@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+#themecolors a {
+    cursor: pointer;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.isDisabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+  }
+
+.btnInfo {
+    background-color: #DFD4A6;
+    border-color: #DFD4A6;
+    color: #8F141B;
+}
+
+.btnSuccess{
+    background-color: #8F141B;
+    border-color: #8F141B;
+    color: #DFD4A6;
+}
+
+.btnDanger{
+    background-color: #4D626C;
+    border-color: #4D626C;
+    color: white;
+}

@@ -1,0 +1,70 @@
+<!-- ============================================================== -->
+<!-- Topbar header - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">
+                <!-- Logo icon --><b>
+                    <img src="assets/images/logos/logosolo-01.png" height="58px" alt="homepage" class="light-logo" />
+                </b>
+                <!--End Logo icon -->
+                <!-- Logo text --><span>
+                    &nbsp;
+                    <img src="assets/images/logos/logoletra-01.png" height="28px" class="light-logo"
+                        alt="homepage" /></span> </a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-collapse">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav my-lg-0">
+                <!-- ============================================================== -->
+                <!-- Profile -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"><img [src]="info.imagen | imagen: tipoUsuario"
+                            height="45" alt="user" class="profile-pic" /></a>
+                    <div class="dropdown-menu dropdown-menu-right animated fadeIn">
+                        <ul class="dropdown-user">
+                            <li>
+                                <div class="text-center">
+                                    <div class="dw-user-box">
+                                        <!-- De esta forma llamamos el pipe -->
+                                        <div class="u-img"><img [src]="info.imagen | imagen: tipoUsuario" alt="user">
+                                        </div>
+                                        <div class="u-text">
+                                            <br>
+                                            <h4>{{info.nombres}} {{ info.apellidos }} </h4>
+
+                                            <p class="text-active">{{ programa }}</p>
+                                            <p class="text-active">{{ info.correo }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><a (click)="_loginService.logOut()" class="pointer"><i class="fa fa-power-off"></i>
+                                    &nbsp; Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->

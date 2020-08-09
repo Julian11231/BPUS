@@ -1,0 +1,242 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h3 class="card-title text-uppercase"><b>1. Datos del Estudiante </b></h3>
+                <hr>
+
+
+                <div class="col-md-3">
+                    <div class="modal fade modal-info" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                        aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+
+                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
+                                        <div class="col-lg-1">
+                                            <div class="vacantesImg text-center">
+                                                <p class="text-center">{{ letra }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="vacantesInfo">
+                                                <h5 class="text-uppercase"> <b>{{ titulo }}</b></h5>
+                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                                    {{empresa}}
+                                                </small><br>
+                                                <small><i class="fa fa-globe"></i>&nbsp;
+                                                    &nbsp;{{ubicacion}}, {{modalidad}}
+                                                </small> <br>
+                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div> <br>
+
+                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                                        <h5 class="text-uppercase"> <b>descripción:</b> </h5>
+                                    </div>
+
+                                    <div class="row" style="margin-left: 25px; width: 93%;">
+                                        <p class="text-justify"> {{descripcion}}</p>
+                                    </div>
+
+                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                                        <h5 class="text-uppercase"> <b>Persona a Cargo:</b> </h5>
+                                    </div>
+
+                                    <div class="row" style="margin-left: 25px;">
+                                        <p class="text-justify"> {{personaCargo}}</p>
+                                    </div>
+
+                                    <div class="row" style="margin-top: -13px; margin-left: 25px;">
+                                        <i class="mdi mdi-email"></i> &nbsp; &nbsp;<small class="text-justify">
+                                            {{correo}}</small>
+                                    </div>
+                                    <div class="row" style="margin-left: 25px;">
+                                        <i class="fa  fa-phone"></i> &nbsp; &nbsp; &nbsp;<small class="text-justify">
+                                            {{telefono}}</small>
+                                    </div>
+
+                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                                        <h5 class="text-uppercase"> <b>Cantidad de Vacantes:</b> </h5> &nbsp; &nbsp;
+                                        <p class="text-justify" style="margin-top: -3px;"> {{cantidad}}</p>
+                                    </div>
+
+                                    <div class="row" style=" margin-left: 25px;">
+                                        <h5 class="text-uppercase"> <b>¿Es Pagada?:</b> </h5> &nbsp; &nbsp;
+                                        <p class="text-justify" style="margin-top: -3px;"> {{pagada}}</p>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btnSuccess waves-effect text-left"
+                                            data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="postSolicitud(f)" class="form-horizontal" id="loginform">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Nombres:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                    <input [(ngModel)]="info.nombres" name="nombres" type="text" class="form-control"
+                                        id="exampleInputuname" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Apellidos:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                    <input [(ngModel)]="info.apellidos" name="apellidos" type="text"
+                                        class="form-control" id="exampleInputuname" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Identificación:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-id-card-o"></i></div>
+                                    <input [(ngModel)]="info.identificacion" name="identificacion" type="text"
+                                        class="form-control" id="exampleInputuname" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Teléfono:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                                    <input [(ngModel)]="info.telefono" name="telefono" type="text" class="form-control"
+                                        id="exampleInputuname" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Programa:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-book"></i></div>
+                                    <input [(ngModel)]="info.programa.nombre" name="programa" type="text"
+                                        class="form-control" id="exampleInputuname" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Código:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-drivers-license"></i></div>
+                                    <input [(ngModel)]="info.codigo" name="codigo" type="text" class="form-control"
+                                        id="exampleInputuname" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Correo Electrónico:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="mdi mdi-email"></i></div>
+                                    <input [(ngModel)]="info.correo" name="correo" type="email" class="form-control"
+                                        id="exampleInputuname" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Empresa de Salud:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="mdi mdi-ambulance"></i></div>
+                                    <input ngModel name="eps" type="text" class="form-control" id="exampleInputuname"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br>
+                    <h3 class="card-title text-uppercase"><b>2. Vacantes Disponibles </b></h3>
+                    <hr>
+
+                    <div class="row" *ngFor="let dato of vacantes">
+
+                        <ng-container *ngIf="(programa === dato.programa._id) && (dato.estado === 'Activa')">
+
+                            <div class="col-lg-1">
+                                <div class="vacantesImg text-center">
+                                    <p class="text-center">{{ dato.letra }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="vacantes">
+                                    <h5 class="text-uppercase"> <b>{{ dato.titulo }}</b></h5>
+                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                        {{dato.empresa.nombre}}
+                                    </small><br>
+                                    <small><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.ubicacion}},
+                                        {{dato.modalidad}}
+                                    </small> <br>
+                                    <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{dato.funciones}}
+                                    </small>
+                                </div>
+                                <hr id="line">
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="buttons">
+
+                                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal"
+                                        data-target=".modal-info" class="btn btnInfo waves-effect text-left"><b> Más
+                                            Info
+                                            <i class="fa fa-info-circle"></i></b></button>&nbsp; &nbsp;
+
+                                    <button type="submit" (click)="getVacanteSelected(dato)"
+                                        class="btn btnSuccess waves-effect text-left"><b>
+                                            Pre-Incribirme
+                                            <i class="fa fa-check"></i></b></button>
+                                </div>
+
+                            </div>
+                        </ng-container>
+
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

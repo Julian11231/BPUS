@@ -1,0 +1,85 @@
+.login-register {
+    background-size: 1000px 650px;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    padding: 10% 0;
+    position: fixed;
+}
+
+.login-box {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.login-box .footer {
+    width: 100%;
+    left: 0px;
+    right: 0px;
+}
+
+.login-box .social {
+    display: block;
+    margin-bottom: 30px;
+}
+
+#recoverform {
+    display: none;
+}
+
+.login-sidebar {
+    padding: 0px;
+    margin-top: 0px;
+}
+
+.login-sidebar .login-box {
+    right: 0px;
+    position: absolute;
+    height: 100%;
+}
+
+#textoLog {
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 8px;
+}
+
+.textTitle {
+    background-color: #8F141B;
+    height: 85px;
+    width: 400px;
+    margin-left: -20px;
+    padding-top: 30px;
+    align-items: center;
+}
+
+#btnLogin {
+    background-color: #8F141B;
+    border-color: #8F141B;
+    color: #ffffff;
+}
+
+#checkbox-signup {
+    background-color: #8F141B;
+}
+
+
+/* RESPONSIVE */
+
+@media only screen and (max-width: 479px) {
+    .login-box {
+        width: 411px;
+        position: relative;
+        margin: 0 auto;
+    }
+    .textTitle {
+        background-color: #8F141B;
+        height: 85px;
+        width: 412px;
+        margin-left: -20px;
+        padding-top: 30px;
+        align-items: center;
+    }
+}

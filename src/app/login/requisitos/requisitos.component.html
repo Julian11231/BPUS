@@ -1,0 +1,44 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+
+<div class="login-register" style="background-color: #5C0E12;">
+    <div class="requisitos-box">
+        <div class="text-center">
+            <br>
+
+            <img src="assets/images/logos/logo-horizontal.png" alt="">
+            <br>
+            <br>
+
+            <div class="text-uppercase">
+                <h5 class="font-weight-bold">Requisitos Mínimos para Solicitud de Modalidad de Grado</h5>
+                <small style="color: #8F141B;"> <b> {{ info.nombres }} {{ info.apellidos }} </b> </small>
+            </div>
+            <br>
+        </div>
+
+        <div class="list-box">
+            <ul>
+                <li>Tener mínimo el 50% de los créditos aprobados &nbsp; &nbsp; &nbsp; <i class="fa"></i> </li>
+                <br>
+                <li>Haber aprobado el curso de Modalidad de grado &nbsp; &nbsp; <i class="fa"></i> </li>
+                <br>
+            </ul>
+
+        </div>
+        <div class="text-center">
+
+            <div class="botones-aceptar">
+                <button routerLink='/login' id="btnRegresar" class="btn btn-info btn-md text-uppercase" type="submit"><i class="fa fa-arrow-left"></i>&nbsp; &nbsp;<b>Regresar</b> </button>&nbsp; &nbsp; &nbsp;
+                <button (click)="continuar()" routerLink='/modalidades' class="btn btn-info btn-md text-uppercase" type="submit" disabled><b>Continuar</b>&nbsp; &nbsp;<i class="fa fa-arrow-right"></i></button>
+            </div>
+
+        </div>
+        <br><br>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->

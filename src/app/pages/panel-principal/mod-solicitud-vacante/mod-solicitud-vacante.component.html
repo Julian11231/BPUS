@@ -1,0 +1,205 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h3 class="card-title text-uppercase"><b> Todas las Solicitudes </b></h3>
+                <hr>
+
+                <div class="col-md-3">
+                    <div class="modal fade modal-info" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                        aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+
+                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
+                                        <div class="col-lg-1">
+                                            <div class="vacantesImg text-center">
+                                                <p class="text-center">{{ letra }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="vacantesInfo">
+                                                <h5 class="text-uppercase"> <b>{{ nombreEst }} {{apellidoEst}}</b></h5>
+                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                                    {{titulo}} - {{empresa}}
+                                                </small><br>
+                                                <small><i class="fa fa-globe"></i>&nbsp;
+                                                    &nbsp;{{ubicacion}}, {{modalidad}}
+                                                </small> <br>
+                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div> <br>
+
+                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                                        <h5 class="text-uppercase"> <b>ID de la solicitud:</b> </h5>
+                                        <p class="text-justify" style="margin-top: -3px;">&nbsp; {{_id}}</p>
+                                    </div>
+
+                                    <div class="row" style="margin-left: 25px;">
+                                        <h5 class="text-uppercase"> <b>Información del estudiante:</b> </h5>
+                                    </div>
+
+                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
+                                        <i class="fa fa-id-card"></i> &nbsp; &nbsp;<small class="text-justify">
+                                            {{codigoEst}}</small>
+                                    </div>
+                                    <div class="row" style="margin-left: 25px;">
+                                        <i class="fa fa-id-card-o"></i> &nbsp; &nbsp;<small class="text-justify">
+                                            {{idEst}}</small>
+                                    </div>
+
+                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
+                                        <i class="mdi mdi-email"></i> &nbsp; &nbsp;<small class="text-justify">
+                                            {{correoEst}}</small>
+                                    </div>
+                                    <div class="row" style="margin-left: 25px;">
+                                        <i class="fa  fa-phone"></i> &nbsp; &nbsp;<small class="text-justify">
+                                            {{telefonoEst}}</small>
+                                    </div>
+
+
+                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                                        <h5 class="text-uppercase"> <b>Persona a Cargo:</b> </h5>
+                                    </div>
+
+                                    <div class="row" style="margin-left: 25px;">
+                                        <p class="text-justify"> {{personaCargo}}</p>
+                                    </div>
+
+                                    <div class="row" style="margin-top: -13px; margin-left: 25px;">
+                                        <i class="mdi mdi-email"></i> &nbsp; &nbsp;<small class="text-justify">
+                                            {{correo}}</small>
+                                    </div>
+                                    <div class="row" style="margin-left: 25px;">
+                                        <i class="fa  fa-phone"></i> &nbsp; &nbsp; &nbsp;<small class="text-justify">
+                                            {{telefono}}</small>
+                                    </div>
+
+                                    <br>
+
+                                    <form ngNativeValidate #actualizar="ngForm" (ngSubmit)="putSolicitud(actualizar)"
+                                        class="form-horizontal" id="loginform" style="margin-left: 10px;">
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        <h5 class="text-uppercase"> <b>Estado:</b> </h5>
+                                                    </label>
+                                                    <select [(ngModel)]="estado" name="estado"
+                                                        class="form-control custom-select" required>
+                                                        <option value="Enviada">Enviada</option>
+                                                        <option value="Aprobada">Aprobada</option>
+                                                        <option value="Rechazada">Rechazada</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        <h5 class="text-uppercase"> <b>Notas:</b> </h5>
+                                                    </label>
+                                                    <input [(ngModel)]="notas" name="notas" type="text" id="firstName"
+                                                        class="form-control" placeholder="Notas Para el Estudiante">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btnSuccess waves-effect text-left"
+                                                data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+
+                                            <button type="submit" class="btn btnInfo waves-effect text-left">Actualizar
+                                                <i class="mdi mdi-update"></i></button>
+
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-12" style="margin-left: -15px;">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
+                                    type="text" id="firstName" class="form-control"
+                                    placeholder="Busca la solicitud por Id, Estudiante o Empresa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row" *ngFor="let dato of solicitudes">
+
+                    <ng-container *ngIf="(programa === dato.estudiante.programa)">
+
+                        <div class="col-lg-1">
+                            <div class="vacantesImg text-center">
+                                <p class="text-center">{{dato.vacante.letra}}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="vacantes">
+                                <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
+                                        {{ dato.estudiante.apellidos }}</b></h5>
+                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                    {{ dato.vacante.titulo }} - {{dato.empresa.nombre}}
+                                </small><br>
+                                <small><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.vacante.ubicacion}},
+                                    {{dato.vacante.modalidad}}
+                                </small> <br>
+                                <small><i class="mdi mdi-account-card-details"></i>&nbsp; &nbsp;{{dato._id}}
+                                </small>
+                            </div>
+                            <hr id="line">
+                        </div>
+
+                        <div class="col-lg-4">
+
+                            <h5 class="text-uppercase"><b>Estado de la Solicitud:</b></h5>
+                            <ng-container *ngIf="dato.estado == 'Enviada'" class="text-success"><span
+                                    class="label btnInfo"> <b> {{ dato.estado }} </b></span>
+                            </ng-container>
+
+                            <ng-container *ngIf="dato.estado == 'Aprobada'" class="text-success"><span
+                                    class="label btnSuccess"> <b> {{ dato.estado }} </b></span>
+                            </ng-container>
+
+                            <ng-container *ngIf="dato.estado == 'Rechazada'" class="text-success"><span
+                                    class="label btnDanger"> <b> {{ dato.estado }} </b></span>
+                            </ng-container>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <div class="buttons">
+
+                                <button type="button" (click)="getDataInfo(dato)" data-toggle="modal"
+                                    data-target=".modal-info" class="btn btnInfo waves-effect text-left"><b> Gestionar
+                                        <i class="fa fa-info-circle"></i></b></button>
+                            </div>
+
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
