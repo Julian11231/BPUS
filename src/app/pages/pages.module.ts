@@ -25,6 +25,8 @@ import { VacantesComponent } from './panel-principal/vacantes/vacantes.component
 import { ModSolicitudVacanteComponent } from './panel-principal/mod-solicitud-vacante/mod-solicitud-vacante.component';
 import { MiSolicitudComponent } from './panel-principal/mi-solicitud/mi-solicitud.component';
 import { ActaInicioComponent } from './panel-principal/acta-inicio/acta-inicio.component';
+import { TutoriaPasantiaComponent } from './panel-principal/tutoria-pasantia/tutoria-pasantia.component';
+import { PropuestasComponent } from './panel-principal/propuestas/propuestas.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { ActaInicioComponent } from './panel-principal/acta-inicio/acta-inicio.c
     VacantesComponent,
     ModSolicitudVacanteComponent,
     MiSolicitudComponent,
-    ActaInicioComponent
+    ActaInicioComponent,
+    TutoriaPasantiaComponent,
+    PropuestasComponent
 
   ],
   exports: [
@@ -56,7 +60,9 @@ import { ActaInicioComponent } from './panel-principal/acta-inicio/acta-inicio.c
     VacantesComponent,
     ModSolicitudVacanteComponent,
     MiSolicitudComponent,
-    ActaInicioComponent
+    ActaInicioComponent,
+    TutoriaPasantiaComponent,
+    PropuestasComponent
   ],
   imports: [
     SharedModule,

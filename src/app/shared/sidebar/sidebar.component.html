@@ -26,6 +26,31 @@
 </aside>
 
 
+<aside class="left-sidebar" *ngIf="menuTutor">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="nav-small-cap"><b>Tutorías de Grado</b> </li>
+                <li *ngFor="let menu of menuTutor"> <a class="has-arrow waves-effect waves-dark" href="#"
+                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
+                            class="hide-menu">{{menu.titulo}}
+                            <span id="number"
+                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
+                                routerLinkActive="active">{{submenu.titulo}} </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+
+
 
 <!--<aside class="left-sidebar" *ngIf="menuEstudiante">
     <div class="scroll-sidebar">

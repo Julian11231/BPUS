@@ -13,7 +13,8 @@ import {
   ModalidadService,
   EmpresaService,
   VacantesService,
-  PasantiService
+  PasantiService,
+  TutoresService
 } from './service.index'
 
 
@@ -32,7 +33,8 @@ import {
     ModalidadService,
     EmpresaService,
     VacantesService,
-    PasantiService
+    PasantiService,
+    TutoresService
   ]
 })
 export class ServiceModule { }

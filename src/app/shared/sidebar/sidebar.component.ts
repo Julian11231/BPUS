@@ -11,6 +11,7 @@ import { SidebarService } from 'src/app/services/service.index';
 export class SidebarComponent implements OnInit {
 
   menuAdmin: any[];
+  menuTutor: any[];
   menuEstudiante: any[];
 
   EstadoPreInsc: string;
@@ -37,10 +38,12 @@ export class SidebarComponent implements OnInit {
       this.EstadoPreInsc = JSON.parse(localStorage.getItem('estudiante')).modalidad.estado;
       this.noPasantia = JSON.parse(localStorage.getItem('estudiante')).modalidad
 
-    } else {
+    } else if (JSON.parse(localStorage.getItem('administrativo')).rol === "JEFE_PROGRAMA") {
       this.menuAdmin = this._sidebarService.menuAdmin;
-    }
 
+    } else {
+      this.menuTutor = this._sidebarService.menuTutor;
+    }
   }
 
   /*let estudiante = JSON.parse(localStorage.getItem("estudiante"))

@@ -70,7 +70,7 @@ export class PasantiService {
 
   }
 
-  putSolicitud(id: string, pasantia: PasantiaAdmin) {
+  putSolicitud(id: string, pasantia: Pasantia) {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
@@ -99,7 +99,37 @@ export class PasantiService {
       });
 
       return throwError(err);
+    }));
+  }
 
+
+  postDocumentoPropuesta(idEstudiante: string, documento_propuesta: FormData) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+
+    return this.http.put(url, documento_propuesta).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+
+        Swal.fire({
+          title: '¡Bien Hecho!',
+          text: `Se ha enviado correctamente el documento`,
+          icon: 'success'
+        }).then(() => {
+          this.router.navigate(['/mi-modalidad'])
+        });
+      }
+      return true;
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
     }));
 
   }

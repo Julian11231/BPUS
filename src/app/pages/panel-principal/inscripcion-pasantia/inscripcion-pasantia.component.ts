@@ -66,7 +66,6 @@ export class InscripcionPasantiaComponent implements OnInit {
             this.preInscripcion,
             form.value.eps
           )
-
           this._pasantiaService.postSolicitud(idEstudiante, preInscripcion).subscribe();
 
         }, 100);

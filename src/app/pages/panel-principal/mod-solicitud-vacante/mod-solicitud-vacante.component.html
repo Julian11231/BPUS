@@ -109,6 +109,7 @@
                                                         class="form-control" placeholder="Notas Para el Estudiante">
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         <div class="modal-footer">
@@ -175,16 +176,18 @@
 
                             <h5 class="text-uppercase"><b>Estado de la Solicitud:</b></h5>
                             <ng-container *ngIf="dato.estado == 'Enviada'" class="text-success"><span
-                                    class="label btnInfo"> <b> {{ dato.estado }} </b></span>
+                                    class="label btnInfo"> <b> {{ dato.estado }} </b></span><br>
                             </ng-container>
 
                             <ng-container *ngIf="dato.estado == 'Aprobada'" class="text-success"><span
-                                    class="label btnSuccess"> <b> {{ dato.estado }} </b></span>
+                                    class="label btnSuccess"> <b> {{ dato.estado }} </b></span><br>
                             </ng-container>
 
                             <ng-container *ngIf="dato.estado == 'Rechazada'" class="text-success"><span
-                                    class="label btnDanger"> <b> {{ dato.estado }} </b></span>
+                                    class="label btnDanger"> <b> {{ dato.estado }} </b></span><br>
                             </ng-container>
+                            <br>
+
                         </div>
 
                         <div class="col-lg-2">

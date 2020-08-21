@@ -35,6 +35,41 @@ export class SidebarService {
         { titulo: 'Gestión de Empresas', url: '/empresas' },
         { titulo: 'Gestión de Vacantes', url: '/vacantes' },
         { titulo: 'Solicitudes Por Vacantes', url: '/solicitudes' },
+        { titulo: 'Propuestas de Pasantía', url: '/propuestas' },
+      ]
+    }
+  ];
+
+
+
+  menuTutor: any = [
+    {
+      titulo: 'Proyecto de Grado',
+      icono: 'fa fa-book',
+      submenu: [
+        { titulo: 'Dashboard', url: '/dashboard' },
+        { titulo: 'Progress Bar', url: '/progress' },
+        { titulo: 'Graficas', url: '/graficas1' },
+        { titulo: 'Promesas', url: '/promesas' },
+        { titulo: 'Rxjs', url: '/rxjs' },
+      ]
+    },
+    {
+      titulo: 'Semilleros',
+      icono: 'mdi mdi-school',
+      submenu: [
+        { titulo: 'Dashboard', url: '/dashboard' },
+        { titulo: 'Progress Bar', url: '/progress' },
+        { titulo: 'Graficas', url: '/graficas1' },
+        { titulo: 'Promesas', url: '/promesas' },
+        { titulo: 'Rxjs', url: '/rxjs' },
+      ]
+    },
+    {
+      titulo: 'Pasantías',
+      icono: 'fa fa-briefcase',
+      submenu: [
+        { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' },
       ]
     }
   ];

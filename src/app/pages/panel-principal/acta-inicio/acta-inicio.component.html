@@ -37,9 +37,9 @@
 
                         <input name="filePropuesta" id="filePropuesta"
                             (change)="getFilePropuesta( $event.target.files[0] )" type="file" accept="application/pdf"
-                            class="imagenes-secundarias" /> <br> <br>
+                            class="imagenes-secundarias" required /> <br> <br>
 
-                        <button class="btn btnSuccess" (click)="enviarActa()" style="width: 40%; "><b> Enviar
+                        <button class="btn btnSuccess" (click)="enviarPropuesta()" style="width: 40%; "><b> Enviar
                                 Propuesta</b></button>
 
                     </div>
@@ -68,12 +68,12 @@
                         </ng-container>
 
                         <ng-container *ngIf="!pasantia">
-                            <button class="btn btnSuccess" (click)="enviarActa()" style="width: 40%; "><b>
+                            <button class="btn btnSuccess" (click)="enviarPropuesta()" style="width: 40%; "><b>
                                     Enviar Convenio</b></button>
                         </ng-container>
 
                         <ng-container *ngIf="pasantia">
-                            <button class="btn btnSuccess" (click)="enviarActa()" style="width: 40%; " disabled><b>
+                            <button class="btn btnSuccess" (click)="enviarPropuesta()" style="width: 40%; " disabled><b>
                                     Enviar Convenio</b></button>
                         </ng-container>
 

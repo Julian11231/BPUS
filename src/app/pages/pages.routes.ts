@@ -14,6 +14,8 @@ import { VacantesComponent } from './panel-principal/vacantes/vacantes.component
 import { ModSolicitudVacanteComponent } from './panel-principal/mod-solicitud-vacante/mod-solicitud-vacante.component';
 import { MiSolicitudComponent } from './panel-principal/mi-solicitud/mi-solicitud.component';
 import { ActaInicioComponent } from './panel-principal/acta-inicio/acta-inicio.component';
+import { TutoriaPasantiaComponent } from './panel-principal/tutoria-pasantia/tutoria-pasantia.component';
+import { PropuestasComponent } from './panel-principal/propuestas/propuestas.component';
 
 
 
@@ -37,6 +39,8 @@ const pagesRoutes: Routes = [
             { path: 'solicitudes', component: ModSolicitudVacanteComponent, data: { titulo: 'Solicitudes Por Vacantes' } },
             { path: 'mi-modalidad', component: MiSolicitudComponent, data: { titulo: 'Seguimiento a la Modalidad' } },
             { path: 'inscripcion-propuesta', component: ActaInicioComponent, data: { titulo: 'Inscripción de la Propuesta' } },
+            { path: 'pasantias-asignadas', component: TutoriaPasantiaComponent, data: { titulo: 'Pasantías Asignadas' } },
+            { path: 'propuestas', component: PropuestasComponent, data: { titulo: 'Propuestas de Pasantía' } },
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },

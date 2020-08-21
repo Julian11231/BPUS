@@ -4,6 +4,7 @@ export class PasantiaAdmin {
 
         public notas?: String,
         public estado?: String,
+        public tutor?: String,
 
     ) { }
 }

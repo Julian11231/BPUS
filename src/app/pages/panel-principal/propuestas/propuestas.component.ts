@@ -2,25 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { PasantiService, TutoresService } from 'src/app/services/service.index';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { PasantiaAdmin } from '../../../models/PasantiaAdmin';
-import { Pasantia } from 'src/app/models/Pasantia';
-
+import { PasantiaAdmin } from 'src/app/models/PasantiaAdmin';
+import { Pasantia } from '../../../models/Pasantia';
 
 @Component({
-  selector: 'app-mod-solicitud-vacante',
-  templateUrl: './mod-solicitud-vacante.component.html',
-  styleUrls: ['./mod-solicitud-vacante.component.css']
+  selector: 'app-propuestas',
+  templateUrl: './propuestas.component.html',
+  styleUrls: ['./propuestas.component.css']
 })
-export class ModSolicitudVacanteComponent implements OnInit {
+export class PropuestasComponent implements OnInit {
+
+  pasantiaSup: Pasantia;
 
   info: any;
-  solicitudes: any[];
+  propuestas: any[];
   programa: string;
 
   _id: string;
   estado: string;
   notas: string;
-  tutor: string[];
+
+  tutorNombres: string;
+  tutorApellidos: string;
+  estado_propuesta: string;
+  notas_propuesta: string;
 
   letra: string;
   titulo: string;
@@ -29,6 +34,7 @@ export class ModSolicitudVacanteComponent implements OnInit {
   modalidad: string;
   funciones: string;
 
+  idEstudiante: string;
   nombreEst: string;
   apellidoEst: string;
   codigoEst: string;
@@ -45,19 +51,20 @@ export class ModSolicitudVacanteComponent implements OnInit {
 
   tutores: any[] = [];
 
-  constructor(public _pasantiaService: PasantiService) { }
+  constructor(public _pasantiaService: PasantiService, public _tutoresService: TutoresService) { }
 
   ngOnInit(): void {
 
     this.info = JSON.parse(localStorage.getItem("estudiante"));
-    this.getSolicitudes();
+    this.getPropuestas();
+    this.getTutores();
 
   }
 
   putSolicitud(form: NgForm) {
 
     Swal.fire({
-      title: '¿Actualizar Solicitud?',
+      title: '¿Actualizar Propuesta?',
       icon: 'warning',
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si',
@@ -69,10 +76,8 @@ export class ModSolicitudVacanteComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let pasantia = new PasantiaAdmin(
-          form.value.notas,
-          form.value.estado,
-        )
+        let pasantia = new Pasantia(null, null, null, form.value.tutor, null, form.value.estado_propuesta, form.value.notas_propuesta, null, null,
+          null, null, null, null, null, null, null, null, "Aprobada")
         this._pasantiaService.putSolicitud(this._id, pasantia).subscribe();
       }
     })
@@ -80,13 +85,13 @@ export class ModSolicitudVacanteComponent implements OnInit {
   }
 
 
-  getSolicitudes() {
+  getPropuestas() {
 
     let administrativo = JSON.parse(localStorage.getItem("administrativo"));
     this.programa = administrativo.programa._id;
 
     this._pasantiaService.getSolicitudes().subscribe((resp: any) => {
-      this.solicitudes = resp.pasantias;
+      this.propuestas = resp.pasantias;
       console.log(resp);
 
     });
@@ -94,12 +99,22 @@ export class ModSolicitudVacanteComponent implements OnInit {
 
   getDataInfo(data: any) {
 
-    console.log(data)
+    this.pasantiaSup = data;
 
     this._id = data._id;
     this.estado = data.estado
     this.notas = data.notas;
-    //this.tutor = [data.tutor.nombres, data.tutor.apellidos];
+
+    if (!data?.tutor) {
+      this.tutorNombres = null;
+      this.tutorApellidos = null;
+
+    } else {
+      this.tutorNombres = data.tutor.nombres;
+      this.tutorApellidos = data.tutor.apellidos;
+    }
+    this.notas_propuesta = data.notas_propuesta;
+    this.estado_propuesta = data.estado_propuesta;
 
     this.letra = data.vacante.letra;
     this.titulo = data.vacante.titulo;
@@ -108,6 +123,7 @@ export class ModSolicitudVacanteComponent implements OnInit {
     this.modalidad = data.vacante.modalidad;
     this.funciones = data.vacante.funciones;
 
+    this.idEstudiante = data.estudiante._id;
     this.nombreEst = data.estudiante.nombres;
     this.apellidoEst = data.estudiante.apellidos;
     this.codigoEst = data.estudiante.codigo;
@@ -120,6 +136,13 @@ export class ModSolicitudVacanteComponent implements OnInit {
     this.telefono = data.empresa.telefono_persona;
   }
 
+  getTutores() {
+    let data = JSON.parse(localStorage.getItem('administrativo'));
+    let idPrograma = data.programa._id;
+    this._tutoresService.getTutores(idPrograma).subscribe((resp: any) => {
+      this.tutores = resp.admins;
+    });
+  }
 
 
   getDataBuscar(data) {

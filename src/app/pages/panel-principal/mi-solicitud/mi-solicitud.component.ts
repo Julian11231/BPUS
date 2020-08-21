@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PasantiService } from 'src/app/services/service.index';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Pasantia } from '../../../models/Pasantia';
 
 @Component({
   selector: 'app-mi-solicitud',
@@ -10,6 +11,8 @@ import Swal from 'sweetalert2';
 })
 export class MiSolicitudComponent implements OnInit {
 
+  pasantiaSup: Pasantia;
+
   info: any;
   pasantia: any;
   programa: string;
@@ -17,6 +20,9 @@ export class MiSolicitudComponent implements OnInit {
   _id: string;
   estado: string;
   notas: string;
+
+  documento_propuesta: string;
+  estado_propuesta: string;
 
   letra: string;
   titulo: string;
@@ -42,37 +48,15 @@ export class MiSolicitudComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
-
     this.info = JSON.parse(localStorage.getItem("estudiante"));
     this.getPasantia();
-
   }
 
-  /*putSolicitud(form: NgForm) {
-
-    Swal.fire({
-      title: '¿Actualizar Solicitud?',
-      icon: 'warning',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Si',
-
-      showCancelButton: true,
-      confirmButtonColor: '#60D89C',
-      cancelButtonColor: '#d33'
-
-    }).then((result) => {
-      if (result.value) {
-
-      }
-    })
-
-  }*/
 
   getPasantia() {
 
     let estudiante = JSON.parse(localStorage.getItem("estudiante"));
     this._id = estudiante.modalidad._id;
-    //if (this._id) {
 
     this._pasantiaService.getPasantia(this._id).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
@@ -80,28 +64,19 @@ export class MiSolicitudComponent implements OnInit {
 
     });
 
-    /* } else {
- 
-       
- 
-       this._pasantiaService.getPasantia(this._pasantiaService._id).subscribe((resp: any) => {
-         this.pasantia = resp.pasantia;
-         console.log(resp);
- 
-       });
- 
-     }*/
-
-
-
-
   }
 
   getDataInfo(data: any) {
 
+    this.pasantiaSup = data;
+    console.log(this.pasantiaSup)
+
     this._id = data._id;
     this.estado = data.estado
     this.notas = data.notas;
+
+    this.documento_propuesta = data.documento_propuesta;
+    this.estado_propuesta
 
     this.letra = data.vacante.letra;
     this.titulo = data.vacante.titulo;
