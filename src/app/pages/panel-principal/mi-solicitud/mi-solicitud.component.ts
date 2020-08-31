@@ -60,8 +60,6 @@ export class MiSolicitudComponent implements OnInit {
 
     this._pasantiaService.getPasantia(this._id).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
-      console.log(resp);
-
     });
 
   }

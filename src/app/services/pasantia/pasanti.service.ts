@@ -70,7 +70,7 @@ export class PasantiService {
 
   }
 
-  putSolicitud(id: string, pasantia: Pasantia) {
+  putSolicitud(id: string, pasantia: any) {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
@@ -109,6 +109,101 @@ export class PasantiService {
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
 
     return this.http.put(url, documento_propuesta).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+
+        Swal.fire({
+          title: '¡Bien Hecho!',
+          text: `Se ha enviado correctamente el documento`,
+          icon: 'success'
+        }).then(() => {
+          this.router.navigate(['/mi-modalidad'])
+        });
+      }
+      return true;
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
+
+
+  postDocumentoInf7(idEstudiante: string, documento_informe7: FormData) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+
+    return this.http.put(url, documento_informe7).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+
+        Swal.fire({
+          title: '¡Bien Hecho!',
+          text: `Se ha enviado correctamente el documento`,
+          icon: 'success'
+        }).then(() => {
+          this.router.navigate(['/mi-modalidad'])
+        });
+      }
+      return true;
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
+
+
+  postDocumentoInf14(idEstudiante: string, documento_informe14: FormData) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+
+    return this.http.put(url, documento_informe14).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+
+        Swal.fire({
+          title: '¡Bien Hecho!',
+          text: `Se ha enviado correctamente el documento`,
+          icon: 'success'
+        }).then(() => {
+          this.router.navigate(['/mi-modalidad'])
+        });
+      }
+      return true;
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
+
+  postDocumentoInfFinal(idEstudiante: string, documento_informeFinal: FormData) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+
+    return this.http.put(url, documento_informeFinal).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
 

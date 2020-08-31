@@ -36,6 +36,7 @@ export class SidebarService {
         { titulo: 'Gestión de Vacantes', url: '/vacantes' },
         { titulo: 'Solicitudes Por Vacantes', url: '/solicitudes' },
         { titulo: 'Propuestas de Pasantía', url: '/propuestas' },
+        { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' },
       ]
     }
   ];

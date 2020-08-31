@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <h3 class="card-title text-uppercase" style="margin-left: 15px;"><b> Descripción de la fase </b>
+                    </h3>
+
+                    <p class="col-12 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum odio
+                        tempore
+                        veritatis maxime
+                        perferendis blanditiis animi qui perspiciatis molestiae fuga provident doloribus, fugiat eos
+                        voluptate ea cupiditate laudantium! Eos, ea! Lorem ipsum dolor sit amet consectetur adipisicing
+                        elit. Animi totam libero assumenda tempore vero dolores corporis voluptatum.
+                    </p><br>
+
+                    <h5 class="text-uppercase" style="margin-left: 15px; color: #8F141B;"><b> Nota: </b>
+                    </h5>
+
+                    <p class="col-12 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum odio
+                        tempore
+                        veritatis maxime
+                        perferendis </p> <br><br><br>
+
+                </div>
+                <div class="row text-xl-center">
+                    <div class="col-lg-12">
+                        <label for="fileInforme" *ngIf="nombreArchivoInforme == null" class="labels custom-file-upload">
+                            Click aquí para subir el el informe de la semana 14</label>
+
+                        <label for="fileInforme" *ngIf="nombreArchivoInforme != null"
+                            class="labels custom-file-upload text-center" style="color: #8F141B; font-weight: bold;">
+                            {{ nombreArchivoInforme }}</label><br>
+                        <small>Recuerda que debe ser un archivo PDF, de tamaño menor a 25MB.</small><br>
+
+
+                        <input name="fileInforme" id="fileInforme" (change)="getFileInforme( $event.target.files[0] )"
+                            type="file" accept="application/pdf" class="imagenes-secundarias" required /> <br> <br>
+
+                        <button class="btn btnSuccess" (click)="enviarInforme()" style="width: 40%; "><b> Enviar
+                                Informe</b></button>
+
+                    </div>
+
+                </div><br><br>
+            </div>
+        </div>
+    </div>
+</div>

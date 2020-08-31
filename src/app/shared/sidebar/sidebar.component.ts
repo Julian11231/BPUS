@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarService } from 'src/app/services/service.index';
+import { SidebarService, PasantiService } from 'src/app/services/service.index';
 
 
 @Component({
@@ -15,6 +15,11 @@ export class SidebarComponent implements OnInit {
   menuEstudiante: any[];
 
   EstadoPreInsc: string;
+  EstadoPropuesta: string;
+  EstadoInforme7: string;
+  EstadoInforme14: string;
+  EstadoInformeFinal: string;
+
   noPasantia: string;
   actaInicio: string;
   informe7: string;
@@ -22,7 +27,7 @@ export class SidebarComponent implements OnInit {
   informeFinal: string;
 
   // Inyectamos el _sidebarService para leer el menu
-  constructor(public _sidebarService: SidebarService) { }
+  constructor(public _sidebarService: SidebarService, public _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
     this.getMenu()
@@ -35,7 +40,20 @@ export class SidebarComponent implements OnInit {
 
       // Falta bloquear las fases respecto a la fase anterior: En el back,
       // poner campos de estado para el acta de inicio, y los informes, en el modelo de Pasantia
-      this.EstadoPreInsc = JSON.parse(localStorage.getItem('estudiante')).modalidad.estado;
+
+      if (JSON.parse(localStorage.getItem('estudiante')).modalidad) {
+        let idPasantia = JSON.parse(localStorage.getItem('estudiante'))?.modalidad._id;
+        this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
+          console.log(resp)
+          this.EstadoPreInsc = resp.pasantia?.estado;
+          this.EstadoPropuesta = resp.pasantia?.estado_propuesta;
+          this.EstadoInforme7 = resp.pasantia?.estado_informe7;
+          this.EstadoInforme14 = resp.pasantia?.estado_informe14;
+          this.EstadoInformeFinal = resp.pasantia?.estado_informeFinal;
+        });
+
+      }
+
       this.noPasantia = JSON.parse(localStorage.getItem('estudiante')).modalidad
 
     } else if (JSON.parse(localStorage.getItem('administrativo')).rol === "JEFE_PROGRAMA") {
@@ -45,10 +63,5 @@ export class SidebarComponent implements OnInit {
       this.menuTutor = this._sidebarService.menuTutor;
     }
   }
-
-  /*let estudiante = JSON.parse(localStorage.getItem("estudiante"))
-if (estudiante.modalidad.modalidad === idModPasantia) {
-  this.menuPasantia = this._sidebarService.menuPasantia;
-}*/
 
 }

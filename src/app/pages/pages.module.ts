@@ -27,6 +27,9 @@ import { MiSolicitudComponent } from './panel-principal/mi-solicitud/mi-solicitu
 import { ActaInicioComponent } from './panel-principal/acta-inicio/acta-inicio.component';
 import { TutoriaPasantiaComponent } from './panel-principal/tutoria-pasantia/tutoria-pasantia.component';
 import { PropuestasComponent } from './panel-principal/propuestas/propuestas.component';
+import { InformeCatorceComponent } from './panel-principal/informe-catorce/informe-catorce.component';
+import { InformeFinalComponent } from './panel-principal/informe-final/informe-final.component';
+import { InformeSieteComponent } from './panel-principal/informe-siete/informe-siete.component';
 
 
 @NgModule({
@@ -45,7 +48,10 @@ import { PropuestasComponent } from './panel-principal/propuestas/propuestas.com
     MiSolicitudComponent,
     ActaInicioComponent,
     TutoriaPasantiaComponent,
-    PropuestasComponent
+    PropuestasComponent,
+    InformeSieteComponent,
+    InformeCatorceComponent,
+    InformeFinalComponent
 
   ],
   exports: [
@@ -62,7 +68,11 @@ import { PropuestasComponent } from './panel-principal/propuestas/propuestas.com
     MiSolicitudComponent,
     ActaInicioComponent,
     TutoriaPasantiaComponent,
-    PropuestasComponent
+    PropuestasComponent,
+    InformeSieteComponent,
+    InformeCatorceComponent,
+    InformeFinalComponent
+
   ],
   imports: [
     SharedModule,

@@ -90,6 +90,11 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="fa fa-book"></i><span class="hide-menu">Propuesta</span></a>
                     <ul aria-expanded="false" class="collapse">
+
+                        <li *ngIf="!EstadoPreInsc"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
                         <li *ngIf="EstadoPreInsc ==='Rechazada'"><a class="isDisabled" routerLink="/dashboard"
                                 routerLinkActive="active">Inscripción de Propuesta
                             </a></li>
@@ -106,30 +111,72 @@
                 </li>
 
                 <!-- ============================================================== -->
-                <!-- Falta bloquear las fases según el estado de la fase anterior -->
+                <!--                Bloqueo de  Envío de documentos                 -->
                 <!-- ============================================================== -->
-
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="fa fa-file-pdf-o"></i><span class="hide-menu">Informe - Semana 7</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a class="isDisabled" routerLink="/dashboard" routerLinkActive="active">Enviar Informe </a>
-                        </li>
+
+                        <li *ngIf="!EstadoPropuesta"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoPropuesta ==='Rechazada'"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoPropuesta ==='Enviada'"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoPropuesta ==='Aprobada'"><a routerLink="/informe-siete"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
 
                     </ul>
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="fa fa-file-text-o"></i><span class="hide-menu">Informe - Semana 14</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a class="isDisabled" routerLink="/dashboard" routerLinkActive="active">Enviar Informe </a>
-                        </li>
+
+
+                        <li *ngIf="!EstadoInforme7"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoInforme7 ==='Rechazado'"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoInforme7 ==='Enviado'"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoInforme7 ==='Aprobado'"><a routerLink="/informe-catorce"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
 
                     </ul>
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="fa fa-file-word-o"></i><span class="hide-menu">Informe Final</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a class="isDisabled" routerLink="/dashboard" routerLinkActive="active">Enviar Informe </a>
-                        </li>
+
+                        <li *ngIf="!EstadoInforme14"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoInforme14 ==='Rechazado'"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoInforme14 ==='Enviado'"><a class="isDisabled" routerLink="/dashboard"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+
+                        <li *ngIf="EstadoInforme14 ==='Aprobado'"><a routerLink="/informe-final"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
 
                     </ul>
                 </li>

@@ -16,6 +16,9 @@ import { MiSolicitudComponent } from './panel-principal/mi-solicitud/mi-solicitu
 import { ActaInicioComponent } from './panel-principal/acta-inicio/acta-inicio.component';
 import { TutoriaPasantiaComponent } from './panel-principal/tutoria-pasantia/tutoria-pasantia.component';
 import { PropuestasComponent } from './panel-principal/propuestas/propuestas.component';
+import { InformeSieteComponent } from './panel-principal/informe-siete/informe-siete.component';
+import { InformeCatorceComponent } from './panel-principal/informe-catorce/informe-catorce.component';
+import { InformeFinalComponent } from './panel-principal/informe-final/informe-final.component';
 
 
 
@@ -41,6 +44,9 @@ const pagesRoutes: Routes = [
             { path: 'inscripcion-propuesta', component: ActaInicioComponent, data: { titulo: 'Inscripción de la Propuesta' } },
             { path: 'pasantias-asignadas', component: TutoriaPasantiaComponent, data: { titulo: 'Pasantías Asignadas' } },
             { path: 'propuestas', component: PropuestasComponent, data: { titulo: 'Propuestas de Pasantía' } },
+            { path: 'informe-siete', component: InformeSieteComponent, data: { titulo: 'Envío de Informe de la Semana 7' } },
+            { path: 'informe-catorce', component: InformeCatorceComponent, data: { titulo: 'Envío de Informe de la Semana 14' } },
+            { path: 'informe-final', component: InformeFinalComponent, data: { titulo: 'Envío de Informe Final' } },
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },
