@@ -18,7 +18,14 @@ export class EmpresaService {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/empresas?token=${token}`;
+    console.log(url);
+    return this.http.get(url);
+  }
 
+  getEmpresasEncargado(encargadoID:String) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/empresas/empresa/${encargadoID}?token=${token}`;
+    console.log(url);
     return this.http.get(url);
   }
 
@@ -31,15 +38,8 @@ export class EmpresaService {
     return this.http.post(url, empresa).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: 'Empresa guardada correctamente',
-          icon: 'success'
-        }).then(() => {
-          location.reload();
-        });
+        return resp.empresaGuardada;
       }
-
       return true;
 
     }), catchError((err) => {

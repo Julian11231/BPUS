@@ -18,7 +18,8 @@
                             <label for="exampleInputuname">Nombre Completo</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.nombres}} {{ info.apellidos }}">
+                                <input *ngIf="tipoUsuario !== 'encargadoEmpresa'" type="text" class="form-control" id="exampleInputuname" value="{{info.nombres}} {{ info.apellidos }}">
+                                <input *ngIf="tipoUsuario === 'encargadoEmpresa'" type="text" class="form-control" id="exampleInputuname" value="{{info.nombre}}">
                             </div>
                         </div>
                     </div>
@@ -73,7 +74,7 @@
                             <label for="exampleInputuname">Programa</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-book"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{programa}}">
+                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.programa.nombre}}">
                             </div>
                         </div>
                     </div>

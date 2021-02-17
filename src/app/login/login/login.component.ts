@@ -44,7 +44,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/requisitos']);
         }
 
-      } else {
+      } else if(localStorage.getItem('encargadoEmpresa')){
+        this.router.navigate(['/vacantes']);
+      }else{
         this.router.navigate(['/panel-principal']);
       }
     });
@@ -69,6 +71,7 @@ export class LoginComponent implements OnInit {
       localStorage.removeItem('estudiante');
     } else {
       localStorage.removeItem('administrativo');
+      localStorage.removeItem('encargadoEmpresa');
     }
 
     // En resumen, si el check está activado, sólo deja el dato del usuario "recordado"

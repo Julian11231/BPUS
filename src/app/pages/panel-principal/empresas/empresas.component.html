@@ -21,8 +21,14 @@
                                 <div class="modal-body">
 
 
-                                    <form ngNativeValidate #f="ngForm" (ngSubmit)="postEmpresa(f)"
-                                        class="form-horizontal" id="loginform">
+                                    <form ngNativeValidate #f="ngForm" (ngSubmit)="postEmpresa(f)" class="form-horizontal" id="loginform">
+                                        
+                                        <div class="form-group">
+                                            <label class="control-label">NIT de la Empresa:</label>
+                                            <input ngModel name="nit" type="text" id="nit"
+                                                class="form-control" placeholder="NIT" required>
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -88,19 +94,19 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="control-label">Puesto:</label>
-                                                    <input ngModel name="puesto" type="text" id="firstName"
-                                                        class="form-control" placeholder="Puesto" required>
+                                                    <label class="control-label">Cedula:</label>
+                                                    <input ngModel name="cedula" type="text" id="cedula"
+                                                        class="form-control" placeholder="Cedula" required>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>    
 
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="control-label">Correo Electrónico:</label>
-                                                    <input ngModel name="correo" type="text" id="firstName"
-                                                        class="form-control" placeholder="Correo" required>
+                                                    <label class="control-label">Puesto:</label>
+                                                    <input ngModel name="puesto" type="text" id="firstName"
+                                                        class="form-control" placeholder="Puesto" required>
                                                 </div>
                                             </div>
 
@@ -110,6 +116,14 @@
                                                     <input ngModel name="telPersona" type="text" id="firstName"
                                                         class="form-control" placeholder="Teléfono" required>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Correo Electrónico:</label>
+                                                <input ngModel name="correo" type="text" id="firstName"
+                                                    class="form-control" placeholder="Correo" required>
                                             </div>
                                         </div>
 
@@ -308,39 +322,35 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th><b> Empresa</b></th>
+                                <th><b>Empresa</b></th>
                                 <th><b>Teléfono</b></th>
                                 <th><b>Naturaleza</b></th>
-                                <th><b>Persona a Cargo</b></th>
-                                <th><b>Correo</b></th>
+                                <th><b>Convenio</b></th>
                                 <th><b>Estado</b></th>
                                 <th><b>Acción</b></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let dato of empresas">
-                                <ng-container *ngIf="programa === dato.programa._id">
-                                    <td>{{ dato.nombre }}</td>
-                                    <td>{{ dato.telefono }}</td>
-                                    <td>{{ dato.naturaleza }}</td>
-                                    <td>{{ dato.nombre_persona }}</td>
-                                    <td>{{ dato.correo_persona }}</td>
-                                    <td *ngIf="dato.estado == 'Activa'" class="text-success"><span
-                                            class="label btnSuccess"> <b> {{ dato.estado }} </b></span>
-                                    </td>
-                                    <td *ngIf="dato.estado == 'Inactiva'" class="text-danger"><span
-                                            class="label btnDanger"> <b> {{ dato.estado }} </b></span>
-                                    </td>
-                                    <td>
-                                        <button (click)="getDataPut(dato)" data-toggle="modal"
-                                            data-target=".modal-actualizar"
-                                            class="btn btnInfo waves-effect text-left"><b>
-                                                <i class="mdi mdi-update"></i></b></button>&nbsp;
-                                        <button (click)="deleteEmpresa(dato)" type="button"
-                                            class="btn btnSuccess waves-effect text-left" data-dismiss="modal"> <i
-                                                class="fa fa-times"></i></button>
-                                    </td>
-                                </ng-container>
+                            <tr *ngFor="let dato of convenios">
+                                <td>{{ dato.empresa.nombre }}</td>
+                                <td>{{ dato.empresa.telefono }}</td>
+                                <td>{{ dato.empresa.naturaleza }}</td>
+                                <td>{{ dato.rutapdf }}</td>
+                                <td *ngIf="dato.estado == 'Activo'" class="text-success"><span
+                                        class="label btnSuccess"> <b> {{ dato.estado }} </b></span>
+                                </td>
+                                <td *ngIf="dato.estado == 'Inactivo'" class="text-danger"><span
+                                        class="label btnDanger"> <b> {{ dato.estado }} </b></span>
+                                </td>
+                                <td>
+                                    <button (click)="getDataPut(dato)" data-toggle="modal"
+                                        data-target=".modal-actualizar"
+                                        class="btn btnInfo waves-effect text-left"><b>
+                                            <i class="mdi mdi-update"></i></b></button>&nbsp;
+                                    <button (click)="deleteEmpresa(dato)" type="button"
+                                        class="btn btnSuccess waves-effect text-left" data-dismiss="modal"> <i
+                                            class="fa fa-times"></i></button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

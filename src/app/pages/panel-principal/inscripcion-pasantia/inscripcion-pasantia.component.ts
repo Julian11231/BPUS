@@ -78,7 +78,7 @@ export class InscripcionPasantiaComponent implements OnInit {
     let estudiante = JSON.parse(localStorage.getItem("estudiante"));
     this.programa = estudiante.programa._id;
 
-    this._vacantesService.getVacantes().subscribe((resp: any) => {
+    this._vacantesService.getVacantes(this.programa).subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
     });
   }

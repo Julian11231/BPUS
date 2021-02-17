@@ -14,7 +14,9 @@ import {
   EmpresaService,
   VacantesService,
   PasantiService,
-  TutoresService
+  TutoresService,
+  EncargadoEmpresaService,
+  ConvenioService
 } from './service.index'
 
 
@@ -34,7 +36,9 @@ import {
     EmpresaService,
     VacantesService,
     PasantiService,
-    TutoresService
+    TutoresService,
+    EncargadoEmpresaService,
+    ConvenioService
   ]
 })
 export class ServiceModule { }

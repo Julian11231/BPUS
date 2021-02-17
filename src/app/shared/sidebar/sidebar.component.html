@@ -25,6 +25,26 @@
     <!-- End Sidebar scroll-->
 </aside>
 
+<aside class="left-sidebar" *ngIf="menuEncargadoEmpresa">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav p-n5">
+            <ul id="sidebarnav" class="p-n5">
+                <li class="nav-small-cap"><b>HOLO</b> </li>
+                <li class="p-n5">
+                    <ul class="p-n5">
+                        <li *ngFor="let menu of menuEncargadoEmpresa" class="p-n5">
+                             <a class="p-n5" style="cursor:pointer" [routerLink]="[menu.url]" routerLinkActive="active"><i class="{{menu.icono}}"></i>{{menu.titulo}} </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
 
 <aside class="left-sidebar" *ngIf="menuTutor">
     <!-- Sidebar scroll-->

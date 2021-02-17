@@ -60,18 +60,11 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Empresa:</label>
-                                                    <select ngModel name="empresa" class="form-control custom-select"
-                                                        required>
-                                                        <ng-container *ngFor="let empresa of empresas">
-                                                            <ng-container
-                                                                *ngIf="(programa === empresa.programa._id) && (empresa.estado === 'Activa')">
-                                                                <option value="{{empresa._id}}">{{empresa.nombre}}
-                                                                </option>
-                                                            </ng-container>
-                                                        </ng-container>
-                                                    </select>
+                                                    <input ngModel name="empresa" type="text" id="firstName"
+                                                    class="form-control" placeholder="{{encargado.empresa.nombre}}"
+                                                    value="{{encargado.empresa.nombre}}" required disabled>
                                                 </div>
-                                            </div>
+                                        </div>
                                         </div>
 
                                         <div class="row">
@@ -185,22 +178,6 @@
                                                         <option value="Presencial">Presencial</option>
                                                         <option value="Semipresencial">Semipresencial</option>
                                                         <option value="Remoto">Remoto</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Empresa:</label>
-                                                    <select [(ngModel)]="empresaSelcted" name="empresa"
-                                                        class="form-control custom-select" required>
-                                                        <ng-container *ngFor="let empresa of empresas">
-                                                            <ng-container
-                                                                *ngIf="(programa === empresa.programa._id) && (empresa.estado === 'Activa')">
-                                                                <option value="{{empresa._id}}">{{empresa.nombre}}
-                                                                </option>
-                                                            </ng-container>
-                                                        </ng-container>
                                                     </select>
                                                 </div>
                                             </div>
@@ -323,28 +300,26 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let dato of vacantes">
-                                <ng-container *ngIf="programa === dato.programa._id">
-                                    <td>{{ dato.titulo }}</td>
-                                    <td>{{ dato.empresa.nombre }}</td>
-                                    <td>{{ dato.modalidad }}</td>
-                                    <td>{{ dato.cantidad }}</td>
-                                    <td *ngIf="dato.estado == 'Activa'" class="text-success"><span
-                                            class="label btnSuccess"> <b> {{ dato.estado }} </b></span>
-                                    </td>
-                                    <td *ngIf="dato.estado == 'Inactiva'" class="text-danger"><span
-                                            class="label btnDanger"> <b> {{ dato.estado }} </b></span>
-                                    </td>
-                                    <td>
+                                <td>{{ dato.titulo }}</td>
+                                <td>{{ dato.empresa.nombre }}</td>
+                                <td>{{ dato.modalidad }}</td>
+                                <td>{{ dato.cantidad }}</td>
+                                <td *ngIf="dato.estado == 'Activa'" class="text-success"><span
+                                        class="label btnSuccess"> <b> {{ dato.estado }} </b></span>
+                                </td>
+                                <td *ngIf="dato.estado == 'Inactiva'" class="text-danger"><span
+                                        class="label btnDanger"> <b> {{ dato.estado }} </b></span>
+                                </td>
+                                <td>
 
-                                        <button (click)="getDataPut(dato)" data-toggle="modal"
-                                            data-target=".modal-actualizar"
-                                            class="btn btnInfo waves-effect text-left"><b>
-                                                <i class="mdi mdi-update"></i></b></button>&nbsp;
-                                        <button (click)="deleteVacante(dato)" type="button"
-                                            class="btn btnSuccess waves-effect text-left" data-dismiss="modal"> <i
-                                                class="fa fa-times"></i></button>
-                                    </td>
-                                </ng-container>
+                                    <button (click)="getDataPut(dato)" data-toggle="modal"
+                                        data-target=".modal-actualizar"
+                                        class="btn btnInfo waves-effect text-left"><b>
+                                            <i class="mdi mdi-update"></i></b></button>&nbsp;
+                                    <button (click)="deleteVacante(dato)" type="button"
+                                        class="btn btnSuccess waves-effect text-left" data-dismiss="modal"> <i
+                                            class="fa fa-times"></i></button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

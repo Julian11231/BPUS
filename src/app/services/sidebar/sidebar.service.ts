@@ -33,7 +33,6 @@ export class SidebarService {
       icono: 'fa fa-briefcase',
       submenu: [
         { titulo: 'Gestión de Empresas', url: '/empresas' },
-        { titulo: 'Gestión de Vacantes', url: '/vacantes' },
         { titulo: 'Solicitudes Por Vacantes', url: '/solicitudes' },
         { titulo: 'Propuestas de Pasantía', url: '/propuestas' },
         { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' },
@@ -41,7 +40,18 @@ export class SidebarService {
     }
   ];
 
-
+  menuEncargadoEmpresa: any = [
+    {
+      titulo: 'Vacantes',
+      icono: 'fa fa-book',
+      url: '/vacantes'
+    },
+    {
+      titulo: 'Solicitud vacantes',
+      icono: 'mdi mdi-school',
+      url: '/panel-principal'
+    }
+  ];
 
   menuTutor: any = [
     {

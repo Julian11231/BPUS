@@ -9,4 +9,6 @@ export { RequisitosService } from './requisitos/requisitos.service';
 export { LoginService } from './login/login.service';
 export { SidebarService } from './sidebar/sidebar.service';
 export { SharedService } from './shared/shared.service';
+export { EncargadoEmpresaService } from './encargadoEmpresa/encargadoEmpresa.service';
+export { ConvenioService } from './convenio/convenio.service';
 

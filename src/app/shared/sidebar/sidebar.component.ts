@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
   menuAdmin: any[];
   menuTutor: any[];
   menuEstudiante: any[];
+  menuEncargadoEmpresa: any[];
 
   EstadoPreInsc: string;
   EstadoPropuesta: string;
@@ -56,10 +57,11 @@ export class SidebarComponent implements OnInit {
 
       this.noPasantia = JSON.parse(localStorage.getItem('estudiante')).modalidad
 
-    } else if (JSON.parse(localStorage.getItem('administrativo')).rol === "JEFE_PROGRAMA") {
+    } else if (localStorage.getItem('encargadoEmpresa')){
+      this.menuEncargadoEmpresa = this._sidebarService.menuEncargadoEmpresa;
+    }else if (JSON.parse(localStorage.getItem('administrativo')).rol === "JEFE_PROGRAMA") {
       this.menuAdmin = this._sidebarService.menuAdmin;
-
-    } else {
+    }else{
       this.menuTutor = this._sidebarService.menuTutor;
     }
   }

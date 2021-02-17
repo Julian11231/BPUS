@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService, ProgramaService } from 'src/app/services/service.index';
+import Swal from 'sweetalert2';
+import { EmpresaService } from 'src/app/services/service.index';
 import { Router } from '@angular/router';
 
 declare function init_plugins();
@@ -19,35 +21,30 @@ export class NavbarComponent implements OnInit {
   constructor(
     public _loginService: LoginService,
     public _programaService: ProgramaService,
+    public _empresaService: EmpresaService,
     public router: Router
   ) {}
 
   ngOnInit(): void {
     init_plugins();
-    this.getPrograma();
     this.setInfo();
-  }
-
-  // Obtenemos el programa y lo pasamos a la variable Programa
-  getPrograma() {
-    this._programaService.getPrograma().subscribe((resp) => {
-      let infoPrograma = resp['programa'];
-      console.log(infoPrograma);
-      this.programa = infoPrograma.nombre;
-    });
   }
 
   // "Ponemos" el restod e información a las variables globales
   setInfo() {
     let estudiante = localStorage.getItem('estudiante');
     let administrativo = localStorage.getItem('administrativo');
+    let encargadoEmpresa = localStorage.getItem('encargadoEmpresa');
 
     if (estudiante) {
       this.tipoUsuario = 'estudiante';
       this.info = JSON.parse(estudiante);
-    } else {
+    } else if (administrativo){
       this.tipoUsuario = 'administrativo';
       this.info = JSON.parse(administrativo);
+    }else{
+      this.tipoUsuario = 'encargadoEmpresa';
+      this.info = JSON.parse(encargadoEmpresa);
     }
   }
 

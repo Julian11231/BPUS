@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { EncargadoEmpresa } from '../../models/EncargadoEmpresa.model';
 import { URL_SERVICES } from 'src/app/config/config';
-import { Vacante } from 'src/app/models/Vacante';
 import { map, catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { throwError } from 'rxjs/internal/observable/throwError';
@@ -10,27 +10,54 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 @Injectable({
   providedIn: 'root'
 })
-export class VacantesService {
+export class EncargadoEmpresaService {
 
   constructor(public http: HttpClient, public router: Router) { }
 
-  getVacantes(encargado:string) {
+  getEncargado() {
+
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/${encargado}?token=${token}`;
+    let url = `${URL_SERVICES}/encargadoEmpresa?token=${token}`;
+
     return this.http.get(url);
   }
 
-  postVacantes(vacante: Vacante) {
+
+  postEncargadoEmpresa(encargadoEmpresa: EncargadoEmpresa) {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes?token=${token}`;
+    let url = `${URL_SERVICES}/encargadoEmpresa?token=${token}`;
 
-    return this.http.post(url, vacante).pipe(map((resp: any) => {
+    return this.http.post(url, encargadoEmpresa).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        return resp.encargadoEmpresaGuardada;
+      }
+      //return true;
+
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+
+    }));
+
+  }
+
+  putEmpresa(id: String, encargadoEmpresa: EncargadoEmpresa) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/empresas/${id}?token=${token}`;
+
+    return this.http.put(url, encargadoEmpresa).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
-          text: 'Vacante guardada correctamente',
+          text: 'Empresa actualizada correctamente',
           icon: 'success'
         }).then(() => {
           location.reload();
@@ -54,58 +81,23 @@ export class VacantesService {
   }
 
 
-  putVacante(id: String, vacante: Vacante) {
+
+  deleteEmpresa(id: string) {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/${id}?token=${token}`;
-
-    return this.http.put(url, vacante).pipe(map((resp: any) => {
-
-      if (resp.ok == true) {
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: 'Vacante actualizada correctamente',
-          icon: 'success'
-        }).then(() => {
-          location.reload();
-        });
-      }
-
-      return true;
-
-    }), catchError((err) => {
-
-      Swal.fire({
-        title: '¡Error!',
-        text: err.error.mensaje,
-        icon: 'error',
-      });
-
-      return throwError(err);
-
-    }));
-
-  }
-
-
-
-  eliminarVacante(id: string) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/empresas/${id}?token=${token}`;
 
     return this.http.delete(url).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
-          text: 'Vacante eliminada correctamente',
+          text: 'Empresa eliminada correctamente',
           icon: 'success'
         }).then(() => {
           location.reload();
         });
       }
-
       return true;
 
     }), catchError((err) => {
@@ -115,12 +107,7 @@ export class VacantesService {
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
-
     }));
-
   }
-
-
 }

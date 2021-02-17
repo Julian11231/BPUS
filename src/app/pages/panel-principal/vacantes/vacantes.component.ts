@@ -14,8 +14,8 @@ import { Vacante } from '../../../models/Vacante';
 export class VacantesComponent implements OnInit {
 
   vacantes: any[];
-  empresas: any[];
-
+  empresa: any;
+  encargado = JSON.parse(localStorage.getItem("encargadoEmpresa"));
   programa: string;
 
   _id: String;
@@ -29,7 +29,7 @@ export class VacantesComponent implements OnInit {
   pagada: String;
   estado: String;
 
-  constructor(public _vacantesService: VacantesService, public _empresaService: EmpresaService) { }
+  constructor(public _vacantesService: VacantesService) { }
 
   ngOnInit(): void {
     this.getVacantes();
@@ -40,21 +40,10 @@ export class VacantesComponent implements OnInit {
   }
 
   getVacantes() {
-
-    let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
-    let programa = administrativo.programa._id
-    this.programa = programa;
-
-    this._vacantesService.getVacantes().subscribe((resp: any) => {
+    this._vacantesService.getVacantes(this.encargado._id).subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
-    });
-
-    this._empresaService.getEmpresas().subscribe((resp: any) => {
-      this.empresas = resp.empresas;
-    });
+    });    
   }
-
-
 
   postVacante(form: NgForm) {
     Swal.fire({
@@ -70,15 +59,13 @@ export class VacantesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
-        let programa = administrativo.programa._id
-
         let vacante = new Vacante(
           form.value.titulo,
           form.value.funciones,
           form.value.descripcion,
-          form.value.empresa,
-          programa,
+          this.encargado.empresa._id,
+          this.encargado.programa._id,
+          this.encargado._id,
           form.value.ubicacion,
           form.value.modalidad,
           form.value.cantidad,
@@ -123,15 +110,13 @@ export class VacantesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
-        let programa = administrativo.programa._id
-
         let vacante = new Vacante(
           form.value.titulo,
           form.value.funciones,
           form.value.descripcion,
-          form.value.empresa,
-          programa,
+          this.encargado.empresa._id,
+          this.encargado.programa._id,
+          this.encargado._id,
           form.value.ubicacion,
           form.value.modalidad,
           form.value.cantidad,

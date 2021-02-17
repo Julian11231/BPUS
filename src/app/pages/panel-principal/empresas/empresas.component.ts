@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Empresa } from '../../../models/Empresa.model';
+import { EncargadoEmpresa } from '../../../models/EncargadoEmpresa.model';
+import { Convenio } from 'src/app/models/Convenio.model'
 import Swal from 'sweetalert2';
 import { EmpresaService } from 'src/app/services/service.index';
+import { EncargadoEmpresaService } from 'src/app/services/service.index';
+import { ConvenioService } from 'src/app/services/service.index';
 
 @Component({
   selector: 'app-empresas',
@@ -11,40 +15,43 @@ import { EmpresaService } from 'src/app/services/service.index';
 })
 export class EmpresasComponent implements OnInit {
 
-  empresas: any[];
+  convenios: any[];
   programa: string;
 
   _id: String;
+  nit: String;
   nombre: String;
   direccion: String;
   telefono: String;
   naturaleza: String;
   actividad_economica: String;
   nombre_persona: String;
+  cedula: String;
   cargo_persona: String;
   correo_persona: String;
   telefono_persona: String;
   estado: String;
 
-  constructor(public _empresaService: EmpresaService) { }
+  constructor(public _empresaService: EmpresaService, 
+              public _encargadoEmpresaService: EncargadoEmpresaService,
+              public _convenioService: ConvenioService) { }
 
   ngOnInit(): void {
-    this.getEmpresas();
+    this.getConvenios();
   }
 
-  getEmpresas() {
+  getConvenios() {
 
     let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
     let programa = administrativo.programa._id
     this.programa = programa
 
-    this._empresaService.getEmpresas().subscribe((resp: any) => {
-      this.empresas = resp.empresas
+    this._convenioService.getConvenio(programa).subscribe((resp: any) => {
+      this.convenios = resp.convenios;
+      console.log(resp);
 
     });
   }
-
-
 
   postEmpresa(form: NgForm) {
     Swal.fire({
@@ -62,24 +69,39 @@ export class EmpresasComponent implements OnInit {
 
         let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
         let programa = administrativo.programa._id
-
+        
         let empresa = new Empresa(
-          programa,
-          form.value.nombre,
-          form.value.direccion,
-          form.value.telEmpresa,
-          form.value.naturaleza,
-          form.value.actividadEc,
-          form.value.persona,
-          form.value.puesto,
-          form.value.correo,
-          form.value.telPersona
-        );
+            form.value.nit,
+            form.value.nombre,
+            form.value.direccion,
+            form.value.telEmpresa,
+            form.value.naturaleza,
+            form.value.actividadEc,
+          );
 
-        this._empresaService.postEmpresa(empresa).subscribe();
+        this._empresaService.postEmpresa(empresa).subscribe((resp:any) => {
+
+          console.log(resp);
+          let encargadoEmpresa = new EncargadoEmpresa(
+            form.value.cedula,
+            form.value.persona,
+            form.value.correo,
+            form.value.telPersona,
+            "123456",
+            programa,
+            resp._id,
+            form.value.puesto,
+            "EncargadoEmpresa",
+          )
+          this._encargadoEmpresaService.postEncargadoEmpresa(encargadoEmpresa).subscribe((respp:any) => {
+            let convenio = new Convenio(programa,  resp._id);
+            this._convenioService.postConvenio(convenio).subscribe((anws:any) => {
+              location.reload();
+            });
+          });
+        }); 
       }
-    })
-
+    });
   }
 
 
@@ -91,10 +113,10 @@ export class EmpresasComponent implements OnInit {
     this.telefono = dato.telefono;
     this.naturaleza = dato.naturaleza;
     this.actividad_economica = dato.actividad_economica;
-    this.nombre_persona = dato.nombre_persona;
-    this.cargo_persona = dato.cargo_persona;
-    this.correo_persona = dato.correo_persona;
-    this.telefono_persona = dato.telefono_persona;
+    this.nombre_persona = dato.persona_a_cargo.nombre;
+    this.cargo_persona = dato.persona_a_cargo.cargo;
+    this.correo_persona = dato.persona_a_cargo.correo;
+    this.telefono_persona = dato.persona_a_cargo.telefono;
     this.estado = dato.estado;
 
   }
@@ -117,17 +139,12 @@ export class EmpresasComponent implements OnInit {
         let programa = administrativo.programa._id
 
         let empresa = new Empresa(
-          programa,
+          form.value.nit,
           form.value.nombre,
           form.value.direccion,
           form.value.telEmpresa,
           form.value.naturaleza,
           form.value.actividadEc,
-          form.value.persona,
-          form.value.puesto,
-          form.value.correo,
-          form.value.telPersona,
-          form.value.estado
         );
 
         this._empresaService.putEmpresa(this._id, empresa).subscribe(resp => console.log(resp));

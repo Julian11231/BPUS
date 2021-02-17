@@ -6,6 +6,7 @@ export class Vacante {
         public descripcion: String,
         public empresa: String,
         public programa: String,
+        public encargado: String,
         public ubicacion: String,
         public modalidad: String,
         public cantidad: Number,

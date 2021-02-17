@@ -50,7 +50,7 @@ export class PasantiService {
           html: `Su solicitud fue exitosa, el radicado de su solicitud es: <b> ${resp.solicitudGuardada._id}</b>. <br> <center> Por favor vuelva a Iniciar Sesión </center>`,
           icon: 'success'
         }).then(() => {
-          this.router.navigate(['/login'])
+          this.router.navigate(['/panel-principal'])
         });
       }
 

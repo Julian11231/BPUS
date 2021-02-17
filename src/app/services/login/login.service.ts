@@ -52,9 +52,9 @@ export class LoginService {
     let url = URL_SERVICES + '/login';
 
     // Enviamos los datos. Es un observable, entonces tendrá una respuesta
-    return this.http.post(url, usuario)
-      .pipe(map((resp: any) => {
+    return this.http.post(url, usuario).pipe(map((resp: any) => {
 
+        console.log(resp);
         if (resp['estudiante']) {
 
           // Si el check está activado, se guarda el usuario en el localStorage
@@ -74,7 +74,7 @@ export class LoginService {
 
 
           // Es el mismo procedimiento anterior(Administrativo)
-        } else {
+        } else if(resp['administrativo']) {
 
           // Si el check está activado, se guarda el usuario en el localStorage
           if (recordar === true) {
@@ -91,6 +91,20 @@ export class LoginService {
           localStorage.setItem('id', resp.administrativo._id);
           localStorage.setItem('token', resp.token);
 
+        }else{
+          if (recordar === true) {
+            localStorage.setItem('usuario', resp.encargadoEmpresa.usuario);
+          } else {
+            localStorage.removeItem('usuario');
+          }
+
+          // Se guarde la info del administrativo, el id y el token al local sotrage
+          // NOTA: Como nos podemos dar cuenta, aquí no se asigna el token del admin a la variable
+          // token, esto debido a que el administrativo no va a pasar por la página de requisitos
+          // y necesita el token a penas se loguee en el local storae
+          localStorage.setItem('encargadoEmpresa', JSON.stringify(resp.encargadoEmpresa));
+          localStorage.setItem('id', resp.encargadoEmpresa._id);
+          localStorage.setItem('token', resp.token);
         }
 
         return true;
