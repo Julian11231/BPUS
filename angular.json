@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "BPUS": {
+    "bpus": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/BPUS",
+            "outputPath": "dist/bpus",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "BPUS:build"
+            "browserTarget": "bpus:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "BPUS:build:production"
+              "browserTarget": "bpus:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "BPUS:build"
+            "browserTarget": "bpus:build"
           }
         },
         "test": {
@@ -110,18 +110,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "BPUS:serve"
+            "devServerTarget": "bpus:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "BPUS:serve:production"
+              "devServerTarget": "bpus:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "BPUS",
+  "defaultProject": "bpus",
   "cli": {
     "analytics": false
   }
