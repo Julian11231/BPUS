@@ -45,7 +45,7 @@ export class SidebarService {
       titulo: 'Estudiate',
       icono: 'fa fa-book',
       submenu: [
-        { titulo: 'Requisitos', url: './requisitos' },
+        { titulo: 'Requisitos', url: '/requisitos' },
         { titulo: 'Modalidades', url: '/modalidades' },
         { titulo: 'Preinscripcion pasantia', url: '/preinscripcion-pasantia' },
         { titulo: 'Mi modalidad', url: '/mi-modalidad' },
