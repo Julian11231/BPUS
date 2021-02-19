@@ -193,7 +193,7 @@
 
                     <div class="row" *ngFor="let dato of vacantes">
 
-                        <ng-container *ngIf="(programa === dato.programa._id) && (dato.estado === 'Activa')">
+                        <ng-container *ngIf="(info.programa._id === dato.programa._id) && (dato.estado === 'Activa')">
 
                             <div class="col-lg-1">
                                 <div class="vacantesImg text-center">
