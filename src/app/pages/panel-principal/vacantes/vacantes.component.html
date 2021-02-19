@@ -60,9 +60,12 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Empresa:</label>
-                                                    <input ngModel name="empresa" type="text" id="firstName"
+                                                    <input *ngIf="encargado" ngModel name="empresa" type="text" id="firstName"
                                                     class="form-control" placeholder="{{encargado.empresa.nombre}}"
                                                     value="{{encargado.empresa.nombre}}" required disabled>
+                                                    <input *ngIf="admin" ngModel name="empresa" type="text" id="empresa"
+                                                    class="form-control" placeholder="Empresa"
+                                                    value="" required>
                                                 </div>
                                         </div>
                                         </div>
