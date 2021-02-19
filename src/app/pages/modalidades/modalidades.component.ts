@@ -43,8 +43,6 @@ export class ModalidadesComponent implements OnInit {
     }else if(administrativo.rol === "ADMIN"){
       this.info = administrativo;
     }
-    this.info = estudiante;
-
     this.getModalidades();
 
     // Enviamos los elemntos que queremos al servicio de la modalidad
