@@ -34,7 +34,8 @@ export class VacantesComponent implements OnInit {
   constructor(public router: Router, public _vacantesService: VacantesService) { }
 
   ngOnInit(): void {
-    if(this.admin && this.admin.rol === "ADMIN"){
+    if((this.admin) && (this.admin.rol == "ADMIN")){
+      console.log('aaaaaaaaa');
       this.getVacantes();
     }else if(this.encargado){
       this.getVacantesEncargado();
@@ -57,6 +58,7 @@ export class VacantesComponent implements OnInit {
   getVacantes() {
     this._vacantesService.getVacantes().subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
+      console.log(resp);
     });    
   }
 
