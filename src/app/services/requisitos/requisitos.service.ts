@@ -35,6 +35,12 @@ export class RequisitosService {
 
       // Tomamos del localStorage y lo separamos en variables
       this.estudiante = JSON.parse(localStorage.getItem('estudiante'));
+      let admin = JSON.parse(localStorage.getItem('administrativo'));
+      if(this.estudiante){
+        this.estudiante = this.estudiante;
+      }else if(admin && admin.rol == "ADMIN"){
+        this.estudiante = admin;
+      }
       this.creditosAprob = this.estudiante['creditos_aprobados'];
       this.modGrado = this.estudiante['modGrado'];
     
