@@ -21,7 +21,14 @@ export class ModalidadService {
   calcularPorcentaje() {
     this._programaService.getPrograma().subscribe((resp: any) => {
       let infoEstudiante = JSON.parse(localStorage.getItem('estudiante'));
-      let credAprob = infoEstudiante.creditos_aprobados;
+      let admin = JSON.parse(localStorage.getItem('administrativo'));
+      let credAprob:any;
+      if(infoEstudiante){
+        credAprob = infoEstudiante.creditos_aprobados;
+      }else if(admin.rol === "ADMIN"){
+        credAprob = admin.creditos_aprobados;
+      }
+      
 
       let programa = resp.programa;
       let creditosTotales = programa.creditos_totales;

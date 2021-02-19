@@ -38,10 +38,12 @@ export class InscripcionPasantiaComponent implements OnInit {
     const admin = JSON.parse(localStorage.getItem('administrativo'));
     if(estudiante){
       this.info = estudiante;
+      this.getVacantesEstudiante();
     }else{
       this.info = admin;
+      this.getVacantes();
     }
-    this.getVacantes();
+    
   }
 
   postSolicitud(form: NgForm) {
@@ -78,7 +80,13 @@ export class InscripcionPasantiaComponent implements OnInit {
   }
 
   getVacantes() {
-    this._vacantesService.getVacantes(this.info.programa).subscribe((resp: any) => {
+    this._vacantesService.getVacantes().subscribe((resp: any) => {
+      this.vacantes = resp.vacantes;
+    });
+  }
+
+  getVacantesEstudiante() {
+    this._vacantesService.getVacantesEstudiante(this.info.programa).subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
     });
   }

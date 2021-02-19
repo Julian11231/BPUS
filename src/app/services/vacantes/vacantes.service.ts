@@ -14,9 +14,21 @@ export class VacantesService {
 
   constructor(public http: HttpClient, public router: Router) { }
 
-  getVacantes(encargado:string) {
+  getVacantesEncargado(encargado:string) {
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/${encargado}?token=${token}`;
+    let url = `${URL_SERVICES}/vacantes/encargado${encargado}?token=${token}`;
+    return this.http.get(url);
+  }
+
+  getVacantes() {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/vacantes?token=${token}`;
+    return this.http.get(url);
+  }
+
+  getVacantesEstudiante(programa:string) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/vacantes/estudiante${programa}?token=${token}`;
     return this.http.get(url);
   }
 

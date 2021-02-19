@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { EmpresaService } from 'src/app/services/service.index';
 import { EncargadoEmpresaService } from 'src/app/services/service.index';
 import { ConvenioService } from 'src/app/services/service.index';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-empresas',
@@ -17,6 +18,7 @@ export class EmpresasComponent implements OnInit {
 
   convenios: any[];
   programa: string;
+  usuario = JSON.parse(localStorage.getItem("administrativo"));
 
   _id: String;
   nit: String;
@@ -32,24 +34,37 @@ export class EmpresasComponent implements OnInit {
   telefono_persona: String;
   estado: String;
 
-  constructor(public _empresaService: EmpresaService, 
+  constructor(public router: Router,
+              public _empresaService: EmpresaService, 
               public _encargadoEmpresaService: EncargadoEmpresaService,
               public _convenioService: ConvenioService) { }
 
   ngOnInit(): void {
-    this.getConvenios();
+    if(this.usuario.rol === "JEFE_PROGRAMA"){
+      this.getConveniosJefe();
+    }else if (this.usuario.rol === "ADMIN"){
+      this.getConvenios();
+    }else{
+      this.router.navigate(['/panel-principal']);
+    }
+  }
+
+  getConveniosJefe() {
+    let programa = this.usuario.programa._id
+    this.programa = programa
+
+    this._convenioService.getConveniosJefe(programa).subscribe((resp: any) => {
+      this.convenios = resp.convenios;
+    });
   }
 
   getConvenios() {
-
-    let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
-    let programa = administrativo.programa._id
+    
+    let programa = this.usuario.programa._id
     this.programa = programa
-
-    this._convenioService.getConvenio(programa).subscribe((resp: any) => {
+    
+    this._convenioService.getConvenios().subscribe((resp: any) => {
       this.convenios = resp.convenios;
-      console.log(resp);
-
     });
   }
 

@@ -14,11 +14,15 @@ export class ConvenioService {
 
   constructor(public http: HttpClient, public router: Router) { }
 
-  getConvenio(programa:String) {
-
+  getConveniosJefe(programa:String) {
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios/${programa}?token=${token}`;;
+    let url = `${URL_SERVICES}/convenios/jefePrograma${programa}?token=${token}`;;
+    return this.http.get(url);
+  }
 
+  getConvenios() {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/convenios?token=${token}`;;
     return this.http.get(url);
   }
 
@@ -47,10 +51,10 @@ export class ConvenioService {
 
   }
 
-  putEmpresa(id: String, convenio: Convenio) {
+  putConvenio(id: String, convenio: Convenio) {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/empresas/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/convenios/${id}?token=${token}`;
 
     return this.http.put(url, convenio).pipe(map((resp: any) => {
 
@@ -82,17 +86,17 @@ export class ConvenioService {
 
 
 
-  deleteEmpresa(id: string) {
+  deleteConvenio(id: string) {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/empresas/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/convenios/${id}?token=${token}`;
 
     return this.http.delete(url).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
-          text: 'Empresa eliminada correctamente',
+          text: 'Convenio eliminada correctamente',
           icon: 'success'
         }).then(() => {
           location.reload();

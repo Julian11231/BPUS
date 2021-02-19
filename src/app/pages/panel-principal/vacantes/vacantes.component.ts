@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { VacantesService, EmpresaService } from 'src/app/services/service.index';
 import { Vacante } from '../../../models/Vacante';
+import { Router } from '@angular/router';
 
 
 
@@ -16,6 +17,7 @@ export class VacantesComponent implements OnInit {
   vacantes: any[];
   empresa: any;
   encargado = JSON.parse(localStorage.getItem("encargadoEmpresa"));
+  admin = JSON.parse(localStorage.getItem("administrativo"));
   programa: string;
 
   _id: String;
@@ -29,18 +31,31 @@ export class VacantesComponent implements OnInit {
   pagada: String;
   estado: String;
 
-  constructor(public _vacantesService: VacantesService) { }
+  constructor(public router: Router, public _vacantesService: VacantesService) { }
 
   ngOnInit(): void {
-    this.getVacantes();
+    if(this.admin && this.admin.rol === "ADMIN"){
+      this.getVacantes();
+    }else if(this.encargado){
+      this.getVacantesEncargado();
+    }else{
+      this.router.navigate(['/panel-principal']);
+    }
+    
   }
 
   getDataBuscar(data) {
 
   }
 
+  getVacantesEncargado() {
+    this._vacantesService.getVacantesEncargado(this.encargado._id).subscribe((resp: any) => {
+      this.vacantes = resp.vacantes;
+    });    
+  }
+
   getVacantes() {
-    this._vacantesService.getVacantes(this.encargado._id).subscribe((resp: any) => {
+    this._vacantesService.getVacantes().subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
     });    
   }
