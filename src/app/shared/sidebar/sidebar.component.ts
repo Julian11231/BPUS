@@ -10,10 +10,11 @@ import { SidebarService, PasantiService } from 'src/app/services/service.index';
 })
 export class SidebarComponent implements OnInit {
 
-  menuAdmin: any[];
+  menuJefePrograma: any[];
   menuTutor: any[];
   menuEstudiante: any[];
   menuEncargadoEmpresa: any[];
+  menuAdmin: any[];
 
   EstadoPreInsc: string;
   EstadoPropuesta: string;
@@ -60,7 +61,18 @@ export class SidebarComponent implements OnInit {
     } else if (localStorage.getItem('encargadoEmpresa')){
       this.menuEncargadoEmpresa = this._sidebarService.menuEncargadoEmpresa;
     }else if (JSON.parse(localStorage.getItem('administrativo')).rol === "JEFE_PROGRAMA") {
-      this.menuAdmin = this._sidebarService.menuAdmin;
+      this.menuJefePrograma = this._sidebarService.menuJefePrograma;
+    }else if (JSON.parse(localStorage.getItem('administrativo')).rol === "ADMIN") {
+      let idPasantia = JSON.parse(localStorage.getItem('administrativo'))?.modalidad._id;
+      this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
+        console.log(resp)
+        this.EstadoPreInsc = resp.pasantia?.estado;
+        this.EstadoPropuesta = resp.pasantia?.estado_propuesta;
+        this.EstadoInforme7 = resp.pasantia?.estado_informe7;
+        this.EstadoInforme14 = resp.pasantia?.estado_informe14;
+        this.EstadoInformeFinal = resp.pasantia?.estado_informeFinal;
+      });
+        this.menuAdmin = this._sidebarService.menuAdmin;
     }else{
       this.menuTutor = this._sidebarService.menuTutor;
     }

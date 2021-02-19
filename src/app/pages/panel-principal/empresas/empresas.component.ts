@@ -135,9 +135,6 @@ export class EmpresasComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
-        let programa = administrativo.programa._id
-
         let empresa = new Empresa(
           form.value.nit,
           form.value.nombre,

@@ -1,13 +1,37 @@
 <!-- ============================================================== -->
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar" *ngIf="menuAdmin">
+<aside class="left-sidebar" *ngIf="menuJefePrograma">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-small-cap"><b>Modalidades de Grado</b> </li>
+                <li *ngFor="let menu of menuJefePrograma"> <a class="has-arrow waves-effect waves-dark" href="#"
+                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
+                            class="hide-menu">{{menu.titulo}}
+                            <span id="number"
+                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
+                                routerLinkActive="active">{{submenu.titulo}} </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+
+<aside class="left-sidebar" *ngIf="menuAdmin">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="nav-small-cap"><b>Perfiles</b> </li>
                 <li *ngFor="let menu of menuAdmin"> <a class="has-arrow waves-effect waves-dark" href="#"
                         aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
                             class="hide-menu">{{menu.titulo}}
@@ -70,8 +94,6 @@
     <!-- End Sidebar scroll-->
 </aside>
 
-
-
 <!--<aside class="left-sidebar" *ngIf="menuEstudiante">
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
@@ -90,7 +112,6 @@
         </nav>
     </div>
 </aside>-->
-
 
 <aside class="left-sidebar" *ngIf="menuEstudiante">
     <!-- Sidebar scroll-->
@@ -211,12 +232,6 @@
         </nav>
     </div>
 </aside>
-
-
-
-
-
-
 
 <!-- ============================================================== -->
 <!-- End Left Sidebar - style you can find in sidebar.scss  -->

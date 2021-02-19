@@ -48,8 +48,13 @@ export class ModSolicitudVacanteComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
-
-    this.info = JSON.parse(localStorage.getItem("estudiante"));
+    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    const admin = JSON.parse(localStorage.getItem('administrativo'));
+    if(estudiante){
+      this.info = estudiante;
+    }else{
+      this.info = admin;
+    }
     this.getSolicitudes();
 
   }
@@ -82,8 +87,7 @@ export class ModSolicitudVacanteComponent implements OnInit {
 
   getSolicitudes() {
 
-    let administrativo = JSON.parse(localStorage.getItem("administrativo"));
-    this.programa = administrativo.programa._id;
+    this.programa = this.info.programa._id;
 
     this._pasantiaService.getSolicitudes().subscribe((resp: any) => {
       this.solicitudes = resp.pasantias;

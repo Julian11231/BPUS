@@ -48,15 +48,20 @@ export class MiSolicitudComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
-    this.info = JSON.parse(localStorage.getItem("estudiante"));
+    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    const admin = JSON.parse(localStorage.getItem('administrativo'));
+    if(estudiante){
+      this.info = estudiante;
+    }else{
+      this.info = admin;
+    }
     this.getPasantia();
   }
 
 
   getPasantia() {
-
-    let estudiante = JSON.parse(localStorage.getItem("estudiante"));
-    this._id = estudiante.modalidad._id;
+    
+    this._id = this.info.modalidad._id;
 
     this._pasantiaService.getPasantia(this._id).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;

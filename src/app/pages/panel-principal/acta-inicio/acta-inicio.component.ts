@@ -15,7 +15,7 @@ export class ActaInicioComponent implements OnInit {
   pasantia: string;
   nombreArchivoP: string;
   nombreArchivoC: string;
-
+  usuario:any;
   documento_propuesta = new FormData();
 
   MAX_SIZE_FILE: number = 25000000
@@ -25,8 +25,15 @@ export class ActaInicioComponent implements OnInit {
   ngOnInit(): void {
 
     init_plugins()
-    this.pasantia = JSON.parse(localStorage.getItem('estudiante')).modalidad
-
+    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    const admin = JSON.parse(localStorage.getItem('administrativo'));
+    if(estudiante){
+      this.usuario = estudiante;
+      this.pasantia = estudiante.modalidad;
+    }else{
+      this.usuario = admin;
+      this.pasantia = admin.modalidad
+    }
   }
 
   getFilePropuesta(file: File) {
@@ -72,7 +79,7 @@ export class ActaInicioComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let idEstudiante = JSON.parse(localStorage.getItem('estudiante'))._id;
+        let idEstudiante = this.usuario._id;
         this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe();
 
       }

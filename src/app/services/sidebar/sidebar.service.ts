@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SidebarService {
 
-  menuAdmin: any = [
+  menuJefePrograma: any = [
     {
       titulo: 'Proyecto de Grado',
       icono: 'fa fa-book',
@@ -38,6 +38,40 @@ export class SidebarService {
         { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' },
       ]
     }
+  ];
+
+  menuAdmin: any = [
+    {
+      titulo: 'Estudiate',
+      icono: 'fa fa-book',
+      submenu: [
+        { titulo: 'Requisitos', url: './requisitos' },
+        { titulo: 'Modalidades', url: '/modalidades' },
+        { titulo: 'Preinscripcion pasantia', url: '/preinscripcion-pasantia' },
+        { titulo: 'Mi modalidad', url: '/mi-modalidad' },
+        { titulo: 'Informe siete', url: '/informe-siete' },
+        { titulo: 'Informe catorce', url: '/informe-catorce' },
+        { titulo: 'Informe final', url: '/informe-final' }
+      ]
+    },
+    {
+      titulo: 'Jefe Programa',
+      icono: 'mdi mdi-school',
+      submenu: [
+        { titulo: 'Gestión de Empresas', url: '/empresas' },
+        { titulo: 'Solicitudes Por Vacantes', url: '/solicitudes' },
+        { titulo: 'Propuestas de Pasantía', url: '/propuestas' },
+        { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' }
+      ]
+    },
+    {
+      titulo: 'Encargado',
+      icono: 'fa fa-briefcase',
+      submenu: [
+        { titulo: 'Gestión de vacantes', url: '/vacantes' },
+
+      ]
+    },
   ];
 
   menuEncargadoEmpresa: any = [
@@ -84,7 +118,6 @@ export class SidebarService {
       ]
     }
   ];
-
 
   menuEstudiante: any[] = [
     {

@@ -37,6 +37,12 @@ export class ModalidadesComponent implements OnInit {
 
     // Obtenemos la información del estudiante y se la pasamos a la variable info
     let estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    let administrativo = JSON.parse(localStorage.getItem('administrativo'));
+    if(estudiante){
+      this.info = estudiante;
+    }else if(administrativo.rol === "ADMIN"){
+      this.info = administrativo;
+    }
     this.info = estudiante;
 
     this.getModalidades();

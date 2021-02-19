@@ -10,9 +10,7 @@ import Swal from 'sweetalert2';
 export class InformeCatorceComponent implements OnInit {
 
   nombreArchivoInforme: string;
-
   documento_informe14 = new FormData();
-
   MAX_SIZE_FILE: number = 25000000;
 
   constructor(public _pasantiaService: PasantiService) { }

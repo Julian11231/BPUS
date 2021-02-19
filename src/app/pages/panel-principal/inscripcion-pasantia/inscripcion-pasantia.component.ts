@@ -14,7 +14,6 @@ export class InscripcionPasantiaComponent implements OnInit {
 
   info: any;
   vacantes: any[];
-  programa: string;
 
   letra: string;
   titulo: string;
@@ -35,15 +34,19 @@ export class InscripcionPasantiaComponent implements OnInit {
   constructor(public _vacantesService: VacantesService, public _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
-
-    this.info = JSON.parse(localStorage.getItem("estudiante"));
+    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    const admin = JSON.parse(localStorage.getItem('administrativo'));
+    if(estudiante){
+      this.info = estudiante;
+    }else{
+      this.info = admin;
+    }
     this.getVacantes();
-
   }
 
   postSolicitud(form: NgForm) {
 
-    let idEstudiante = localStorage.getItem("id")
+    let idEstudiante = this.info._id;
 
     Swal.fire({
       title: '¿Hacer Pre-Incripición?',
@@ -75,10 +78,7 @@ export class InscripcionPasantiaComponent implements OnInit {
   }
 
   getVacantes() {
-    let estudiante = JSON.parse(localStorage.getItem("estudiante"));
-    this.programa = estudiante.programa._id;
-
-    this._vacantesService.getVacantes(this.programa).subscribe((resp: any) => {
+    this._vacantesService.getVacantes(this.info.programa).subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
     });
   }

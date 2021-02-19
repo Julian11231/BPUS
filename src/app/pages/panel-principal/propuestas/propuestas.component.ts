@@ -54,8 +54,13 @@ export class PropuestasComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService, public _tutoresService: TutoresService) { }
 
   ngOnInit(): void {
-
-    this.info = JSON.parse(localStorage.getItem("estudiante"));
+    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    const admin = JSON.parse(localStorage.getItem('administrativo'));
+    if(estudiante){
+      this.info = estudiante;
+    }else{
+      this.info = admin;
+    }
     this.getPropuestas();
     this.getTutores();
 
@@ -87,8 +92,7 @@ export class PropuestasComponent implements OnInit {
 
   getPropuestas() {
 
-    let administrativo = JSON.parse(localStorage.getItem("administrativo"));
-    this.programa = administrativo.programa._id;
+    this.programa = this.info.administrativo.programa._id;
 
     this._pasantiaService.getSolicitudes().subscribe((resp: any) => {
       this.propuestas = resp.pasantias;
@@ -137,8 +141,7 @@ export class PropuestasComponent implements OnInit {
   }
 
   getTutores() {
-    let data = JSON.parse(localStorage.getItem('administrativo'));
-    let idPrograma = data.programa._id;
+    let idPrograma = this.info.programa._id;
     this._tutoresService.getTutores(idPrograma).subscribe((resp: any) => {
       this.tutores = resp.admins;
     });
