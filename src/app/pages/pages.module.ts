@@ -30,6 +30,7 @@ import { PropuestasComponent } from './panel-principal/propuestas/propuestas.com
 import { InformeCatorceComponent } from './panel-principal/informe-catorce/informe-catorce.component';
 import { InformeFinalComponent } from './panel-principal/informe-final/informe-final.component';
 import { InformeSieteComponent } from './panel-principal/informe-siete/informe-siete.component';
+import { NotificacionesComponent} from './notificaciones/notificaciones.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { InformeSieteComponent } from './panel-principal/informe-siete/informe-s
     PropuestasComponent,
     InformeSieteComponent,
     InformeCatorceComponent,
-    InformeFinalComponent
+    InformeFinalComponent,
+    NotificacionesComponent
 
   ],
   exports: [
@@ -71,7 +73,8 @@ import { InformeSieteComponent } from './panel-principal/informe-siete/informe-s
     PropuestasComponent,
     InformeSieteComponent,
     InformeCatorceComponent,
-    InformeFinalComponent
+    InformeFinalComponent,
+    NotificacionesComponent
 
   ],
   imports: [

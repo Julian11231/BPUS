@@ -19,6 +19,7 @@ import { PropuestasComponent } from './panel-principal/propuestas/propuestas.com
 import { InformeSieteComponent } from './panel-principal/informe-siete/informe-siete.component';
 import { InformeCatorceComponent } from './panel-principal/informe-catorce/informe-catorce.component';
 import { InformeFinalComponent } from './panel-principal/informe-final/informe-final.component';
+import { NotificacionesComponent} from './notificaciones/notificaciones.component';
 
 
 
@@ -28,7 +29,7 @@ const pagesRoutes: Routes = [
     { path: 'solicitud-pasantia-supervisada', component: PasantiaComponent, data: { titulo: 'Solicitud Pasantía' }, canActivate: [LoginGuardGuard] },
     { path: 'solicitud-proyecto-de-grado', component: ProyectoComponent, data: { titulo: 'Solicitud Proyecto' }, canActivate: [LoginGuardGuard] },
     { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard] },
-
+    { path: 'notificaciones', component: NotificacionesComponent, data: { titulo: 'Notificaciones' }, canActivate: [LoginGuardGuard] },
     {
         path: '',
         component: PagesComponent,

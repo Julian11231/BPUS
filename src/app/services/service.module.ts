@@ -16,7 +16,8 @@ import {
   PasantiService,
   TutoresService,
   EncargadoEmpresaService,
-  ConvenioService
+  ConvenioService,
+  NotificacionesService
 } from './service.index'
 
 
@@ -38,7 +39,8 @@ import {
     PasantiService,
     TutoresService,
     EncargadoEmpresaService,
-    ConvenioService
+    ConvenioService,
+    NotificacionesService
   ]
 })
 export class ServiceModule { }

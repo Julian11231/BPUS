@@ -11,4 +11,5 @@ export { SidebarService } from './sidebar/sidebar.service';
 export { SharedService } from './shared/shared.service';
 export { EncargadoEmpresaService } from './encargadoEmpresa/encargadoEmpresa.service';
 export { ConvenioService } from './convenio/convenio.service';
+export { NotificacionesService } from './notificacion/notificacion.service';
 
