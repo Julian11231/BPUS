@@ -86,7 +86,7 @@ export class InscripcionPasantiaComponent implements OnInit {
   }
 
   getVacantesEstudiante() {
-    this._vacantesService.getVacantesEstudiante(this.info.programa).subscribe((resp: any) => {
+    this._vacantesService.getVacantesEstudiante(this.info.programa._id).subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
     });
   }
@@ -102,9 +102,9 @@ export class InscripcionPasantiaComponent implements OnInit {
     this.descripcion = data.descripcion;
     this.cantidad = data.cantidad;
     this.pagada = data.pagada;
-    this.personaCargo = data.empresa.nombre_persona;
-    this.correo = data.empresa.correo_persona;
-    this.telefono = data.empresa.telefono_persona;
+    this.personaCargo = data.encargado.nombre;
+    this.correo = data.encargado.correo;
+    this.telefono = data.encargado.telefono;
   }
 
   getVacanteSelected(dato: any) {
