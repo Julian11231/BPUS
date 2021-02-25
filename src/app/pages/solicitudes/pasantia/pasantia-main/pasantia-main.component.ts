@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-pasantia',
-  templateUrl: './pasantia.component.html',
-  styleUrls: ['./pasantia.component.css']
+  templateUrl: './pasantia-main.component.html',
+  styleUrls: ['./pasantia-main.component.css']
 })
 export class PasantiaComponent implements OnInit {
 

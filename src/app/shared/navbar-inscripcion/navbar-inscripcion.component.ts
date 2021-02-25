@@ -41,8 +41,19 @@ export class NavbarInscripcionComponent implements OnInit {
   // "Ponemos" el restod e información a las variables globales
   setInfo() {
     let estudiante = localStorage.getItem('estudiante');
-    this.tipoUsuario = 'estudiante';
-    this.info = JSON.parse(estudiante);
+    let administrativo = localStorage.getItem('administrativo');
+    let encargadoEmpresa = localStorage.getItem('encargadoEmpresa');
+
+    if (estudiante) {
+      this.tipoUsuario = 'estudiante';
+      this.info = JSON.parse(estudiante);
+    } else if (administrativo){
+      this.tipoUsuario = 'administrativo';
+      this.info = JSON.parse(administrativo);
+    }else{
+      this.tipoUsuario = 'encargadoEmpresa';
+      this.info = JSON.parse(encargadoEmpresa);
+    }
   }
 
   // Función que direcciona cuando se da click en "perfil"

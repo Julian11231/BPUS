@@ -20,6 +20,11 @@
     color: #8F141B;
 }
 
+button.btnInfo:hover{
+    background-color: #8F141B;
+    color: #DFD4A6;
+}
+
 .btnSuccess{
     background-color: #8F141B;
     border-color: #8F141B;
@@ -45,3 +50,12 @@
     text-align: center;
   }
   
+  .activeTab {
+    color: #8f141b;
+    border-bottom: 5px solid #8f141b;
+    border-radius: 5px;
+}
+
+a.activeTab:hover {
+    color: #CAB691;
+}

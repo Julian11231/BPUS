@@ -3,6 +3,7 @@ import { PasantiService } from 'src/app/services/service.index';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Pasantia } from '../../../models/Pasantia';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mi-solicitud',
@@ -45,7 +46,7 @@ export class MiSolicitudComponent implements OnInit {
   preInscripcion: any;
   nombreEmpresa: string;
 
-  constructor(public _pasantiaService: PasantiService) { }
+  constructor(public _pasantiaService: PasantiService, public router: Router) { }
 
   ngOnInit(): void {
     const estudiante = JSON.parse(localStorage.getItem('estudiante'));
@@ -55,7 +56,11 @@ export class MiSolicitudComponent implements OnInit {
     }else{
       this.info = admin;
     }
-    this.getPasantia();
+    if(this.info.modalidad !== null){
+      this.getPasantia();
+    }else{
+      this.router.navigate(['/modalidades'])
+    }
   }
 
 

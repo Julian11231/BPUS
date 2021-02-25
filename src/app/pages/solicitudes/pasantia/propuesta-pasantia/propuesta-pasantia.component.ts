@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { Pasantia } from '../../../models/Pasantia';
+import { Pasantia } from 'src/app/models/Pasantia';
 import { PasantiService } from 'src/app/services/service.index';
 
 declare function init_plugins()
 
 @Component({
   selector: 'app-acta-inicio',
-  templateUrl: './acta-inicio.component.html',
-  styleUrls: ['./acta-inicio.component.css']
+  templateUrl: './propuesta-pasantia.component.html',
+  styleUrls: ['./propuesta-pasantia.component.css']
 })
 export class ActaInicioComponent implements OnInit {
 

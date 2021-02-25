@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { VacantesService, PasantiService } from 'src/app/services/service.index';
-import { Pasantia } from '../../../models/Pasantia';
+import { VacantesService, PasantiService, NotificacionesService,ProgramaService } from 'src/app/services/service.index';
+import { Pasantia } from 'src/app/models/Pasantia';
+import { Notificacion } from 'src/app/models/notificacion.model';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 
@@ -15,6 +17,7 @@ export class InscripcionPasantiaComponent implements OnInit {
   info: any;
   vacantes: any[];
 
+  jefeProgramaID:string;
   letra: string;
   titulo: string;
   empresa: string;
@@ -31,11 +34,18 @@ export class InscripcionPasantiaComponent implements OnInit {
   preInscripcion: any;
   nombreEmpresa: string;
 
-  constructor(public _vacantesService: VacantesService, public _pasantiaService: PasantiService) { }
+  constructor(public _vacantesService: VacantesService, 
+              public _pasantiaService: PasantiService,
+              public _notificacionService: NotificacionesService,
+              public _programaService: ProgramaService,
+              public router: Router) { }
 
   ngOnInit(): void {
     const estudiante = JSON.parse(localStorage.getItem('estudiante'));
     const admin = JSON.parse(localStorage.getItem('administrativo'));
+    this._programaService.getPrograma().subscribe((resp:any) => {
+      this.jefeProgramaID = resp.programa.jefe._id;
+    } )
     if(estudiante){
       this.info = estudiante;
       this.getVacantesEstudiante();
@@ -71,7 +81,27 @@ export class InscripcionPasantiaComponent implements OnInit {
             this.preInscripcion,
             form.value.eps
           )
-          this._pasantiaService.postSolicitud(idEstudiante, preInscripcion).subscribe();
+          this._pasantiaService.postSolicitud(idEstudiante, preInscripcion).subscribe((resp:any) => {
+            let currentDate = new Date();
+            let notificacion = new Notificacion(
+              this.jefeProgramaID,
+              currentDate,
+              'Nueva solicitd de pasantia',
+              `${this.info.nombres} te ha enviado una solicitude de pasantia para la empresa ${this.nombreEmpresa}`,
+              'Administrativo' 
+            );
+            this._notificacionService.postNotificacion(notificacion).subscribe((resp:any)=> {
+              if(resp){
+                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((resp:any)=>{
+                  if(resp){
+                      this.router.navigate(['/mi-modalidad']);
+                  }else{
+                    console.log("Error garrafal");
+                  }
+                })
+              }
+            });
+          });
 
         }, 100);
 
@@ -83,6 +113,21 @@ export class InscripcionPasantiaComponent implements OnInit {
     this._vacantesService.getVacantes().subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
     });
+  }
+
+  testCorreo(){
+
+    let currentDate = new Date();
+    let notificacion = new Notificacion(
+      this.jefeProgramaID,
+      currentDate,
+      'Nueva solicitd de pasantia',
+      `${this.info.nombres} te ha enviado una solicitude de pasantia para la empresa ${this.nombreEmpresa}`,
+      'Administrativo' 
+    );
+    this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((resp:any)=>{
+      console.log('me cago en dios');
+    })
   }
 
   getVacantesEstudiante() {

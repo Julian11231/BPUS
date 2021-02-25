@@ -1,45 +1,41 @@
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
-<section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/USCO-Huila.jpg );">
-    <div class="login-box card">
-        <div class="card-body">
-            <form ngNativeValidate #f="ngForm" (ngSubmit)="ingresar(f)" class="form-horizontal floating-labels" id="loginform">
+<section id="wrapper" class="login-register pt-5">
+    <div class="login-box card" style="padding: 0%;">
+        <div class="card-body" style="padding: 0%;">
+            <form ngNativeValidate #f="ngForm" (ngSubmit)="ingresar(f)" class="floating-labels" id="loginform">
                 <a href="https://www.usco.edu.co/es/" class="text-center db"><img src="../assets/images/logos/logo-vertical-usco.png" alt="Home" /></a>
                 <br>
-                <div class="textTitle">
+                <div class="textTitle px-5 py-3">
                     <p id="textoLog">INSCRIPCIÓN DE MODALIDAD DE GRADO</p>
-                    <p id="textoLog">FACULTAD DE INGENIERÍA</p>
                 </div>
-                <div class="form-group m-t-40">
-                    <div class="col-xs-12">
-                        <input [(ngModel)]="usuario" name="usuario" id="inputUsuario" class="form-control floating-labels" type="text" required>
-                        <span class="bar"></span>
-                        <label for="inputUsuario">Usuario</label>
-                    </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" required>
-                        <span class="bar"></span>
-                        <label for="inputContra">Contraseña</label>
-                    </div>
-                </div>
-                <br>
-
-                <div class="form-group row">
-                    <div class="col-md-12">
-                        <div class="checkbox checkbox-primary pull-left p-t-0">
-                            <input [(ngModel)]="recordar" name="recordar" id="checkbox-signup" type="checkbox" class="filled-in chk-col-red">
-                            <label for="checkbox-signup"> Recordarme </label>
+                <div class="mt-5 px-3">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input [(ngModel)]="usuario" name="usuario" id="inputUsuario" class="form-control floating-labels" type="text" required>
+                            <span class="bar"></span>
+                            <label for="inputUsuario">Usuario</label>
                         </div>
-                        <a href="https://www.usco.edu.co/cambio_clave/ " id="to-recover " class="text-dark pull-right "><i class="fa fa-lock m-r-5 "></i> Olvidé Mi Contraseña</a> </div>
-                </div>
-
-                <div class="form-group text-center m-t-20 ">
-                    <div class="col-xs-12 ">
-                        <button id="btnLogin" class="btn btn-md btn-block text-uppercase " type="submit "><b>INGRESAR</b>&nbsp; &nbsp;<i class="fa fa-arrow-right "></i></button>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" required>
+                            <span class="bar"></span>
+                            <label for="inputContra">Contraseña</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="checkbox checkbox-primary pull-left p-t-0">
+                                <input [(ngModel)]="recordar" name="recordar" id="checkbox-signup" type="checkbox" class="filled-in chk-col-red">
+                                <label for="checkbox-signup"> Recordarme </label>
+                            </div>
+                            <a href="https://www.usco.edu.co/cambio_clave/ " id="to-recover " class="text-dark pull-right "><i class="fa fa-lock m-r-5 "></i> Olvidé Mi Contraseña</a> 
+                        </div>
+                    </div>
+                    <div class="form-group text-center mt-5 px-5">
+                        <button class="btn btn-md btn-block btnLogin text-uppercase" type="submit "><b>INGRESAR</b></button>
                     </div>
                 </div>
             </form>

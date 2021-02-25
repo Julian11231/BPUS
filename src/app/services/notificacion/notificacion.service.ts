@@ -14,9 +14,15 @@ export class NotificacionesService {
 
   constructor(public http: HttpClient, public router: Router) { }
 
-  getNotificaciones(usuario: String) {
+  getNotificaciones(usuarioId: String) {
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones${usuario}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/${usuarioId}?token=${token}`;
+    return this.http.get(url);
+  }
+
+  getNotificacionesNav(usuarioId: String) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/notificacionesNav/${usuarioId}?token=${token}`;
     return this.http.get(url);
   }
 
@@ -27,18 +33,36 @@ export class NotificacionesService {
 
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
 
-      if (resp.ok == true) {
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: 'notificación guardada correctamente',
-          icon: 'success'
-        }).then(() => {
-          location.reload();
-        });
+      if (resp.ok == true) {  
+        console.log('Notificacion enviada');
       }
-
       return true;
+      
+    }), catchError((err) => {
 
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+
+    }));
+  }
+
+  sendNotificacionCorreo(notificacion: Notificacion) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/correo?token=${token}`;
+
+    return this.http.post(url, notificacion).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {  
+        console.log('Notificacion Correo enviada');
+      }
+      return true;
+      
     }), catchError((err) => {
 
       Swal.fire({

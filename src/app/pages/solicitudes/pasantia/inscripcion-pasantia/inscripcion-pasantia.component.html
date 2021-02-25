@@ -1,0 +1,136 @@
+<div id="main-wrapper">
+
+    <!-- Selector del header -->
+    <app-navbar-inscripcion></app-navbar-inscripcion>
+
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid p-5">
+
+        <button routerLink='/solicitud-pasantia-supervisada' class="btn btn-sm btnInfo mt-5 px-3" type="submit">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <button  (click)="testCorreo()" class="btn btn-danger mt-5 ml-5" type="submit">ENVIAR CORREO</button>
+        <hr>
+        <div class="modal fade modal-info" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row" style="margin-top: 15px; margin-left: 10px;">
+                            <div class="col-lg-1">
+                                <div class="vacantesImg text-center">
+                                    <p class="text-center">{{ letra }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="vacantesInfo">
+                                    <h5 class="text-uppercase"> <b>{{ titulo }}</b></h5>
+                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                        {{empresa}}
+                                    </small><br>
+                                    <small><i class="fa fa-globe"></i>&nbsp;
+                                        &nbsp;{{ubicacion}}, {{modalidad}}
+                                    </small> <br>
+                                    <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
+                                    </small>
+                                </div>
+                            </div>
+                        </div> <br>
+                        <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                            <h5 class="text-uppercase"> <b>descripción:</b> </h5>
+                        </div>
+                        <div class="row" style="margin-left: 25px; width: 93%;">
+                            <p class="text-justify"> {{descripcion}}</p>
+                        </div>
+                        <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                            <h5 class="text-uppercase"> <b>Persona a Cargo:</b> </h5>
+                        </div>
+                        <div class="row" style="margin-left: 25px;">
+                            <p class="text-justify"> {{personaCargo}}</p>
+                        </div>
+                        <div class="row" style="margin-top: -13px; margin-left: 25px;">
+                            <i class="mdi mdi-email"></i> &nbsp; &nbsp;<small class="text-justify">
+                                {{correo}}</small>
+                        </div>
+                        <div class="row" style="margin-left: 25px;">
+                            <i class="fa  fa-phone"></i> &nbsp; &nbsp; &nbsp;<small class="text-justify">
+                                {{telefono}}</small>
+                        </div>
+                        <div class="row" style=" margin-top: 15px; margin-left: 25px;">
+                            <h5 class="text-uppercase"> <b>Cantidad de Vacantes:</b> </h5> &nbsp; &nbsp;
+                            <p class="text-justify" style="margin-top: -3px;"> {{cantidad}}</p>
+                        </div>
+                        <div class="row" style=" margin-left: 25px;">
+                            <h5 class="text-uppercase"> <b>¿Es Pagada?:</b> </h5> &nbsp; &nbsp;
+                            <p class="text-justify" style="margin-top: -3px;"> {{pagada}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btnSuccess waves-effect text-left"
+                                data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form ngNativeValidate #f="ngForm" (ngSubmit)="postSolicitud(f)" id="loginform">
+            <div class="row">
+                <div class="col-sm-6 col-md-8 col-lg-8">
+                    <h3 class="card-title text-uppercase"><b>2. Vacantes Disponibles </b></h3>
+                    <div class="row" *ngFor="let dato of vacantes">
+                        <ng-container *ngIf="(info.programa._id === dato.programa._id) && (dato.estado === 'Activa')">
+                            <div class="col-sm-8 col-md-7 col-lg-7">
+                                <div class="vacantes">
+                                    <h5 class="text-uppercase"> <b>{{ dato.titulo }}</b></h5>
+                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                        {{dato.empresa.nombre}}
+                                    </small><br>
+                                    <small><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.ubicacion}},
+                                        {{dato.modalidad}}
+                                    </small> <br>
+                                    <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{dato.funciones}}
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-5 col-lg-5">
+                                <div class="buttons">
+                                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal"
+                                        data-target=".modal-info" class="btn btn-outline-info mr-2"><b>
+                                            <i class="fa fa-info-circle"></i></b>
+                                    </button>
+        
+                                    <button type="submit" (click)="getVacanteSelected(dato)"
+                                        class="btn btnSuccess btn-outline-success"><b>
+                                        Pre-Incribirme
+                                        <i class="fa fa-check"></i></b>
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-4">
+                    <div class="shadow-lg card border" style="border-color: #DFD4A6;">
+                        <div class="font-weight-bold card-header text-center" style="background-color: #8F141B; color: #DFD4A6;">Datos estudiante</div>
+                        <div class="card-body">
+                            <p class="font-weight-bold text-dark">Nombre:</p>
+                            <p>{{info.nombres}} {{info.apellidos}}</p>
+                            <p><span class="font-weight-bold text-dark mr-2">Código: </span>{{info.codigo}} <span class="ml-3 font-weight-bold text-dark">ID:</span> {{info.identificacion}}</p>
+                            <p><span class="font-weight-bold text-dark mr-2">Programa: </span> {{info.programa.nombre}}</p>
+                            <p><span class="font-weight-bold text-dark mr-2">Correo: </span> {{info.correo}}</p>
+                            <p><span class="font-weight-bold text-dark mr-2">Teléfono: </span> {{info.telefono}}</p>
+                            <label for="exampleInputuname" class="font-weight-bold text-dark">Empresa de Salud:</label>
+                            <div class="input-group">
+                                <input [(ngModel)]="info.eps" name="eps" type="text" class="form-control" id="exampleInputuname" value="{{info.eps}}" placeholder="{{info.eps}}" required>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>

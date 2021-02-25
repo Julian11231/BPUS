@@ -2,6 +2,8 @@ import { Component} from '@angular/core';
 import Swal from 'sweetalert2';
 import { NotificacionesService } from 'src/app/services/service.index';
 import { Notificacion } from 'src/app/models/notificacion.model';
+import { DatePipe } from '@angular/common';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-notificaciones',
@@ -9,25 +11,34 @@ import { Notificacion } from 'src/app/models/notificacion.model';
 })
 
 export class NotificacionesComponent {
-  notificaciones: Notificacion[] = [];
-  notificacionAceptar: Notificacion = new Notificacion('','',null,'','');
+  //notificaciones: Notificacion[] = [];
+  notificacionesLeidas: Notificacion[] = [];
+  notificacionesNoLeidas: Notificacion[] = [];
+  numeroNotificacionesLeidas: number = 0;
+  numeroNotificacionesNoLeidas: number = 0;
   usuario: any;
-  cargando = true;
-  notifiVacia = false;
 
-  constructor(  public _notificacionService: NotificacionesService) {}
+
+  constructor(public _notificacionService: NotificacionesService) {}
 
    ngOnInit() {
     const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
+    const administrativo = JSON.parse(localStorage.getItem('administrativo'));
+    const encargadoEmpresa = JSON.parse(localStorage.getItem('encargadoEmpresa'));
     if(estudiante){
       this.usuario = estudiante;
+    }else if (administrativo){
+      this.usuario = administrativo;
     }else{
-      this.usuario = admin;
+      this.usuario = encargadoEmpresa;
     }
-
     this.cargarNotificaciones();
-
+    const contador = interval(60000);
+    contador.subscribe((n) => {
+      this.notificacionesLeidas = [];
+      this.notificacionesNoLeidas = [];
+      this.cargarNotificaciones();
+    });
   }
 
   activeTab(tab: string) {
@@ -40,12 +51,26 @@ export class NotificacionesComponent {
   }
 
   cargarNotificaciones() {
-    this.cargando = true;
     this._notificacionService.getNotificaciones(this.usuario._id).subscribe((resp:any) => {
-      this.notificaciones = resp.notificaciones;
+      for (let i = 0; i < resp.notificaciones.length; i++) {
+        const pipe = new DatePipe('en-US');
+        let currentDate = new Date();
+        let notiTime = new Date(Date.parse(resp.notificaciones[i].fecha));
+        let diff = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(notiTime.getFullYear(), notiTime.getMonth(), notiTime.getDate()) ) /(1000 * 60 * 60 * 24));
+        if(diff > 0){
+          resp.notificaciones[i].fecha = pipe.transform(resp.notificaciones[i].fecha, 'dd/MM/yyyy');
+        }else{
+          resp.notificaciones[i].fecha = pipe.transform(resp.notificaciones[i].fecha, 'shortTime');
+        }
+        if(resp.notificaciones[i].isRead){
+          this.notificacionesLeidas.push(resp.notificaciones[i]);
+        }else{
+          this.notificacionesNoLeidas.push(resp.notificaciones[i]);
+        }
+      }
+      this.numeroNotificacionesLeidas = this.notificacionesLeidas.length;
+      this.numeroNotificacionesNoLeidas = this.notificacionesNoLeidas.length;
     });
-    
-    this.cargando = false;
   }
 
   borrarNotificacion(notificacion:Notificacion){

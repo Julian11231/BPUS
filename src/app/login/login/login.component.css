@@ -1,15 +1,16 @@
 .login-register {
-    background-size: 1000px 650px;
-    background-repeat: no-repeat;
     height: 100%;
     width: 100%;
-    padding: 10% 0;
     position: fixed;
+    background: url('src/assets/images/background/USCO-Huila.jpg') no-repeat center fixed;
+    background-size: cover;
 }
 
 .login-box {
-    width: 400px;
+    width: 600px;
     margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .login-box .footer {
@@ -40,24 +41,26 @@
 
 #textoLog {
     text-align: center;
+    color: darkslategrey;
     font-weight: bold;
-    color: #ffffff;
-    font-size: 13px;
-    line-height: 8px;
 }
 
 .textTitle {
-    background-color: #8F141B;
-    height: 85px;
-    width: 400px;
-    margin-left: -20px;
-    padding-top: 30px;
+    background-color: #DFD4A6;
+    height: auto;
+    width: 100%;
     align-items: center;
 }
 
-#btnLogin {
+.btnLogin {
     background-color: #8F141B;
     border-color: #8F141B;
+    color: #ffffff;
+}
+
+button.btnLogin:hover{
+    background-color: #28a745;
+    border-color: #28a745;
     color: #ffffff;
 }
 
@@ -68,18 +71,10 @@
 
 /* RESPONSIVE */
 
-@media only screen and (max-width: 479px) {
+@media only screen and (max-width: 576px) {
     .login-box {
-        width: 411px;
+        width: auto;
         position: relative;
         margin: 0 auto;
-    }
-    .textTitle {
-        background-color: #8F141B;
-        height: 85px;
-        width: 412px;
-        margin-left: -20px;
-        padding-top: 30px;
-        align-items: center;
     }
 }
