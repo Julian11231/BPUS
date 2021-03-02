@@ -7,10 +7,17 @@
 }
 
 .login-box {
-    width: 600px;
-    margin: 0 auto;
+    width: 50%;
+    height: auto;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
 }
 
 .login-box .footer {
@@ -78,3 +85,9 @@ button.btnLogin:hover{
         margin: 0 auto;
     }
 }
+
+@media only screen and (max-width: 576px) and (orientation: landscape) {
+    .login-box {
+      width: 100%;
+    }
+  }

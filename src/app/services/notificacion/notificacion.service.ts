@@ -33,10 +33,12 @@ export class NotificacionesService {
 
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
 
-      if (resp.ok == true) {  
+      if (resp.ok) {  
         console.log('Notificacion enviada');
+        return true;
+      }else{
+        return false;
       }
-      return true;
       
     }), catchError((err) => {
 
@@ -58,10 +60,12 @@ export class NotificacionesService {
 
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
 
-      if (resp.ok == true) {  
+      if (resp.ok) {  
         console.log('Notificacion Correo enviada');
+        return true;
+      }else{
+        return false;
       }
-      return true;
       
     }), catchError((err) => {
 

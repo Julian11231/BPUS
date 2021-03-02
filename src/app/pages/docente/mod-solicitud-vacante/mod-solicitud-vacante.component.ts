@@ -28,6 +28,8 @@ export class ModSolicitudVacanteComponent implements OnInit {
   ubicacion: string;
   modalidad: string;
   funciones: string;
+  pagada: string;
+  descripcion: string;
 
   nombreEst: string;
   apellidoEst: string;
@@ -35,6 +37,7 @@ export class ModSolicitudVacanteComponent implements OnInit {
   idEst: string;
   correoEst: string;
   telefonoEst: string;
+  epsEst:string;
 
   personaCargo: string;
   correo: string;
@@ -45,54 +48,48 @@ export class ModSolicitudVacanteComponent implements OnInit {
 
   tutores: any[] = [];
 
-  constructor(public _pasantiaService: PasantiService) { }
+  constructor(public _pasantiaService: PasantiService, public _tutoresService: TutoresService) { }
 
   ngOnInit(): void {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    //const estudiante = JSON.parse(localStorage.getItem('estudiante'));
     const admin = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else{
-      this.info = admin;
-    }
+    this.info = admin;
+    this.programa = this.info.programa._id;
     this.getSolicitudes();
+    this.getTutores();
 
   }
 
-  putSolicitud(form: NgForm) {
-
-    Swal.fire({
-      title: '¿Actualizar Solicitud?',
-      icon: 'warning',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Si',
-
-      showCancelButton: true,
-      confirmButtonColor: '#60D89C',
-      cancelButtonColor: '#d33'
-
-    }).then((result) => {
-      if (result.value) {
-
-        let pasantia = new PasantiaAdmin(
-          form.value.notas,
-          form.value.estado,
-        )
-        this._pasantiaService.putSolicitud(this._id, pasantia).subscribe();
-      }
-    })
-
+  getTutores(){
+    this._tutoresService.getTutores(this.programa).subscribe((resp:any)=>{
+      this.tutores = resp.admins;
+    });
   }
 
+  aprobarSolicitud(form: NgForm) {
+    console.log(form.value);
+    let pasantia = new PasantiaAdmin(
+      form.value.notas,
+      "Aprobada",
+      form.value.tutor
+    )
+    this._pasantiaService.putSolicitud(this._id, pasantia).subscribe();
+  }
+
+  rechazarSolicitud(form: NgForm){
+    if(form.value.notas !== null){
+      let pasantia = new PasantiaAdmin(
+        form.value.notas,
+        "Rechazada",
+      )
+      this._pasantiaService.putSolicitud(this._id, pasantia).subscribe();
+    }
+  }
 
   getSolicitudes() {
 
-    this.programa = this.info.programa._id;
-
     this._pasantiaService.getSolicitudes().subscribe((resp: any) => {
       this.solicitudes = resp.pasantias;
-      console.log(resp);
-
     });
   }
 
@@ -111,6 +108,8 @@ export class ModSolicitudVacanteComponent implements OnInit {
     this.ubicacion = data.vacante.ubicacion;
     this.modalidad = data.vacante.modalidad;
     this.funciones = data.vacante.funciones;
+    this.pagada = data.vacante.pagada;
+    this.descripcion = data.vacante.descripcion;
 
     this.nombreEst = data.estudiante.nombres;
     this.apellidoEst = data.estudiante.apellidos;
@@ -118,10 +117,11 @@ export class ModSolicitudVacanteComponent implements OnInit {
     this.idEst = data.estudiante.identificacion;
     this.correoEst = data.estudiante.correo;
     this.telefonoEst = data.estudiante.telefono;
+    this.epsEst = data.estudiante.eps;
 
-    this.personaCargo = data.empresa.nombre_persona;
-    this.correo = data.empresa.correo_persona;
-    this.telefono = data.empresa.telefono_persona;
+    this.personaCargo = data.vacante.encargado.nombre;
+    this.correo = data.vacante.encargado.correo;
+    this.telefono = data.vacante.encargado.telefono;
   }
 
 

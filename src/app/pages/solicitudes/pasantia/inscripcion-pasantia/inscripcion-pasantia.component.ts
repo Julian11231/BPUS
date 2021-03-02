@@ -81,7 +81,7 @@ export class InscripcionPasantiaComponent implements OnInit {
             this.preInscripcion,
             form.value.eps
           )
-          this._pasantiaService.postSolicitud(idEstudiante, preInscripcion).subscribe((resp:any) => {
+          this._pasantiaService.postSolicitud(idEstudiante, preInscripcion).subscribe((respP:any) => {
             let currentDate = new Date();
             let notificacion = new Notificacion(
               this.jefeProgramaID,
@@ -90,11 +90,23 @@ export class InscripcionPasantiaComponent implements OnInit {
               `${this.info.nombres} te ha enviado una solicitude de pasantia para la empresa ${this.nombreEmpresa}`,
               'Administrativo' 
             );
-            this._notificacionService.postNotificacion(notificacion).subscribe((resp:any)=> {
-              if(resp){
-                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((resp:any)=>{
-                  if(resp){
-                      this.router.navigate(['/mi-modalidad']);
+            console.log(respP);
+            this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
+              if(respN){
+                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
+                  if(respC){
+                    Swal.fire({
+                      title: '¡Bien Hecho!',
+                      html: `Su solicitud fue exitosa, el radicado de su solicitud es: <b> ${respP._id}</b>`,
+                      icon: 'warning',
+                      confirmButtonText: 'Aceptar',
+                      confirmButtonColor: '#60D89C',
+                
+                    }).then((result) => {
+                      if (result.value) {
+                        this.router.navigate(['/mi-modalidad']);
+                      }
+                    });
                   }else{
                     console.log("Error garrafal");
                   }
@@ -126,7 +138,19 @@ export class InscripcionPasantiaComponent implements OnInit {
       'Administrativo' 
     );
     this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((resp:any)=>{
-      console.log('me cago en dios');
+      if(resp){
+        Swal.fire({
+          title: '¡Bien Hecho!',
+          text: `Se ha enviado el corrreo correctamente`,
+          icon: 'success'
+        });
+      }else{
+        Swal.fire({
+          title: '¡Error!',
+          text: 'Se ha producido un error al mandar el correo',
+          icon: 'error',
+        });
+      }
     })
   }
 

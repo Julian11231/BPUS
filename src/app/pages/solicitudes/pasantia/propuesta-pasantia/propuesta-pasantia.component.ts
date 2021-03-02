@@ -14,11 +14,10 @@ export class ActaInicioComponent implements OnInit {
 
   pasantia: string;
   nombreArchivoP: string;
-  nombreArchivoC: string;
   usuario:any;
   documento_propuesta = new FormData();
 
-  MAX_SIZE_FILE: number = 25000000
+  MAX_SIZE_FILE: number = 2000000
 
   constructor(public _pasantiaService: PasantiService) { }
 
@@ -34,6 +33,7 @@ export class ActaInicioComponent implements OnInit {
       this.usuario = admin;
       this.pasantia = admin.modalidad
     }
+    console.log(this.nombreArchivoP);
   }
 
   getFilePropuesta(file: File) {
@@ -57,11 +57,6 @@ export class ActaInicioComponent implements OnInit {
       this.documento_propuesta.append('documento_propuesta', documento_propuesta, documento_propuesta.name);
     }
   }
-
-  getFileConvenio(file: File) {
-    this.nombreArchivoC = file.name;
-  }
-
 
   enviarPropuesta() {
 

@@ -44,15 +44,10 @@ export class PasantiService {
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          html: `Su solicitud fue exitosa, el radicado de su solicitud es: <b> ${resp.solicitudGuardada._id}</b>. <br> <center> Por favor vuelva a Iniciar Sesión </center>`,
-          icon: 'success'
-        });
+        return resp.solicitudGuardada;
+      }else{
+        return false;
       }
-
-      return true;
 
     }), catchError((err) => {
 
