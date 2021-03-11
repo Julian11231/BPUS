@@ -2,8 +2,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
 import { InscripcionPasantiaComponent } from './solicitudes/pasantia/inscripcion-pasantia/inscripcion-pasantia.component';
-import { VacantesComponent } from './docente/vacantes/vacantes.component';
+import { VacantesComponent } from './encargado/vacantes/vacantes.component';
 import { ModSolicitudVacanteComponent } from './docente/mod-solicitud-vacante/mod-solicitud-vacante.component';
+import { EncarSolicitudVacanteComponent } from './encargado/solicitud-vacante/solicitud-vacante.component';
 import { MiSolicitudComponent } from './estudiante/mi-solicitud/mi-solicitud.component';
 import { ActaInicioComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
 import { TutoriaPasantiaComponent } from './docente/tutoria-pasantia/tutoria-pasantia.component';
@@ -48,6 +49,7 @@ const pagesRoutes: Routes = [
             { path: 'informe-siete', component: InformeSieteComponent, data: { titulo: 'Envío de Informe de la Semana 7' } },
             { path: 'informe-catorce', component: InformeCatorceComponent, data: { titulo: 'Envío de Informe de la Semana 14' } },
             { path: 'informe-final', component: InformeFinalComponent, data: { titulo: 'Envío de Informe Final' } },
+            { path: 'solicitud-vacantes', component: EncarSolicitudVacanteComponent, data: { titulo: 'Solicitudes de vacantes' } },
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },

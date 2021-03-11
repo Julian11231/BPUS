@@ -6,140 +6,146 @@
                 <h3 class="card-title text-uppercase"><b> Todas las Propuestas </b></h3>
                 <hr>
 
-                <div class="col-md-3">
-                    <div class="modal fade modal-propuesta" tabindex="-1" role="dialog"
-                        aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-
-                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
-                                        <div class="col-lg-1">
-                                            <div class="vacantesImg text-center">
-                                                <p class="text-center">{{ letra }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="vacantesInfo">
-                                                <h5 class="text-uppercase"> <b>{{ nombreEst }} {{apellidoEst}}</b></h5>
-                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                                    {{titulo}} - {{empresa}}
-                                                </small><br>
-                                                <small><i class="fa fa-globe"></i>&nbsp;
-                                                    &nbsp;{{ubicacion}}, {{modalidad}}
-                                                </small> <br>
-                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div> <br>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>ID de la solicitud:</b> </h5>
-                                        <p class="text-justify" style="margin-top: -3px;">&nbsp; {{_id}}</p>
+                <div class="modal fade modal-propuesta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-7 col-lg-8">
+                                        <h5><b class="text-uppercase">ID de la solicitud:</b> &nbsp; {{pasantiaSup?._id}}</h5>
                                     </div>
-
-                                    <div class="row" style="margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Documento de Propuesta de Pasantía:</b> </h5>
+                                    <div class="col-12 col-sm-12 col-md-5 col-lg-4">
+                                        <h5><b>Estado: &nbsp;</b>
+                                            <ng-container *ngIf="pasantiaSup?.estado == 'Enviada'" class="text-success"><span
+                                                class="label btnInfo"> <b> {{ pasantiaSup?.estado }} </b></span>
+                                            </ng-container>
+                                            <ng-container *ngIf="pasantiaSup?.estado == 'Aprobada'" class="text-success"><span
+                                                    class="label btnSuccess"> <b> {{ pasantiaSup?.estado }} </b></span>
+                                            </ng-container>
+                                            <ng-container *ngIf="pasantiaSup?.estado == 'Rechazada'" class="text-success"><span
+                                                    class="label btnDanger"> <b> {{ pasantiaSup?.estado }} </b></span>
+                                            </ng-container>
+                                        </h5>
                                     </div>
-
-                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
-                                        <i class="fa fa-file-pdf-o"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{pasantiaSup?.documento_propuesta}}</small>
-
-                                        <a class="btn btnSuccess descargar"
-                                            [href]="pasantiaSup?.documento_propuesta | documento: idEstudiante"
-                                            download="pasantiaSup?.documento_propuesta" target="_blank"
-                                            style="margin-top: -10px; margin-left: 15px;"><small><b>Descargar
-                                                    Documento</b></small></a>
+                                </div>
+                                <br>
+                                <h5 class="text-uppercase"> <b>Información del estudiante:</b></h5>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                        <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSup?.estudiante.nombres }} {{pasantiaSup?.estudiante.apellido}}</small>
                                     </div>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Tutor de Pasantía:</b> </h5>
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                        <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{pasantiaSup?.estudiante.codigo}}</small>
                                     </div>
-
-                                    <ng-container *ngIf="pasantiaSup?.tutor == null">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <span class="label btnDanger"> <b> No Asignado</b></span>
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{pasantiaSup?.estudiante.identificacion}}</small>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                        <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{pasantiaSup?.estudiante.correo}}</small>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                        <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">Tél:&nbsp; {{pasantiaSup?.estudiante.telefono}}</small>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">EPS:&nbsp; {{pasantiaSup?.estudiante.eps}}</small>
+                                    </div>
+                                </div>
+                                <hr>
+                                <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                        <div class="vacantesInfo">
+                                            <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSup?.vacante.titulo}} - {{pasantiaSup?.empresa.nombre}} </small><br>
+                                            <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSup?.vacante.ubicacion}}, &nbsp;{{pasantiaSup?.vacante.modalidad}}</small><br>
+                                            <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSup?.vacante.funciones}}</small><br>
+                                            <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSup?.vacante.pagada}}</small><br>
                                         </div>
-                                    </ng-container>
-
-                                    <ng-container *ngIf="pasantiaSup?.tutor != null">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <span class="label btnSuccess"> <b>{{tutorNombres}}
-                                                    {{tutorApellidos}}</b></span>
-                                        </div>
-                                    </ng-container>
-
-                                    <br><br>
-
-                                    <form ngNativeValidate #actualizar="ngForm" (ngSubmit)="putSolicitud(actualizar)"
-                                        class="form-horizontal" id="loginform" style="padding-left: 20px;">
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">
-                                                        <h5 class="text-uppercase"> <b>Estado:</b> </h5>
-                                                    </label>
-                                                    <select [(ngModel)]="estado_propuesta" name="estado_propuesta"
-                                                        class="form-control custom-select" required>
-                                                        <option value="Enviada">Enviada</option>
-                                                        <option value="Aprobada">Aprobada</option>
-                                                        <option value="Rechazada">Rechazada</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-8">
-                                                <div class="form-group">
-                                                    <label class="control-label">
-                                                        <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                    </label>
-                                                    <input [(ngModel)]="notas_propuesta" name="notas_propuesta"
-                                                        type="text" id="firstName" class="form-control"
-                                                        placeholder="Notas Para el Estudiante">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <label class="control-label">
-                                                    <h5 class="text-uppercase"> <b>Asignar Tutor:</b> </h5>
-                                                </label>
-                                                <select ngModel name="tutor" class="form-control custom-select"
-                                                    required>
-                                                    <ng-container *ngFor="let tutor of tutores">
-                                                        <option value="{{tutor._id}}">
-                                                            {{tutor.nombres}} {{tutor.apellidos}}</option>
-                                                    </ng-container>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btnSuccess waves-effect text-left"
-                                                data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
-
-                                            <button type="submit" class="btn btnInfo waves-effect text-left">Actualizar
-                                                <i class="mdi mdi-update"></i></button>
-
-                                        </div>
-                                    </form>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                        <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
+                                        <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{pasantiaSup?.vacante.encargado.nombre}}</small><br>
+                                        <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{pasantiaSup?.vacante.encargado.correo}}</small><br>
+                                        <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{pasantiaSup?.vacante.encargado.telefono}}</small>
+                                    </div>
+                                </div>
+                                <div class="mt-3 ml-4">
+                                    <h5 class="text-uppercase"> <b>Descripción:</b></h5>
+                                    <p class="mt-2 ml-2">{{pasantiaSup?.vacante.descripcion}}</p> 
                                 </div>
 
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                                </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
+                <!-- Modal rechazar-->
+                <div class="modal fade" id="rechazarModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        
+                            <!-- Modal Header -->
+                            <div class="modal-header bg-danger text-center text-light">
+                                <h4 class="modal-title text-light">Rechazar solicitud</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                Estas a punto de rechazar la solicitud de pasantia de <span class="text-capitalize">{{pasantiaSup?.estudiante.nombres}} {{pasantiaSup?.estudiante.apellidos}}</span> en {{pasantiaSup?.empresa.nombre}}
+                                <form ngNativeValidate #rechazar="ngForm" (ngSubmit)="rechazarSolicitud(rechazar)">
+                                    <label class="control-label mt-2">
+                                        <h5> <b class="text-uppercase">Notas</b> (escribe el motivo del rechazo) <b>:</b></h5>
+                                    </label>
+                                    <textarea [(ngModel)]="notas" name="notas" class="form-control" rows="5" placeholder="Notas Para el Estudiante" required></textarea>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-danger btn-block">Rechazar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Modal aprobar-->
+                <div class="modal fade" id="AprobarModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        
+                            <!-- Modal Header -->
+                            <div class="modal-header text-white" style="background-color: #357a38;">
+                                <h4 class="modal-title text-white">Aprobar solicitud</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                Estas a punto de aprobar la solicitud de pasantia de <span class="text-capitalize">{{pasantiaSup?.estudiante.nombres}} {{pasantiaSup?.estudiante.apellidos}}</span> en {{pasantiaSup?.empresa.nombre}}
+                                <form ngNativeValidate #aprobar="ngForm" (ngSubmit)="aprobarSolicitud(aprobar)">
+                                    <label class="control-label mt-2">
+                                        <h5 class="text-uppercase"> <b>Asiganar tutor:</b> </h5>
+                                    </label>
+                                    <select [(ngModel)]="tutor" name="tutor" class="form-control custom-select" required>
+                                        <ng-container *ngFor="let tutor of tutores">
+                                            <option value="{{tutor._id}}">{{tutor.nombres}} {{tutor.apellidos}}</option>
+                                        </ng-container>
+                                    </select>
+                                    <label class="control-label mt-2">
+                                        <h5 class="text-uppercase"> <b>Notas:</b> </h5>
+                                    </label>
+                                    <textarea [(ngModel)]="notas" name="notas" class="form-control" rows="5" placeholder="Notas Para el Estudiante"></textarea>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-block text-white" style="background-color: #4caf50">Aprobar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-12" style="margin-left: -15px;">
 
@@ -154,61 +160,55 @@
                     </div>
                 </div>
 
-                <br>
-
                 <div class="row" *ngFor="let dato of propuestas">
-
-                    <ng-container *ngIf="(programa === dato.estudiante.programa && dato.documento_propuesta != null)">
-
+                    <ng-container *ngIf="dato.estado === 'Enviada'">
                         <ng-container>
-                            <div class="col-lg-1">
-                                <div class="vacantesImg text-center">
-                                    <p class="text-center">{{dato.vacante.letra}}</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="vacantes">
                                     <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
                                             {{ dato.estudiante.apellidos }}</b></h5>
-                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                    <small><i class="fa fa-briefcase"></i> &nbsp;
                                         {{ dato.vacante.titulo }} - {{dato.empresa.nombre}}
                                     </small><br>
-                                    <small><i class="fa fa-file-pdf-o"></i>&nbsp;
-                                        &nbsp;{{dato.documento_propuesta}}
-                                    </small> <br>
+                                    <small>{{ dato.vacante.funciones }}</small>
                                 </div>
                             </div>
-
-                            <div class="col-lg-4">
-
-                                <h5 class="text-uppercase"><b>Estado de la Propuesta:</b></h5>
-                                <ng-container *ngIf="dato.estado_propuesta == 'Enviada'" class="text-success">
-                                    <span class="label btnInfo"> <b> {{ dato.estado_propuesta }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="dato.estado_propuesta == 'Aprobada'" class="text-success">
-                                    <span class="label btnSuccess"> <b> {{ dato.estado_propuesta }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="dato.estado_propuesta == 'Rechazada'" class="text-success">
-                                    <span class="label btnDanger"> <b> {{ dato.estado_propuesta }} </b></span>
-                                </ng-container>
-                                <br>
-
+                            <br>
+                            <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+                                <div class="px-auto text-center">
+                                    <button class="btn btn-lg descargar btnSuccess">
+                                        <a class="btnSuccess" [href]="dato.documento_propuesta | documento: dato.estudiante._id" download="dato.documento_propuesta" target="_blank">
+                                            <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Propuesta</b></small>
+                                        </a>
+                                    </button>
+                                </div>
                             </div>
+                            <br>
+                            <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+                                <div class="px-auto text-center">
+                                    <button class="btn btn-lg descargar btnSuccess">
+                                        <a class="btnSuccess" [href]="dato.documento_fichaAcademica | documento: dato.estudiante._id" download="dato.documento_fichaAcademica" target="_blank">
+                                            <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ficha</b></small>
+                                        </a>
+                                    </button>
+                                </div>
+                            </div>                                
 
-                            <div class="col-lg-2">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="buttons">
-
-                                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal"
-                                        data-target=".modal-propuesta"
-                                        class="btn btnInfo waves-effect text-left"><b>Gestionar
-                                            <i class="fa fa-info-circle"></i></b></button>
+                                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target=".modal-propuesta" class="btn btn btn-outline-info btn-sm mr-2">
+                                        <i class="fa fa-info-circle"></i>
+                                    </button>
+                                    <button type="button" [disabled]="dato.estado == 'Aprobada'" (click)="getDataInfo(dato)" class="btn text-white mr-2" data-toggle="modal" data-target="#AprobarModal" style="background-color: #6fbf73;">
+                                        Aprobar
+                                    </button>
+                                    <button type="button" [disabled]="dato.estado == 'Rechazada'" (click)="getDataInfo(dato)" class="btn btnSuccess mr-2" data-toggle="modal" data-target="#rechazarModal">
+                                        Rechazar
+                                    </button>
                                 </div>
                             </div>
                         </ng-container>
                     </ng-container>
-
                 </div>
             </div>
         </div>

@@ -1,951 +1,300 @@
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-
-                <h3 class="card-title text-uppercase"><b> Mi Modalidad de grado </b></h3>
-                <h5 class="text-uppercase"> <b> Tutor Asignado: </b></h5>
-                <ng-container *ngIf="pasantia.tutor == null" class="text-success">
-                    <span class="label btnDanger" style="margin-top: -3px;">
-                        <b> No asignado </b></span><br>
-                </ng-container>
-
-                <ng-container *ngIf="pasantia.tutor" class="text-success">
-                    <span class="label btnSuccess" style="margin-top: -25px;">
-                        <b> {{pasantia?.tutor.nombres}} {{pasantia?.tutor.apellidos}}</b></span><br>
-                </ng-container><br>
-                <hr style="margin-top: 0px;">
-
-                <!-- ============================================================== -->
-                <!--                        MODAL INFO                              -->
-                <!-- ============================================================== -->
-
-                <div class="col-md-3" *ngIf="pasantia">
-                    <div class="modal fade modal-info" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-                        aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-
-                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
-                                        <div class="col-lg-1">
-                                            <div class="vacantesImg text-center">
-                                                <p class="text-center">{{ letra }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="vacantesInfo">
-                                                <h5 class="text-uppercase"> <b>{{ nombreEst }} {{apellidoEst}}</b></h5>
-                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                                    {{titulo}} - {{empresa}}
-                                                </small><br>
-                                                <small><i class="fa fa-globe"></i>&nbsp;
-                                                    &nbsp;{{ubicacion}}, {{modalidad}}
-                                                </small> <br>
-                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div> <br>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>ID de la solicitud:</b> </h5>
-                                        <p class="text-justify" style="margin-top: -3px;">&nbsp; {{_id}}</p>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Información del estudiante:</b> </h5>
-                                    </div>
-
-                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
-                                        <i class="fa fa-id-card"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{codigoEst}}</small>
-                                    </div>
-                                    <div class="row" style="margin-left: 25px;">
-                                        <i class="fa fa-id-card-o"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{idEst}}</small>
-                                    </div>
-
-                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
-                                        <i class="mdi mdi-email"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{correoEst}}</small>
-                                    </div>
-                                    <div class="row" style="margin-left: 25px;">
-                                        <i class="fa  fa-phone"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{telefonoEst}}</small>
-                                    </div>
-
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Persona a Cargo:</b> </h5>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 25px;">
-                                        <p class="text-justify"> {{personaCargo}}</p>
-                                    </div>
-
-                                    <div class="row" style="margin-top: -13px; margin-left: 25px;">
-                                        <i class="mdi mdi-email"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{correo}}</small>
-                                    </div>
-                                    <div class="row" style="margin-left: 25px;">
-                                        <i class="fa  fa-phone"></i> &nbsp; &nbsp; &nbsp;<small class="text-justify">
-                                            {{telefono}}</small>
-                                    </div>
-
-                                    <br>
-
-
-                                    <div class="row" style="margin-left: 10px;">
-
-                                        <div class="col-md-4">
-                                            <h5 class="text-uppercase"> <b>Estado:</b> </h5>
-                                            <ng-container *ngIf="pasantia.estado == 'Enviada'" class="text-success">
-                                                <span class="label btnInfo"> <b> {{ pasantia.estado }} </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado == 'Aprobada'" class="text-success">
-                                                <span class="label btnSuccess"> <b> {{ pasantia.estado }} </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado == 'Rechazada'" class="text-success">
-                                                <span class="label btnDanger"> <b> {{ pasantia.estado }} </b></span>
-                                            </ng-container>
-                                        </div>
-
-
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                <p class="text-justify">{{notas}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br><br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btnSuccess waves-effect text-left"
-                                            data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- ============================================================== -->
-                <!--                   MODAL PROPUESTA                              -->
-                <!-- ============================================================== -->
-                <div class="col-md-3" *ngIf="pasantia?.documento_propuesta">
-                    <div class="modal fade modal-propuesta" tabindex="-1" role="dialog"
-                        aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-
-                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
-                                        <div class="col-lg-1">
-                                            <div class="vacantesImg text-center">
-                                                <p class="text-center">{{ letra }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="vacantesInfo">
-                                                <h5 class="text-uppercase"> <b>{{ nombreEst }} {{apellidoEst}}</b></h5>
-                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                                    {{titulo}} - {{empresa}}
-                                                </small><br>
-                                                <small><i class="fa fa-globe"></i>&nbsp;
-                                                    &nbsp;{{ubicacion}}, {{modalidad}}
-                                                </small> <br>
-                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div> <br>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>ID de la solicitud:</b> </h5>
-                                        <p class="text-justify" style="margin-top: -3px;">&nbsp; {{_id}}</p>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Documento de Propuesta de Pasantía:</b> </h5>
-                                    </div>
-
-                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
-                                        <i class="fa fa-file-pdf-o"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{pasantiaSup?.documento_propuesta}}</small>
-                                    </div>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Tutor de Pasantía:</b> </h5>
-                                    </div>
-
-                                    <ng-container *ngIf="!pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>No Asignado Aún</b></p>
-                                        </div>
-                                    </ng-container>
-
-                                    <ng-container *ngIf="pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>{{pasantia.tutor.nombres}}
-                                                    {{pasantia.tutor.apellidos}}</b></p>
-                                        </div>
-                                    </ng-container>
-
-
-                                    <div class="row" style="margin-left: 10px;">
-
-                                        <div class="col-md-4">
-                                            <h5 class="text-uppercase"> <b>Estado de la Propuesta:</b> </h5>
-                                            <ng-container *ngIf="pasantia.estado_propuesta == 'Enviada'"
-                                                class="text-success">
-                                                <span class="label btnInfo"> <b> {{ pasantiaSup?.estado_propuesta }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_propuesta == 'Aprobada'"
-                                                class="text-success">
-                                                <span class="label btnSuccess"> <b> {{ pasantiaSup?.estado_propuesta }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_propuesta == 'Rechazada'"
-                                                class="text-success">
-                                                <span class="label btnDanger"> <b> {{ pasantiaSup?.estado_propuesta }}
-                                                    </b></span>
-                                            </ng-container>
-                                        </div>
-
-
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                <p class="text-justify">{{pasantiaSup?.notas_propuesta}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btnSuccess waves-effect text-left"
-                                            data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ============================================================== -->
-                <!--                   MODAL INFORME 7                              -->
-                <!-- ============================================================== -->
-                <div class="col-md-3" *ngIf="pasantia?.documento_informe7">
-                    <div class="modal fade modal-informe7" tabindex="-1" role="dialog"
-                        aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-
-                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
-                                        <div class="col-lg-1">
-                                            <div class="vacantesImg text-center">
-                                                <p class="text-center">{{ letra }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="vacantesInfo">
-                                                <h5 class="text-uppercase"> <b>{{ nombreEst }} {{apellidoEst}}</b></h5>
-                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                                    {{titulo}} - {{empresa}}
-                                                </small><br>
-                                                <small><i class="fa fa-globe"></i>&nbsp;
-                                                    &nbsp;{{ubicacion}}, {{modalidad}}
-                                                </small> <br>
-                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div> <br>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>ID de la solicitud:</b> </h5>
-                                        <p class="text-justify" style="margin-top: -3px;">&nbsp; {{_id}}</p>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Documento de Informe:</b> </h5>
-                                    </div>
-
-                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
-                                        <i class="fa fa-file-pdf-o"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{pasantiaSup?.documento_informe7}}</small>
-                                    </div>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Tutor de Pasantía:</b> </h5>
-                                    </div>
-
-                                    <ng-container *ngIf="!pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>No Asignado Aún</b></p>
-                                        </div>
-                                    </ng-container>
-
-                                    <ng-container *ngIf="pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>{{pasantia.tutor.nombres}}
-                                                    {{pasantia.tutor.apellidos}}</b></p>
-                                        </div>
-                                    </ng-container>
-
-
-                                    <div class="row" style="margin-left: 10px;">
-
-                                        <div class="col-md-4">
-                                            <h5 class="text-uppercase"> <b>Estado del Informe:</b> </h5>
-                                            <ng-container *ngIf="pasantia.estado_informe7 == 'Enviado'"
-                                                class="text-success">
-                                                <span class="label btnInfo"> <b> {{ pasantiaSup?.estado_informe7 }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_informe7 == 'Aprobado'"
-                                                class="text-success">
-                                                <span class="label btnSuccess"> <b> {{ pasantiaSup?.estado_informe7 }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_informe7 == 'Rechazado'"
-                                                class="text-success">
-                                                <span class="label btnDanger"> <b> {{ pasantiaSup?.estado_informe7 }}
-                                                    </b></span>
-                                            </ng-container>
-                                        </div>
-
-
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                <p class="text-justify">{{pasantiaSup?.notas_informe7}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btnSuccess waves-effect text-left"
-                                            data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ============================================================== -->
-                <!--                   MODAL INFORME 14                             -->
-                <!-- ============================================================== -->
-                <div class="col-md-3" *ngIf="pasantia?.documento_informe14">
-                    <div class="modal fade modal-informe14" tabindex="-1" role="dialog"
-                        aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-
-                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
-                                        <div class="col-lg-1">
-                                            <div class="vacantesImg text-center">
-                                                <p class="text-center">{{ letra }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="vacantesInfo">
-                                                <h5 class="text-uppercase"> <b>{{ nombreEst }} {{apellidoEst}}</b></h5>
-                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                                    {{titulo}} - {{empresa}}
-                                                </small><br>
-                                                <small><i class="fa fa-globe"></i>&nbsp;
-                                                    &nbsp;{{ubicacion}}, {{modalidad}}
-                                                </small> <br>
-                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div> <br>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>ID de la solicitud:</b> </h5>
-                                        <p class="text-justify" style="margin-top: -3px;">&nbsp; {{_id}}</p>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Documento de Informe:</b> </h5>
-                                    </div>
-
-                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
-                                        <i class="fa fa-file-pdf-o"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{pasantiaSup?.documento_informe14}}</small>
-                                    </div>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Tutor de Pasantía:</b> </h5>
-                                    </div>
-
-                                    <ng-container *ngIf="!pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>No Asignado Aún</b></p>
-                                        </div>
-                                    </ng-container>
-
-                                    <ng-container *ngIf="pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>{{pasantia.tutor.nombres}}
-                                                    {{pasantia.tutor.apellidos}}</b></p>
-                                        </div>
-                                    </ng-container>
-
-
-                                    <div class="row" style="margin-left: 10px;">
-
-                                        <div class="col-md-4">
-                                            <h5 class="text-uppercase"> <b>Estado del Informe:</b> </h5>
-                                            <ng-container *ngIf="pasantia.estado_informe14 == 'Enviado'"
-                                                class="text-success">
-                                                <span class="label btnInfo"> <b> {{ pasantiaSup?.estado_informe14 }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_informe14 == 'Aprobado'"
-                                                class="text-success">
-                                                <span class="label btnSuccess"> <b> {{ pasantiaSup?.estado_informe14 }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_informe14 == 'Rechazado'"
-                                                class="text-success">
-                                                <span class="label btnDanger"> <b> {{ pasantiaSup?.estado_informe14 }}
-                                                    </b></span>
-                                            </ng-container>
-                                        </div>
-
-
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                <p class="text-justify">{{pasantiaSup?.notas_informe14}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btnSuccess waves-effect text-left"
-                                            data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ============================================================== -->
-                <!--                   MODAL INFORME FINAL                         -->
-                <!-- ============================================================== -->
-                <div class="col-md-3" *ngIf="pasantia?.documento_informeFinal">
-                    <div class="modal fade modal-informeFinal" tabindex="-1" role="dialog"
-                        aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-
-                                <div class="modal-body">
-
-                                    <div class="row" style="margin-top: 15px; margin-left: 10px;">
-                                        <div class="col-lg-1">
-                                            <div class="vacantesImg text-center">
-                                                <p class="text-center">{{ letra }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="vacantesInfo">
-                                                <h5 class="text-uppercase"> <b>{{ nombreEst }} {{apellidoEst}}</b></h5>
-                                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                                    {{titulo}} - {{empresa}}
-                                                </small><br>
-                                                <small><i class="fa fa-globe"></i>&nbsp;
-                                                    &nbsp;{{ubicacion}}, {{modalidad}}
-                                                </small> <br>
-                                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div> <br>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>ID de la solicitud:</b> </h5>
-                                        <p class="text-justify" style="margin-top: -3px;">&nbsp; {{_id}}</p>
-                                    </div>
-
-                                    <div class="row" style="margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Documento de Informe:</b> </h5>
-                                    </div>
-
-                                    <div class="row" style="margin-top: -3px; margin-left: 25px;">
-                                        <i class="fa fa-file-pdf-o"></i> &nbsp; &nbsp;<small class="text-justify">
-                                            {{pasantiaSup?.documento_informeFinal}}</small>
-                                    </div>
-
-                                    <div class="row" style=" margin-top: 15px; margin-left: 25px;">
-                                        <h5 class="text-uppercase"> <b>Tutor de Pasantía:</b> </h5>
-                                    </div>
-
-                                    <ng-container *ngIf="!pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>No Asignado Aún</b></p>
-                                        </div>
-                                    </ng-container>
-
-                                    <ng-container *ngIf="pasantia?.tutor">
-                                        <div class="row" style="margin-left: 25px; margin-top: 0px;">
-                                            <p class="text-justify"> <b>{{pasantia.tutor.nombres}}
-                                                    {{pasantia.tutor.apellidos}}</b></p>
-                                        </div>
-                                    </ng-container>
-
-
-                                    <div class="row" style="margin-left: 10px;">
-
-                                        <div class="col-md-4">
-                                            <h5 class="text-uppercase"> <b>Estado del Informe:</b> </h5>
-                                            <ng-container *ngIf="pasantia.estado_informeFinal == 'Enviado'"
-                                                class="text-success">
-                                                <span class="label btnInfo"> <b> {{ pasantiaSup?.estado_informeFinal }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_informeFinal == 'Aprobado'"
-                                                class="text-success">
-                                                <span class="label btnSuccess"> <b>
-                                                        {{ pasantiaSup?.estado_informeFinal }}
-                                                    </b></span>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantia.estado_informeFinal == 'Rechazado'"
-                                                class="text-success">
-                                                <span class="label btnDanger"> <b>
-                                                        {{ pasantiaSup?.estado_informeFinal }}
-                                                    </b></span>
-                                            </ng-container>
-                                        </div>
-
-
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                <p class="text-justify">{{pasantiaSup?.notas_informeFinal}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btnSuccess waves-effect text-left"
-                                            data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <!-- ============================================================== -->
-                <!--                        INFO SOLICITUD                          -->
-                <!-- ============================================================== -->
-                <h4 class="card-title text-uppercase" *ngIf="!pasantia"><b> 1. Pre-Inscripción
-                        &nbsp;<small style="color:#77181C"><b>No Aplica</b> </small></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia?.estado === 'Aprobada'"><b> 1. Pre-Inscripción
-                        &nbsp;<i class="fa fa-check" style="color: green;"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia?.estado === 'Rechazada'"><b> 1. Pre-Inscripción
-                        &nbsp;<i class="fa fa-times" style="color:#77181C"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia?.estado === 'Enviada'"><b> 1. Pre-Inscripción
-                        &nbsp;<i class="mdi mdi-update" style="color:#C7B363"></i></b></h4>
-
-                <br>
-                <div class="row" *ngIf="pasantia">
-
-                    <ng-container>
-                        <div class="col-lg-1">
-                            <div class="vacantesImg text-center">
-                                <p class="text-center">{{pasantia?.vacante.letra}}</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-5">
-                            <div class="vacantes">
-                                <h5 class="text-uppercase"> <b>{{ pasantia?.estudiante.nombres }}
-                                        {{ pasantia?.estudiante.apellidos }}</b></h5>
-                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                    {{ pasantia?.vacante.titulo }} - {{pasantia?.empresa.nombre}}
-                                </small><br>
-                                <small><i class="fa fa-globe"></i>&nbsp;
-                                    &nbsp;{{pasantia?.vacante.ubicacion}},
-                                    {{pasantia?.vacante.modalidad}}
-                                </small> <br>
-                                <small><i class="mdi mdi-account-card-details"></i>&nbsp;
-                                    &nbsp;{{pasantia?._id}}
-                                </small>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-
-                            <h5 class="text-uppercase"><b>Estado de la Solicitud:</b></h5>
-                            <ng-container *ngIf="pasantia?.estado == 'Enviada'" class="text-success">
-                                <span class="label btnInfo"> <b> {{ pasantia?.estado }} </b></span>
-                            </ng-container>
-
-                            <ng-container *ngIf="pasantia?.estado == 'Aprobada'" class="text-success">
-                                <span class="label btnSuccess"> <b> {{ pasantia?.estado }} </b></span>
-                            </ng-container>
-
-                            <ng-container *ngIf="pasantia?.estado == 'Rechazada'" class="text-success">
-                                <span class="label btnDanger"> <b> {{ pasantia?.estado }} </b></span>
-                            </ng-container>
-                            <br>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <div class="buttons">
-
-                                <button type="button" (click)="getDataInfo(pasantia)" data-toggle="modal"
-                                    data-target=".modal-info" class="btn btnInfo waves-effect text-left"><b>Más Info
-                                        <i class="fa fa-info-circle"></i></b></button>
-                            </div>
-
-                        </div>
-                    </ng-container>
-
-                </div><br><br>
-
-
-                <!-- ============================================================== -->
-                <!--                        INFO PROPUESTA                          -->
-                <!-- ============================================================== -->
-                <h4 class="card-title text-uppercase" *ngIf="!pasantia?.estado_propuesta"><b> 2.
-                        Propuesta de Modalidad
-                    </b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_propuesta === 'Aprobada'"><b> 2.
-                        Propuesta de Modalidad
-                        &nbsp;<i class="fa fa-check" style="color: green;"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_propuesta === 'Rechazada'"><b> 2.
-                        Propuesta de Modalidad
-                        &nbsp;<i class="fa fa-times" style="color:#77181C"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_propuesta === 'Enviada'"><b> 2.
-                        Propuesta de Modalidad
-                        &nbsp;<i class="mdi mdi-update" style="color:#C7B363"></i></b></h4>
-
-                <br>
-
-                <ng-container *ngIf="pasantia?.documento_propuesta">
-                    <div class="row">
-                        <ng-container>
-                            <div class="col-lg-1">
-                                <div class="vacantesImg text-center">
-                                    <p class="text-center">{{pasantia.vacante.letra}}</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="vacantes">
-                                    <h5 class="text-uppercase"> <b>{{ pasantia.estudiante.nombres }}
-                                            {{ pasantia.estudiante.apellidos }}</b></h5>
-                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{ pasantia.vacante.titulo }} - {{pasantia.empresa.nombre}}
-                                    </small><br>
-                                    <small><i class="fa fa-file-pdf-o"></i>&nbsp;
-                                        &nbsp;{{pasantia.documento_propuesta}}
-                                    </small> <br>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-
-                                <h5 class="text-uppercase"><b>Estado de la Propuesta:</b></h5>
-                                <ng-container *ngIf="pasantia.estado_propuesta == 'Enviada'" class="text-success">
-                                    <span class="label btnInfo"> <b> {{ pasantia.estado_propuesta }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_propuesta == 'Aprobada'" class="text-success">
-                                    <span class="label btnSuccess"> <b> {{ pasantia.estado_propuesta }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_propuesta == 'Rechazada'" class="text-success">
-                                    <span class="label btnDanger"> <b> {{ pasantia.estado_propuesta }} </b></span>
-                                </ng-container>
-                                <br>
-                            </div>
-
-                            <div class="col-lg-2">
-                                <div class="buttons">
-
-                                    <button type="button" (click)="getDataInfo(pasantia)" data-toggle="modal"
-                                        data-target=".modal-propuesta" class="btn btnInfo waves-effect text-left"><b>Más
-                                            Info
-                                            <i class="fa fa-info-circle"></i></b></button>
-                                </div>
-
-                            </div>
-                        </ng-container>
-                    </div>
-                </ng-container>
-                <br><br>
-
-
-                <!-- ============================================================== -->
-                <!--                        INFO INFORME 7                          -->
-                <!-- ============================================================== -->
-                <h4 class="card-title text-uppercase" *ngIf="!pasantia?.estado_informe7"><b> 3.
-                        Informe de la Semana 7
-                    </b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informe7 === 'Aprobado'"><b> 3.
-                        Informe de la Semana 7
-                        &nbsp;<i class="fa fa-check" style="color: green;"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informe7 === 'Rechazado'"><b> 3.
-                        Informe de la Semana 7
-                        &nbsp;<i class="fa fa-times" style="color:#77181C"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informe7 === 'Enviado'"><b> 3.
-                        Informe de la Semana 7
-                        &nbsp;<i class="mdi mdi-update" style="color:#C7B363"></i></b></h4>
-
-                <br>
-
-                <ng-container *ngIf="pasantia?.documento_informe7">
-                    <div class="row">
-                        <ng-container>
-                            <div class="col-lg-1">
-                                <div class="vacantesImg text-center">
-                                    <p class="text-center">{{pasantia.vacante.letra}}</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="vacantes">
-                                    <h5 class="text-uppercase"> <b>{{ pasantia.estudiante.nombres }}
-                                            {{ pasantia.estudiante.apellidos }}</b></h5>
-                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{ pasantia.vacante.titulo }} - {{pasantia.empresa.nombre}}
-                                    </small><br>
-                                    <small><i class="fa fa-file-pdf-o"></i>&nbsp;
-                                        &nbsp;{{pasantia.documento_informe7}}
-                                    </small> <br>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-
-                                <h5 class="text-uppercase"><b>Estado del Informe:</b></h5>
-                                <ng-container *ngIf="pasantia.estado_informe7 == 'Enviado'" class="text-success">
-                                    <span class="label btnInfo"> <b> {{ pasantia.estado_informe7 }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_informe7 == 'Aprobado'" class="text-success">
-                                    <span class="label btnSuccess"> <b> {{ pasantia.estado_informe7 }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_informe7 == 'Rechazado'" class="text-success">
-                                    <span class="label btnDanger"> <b> {{ pasantia.estado_informe7 }} </b></span>
-                                </ng-container>
-                                <br>
-                            </div>
-
-                            <div class="col-lg-2">
-                                <div class="buttons">
-
-                                    <button type="button" (click)="getDataInfo(pasantia)" data-toggle="modal"
-                                        data-target=".modal-informe7" class="btn btnInfo waves-effect text-left"><b>Más
-                                            Info
-                                            <i class="fa fa-info-circle"></i></b></button>
-                                </div>
-
-                            </div>
-                        </ng-container>
-                    </div>
-                </ng-container><br><br>
-
-
-                <!-- ============================================================== -->
-                <!--                        INFO INFORME 14                          -->
-                <!-- ============================================================== -->
-                <h4 class="card-title text-uppercase" *ngIf="!pasantia?.estado_informe14"><b> 4.
-                        Informe de la Semana 14
-                    </b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informe14 === 'Aprobado'"><b> 4.
-                        Informe de la Semana 14
-                        &nbsp;<i class="fa fa-check" style="color: green;"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informe14 === 'Rechazado'"><b> 4.
-                        Informe de la Semana 14
-                        &nbsp;<i class="fa fa-times" style="color:#77181C"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informe14 === 'Enviado'"><b> 4.
-                        Informe de la Semana 14
-                        &nbsp;<i class="mdi mdi-update" style="color:#C7B363"></i></b></h4>
-
-                <br>
-
-                <ng-container *ngIf="pasantia?.documento_informe14">
-                    <div class="row">
-                        <ng-container>
-                            <div class="col-lg-1">
-                                <div class="vacantesImg text-center">
-                                    <p class="text-center">{{pasantia.vacante.letra}}</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="vacantes">
-                                    <h5 class="text-uppercase"> <b>{{ pasantia.estudiante.nombres }}
-                                            {{ pasantia.estudiante.apellidos }}</b></h5>
-                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{ pasantia.vacante.titulo }} - {{pasantia.empresa.nombre}}
-                                    </small><br>
-                                    <small><i class="fa fa-file-pdf-o"></i>&nbsp;
-                                        &nbsp;{{pasantia.documento_informe14}}
-                                    </small> <br>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-
-                                <h5 class="text-uppercase"><b>Estado del Informe:</b></h5>
-                                <ng-container *ngIf="pasantia.estado_informe14 == 'Enviado'" class="text-success">
-                                    <span class="label btnInfo"> <b> {{ pasantia.estado_informe14 }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_informe14 == 'Aprobado'" class="text-success">
-                                    <span class="label btnSuccess"> <b> {{ pasantia.estado_informe14 }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_informe14 == 'Rechazado'" class="text-success">
-                                    <span class="label btnDanger"> <b> {{ pasantia.estado_informe14 }} </b></span>
-                                </ng-container>
-                                <br>
-                            </div>
-
-                            <div class="col-lg-2">
-                                <div class="buttons">
-
-                                    <button type="button" (click)="getDataInfo(pasantia)" data-toggle="modal"
-                                        data-target=".modal-informe14" class="btn btnInfo waves-effect text-left"><b>Más
-                                            Info
-                                            <i class="fa fa-info-circle"></i></b></button>
-                                </div>
-
-                            </div>
-                        </ng-container>
-                    </div>
-                </ng-container> <br><br>
-
-
-                <!-- ============================================================== -->
-                <!--                        INFO INFORME FINAL                      -->
-                <!-- ============================================================== -->
-                <h4 class="card-title text-uppercase" *ngIf="!pasantia?.estado_informeFinal"><b> 5.
-                        Informe Final
-                    </b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informeFinal === 'Aprobado'"><b> 5.
-                        Informe Final
-                        &nbsp;<i class="fa fa-check" style="color: green;"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informeFinal === 'Rechazado'"><b> 5.
-                        Informe Final
-                        &nbsp;<i class="fa fa-times" style="color:#77181C"></i></b></h4>
-
-                <h4 class="card-title text-uppercase" *ngIf="pasantia.estado_informeFinal === 'Enviado'"><b> 5.
-                        Informe Final
-                        &nbsp;<i class="mdi mdi-update" style="color:#C7B363"></i></b></h4>
-
-                <br>
-
-                <ng-container *ngIf="pasantia?.documento_informeFinal">
-                    <div class="row">
-                        <ng-container>
-                            <div class="col-lg-1">
-                                <div class="vacantesImg text-center">
-                                    <p class="text-center">{{pasantia.vacante.letra}}</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="vacantes">
-                                    <h5 class="text-uppercase"> <b>{{ pasantia.estudiante.nombres }}
-                                            {{ pasantia.estudiante.apellidos }}</b></h5>
-                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{ pasantia.vacante.titulo }} - {{pasantia.empresa.nombre}}
-                                    </small><br>
-                                    <small><i class="fa fa-file-pdf-o"></i>&nbsp;
-                                        &nbsp;{{pasantia.documento_informeFinal}}
-                                    </small> <br>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-
-                                <h5 class="text-uppercase"><b>Estado del Informe:</b></h5>
-                                <ng-container *ngIf="pasantia.estado_informeFinal == 'Enviado'" class="text-success">
-                                    <span class="label btnInfo"> <b> {{ pasantia.estado_informeFinal }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_informeFinal == 'Aprobado'" class="text-success">
-                                    <span class="label btnSuccess"> <b> {{ pasantia.estado_informeFinal }} </b></span>
-                                </ng-container>
-
-                                <ng-container *ngIf="pasantia.estado_informeFinal == 'Rechazado'" class="text-success">
-                                    <span class="label btnDanger"> <b> {{ pasantia.estado_informeFinal }} </b></span>
-                                </ng-container>
-                                <br>
-                            </div>
-
-                            <div class="col-lg-2">
-                                <div class="buttons">
-
-                                    <button type="button" (click)="getDataInfo(pasantia)" data-toggle="modal"
-                                        data-target=".modal-informeFinal"
-                                        class="btn btnInfo waves-effect text-left"><b>Más
-                                            Info
-                                            <i class="fa fa-info-circle"></i></b></button>
-                                </div>
-
-                            </div>
-                        </ng-container>
-                    </div>
-                </ng-container>
-
-
-            </div>
+<ng-container *ngIf="pasantia">
+    <h2 class="card-title text-uppercase"><b> Mi Modalidad de grado </b></h2>
+    <hr>
+    <h4 class="pl-5 mb-3"><b>ID: </b>{{pasantia?._id}}</h4>
+    <div class="row text-center">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+            <h3><b>Modalidad seleccionada:</b></h3>
+            <h4>{{pasantia?.modalidad.nombre}}</h4>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+            <h3><b>Tutor Asignado:</b></h3>
+            <ng-container *ngIf="pasantia.tutor == null" class="text-success">
+                <span class="label btnDanger"><b> No asignado </b></span>
+            </ng-container>
+            <ng-container *ngIf="pasantia.tutor" class="text-success">
+                <span class="label btnSuccess"><b> {{pasantia?.tutor.nombres}} {{pasantia?.tutor.apellidos}}</b></span>
+            </ng-container>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+            <h3><b>Estado:</b> </h3>
+            <ng-container *ngIf="pasantia.estado == 'Enviada'" class="text-success">
+                <span class="label btnInfo"> <b> {{ pasantia.estado }} </b></span>
+            </ng-container>
+            <ng-container *ngIf="pasantia.estado == 'En ejecución'" class="text-success">
+                <span class="label btnDanger"> <b> {{ pasantia.estado }} </b></span>
+            </ng-container>
+            <ng-container *ngIf="pasantia.estado == 'Rechazada'" class="text-success">
+                <span class="label btnSuccess"> <b> {{ pasantia.estado }} </b></span>
+            </ng-container>
         </div>
     </div>
-</div>
+    <br>
+    <!--Acordeon de información -->
+    <div id="accordion">
+        <div class="card">
+          <div class="card-header">
+            <h3>
+                <a class="collapsed card-link" data-toggle="collapse" href="#preinscripcion">
+                    <b>1. Pre-Inscripción & información de la vacante &nbsp;</b>
+                    <i *ngIf="pasantia?.aprobacionEmpresa === true" class="fa fa-check" style="color: green;"></i>
+                    <i *ngIf="pasantia?.aprobacionEmpresa === false" class="fa fa-times" style="color:#77181C"></i>
+                </a>
+            </h3>
+          </div>
+          <div id="preinscripcion" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <div class="d-flex justify-content-start mb-3">
+                    <h5 class="mr-3">
+                        <b>Aprobacion de la empresa:</b>&nbsp;
+                        <i *ngIf="pasantia?.aprobacionEmpresa === true" class="fa fa-check" style="color: green;"></i>
+                        <i *ngIf="pasantia?.aprobacionEmpresa === false" class="fa fa-times" style="color:#77181C"></i>
+                    </h5>
+                    <h5><i class="fa fa-money"></i> &nbsp; <b>Pagada: </b>{{pasantia?.vacante.pagada}}</h5>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <h5><i class="fa fa-briefcase"></i> &nbsp; <b>Vacante: </b>{{pasantia?.vacante.titulo}}</h5>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <h5><i class="fa fa-building"></i> &nbsp; <b>Empresa: </b>{{pasantia?.empresa.nombre}}</h5>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <h5><i class="fa fa-home"></i> &nbsp; <b>Dirección: </b>{{pasantia?.vacante.ubicacion}}</h5>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <h5><i class="fa fa-car"></i> &nbsp; <b>Modalidad: </b>{{pasantia?.vacante.modalidad}}</h5>
+                    </div>
+                </div>
+                <h5><i class="fa fa-code"></i> &nbsp; <b>Funciones: </b>{{pasantia?.vacante.funciones}}</h5>              
+                <div class="mt-3 ml-4">
+                    <h4> <b>Descripción:</b></h4>
+                    <p class="mt-2">{{pasantia?.vacante.descripcion}}</p> 
+                </div>
+                <hr>
+                <h5> <b>Persona a Cargo:</b></h5>
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mw-100">
+                        <h5><i class="fa fa-user"></i> &nbsp; {{pasantia?.vacante.encargado.nombre}}</h5>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mw-100">
+                        <h5><i class="mdi mdi-email"></i> &nbsp;{{pasantia?.vacante.encargado.correo}}</h5>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mw-100">
+                        <h5><i class="fa fa-phone"></i> &nbsp;{{pasantia?.vacante.encargado.telefono}}</h5>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mw-100">
+                        <h5><i class="fa fa-id-badge"></i> &nbsp;{{pasantia?.vacante.encargado.cargo}}</h5>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="card-header">
+            <h3>
+                <a class="collapsed card-link" data-toggle="collapse" href="#propuesta">
+                    <b>2. Propuesta </b>
+                    <i *ngIf="pasantia?.estado_propuesta === 'Enviada'" class="mdi mdi-update" style="color:#C7B363"></i>
+                    <i *ngIf="pasantia?.estado_propuesta === 'Aprobada'" class="fa fa-check" style="color: green;"></i>
+                    <i *ngIf="pasantia?.estado_propuesta === 'Rechazada'" class="fa fa-times" style="color:#77181C"></i>
+                </a>
+            </h3>
+          </div>
+          <div id="propuesta" class="collapse" data-parent="#accordion">
+            <div *ngIf="pasantia?.documento_propuesta !== undefined && pasantia?.documento_propuesta !== null && pasantia?.documento_propuesta !== ''"class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <h3><b>Estado:</b> </h3>
+                        <ng-container *ngIf="pasantia.estado_propuesta == 'Enviada'" class="text-success">
+                            <span class="label btnInfo"> <b> {{ pasantia.estado_propuesta }} </b></span>
+                        </ng-container>
+                        <ng-container *ngIf="pasantia.estado_propuesta == 'Aprobada'" class="text-success">
+                            <span class="label" style="background-color: green;"> <b> {{ pasantia.estado_propuesta }} </b></span>
+                        </ng-container>
+                        <ng-container *ngIf="pasantia.estado_propuesta == 'Rechazada'" class="text-success">
+                            <span class="label btnSuccess"> <b> {{ pasantia.estado_propuesta }} </b></span>
+                        </ng-container>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <h5><b>Documento propuesta:</b></h5>
+                        <button class="btn btnSuccess">
+                            <a class="btnSuccess" [href]="pasantia?.documento_propuesta | documento: info._id" download="pasantia?.documento_propuesta" target="_blank">
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver propuesta</b></small>
+                            </a>
+                        </button>
+                    </div>
+                    <br>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <h5><b>Documento ficha:</b></h5>
+                        <button class="btn btnSuccess">
+                            <a class="btnSuccess" [href]="pasantia?.documento_fichaAcademica | documento: info._id" download="pasantia?.documento_fichaAcademica" target="_blank">
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ficha académica</b></small>
+                            </a>
+                        </button>
+                    </div>  
+                </div>
+                <div class="mt-5 ml-3">
+                    <h4><b>Notas de la propuesta:</b></h4>
+                    <p *ngIf="pasantia.notas_propuesta !== ''" class="pl-3 mt-2">{{pasantia?.notas_propuesta}}</p>
+                    <p *ngIf="pasantia.notas_propuesta == ''" class="pl-3 mt-2 font-italic">No hay notas de la propuesta ...</p>  
+                </div>        
+            </div>
+            <div *ngIf="pasantia?.documento_propuesta == null || pasantia?.documento_propuesta == ''"class="card-body">
+                <h3 class="pl-3 font-italic">No has enviado la propuesta...</h3>
+            </div>
+          </div>
+        </div>
+      
+        <div class="card">
+          <div class="card-header">
+            <h3>
+                <a class="collapsed card-link" data-toggle="collapse" href="#informe7">
+                    <b>3. Informe 7 </b>
+                    <i *ngIf="pasantia?.estado_informe7 === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
+                    <i *ngIf="pasantia?.estado_informe7 === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
+                    <i *ngIf="pasantia?.estado_informe7 === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
+                </a>
+            </h3>
+          </div>
+          <div id="informe7" class="collapse" data-parent="#accordion">
+            <div *ngIf="pasantia?.documento_informe7 !== undefined && pasantia?.documento_informe7 !== null && pasantia?.documento_informe7 !== ''" class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                        <h3><b>Estado:</b> </h3>
+                        <ng-container *ngIf="pasantia.estado_informe7 == 'Enviado'" class="text-success">
+                            <span class="label btnInfo"> <b> {{ pasantia.estado_informe7 }} </b></span>
+                        </ng-container>
+                        <ng-container *ngIf="pasantia.estado_informe7 == 'Aprobado'" class="text-success">
+                            <span class="label" style="background-color: green;"> <b> {{ pasantia.estado_informe7 }} </b></span>
+                        </ng-container>
+                        <ng-container *ngIf="pasantia.estado_informe7 == 'Rechazado'" class="text-success">
+                            <span class="label btnSuccess"> <b> {{ pasantia.estado_informe7 }} </b></span>
+                        </ng-container>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                        <h5><b>Documento informe 7:</b></h5>
+                        <button class="btn btnSuccess">
+                            <a class="btnSuccess" [href]="pasantia?.documento_informe7 | documento: info._id" download="pasantia?.documento_informe7" target="_blank">
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver informe 7</b></small>
+                            </a>
+                        </button>
+                    </div>
+                    <br> 
+                </div>
+                <div class="mt-5 ml-3">
+                    <h4><b>Notas del informe 7:</b></h4>
+                    <p *ngIf="pasantia.notas_informe7 !== ''" class="pl-3 mt-2">{{pasantia?.notas_informe7}}</p>
+                    <p *ngIf="pasantia.notas_informe7 == ''" class="pl-3 mt-2 font-italic">No hay notas del informe 7...</p>  
+                </div>        
+            </div>
+            <div *ngIf="pasantia?.documento_informe7 == null || pasantia?.documento_informe7 == ''"class="card-body">
+                <h3 class="pl-3 font-italic">No has enviado el informe 7...</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+              <h3>
+                  <a class="collapsed card-link" data-toggle="collapse" href="#informe14">
+                      <b>4. Informe 14 </b>
+                      <i *ngIf="pasantia?.estado_informe14 === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
+                      <i *ngIf="pasantia?.estado_informe14 === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
+                      <i *ngIf="pasantia?.estado_informe14 === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
+                  </a>
+              </h3>
+            </div>
+            <div id="informe14" class="collapse" data-parent="#accordion">
+              <div *ngIf="pasantia?.documento_informe14 !== undefined && pasantia?.documento_informe14 !== null && pasantia?.documento_informe14 !== ''" class="card-body">
+                  <div class="row">
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                          <h3><b>Estado:</b> </h3>
+                          <ng-container *ngIf="pasantia.estado_informe14 == 'Enviado'" class="text-success">
+                              <span class="label btnInfo"> <b> {{ pasantia.estado_informe14 }} </b></span>
+                          </ng-container>
+                          <ng-container *ngIf="pasantia.estado_informe14 == 'Aprobado'" class="text-success">
+                              <span class="label" style="background-color: green;"> <b> {{ pasantia.estado_informe14 }} </b></span>
+                          </ng-container>
+                          <ng-container *ngIf="pasantia.estado_informe14 == 'Rechazado'" class="text-success">
+                              <span class="label btnSuccess"> <b> {{ pasantia.estado_informe14 }} </b></span>
+                          </ng-container>
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                          <h5><b>Documento informe 14:</b></h5>
+                          <button class="btn btnSuccess">
+                              <a class="btnSuccess" [href]="pasantia?.documento_informe14 | documento: info._id" download="pasantia?.documento_informe14" target="_blank">
+                                  <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver informe 14</b></small>
+                              </a>
+                          </button>
+                      </div>
+                      <br> 
+                  </div>
+                  <div class="mt-5 ml-3">
+                      <h4><b>Notas del informe 7:</b></h4>
+                      <p *ngIf="pasantia.notas_informe14 !== ''" class="pl-3 mt-2">{{pasantia?.notas_informe14}}</p>
+                      <p *ngIf="pasantia.notas_informe14 == ''" class="pl-3 mt-2 font-italic">No hay notas del informe 14...</p>  
+                  </div>        
+              </div>
+              <div *ngIf="pasantia?.documento_informe14 == null || pasantia?.documento_informe14 == ''"class="card-body">
+                  <h3 class="pl-3 font-italic">No has enviado el informe 14...</h3>
+              </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+              <h3>
+                  <a class="collapsed card-link" data-toggle="collapse" href="#informeFinal">
+                      <b>4. Informe final </b>
+                      <i *ngIf="pasantia?.estado_informeFinal === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
+                      <i *ngIf="pasantia?.estado_informeFinal === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
+                      <i *ngIf="pasantia?.estado_informeFinal === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
+                  </a>
+              </h3>
+            </div>
+            <div id="informeFinal" class="collapse" data-parent="#accordion">
+              <div *ngIf="pasantia?.documento_informeFinal !== undefined && pasantia?.documento_informeFinal !== null && pasantia?.documento_informeFinal !== ''" class="card-body">
+                  <div class="row">
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                          <h3><b>Estado:</b> </h3>
+                          <ng-container *ngIf="pasantia.estado_informeFinal == 'Enviado'" class="text-success">
+                              <span class="label btnInfo"> <b> {{ pasantia.estado_informeFinal }} </b></span>
+                          </ng-container>
+                          <ng-container *ngIf="pasantia.estado_informeFinal == 'Aprobado'" class="text-success">
+                              <span class="label" style="background-color: green;"> <b> {{ pasantia.estado_informeFinal }} </b></span>
+                          </ng-container>
+                          <ng-container *ngIf="pasantia.estado_informeFinal == 'Rechazado'" class="text-success">
+                              <span class="label btnSuccess"> <b> {{ pasantia.estado_informeFinal }} </b></span>
+                          </ng-container>
+                      </div>
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                          <h5><b>Documento informe final:</b></h5>
+                          <button class="btn btnSuccess">
+                              <a class="btnSuccess" [href]="pasantia?.documento_informeFinal | documento: info._id" download="pasantia?.documento_informeFinal" target="_blank">
+                                  <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver informe final</b></small>
+                              </a>
+                          </button>
+                      </div>
+                      <br> 
+                  </div>
+                  <div class="mt-5 ml-3">
+                      <h4><b>Notas del informe final:</b></h4>
+                      <p *ngIf="pasantia.notas_informeFinal !== ''" class="pl-3 mt-2">{{pasantia?.notas_informeFinal}}</p>
+                      <p *ngIf="pasantia.notas_informeFinal == ''" class="pl-3 mt-2 font-italic">No hay notas del informe final...</p>  
+                  </div>        
+              </div>
+              <div *ngIf="pasantia?.documento_informeFinal == null || pasantia?.documento_informeFinal == ''"class="card-body">
+                  <h3 class="pl-3 font-italic">No has enviado el informe final...</h3>
+              </div>
+            </div>
+        </div>
+      
+      </div>
+
+
+</ng-container>
+<ng-container *ngIf="!pasantia">
+    <h1 class="mx-auto py-5">No has seleccionado ninguna modalidad</h1>
+</ng-container>

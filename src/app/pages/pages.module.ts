@@ -21,7 +21,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { EmpresasComponent } from './docente/empresas/empresas.component';
 import { FormsModule } from '@angular/forms';
 import { InscripcionPasantiaComponent } from './solicitudes/pasantia/inscripcion-pasantia/inscripcion-pasantia.component';
-import { VacantesComponent } from './docente/vacantes/vacantes.component';
+import { VacantesComponent } from './encargado/vacantes/vacantes.component';
+import { EncarSolicitudVacanteComponent } from './encargado/solicitud-vacante/solicitud-vacante.component';
 import { ModSolicitudVacanteComponent } from './docente/mod-solicitud-vacante/mod-solicitud-vacante.component';
 import { MiSolicitudComponent } from './estudiante/mi-solicitud/mi-solicitud.component';
 import { ActaInicioComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
@@ -53,7 +54,8 @@ import { NotificacionesComponent} from './notificaciones/notificaciones.componen
     InformeSieteComponent,
     InformeCatorceComponent,
     InformeFinalComponent,
-    NotificacionesComponent
+    NotificacionesComponent,
+    EncarSolicitudVacanteComponent
 
   ],
   exports: [
@@ -74,7 +76,8 @@ import { NotificacionesComponent} from './notificaciones/notificaciones.componen
     InformeSieteComponent,
     InformeCatorceComponent,
     InformeFinalComponent,
-    NotificacionesComponent
+    NotificacionesComponent,
+    EncarSolicitudVacanteComponent
 
   ],
   imports: [

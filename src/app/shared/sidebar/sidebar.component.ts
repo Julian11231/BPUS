@@ -17,6 +17,7 @@ export class SidebarComponent implements OnInit {
   menuAdmin: any[];
 
   EstadoPreInsc: string;
+  aprobacionEmpresa: boolean;
   EstadoPropuesta: string;
   EstadoInforme7: string;
   EstadoInforme14: string;
@@ -46,7 +47,8 @@ export class SidebarComponent implements OnInit {
       if (JSON.parse(localStorage.getItem('estudiante')).modalidad) {
         let idPasantia = JSON.parse(localStorage.getItem('estudiante'))?.modalidad._id;
         this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
-          console.log(resp)
+          console.log(resp);
+          this.aprobacionEmpresa = resp.pasantia?.aprobacionEmpresa;
           this.EstadoPreInsc = resp.pasantia?.estado;
           this.EstadoPropuesta = resp.pasantia?.estado_propuesta;
           this.EstadoInforme7 = resp.pasantia?.estado_informe7;

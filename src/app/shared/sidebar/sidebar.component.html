@@ -53,14 +53,17 @@
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
-        <nav class="sidebar-nav p-n5">
-            <ul id="sidebarnav" class="p-n5">
-                <li class="nav-small-cap"><b>HOLO</b> </li>
-                <li class="p-n5">
-                    <ul class="p-n5">
-                        <li *ngFor="let menu of menuEncargadoEmpresa" class="p-n5">
-                             <a class="p-n5" style="cursor:pointer" [routerLink]="[menu.url]" routerLinkActive="active"><i class="{{menu.icono}}"></i>{{menu.titulo}} </a>
-                        </li>
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="nav-small-cap"><b>Perfiles</b> </li>
+                <li *ngFor="let menu of menuEncargadoEmpresa"> <a class="has-arrow waves-effect waves-dark" href="#"
+                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
+                            class="hide-menu">{{menu.titulo}}
+                            <span id="number"
+                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
+                                routerLinkActive="active">{{submenu.titulo}} </a></li>
                     </ul>
                 </li>
             </ul>
@@ -123,30 +126,39 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="fa fa-check-square-o"></i><span class="hide-menu">Pre-Inscripción </span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a class="isDisabled" routerLink="/dashboard" routerLinkActive="active">Enviar
+                        <li>
+                            <a routerLink= "/mi-modalidad" *ngIf="aprobacionEmpresa === true" class="isDisabled">Enviar
                                 Pre-Inscripción
-                            </a></li>
+                            </a>
+                            <a  *ngIf="aprobacionEmpresa === false" routerLink="/preinscripcion-pasantia" routerLinkActive="active">Enviar
+                                Pre-Inscripción
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
                             class="fa fa-book"></i><span class="hide-menu">Propuesta</span></a>
                     <ul aria-expanded="false" class="collapse">
 
-                        <li *ngIf="!EstadoPreInsc"><a class="isDisabled" routerLink="/dashboard"
-                                routerLinkActive="active">Enviar Informe
-                            </a></li>
+                        <li *ngIf="EstadoPreInsc ==='PreInscrita' && aprobacionEmpresa === false">
+                            <a routerLink="/mi-modalidad" class="isDisabled">Inscripción de Propuesta</a>
+                        </li>
 
-                        <li *ngIf="EstadoPreInsc ==='Rechazada'"><a class="isDisabled" routerLink="/dashboard"
-                                routerLinkActive="active">Inscripción de Propuesta
-                            </a></li>
+                        <li *ngIf="EstadoPreInsc ==='PreInscrita' && aprobacionEmpresa === true">
+                            <a routerLink="/inscripcion-propuesta" routerLinkActive="active">Inscripción de Propuesta</a>
+                        </li>
 
-                        <li *ngIf="EstadoPreInsc ==='Enviada'"><a class="isDisabled" routerLink="/dashboard"
-                                routerLinkActive="active">Inscripción de Propuesta
-                            </a></li>
+                        <li *ngIf="EstadoPropuesta ==='Rechazada'">
+                            <a routerLink="/inscripcion-propuesta" routerLinkActive="active">Inscripción de Propuesta</a>
+                        </li>
 
-                        <li *ngIf="EstadoPreInsc ==='Aprobada'"><a routerLink="/inscripcion-propuesta"
-                                routerLinkActive="active">Inscripción de Propuesta
-                            </a></li>
+                        <li *ngIf="EstadoPropuesta ==='Enviada'">
+                            <a routerLink="/mi-modalidad" class="isDisabled">Inscripción de Propuesta</a>
+                        </li>
+
+                        <li *ngIf="EstadoPropuesta ==='Aprobada'">
+                            <a routerLink="/mi-modalidad" class="isDisabled">Inscripción de Propuesta</a>
+                        </li>
 
                     </ul>
                 </li>
@@ -158,19 +170,23 @@
                             class="fa fa-file-pdf-o"></i><span class="hide-menu">Informe - Semana 7</span></a>
                     <ul aria-expanded="false" class="collapse">
 
-                        <li *ngIf="!EstadoPropuesta"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="!EstadoInforme7 && EstadoPropuesta === 'Aprobada' && EstadoPreInsc === 'En ejecución'"><a routerLink="/informe-siete"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoPropuesta ==='Rechazada'"><a class="isDisabled" routerLink="/dashboard"
+                        <li  *ngIf="EstadoPropuesta !== 'Aprobada' && EstadoPreInsc !== 'En ejecución'"><a routerLink="/mi-modalidad"
+                            routerLinkActive="active">Enviar Informe
+                        </a></li>
+
+                        <li *ngIf="EstadoInforme7 ==='Rechazado'"><a routerLink="/informe-siete"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoPropuesta ==='Enviada'"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="EstadoInforme7 ==='Enviado'"><a class="isDisabled" routerLink="/mi-modalidad"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoPropuesta ==='Aprobada'"><a routerLink="/informe-siete"
+                        <li *ngIf="EstadoInforme7 ==='Aprobado'"><a routerLink="/mi-modalidad"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
@@ -180,20 +196,23 @@
                             class="fa fa-file-text-o"></i><span class="hide-menu">Informe - Semana 14</span></a>
                     <ul aria-expanded="false" class="collapse">
 
-
-                        <li *ngIf="!EstadoInforme7"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="!EstadoInforme14 && EstadoInforme7 ==='Aprobado'"><a routerLink="/informe-catorce"
+                                routerLinkActive="active">Enviar Informe
+                            </a></li>
+                        
+                            <li *ngIf="!EstadoInforme14 && EstadoInforme7 !== 'Aprobado'"><a class="isDisabled" routerLink="/mi-modalidad"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoInforme7 ==='Rechazado'"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="EstadoInforme14 ==='Rechazado'"><a routerLink="/informe-catorce"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoInforme7 ==='Enviado'"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="EstadoInforme14 ==='Enviado'"><a class="isDisabled" routerLink="/mi-modalidad"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoInforme7 ==='Aprobado'"><a routerLink="/informe-catorce"
+                        <li *ngIf="EstadoInforme14 ==='Aprobado'"><a routerLink="/mi-modalidad"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
@@ -203,19 +222,23 @@
                             class="fa fa-file-word-o"></i><span class="hide-menu">Informe Final</span></a>
                     <ul aria-expanded="false" class="collapse">
 
-                        <li *ngIf="!EstadoInforme14"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="!EstadoInformeFinal && EstadoInforme14 === 'Aprobado'"><a routerLink="/informe-final"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoInforme14 ==='Rechazado'"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="!EstadoInformeFinal &&  EstadoInforme14 !== 'Aprobado'"><a class="isDisabled" routerLink="/mi-modalidad"
+                            routerLinkActive="active">Enviar Informe
+                        </a></li>
+
+                        <li *ngIf="EstadoInformeFinal ==='Rechazado'"><a routerLink="/informe-final"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoInforme14 ==='Enviado'"><a class="isDisabled" routerLink="/dashboard"
+                        <li *ngIf="EstadoInformeFinal ==='Enviado'"><a class="isDisabled" routerLink="/mi-modalidad"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 
-                        <li *ngIf="EstadoInforme14 ==='Aprobado'"><a routerLink="/informe-final"
+                        <li *ngIf="EstadoInformeFinal ==='Aprobado'"><a routerLink="/mi-modalidad"
                                 routerLinkActive="active">Enviar Informe
                             </a></li>
 

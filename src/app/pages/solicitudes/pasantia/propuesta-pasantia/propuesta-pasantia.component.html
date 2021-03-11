@@ -39,7 +39,7 @@
 
                     </div>
                     <div class="row text-xl-center">
-                        <div class="col-lg-12">
+                        <div class="col-12 col-lg-6">
                             <label for="filePropuesta" *ngIf="nombreArchivoP == null" class="labels custom-file-upload">
                                 Click aquí para subir la Propuesta de Modalidad</label>
 
@@ -51,15 +51,27 @@
 
                             <input name="filePropuesta" id="filePropuesta"
                                 (change)="getFilePropuesta( $event.target.files[0] )" type="file" accept="application/pdf"
-                                class="imagenes-secundarias" required /> <br> <br>
+                                class="imagenes-secundarias" required /> 
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="fileFicha" *ngIf="nombreArchivoF == null" class="labels custom-file-upload">
+                                Click aquí para subir la ficha academica</label>
 
-                            <button class="btn btnSuccess" [disabled]="nombreArchivoP == undefined" (click)="enviarPropuesta()" style="width: 40%; "><b> Enviar
-                                    Propuesta</b></button>
+                            <label for="fileFicha" *ngIf="nombreArchivoF != null"
+                                class="labels custom-file-upload text-center" style="color: #8F141B; font-weight: bold;">
+                                {{ nombreArchivoF }}</label><br>
+                            <small>Recuerda que debe ser un archivo PDF, de tamaño menor a 2MB.</small><br>
 
+
+                            <input name="fileFicha" id="fileFicha"
+                                (change)="getFileFicha( $event.target.files[0] )" type="file" accept="application/pdf"
+                                class="imagenes-secundarias" required />
                         </div>
 
-                    </div><br><br>
-
+                    </div>
+                    <button class="btn btnSuccess btn-block my-5 px-5" [disabled]="(nombreArchivoF === undefined) || (nombreArchivoP === undefined)" (click)="enviarPropuesta()"><b> Enviar
+                        archivos</b>
+                </button>
                 </div>
             </div>
             </div>

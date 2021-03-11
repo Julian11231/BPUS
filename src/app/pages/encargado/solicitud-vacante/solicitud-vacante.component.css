@@ -1,0 +1,35 @@
+.vacantesImg {
+    
+    width: 70px;
+    height: 70px;
+    /*border: solid 2px;*/
+    border-radius: 100%;
+    margin-top: 0px;
+    background-color: #77181C;
+    padding-top: 16px;
+
+}
+
+.vacantesImg p{
+    
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.vacantesInfo{
+    margin-left: 25px;
+}
+
+.buttons {
+
+    padding-top: 30px;
+}
+
+#line{
+    width:240%;
+    text-align:left;
+    margin-left: -88px;
+    margin-top: 40px;
+}
+

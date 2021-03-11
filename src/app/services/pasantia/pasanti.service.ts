@@ -21,18 +21,28 @@ export class PasantiService {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia?token=${token}`;
-
     return this.http.get(url);
+  }
 
+  getSolicitudesEncargado(empresa: string) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/empresa${empresa}?token=${token}`;
+    return this.http.get(url);
+  }
+
+  getSolicitudesTutor(tutor: string) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/tutor${tutor}?token=${token}`;
+    return this.http.get(url);
   }
 
   getPasantia(id: string) {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
-
     return this.http.get(url);
-
   }
 
 
@@ -45,6 +55,33 @@ export class PasantiService {
 
       if (resp.ok == true) {
         return resp.solicitudGuardada;
+      }else{
+        return false;
+      }
+
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+
+    }));
+
+  }
+
+  cambiarEstadoEncargado(id: String, estado: boolean) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/cambiarEstado${id}?estado=${estado}&token=${token}`;
+
+    return this.http.put(url, estado).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        return true;
       }else{
         return false;
       }
@@ -108,6 +145,37 @@ export class PasantiService {
         Swal.fire({
           title: '¡Bien Hecho!',
           text: `Se ha enviado correctamente el documento`,
+          icon: 'success'
+        }).then(() => {
+          this.router.navigate(['/mi-modalidad'])
+        });
+      }
+      return true;
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
+
+  postDocumentoFichaAcademica(idEstudiante: string, documento_fichaAcademica: FormData) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+
+    return this.http.put(url, documento_fichaAcademica).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+
+        Swal.fire({
+          title: '¡Bien Hecho!',
+          text: `Se ha enviado correctamente la ficha academica`,
           icon: 'success'
         }).then(() => {
           this.router.navigate(['/mi-modalidad'])

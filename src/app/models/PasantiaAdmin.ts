@@ -1,10 +1,10 @@
 export class PasantiaAdmin {
 
     constructor(
-
-        public notas?: String,
         public estado?: String,
         public tutor?: String,
+        public estado_propuesta?: String,
+        public notas_propuesta?: String
 
     ) { }
 }

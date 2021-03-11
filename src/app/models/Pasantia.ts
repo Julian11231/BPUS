@@ -8,6 +8,7 @@ export class Pasantia {
         public tutor?: String,
 
         public documento_propuesta?: FormData,
+        public documento_fichaAcademica?: FormData,
         public estado_propuesta?: String,
         public notas_propuesta?: String,
 
@@ -22,8 +23,7 @@ export class Pasantia {
         public documento_informeFinal?: FormData,
         public estado_informeFinal?: String,
         public notas_informeFinal?: String,
-
-        public notas?: String,
+        
         public estado?: String
 
     ) { }

@@ -23,9 +23,11 @@ export class TutoriaPasantiaComponent implements OnInit {
   }
 
   getPasantias() {
-    this._pasantiaService.getSolicitudes().subscribe((resp: any) => {
-      this.idTutor = localStorage.getItem('id');
+    this.idTutor = localStorage.getItem('id');
+    this._pasantiaService.getSolicitudesTutor(this.idTutor).subscribe((resp: any) => {
       this.pasantias = resp.pasantias;
+      console.log(this.pasantias);
+      console.log(this.idTutor);
     })
   }
 
@@ -46,12 +48,13 @@ export class TutoriaPasantiaComponent implements OnInit {
       if (result.value) {
 
         let pasantiaUpdate = new PasantiaTutor(
-          "Aprobada",
           form.value.estado_informe7,
+          null,
           form.value.estado_informe14,
+          null,
           form.value.estado_informeFinal,
-          "Aprobada",
-          localStorage.getItem('id')
+          null,
+          "En ejecución",
         )
 
         this._pasantiaService.putSolicitud(idPasantia, pasantiaUpdate).subscribe();

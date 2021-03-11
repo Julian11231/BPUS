@@ -14,8 +14,11 @@ export class ActaInicioComponent implements OnInit {
 
   pasantia: string;
   nombreArchivoP: string;
+  nombreArchivoF: string;
   usuario:any;
+
   documento_propuesta = new FormData();
+  documento_fichaAcademica = new FormData();
 
   MAX_SIZE_FILE: number = 2000000
 
@@ -41,7 +44,7 @@ export class ActaInicioComponent implements OnInit {
     if (file.size > this.MAX_SIZE_FILE) {
       Swal.fire({
         title: '¡Lo Sentimos!',
-        html: `<p> El archivo: <b>${file.name}</b>, supera las 25 MB</p>`,
+        html: `<p> El archivo: <b>${file.name}</b>, supera las 2 MB</p>`,
         icon: 'error',
         confirmButtonText: 'Ok',
         showCancelButton: false,
@@ -55,6 +58,28 @@ export class ActaInicioComponent implements OnInit {
       this.nombreArchivoP = file.name;
       let documento_propuesta = <File>file;
       this.documento_propuesta.append('documento_propuesta', documento_propuesta, documento_propuesta.name);
+    }
+  }
+
+  getFileFicha(file: File) {
+
+    if (file.size > this.MAX_SIZE_FILE) {
+      Swal.fire({
+        title: '¡Lo Sentimos!',
+        html: `<p> El archivo: <b>${file.name}</b>, supera las 2 MB</p>`,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        showCancelButton: false,
+        confirmButtonColor: '#60D89C',
+      }).then(() => {
+        location.reload()
+      });
+
+    } else {
+
+      this.nombreArchivoF = file.name;
+      let documento_fichaAcademica = <File>file;
+      this.documento_fichaAcademica.append('documento_fichaAcademica', documento_fichaAcademica, documento_fichaAcademica.name);
     }
   }
 
@@ -75,7 +100,9 @@ export class ActaInicioComponent implements OnInit {
       if (result.value) {
 
         let idEstudiante = this.usuario._id;
-        this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe();
+        this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((resp:any) => {
+          this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe();
+        });
 
       }
     });

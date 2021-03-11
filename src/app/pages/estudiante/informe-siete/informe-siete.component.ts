@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { PasantiService } from 'src/app/services/service.index';
+import { PasantiService, NotificacionesService } from 'src/app/services/service.index';
+import { Notificacion } from 'src/app/models/notificacion.model';
 
 @Component({
   selector: 'app-informe-siete',
@@ -10,14 +11,21 @@ import { PasantiService } from 'src/app/services/service.index';
 export class InformeSieteComponent implements OnInit {
 
   nombreArchivoInforme: string;
-
+  info:any;
   documento_informe7 = new FormData();
 
-  MAX_SIZE_FILE: number = 25000000
+  MAX_SIZE_FILE: number = 2000000
 
-  constructor(public _pasantiaService: PasantiService) { }
+  constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService,) { }
 
   ngOnInit(): void {
+    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
+    const admin = JSON.parse(localStorage.getItem('administrativo'));
+    if(estudiante){
+      this.info = estudiante;
+    }else{
+      this.info = admin;
+    }
   }
 
   getFileInforme(file: File) {
@@ -25,7 +33,7 @@ export class InformeSieteComponent implements OnInit {
     if (file.size > this.MAX_SIZE_FILE) {
       Swal.fire({
         title: '¡Lo Sentimos!',
-        html: `<p> El archivo: <b>${file.name}</b>, supera las 25 MB</p>`,
+        html: `<p> El archivo: <b>${file.name}</b>, supera las 2 MB</p>`,
         icon: 'error',
         confirmButtonText: 'Ok',
         showCancelButton: false,
@@ -58,10 +66,18 @@ export class InformeSieteComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
-
         let idEstudiante = localStorage.getItem('id');
-        this._pasantiaService.postDocumentoInf7(idEstudiante, this.documento_informe7).subscribe();
-
+          this._pasantiaService.postDocumentoInf7(idEstudiante, this.documento_informe7).subscribe((resp:any)=> {
+            let currentDate = new Date();
+            let notificacion = new Notificacion(
+              this.info.modalidad.tutor,
+              currentDate,
+              'Envio de informe 7',
+              `${this.info.nombres} te ha enviado el informe de la semana 7`,
+              'Administrativo' 
+            );
+            this._notificacionService.postNotificacion(notificacion).subscribe();
+          });
       }
     });
   }

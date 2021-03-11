@@ -30,6 +30,7 @@ export class InscripcionPasantiaComponent implements OnInit {
   personaCargo: string;
   correo: string;
   telefono: string;
+  personaCargoId:string;
 
   preInscripcion: any;
   nombreEmpresa: string;
@@ -82,16 +83,18 @@ export class InscripcionPasantiaComponent implements OnInit {
             form.value.eps
           )
           this._pasantiaService.postSolicitud(idEstudiante, preInscripcion).subscribe((respP:any) => {
+            console.log(this.personaCargoId);
             let currentDate = new Date();
             let notificacion = new Notificacion(
-              this.jefeProgramaID,
+              this.personaCargoId,
               currentDate,
               'Nueva solicitd de pasantia',
               `${this.info.nombres} te ha enviado una solicitude de pasantia para la empresa ${this.nombreEmpresa}`,
-              'Administrativo' 
+              'EncargadoEmpresa' 
             );
             console.log(respP);
             this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
+              /*
               if(respN){
                 this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
                   if(respC){
@@ -112,6 +115,7 @@ export class InscripcionPasantiaComponent implements OnInit {
                   }
                 })
               }
+             */ 
             });
           });
 
@@ -131,11 +135,11 @@ export class InscripcionPasantiaComponent implements OnInit {
 
     let currentDate = new Date();
     let notificacion = new Notificacion(
-      this.jefeProgramaID,
+      this.personaCargoId,
       currentDate,
       'Nueva solicitd de pasantia',
       `${this.info.nombres} te ha enviado una solicitude de pasantia para la empresa ${this.nombreEmpresa}`,
-      'Administrativo' 
+      'EncargadoEmpresa' 
     );
     this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((resp:any)=>{
       if(resp){
@@ -172,6 +176,7 @@ export class InscripcionPasantiaComponent implements OnInit {
     this.cantidad = data.cantidad;
     this.pagada = data.pagada;
     this.personaCargo = data.encargado.nombre;
+    this.personaCargoId = data.encargado._id;
     this.correo = data.encargado.correo;
     this.telefono = data.encargado.telefono;
   }
@@ -180,6 +185,7 @@ export class InscripcionPasantiaComponent implements OnInit {
     this.preInscripcion = dato._id;
     this.empresa = dato.empresa._id;
     this.nombreEmpresa = dato.empresa.nombre;
+    this.personaCargoId = dato.encargado._id;
   }
 
 }
