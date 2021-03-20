@@ -57,7 +57,7 @@ export class TutoriaPasantiaComponent implements OnInit {
           "En ejecución",
         )
 
-        this._pasantiaService.putSolicitud(idPasantia, pasantiaUpdate).subscribe();
+        this._pasantiaService.putSolicitudTutor(idPasantia, pasantiaUpdate).subscribe();
       }
     })
 

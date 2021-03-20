@@ -64,13 +64,37 @@ export class EncarSolicitudVacanteComponent implements OnInit {
   }
 
   rechazarSolicitud(form: NgForm){
-    if(form.value.notas !== null){
-      let pasantia = new PasantiaAdmin(
-        form.value.notas,
-        "Rechazada",
-      )
-      this._pasantiaService.putSolicitud(this.vacanteSelected._id, pasantia).subscribe();
-    }
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'Vas a rechazar la vacante de '+ this.vacanteSelected.estudiante.nombres,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Aprobar!',
+      cancelButtonText: 'Cerrar'
+    }).then((result) => {
+      if (result.value) {
+        this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, false).subscribe((resp:any) => {
+          console.log(resp);
+          if(resp){
+            Swal.close();
+            Swal.fire({
+              title: 'Rechazada correctamente',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton:false,
+              timerProgressBar: true,
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                this.getSolicitudes();
+              }
+            })
+          }
+        });
+      }
+    })
   }
 
   getSolicitudes() {

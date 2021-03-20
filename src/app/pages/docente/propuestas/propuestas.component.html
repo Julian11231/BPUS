@@ -53,28 +53,29 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-7 col-lg-7">
-                                        <div class="vacantesInfo">
-                                            <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSup?.vacante.titulo}} - {{pasantiaSup?.empresa.nombre}} </small><br>
-                                            <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSup?.vacante.ubicacion}}, &nbsp;{{pasantiaSup?.vacante.modalidad}}</small><br>
-                                            <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSup?.vacante.funciones}}</small><br>
-                                            <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSup?.vacante.pagada}}</small><br>
+                                <ng-container *ngIf="pasantiaSup?.vacante">
+                                    <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                            <div class="vacantesInfo">
+                                                <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSup?.vacante.titulo}} - {{pasantiaSup?.empresa.nombre}} </small><br>
+                                                <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSup?.vacante.ubicacion}}, &nbsp;{{pasantiaSup?.vacante.modalidad}}</small><br>
+                                                <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSup?.vacante.funciones}}</small><br>
+                                                <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSup?.vacante.pagada}}</small><br>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                            <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
+                                            <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{pasantiaSup?.vacante.encargado.nombre}}</small><br>
+                                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{pasantiaSup?.vacante.encargado.correo}}</small><br>
+                                            <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{pasantiaSup?.vacante.encargado.telefono}}</small>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                        <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
-                                        <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{pasantiaSup?.vacante.encargado.nombre}}</small><br>
-                                        <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{pasantiaSup?.vacante.encargado.correo}}</small><br>
-                                        <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{pasantiaSup?.vacante.encargado.telefono}}</small>
+                                    <div class="mt-3 ml-4">
+                                        <h5 class="text-uppercase"> <b>Descripción:</b></h5>
+                                        <p class="mt-2 ml-2">{{pasantiaSup?.vacante.descripcion}}</p> 
                                     </div>
-                                </div>
-                                <div class="mt-3 ml-4">
-                                    <h5 class="text-uppercase"> <b>Descripción:</b></h5>
-                                    <p class="mt-2 ml-2">{{pasantiaSup?.vacante.descripcion}}</p> 
-                                </div>
-
+                                </ng-container>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
                                 </div>
@@ -89,7 +90,7 @@
                         <div class="modal-content">
                         
                             <!-- Modal Header -->
-                            <div class="modal-header bg-danger text-center text-light">
+                            <div class="modal-header text-center text-light" style="background-color: #8F141B;">
                                 <h4 class="modal-title text-light">Rechazar solicitud</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
@@ -103,7 +104,7 @@
                                     </label>
                                     <textarea [(ngModel)]="notas" name="notas" class="form-control" rows="5" placeholder="Notas Para el Estudiante" required></textarea>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-danger btn-block">Rechazar</button>
+                                        <button type="submit" class="btn btnSuccess btn-block">Rechazar</button>
                                     </div>
                                 </form>
                             </div>
@@ -167,10 +168,13 @@
                                 <div class="vacantes">
                                     <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
                                             {{ dato.estudiante.apellidos }}</b></h5>
-                                    <small><i class="fa fa-briefcase"></i> &nbsp;
+                                    <small *ngIf="dato.vacante"><i class="fa fa-briefcase"></i> &nbsp;
                                         {{ dato.vacante.titulo }} - {{dato.empresa.nombre}}
-                                    </small><br>
-                                    <small>{{ dato.vacante.funciones }}</small>
+                                    </small><br *ngIf="dato.vacante">
+                                    <small *ngIf="dato.vacante">{{ dato.vacante.funciones }}</small>
+                                    <small *ngIf="!dato.vacante"><i class="fa fa-briefcase">
+                                        </i> &nbsp; {{dato.empresa.nombre}}
+                                    </small>
                                 </div>
                             </div>
                             <br>

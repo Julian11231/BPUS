@@ -73,7 +73,6 @@ export class ModSolicitudVacanteComponent implements OnInit {
       "Aprobada",
       form.value.tutor
     )
-    this._pasantiaService.putSolicitud(this._id, pasantia).subscribe();
   }
 
   rechazarSolicitud(form: NgForm){
@@ -82,7 +81,6 @@ export class ModSolicitudVacanteComponent implements OnInit {
         form.value.notas,
         "Rechazada",
       )
-      this._pasantiaService.putSolicitud(this._id, pasantia).subscribe();
     }
   }
 
@@ -94,8 +92,6 @@ export class ModSolicitudVacanteComponent implements OnInit {
   }
 
   getDataInfo(data: any) {
-
-    console.log(data)
 
     this._id = data._id;
     this.estado = data.estado

@@ -12,120 +12,144 @@
                         aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title text-capitalize" id="myLargeModalLabel"> <b> Añade una
-                                            Empresa</b> </h4>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                        aria-hidden="true">×</button>
-                                </div>
+
                                 <div class="modal-body">
 
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#empresa">Empresa</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#encargado">Encargado</a>
+                                        </li>
+                                    </ul>
 
                                     <form ngNativeValidate #f="ngForm" (ngSubmit)="postEmpresa(f)" class="form-horizontal" id="loginform">
+
+                                        <div class="tab-content">
+                                            <div id="empresa" class="container tab-pane active"><br>
+        
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">NIT de la Empresa:</label>
+                                                            <input ngModel name="nit" type="text" id="nit"
+                                                                class="form-control" placeholder="NIT" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Nombre de la Empresa:</label>
+                                                            <input ngModel name="nombre" type="text" id="firstName"
+                                                                class="form-control" placeholder="Nombre" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+        
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Dirección:</label>
+                                                            <input ngModel name="direccion" type="text" id="firstName"
+                                                                class="form-control" placeholder="Direccion" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Teléfono de la Empresa</label>
+                                                            <input ngModel name="telEmpresa" type="text" id="firstName"
+                                                                class="form-control" placeholder="Teléfono" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+        
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Naturaleza:</label>
+                                                            <select ngModel name="naturaleza" class="form-control custom-select"
+                                                                required>
+                                                                <option value="Pública">Pública</option>
+                                                                <option value="Privada">Privada</option>
+                                                                <option value="Mixta">Mixta</option>
+                                                                <option value="Otra">Otra</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Actividad Económica:</label>
+                                                            <input ngModel name="actividadEc" type="text" id="firstName"
+                                                                class="form-control" placeholder="Actividad" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <label class="control-label">Convenio:</label>
+
+                                                <label for="fileConvenio" *ngIf="nombreArchivoC == null" class="labels custom-file-upload py-3 mt-4">
+                                                    Click aquí para subir el convenio</label>
+                            
+                                                <label for="fileConvenio" *ngIf="nombreArchivoC != null"
+                                                    class="labels custom-file-upload text-center py-3 mt-4" style="color: #8F141B; font-weight: bold;">
+                                                    {{ nombreArchivoC }}</label><br>
+                            
+                                                <input name="filePropuesta" id="fileConvenio"
+                                                    (change)="getFileConvenio( $event.target.files[0] )" type="file" accept="application/pdf"
+                                                    class="imagenes-secundarias" required /> 
                                         
-                                        <div class="form-group">
-                                            <label class="control-label">NIT de la Empresa:</label>
-                                            <input ngModel name="nit" type="text" id="nit"
-                                                class="form-control" placeholder="NIT" required>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Nombre de la Empresa:</label>
-                                                    <input ngModel name="nombre" type="text" id="firstName"
-                                                        class="form-control" placeholder="Nombre" required>
+                                            </div>
+                                            <br>
+                                            <div id="encargado" class="container tab-pane">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Persona a Cargo:</label>
+                                                            <input ngModel name="persona" type="text" id="firstName"
+                                                                class="form-control" placeholder="Nombre" required>
+                                                        </div>
+                                                    </div>
+    
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Cedula:</label>
+                                                            <input ngModel name="cedula" type="text" id="cedula"
+                                                                class="form-control" placeholder="Cedula" required>
+                                                        </div>
+                                                    </div>
+                                                </div>    
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Puesto:</label>
+                                                            <input ngModel name="puesto" type="text" id="firstName"
+                                                                class="form-control" placeholder="Puesto" required>
+                                                        </div>
+                                                    </div>
+    
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Teléfono:</label>
+                                                            <input ngModel name="telPersona" type="text" id="firstName"
+                                                                class="form-control" placeholder="Teléfono" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Correo Electrónico:</label>
+                                                        <input ngModel name="correo" type="text" id="firstName"
+                                                            class="form-control" placeholder="Correo" required>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Dirección:</label>
-                                                    <input ngModel name="direccion" type="text" id="firstName"
-                                                        class="form-control" placeholder="Direccion" required>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Teléfono de la Empresa</label>
-                                                    <input ngModel name="telEmpresa" type="text" id="firstName"
-                                                        class="form-control" placeholder="Teléfono" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Naturaleza:</label>
-                                                    <select ngModel name="naturaleza" class="form-control custom-select"
-                                                        required>
-                                                        <option value="Pública">Pública</option>
-                                                        <option value="Privada">Privada</option>
-                                                        <option value="Mixta">Mixta</option>
-                                                        <option value="Otra">Otra</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label">Actividad Económica:</label>
-                                                    <input ngModel name="actividadEc" type="text" id="firstName"
-                                                        class="form-control" placeholder="Actividad" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <h4><b>Datos de la Persona a Cargo</b></h4>
-                                        <hr>
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Persona a Cargo:</label>
-                                                    <input ngModel name="persona" type="text" id="firstName"
-                                                        class="form-control" placeholder="Nombre" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Cedula:</label>
-                                                    <input ngModel name="cedula" type="text" id="cedula"
-                                                        class="form-control" placeholder="Cedula" required>
-                                                </div>
-                                            </div>
-                                        </div>    
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Puesto:</label>
-                                                    <input ngModel name="puesto" type="text" id="firstName"
-                                                        class="form-control" placeholder="Puesto" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Teléfono:</label>
-                                                    <input ngModel name="telPersona" type="text" id="firstName"
-                                                        class="form-control" placeholder="Teléfono" required>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="control-label">Correo Electrónico:</label>
-                                                <input ngModel name="correo" type="text" id="firstName"
-                                                    class="form-control" placeholder="Correo" required>
-                                            </div>
-                                        </div>
 
 
                                         <div class="modal-footer">
@@ -133,6 +157,8 @@
                                                 data-dismiss="modal">Cancelar <i class="fa fa-times"></i></button>
                                             <button type="submit" class="btn btnSuccess waves-effect text-left">Añadir
                                                 <i class="fa fa-plus"></i></button>
+                                        </div>
+                            
                                         </div>
                                     </form>
                                 </div>

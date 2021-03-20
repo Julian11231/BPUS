@@ -84,6 +84,30 @@ export class ConvenioService {
 
   }
 
+  postDocumentoConvenio(idConvenio: string, documento_convenio: FormData) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idConvenio}?token=${token}`;
+
+    return this.http.put(url, documento_convenio).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        return true;
+      }
+      
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
+
 
 
   deleteConvenio(id: string) {

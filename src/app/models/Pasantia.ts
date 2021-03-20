@@ -5,6 +5,7 @@ export class Pasantia {
         public empresa?: String,
         public vacante?: String,
         public eps?: String,
+        public titulo?: String,
         public tutor?: String,
 
         public documento_propuesta?: FormData,

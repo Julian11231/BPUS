@@ -34,6 +34,11 @@ export class EmpresasComponent implements OnInit {
   telefono_persona: String;
   estado: String;
 
+  documento_convenio = new FormData();
+  nombreArchivoC:string;
+
+  MAX_SIZE_FILE: number = 1000000
+
   constructor(public router: Router,
               public _empresaService: EmpresaService, 
               public _encargadoEmpresaService: EncargadoEmpresaService,
@@ -109,9 +114,23 @@ export class EmpresasComponent implements OnInit {
             "EncargadoEmpresa",
           )
           this._encargadoEmpresaService.postEncargadoEmpresa(encargadoEmpresa).subscribe((respp:any) => {
-            let convenio = new Convenio(programa,  resp._id);
+            let convenio = new Convenio(programa,  resp._id, respp._id);
             this._convenioService.postConvenio(convenio).subscribe((anws:any) => {
-              location.reload();
+              this._convenioService.postDocumentoConvenio(anws._id, this.documento_convenio).subscribe((ans:any) => {
+                if(ans){
+                  Swal.fire({
+                    title: '¡Bien Hecho!',
+                    text: `Se ha creado correctamente la empresa`,
+                    icon: 'success'
+                  }).then(() => {
+                    if(this.usuario.rol === "JEFE_PROGRAMA"){
+                      this.getConveniosJefe();
+                    }else {
+                      this.getConvenios();
+                    }
+                  });
+                }
+              });
             });
           });
         }); 
@@ -123,11 +142,11 @@ export class EmpresasComponent implements OnInit {
   getDataPut(dato: any) {
 
     this._id = dato._id
-    this.nombre = dato.nombre;
-    this.direccion = dato.direccion;
-    this.telefono = dato.telefono;
-    this.naturaleza = dato.naturaleza;
-    this.actividad_economica = dato.actividad_economica;
+    this.nombre = dato.empresa.nombre;
+    this.direccion = dato.empresa.direccion;
+    this.telefono = dato.empresa.telefono;
+    this.naturaleza = dato.empresa.naturaleza;
+    this.actividad_economica = dato.empresa.actividad_economica;
     this.nombre_persona = dato.persona_a_cargo.nombre;
     this.cargo_persona = dato.persona_a_cargo.cargo;
     this.correo_persona = dato.persona_a_cargo.correo;
@@ -181,6 +200,28 @@ export class EmpresasComponent implements OnInit {
         this._empresaService.deleteEmpresa(dato._id).subscribe();
       }
     })
+  }
+
+  getFileConvenio(file: File) {
+
+    if (file.size > this.MAX_SIZE_FILE) {
+      Swal.fire({
+        title: '¡Lo Sentimos!',
+        html: `<p> El archivo: <b>${file.name}</b>, supera el 1 MB</p>`,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        showCancelButton: false,
+        confirmButtonColor: '#60D89C',
+      }).then(() => {
+        location.reload()
+      });
+
+    } else {
+
+      this.nombreArchivoC = file.name;
+      let documento_convenio = <File>file;
+      this.documento_convenio.append('documento_propuesta', documento_convenio, documento_convenio.name);
+    }
   }
 
   getDataBuscar(data) {

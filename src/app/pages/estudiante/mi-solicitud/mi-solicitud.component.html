@@ -32,7 +32,7 @@
     <br>
     <!--Acordeon de información -->
     <div id="accordion">
-        <div class="card">
+        <div *ngIf="pasantia?.vacante" class="card">
           <div class="card-header">
             <h3>
                 <a class="collapsed card-link" data-toggle="collapse" href="#preinscripcion">
@@ -95,7 +95,7 @@
           <div class="card-header">
             <h3>
                 <a class="collapsed card-link" data-toggle="collapse" href="#propuesta">
-                    <b>2. Propuesta </b>
+                    <b>2. Propuesta </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_propuesta">(No enviado)</span>
                     <i *ngIf="pasantia?.estado_propuesta === 'Enviada'" class="mdi mdi-update" style="color:#C7B363"></i>
                     <i *ngIf="pasantia?.estado_propuesta === 'Aprobada'" class="fa fa-check" style="color: green;"></i>
                     <i *ngIf="pasantia?.estado_propuesta === 'Rechazada'" class="fa fa-times" style="color:#77181C"></i>
@@ -151,7 +151,7 @@
           <div class="card-header">
             <h3>
                 <a class="collapsed card-link" data-toggle="collapse" href="#informe7">
-                    <b>3. Informe 7 </b>
+                    <b>3. Informe 7 </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_informe7">(No enviado)</span>
                     <i *ngIf="pasantia?.estado_informe7 === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
                     <i *ngIf="pasantia?.estado_informe7 === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
                     <i *ngIf="pasantia?.estado_informe7 === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
@@ -199,7 +199,7 @@
             <div class="card-header">
               <h3>
                   <a class="collapsed card-link" data-toggle="collapse" href="#informe14">
-                      <b>4. Informe 14 </b>
+                      <b>4. Informe 14 </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_informe14">(No enviado)</span>
                       <i *ngIf="pasantia?.estado_informe14 === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
                       <i *ngIf="pasantia?.estado_informe14 === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
                       <i *ngIf="pasantia?.estado_informe14 === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
@@ -232,7 +232,7 @@
                       <br> 
                   </div>
                   <div class="mt-5 ml-3">
-                      <h4><b>Notas del informe 7:</b></h4>
+                      <h4><b>Notas del informe 14:</b></h4>
                       <p *ngIf="pasantia.notas_informe14 !== ''" class="pl-3 mt-2">{{pasantia?.notas_informe14}}</p>
                       <p *ngIf="pasantia.notas_informe14 == ''" class="pl-3 mt-2 font-italic">No hay notas del informe 14...</p>  
                   </div>        
@@ -247,7 +247,7 @@
             <div class="card-header">
               <h3>
                   <a class="collapsed card-link" data-toggle="collapse" href="#informeFinal">
-                      <b>4. Informe final </b>
+                      <b>4. Informe final </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_informeFinal">(No enviado)</span>
                       <i *ngIf="pasantia?.estado_informeFinal === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
                       <i *ngIf="pasantia?.estado_informeFinal === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
                       <i *ngIf="pasantia?.estado_informeFinal === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>

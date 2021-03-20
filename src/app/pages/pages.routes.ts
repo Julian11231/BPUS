@@ -19,8 +19,10 @@ import { SemilleroComponent } from './solicitudes/semillero/semillero/semillero.
 import { ProyectoComponent } from './solicitudes/proyecto/proyecto/proyecto.component';
 import { ModalidadesComponent } from './modalidades/modalidades.component';
 import { EmpresasComponent } from './docente/empresas/empresas.component';
+import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
 import { MainComponent } from './main/main.component';
 import { LoginGuardGuard } from '../services/service.index';
+
 
 
 
@@ -32,7 +34,7 @@ const pagesRoutes: Routes = [
     { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard] },
     { path: 'notificaciones', component: NotificacionesComponent, data: { titulo: 'Notificaciones' }, canActivate: [LoginGuardGuard] },
     { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard] },
-    { path: 'inscripcion-propuesta', component: ActaInicioComponent, data: { titulo: 'Inscripción de la Propuesta' },canActivate: [LoginGuardGuard] },
+    { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard] },
     {
         path: '',
         component: PagesComponent,
@@ -42,6 +44,7 @@ const pagesRoutes: Routes = [
             { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil de Usuario' } },
             { path: 'empresas', component: EmpresasComponent, data: { titulo: 'Gestión de Empresas' } },
             { path: 'vacantes', component: VacantesComponent, data: { titulo: 'Gestión de Vacantes' } },
+            { path: 'inscripcion-propuesta', component: ActaInicioComponent, data: { titulo: 'Inscripción de la Propuesta' },canActivate: [LoginGuardGuard] },
             { path: 'solicitudes', component: ModSolicitudVacanteComponent, data: { titulo: 'Solicitudes Por Vacantes' } },
             { path: 'mi-modalidad', component: MiSolicitudComponent, data: { titulo: 'Seguimiento a la Modalidad' } },
             { path: 'pasantias-asignadas', component: TutoriaPasantiaComponent, data: { titulo: 'Pasantías Asignadas' } },

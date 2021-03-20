@@ -54,6 +54,43 @@ export class PasantiService {
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
+        let usuario = JSON.parse(localStorage.getItem("estudiante"));
+        usuario["modalidad"] = resp.solicitudGuardada._id;
+        localStorage.removeItem("estudiante");
+        localStorage.setItem("estudiante", usuario);
+        return resp.solicitudGuardada;
+      }else{
+        return false;
+      }
+
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+
+    }));
+
+  }
+
+  postSolicitudDirecta(idEstudiante: String, solicitud: Pasantia) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/direct/${idEstudiante}?token=${token}`;
+
+    console.log(solicitud);
+
+    return this.http.post(url, solicitud).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        let usuario = JSON.parse(localStorage.getItem("estudiante"));
+        usuario["modalidad"] = resp.solicitudGuardada._id;
+        localStorage.removeItem("estudiante");
+        localStorage.setItem("estudiante", usuario);
         return resp.solicitudGuardada;
       }else{
         return false;
@@ -100,10 +137,10 @@ export class PasantiService {
 
   }
 
-  putSolicitud(id: string, pasantia: any) {
+  putSolicitudJefe(id: string, pasantia: any) {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/jefe${id}?token=${token}`;
 
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
 
@@ -132,6 +169,37 @@ export class PasantiService {
     }));
   }
 
+  putSolicitudTutor(id: string, pasantia: any) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/tutor${id}?token=${token}`;
+
+    return this.http.put(url, pasantia).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+
+        Swal.fire({
+          title: '¡Bien Hecho!',
+          text: `Se ha actualizado correctamente la solicitud`,
+          icon: 'success'
+        }).then(() => {
+          location.reload();
+        });
+      }
+
+      return true;
+
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+  }
 
   postDocumentoPropuesta(idEstudiante: string, documento_propuesta: FormData) {
 

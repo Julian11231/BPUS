@@ -43,7 +43,7 @@ export class PropuestasComponent implements OnInit {
       form.value.notas,
     )
     console.log(pasantia);
-    this._pasantiaService.putSolicitud(this.pasantiaSup._id, pasantia).subscribe();
+    this._pasantiaService.putSolicitudJefe(this.pasantiaSup._id, pasantia).subscribe();
   }
 
   rechazarSolicitud(form: NgForm){
@@ -54,14 +54,14 @@ export class PropuestasComponent implements OnInit {
         "Rechazada",
         form.value.notas,
       )
-      this._pasantiaService.putSolicitud(this.pasantiaSup._id, pasantia).subscribe();
+      this._pasantiaService.putSolicitudJefe(this.pasantiaSup._id, pasantia).subscribe();
     }
   }
 
   getPropuestas() {
     this._pasantiaService.getSolicitudes().subscribe((resp: any) => {
       this.propuestas = resp.pasantias;
-      console.log(resp);
+      console.log(this.propuestas);
 
     });
   }

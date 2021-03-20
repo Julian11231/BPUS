@@ -32,6 +32,8 @@ import { InformeCatorceComponent } from './estudiante/informe-catorce/informe-ca
 import { InformeFinalComponent } from './estudiante/informe-final/informe-final.component';
 import { InformeSieteComponent } from './estudiante/informe-siete/informe-siete.component';
 import { NotificacionesComponent} from './notificaciones/notificaciones.component';
+import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
+
 
 
 @NgModule({
@@ -55,7 +57,8 @@ import { NotificacionesComponent} from './notificaciones/notificaciones.componen
     InformeCatorceComponent,
     InformeFinalComponent,
     NotificacionesComponent,
-    EncarSolicitudVacanteComponent
+    EncarSolicitudVacanteComponent,
+    InscripcionDirectaComponent
 
   ],
   exports: [
@@ -77,7 +80,8 @@ import { NotificacionesComponent} from './notificaciones/notificaciones.componen
     InformeCatorceComponent,
     InformeFinalComponent,
     NotificacionesComponent,
-    EncarSolicitudVacanteComponent
+    EncarSolicitudVacanteComponent,
+    InscripcionDirectaComponent
 
   ],
   imports: [

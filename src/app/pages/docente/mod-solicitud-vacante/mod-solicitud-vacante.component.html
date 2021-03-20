@@ -55,28 +55,29 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
-                                    <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-7 col-lg-7">
-                                            <div class="vacantesInfo">
-                                                <small><i class="fa fa-briefcase"></i> &nbsp; {{titulo}} - {{empresa}} </small><br>
-                                                <small><i class="fa fa-globe"></i> &nbsp; {{ubicacion}}, &nbsp;{{modalidad}}</small><br>
-                                                <small><i class="fa fa-code"></i> &nbsp; {{funciones}}</small><br>
-                                                <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pagada}}</small><br>
+                                    <ng-container *ngIf="titulo !== null">
+                                        <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                                <div class="vacantesInfo">
+                                                    <small><i class="fa fa-briefcase"></i> &nbsp; {{titulo}} - {{empresa}} </small><br>
+                                                    <small><i class="fa fa-globe"></i> &nbsp; {{ubicacion}}, &nbsp;{{modalidad}}</small><br>
+                                                    <small><i class="fa fa-code"></i> &nbsp; {{funciones}}</small><br>
+                                                    <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pagada}}</small><br>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                                <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
+                                                <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{personaCargo}}</small><br>
+                                                <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{correo}}</small><br>
+                                                <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{telefono}}</small>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                            <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
-                                            <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{personaCargo}}</small><br>
-                                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{correo}}</small><br>
-                                            <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{telefono}}</small>
+                                        <div class="mt-3 ml-4">
+                                            <h5 class="text-uppercase"> <b>Descripción:</b></h5>
+                                            <p class="mt-2 ml-2">{{descripcion}}</p> 
                                         </div>
-                                    </div>
-                                    <div class="mt-3 ml-4">
-                                        <h5 class="text-uppercase"> <b>Descripción:</b></h5>
-                                        <p class="mt-2 ml-2">{{descripcion}}</p> 
-                                    </div>
-
+                                    </ng-container>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
                                     </div>
@@ -174,10 +175,10 @@
                             <div class="vacantes">
                                 <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
                                         {{ dato.estudiante.apellidos }}</b></h5>
-                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                <small *ngIf="dato.vacante" style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
                                     {{ dato.vacante.titulo }} - {{dato.empresa.nombre}}
                                 </small><br>
-                                <small><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.vacante.ubicacion}},
+                                <small *ngIf="dato.vacante"><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.vacante.ubicacion}},
                                     {{dato.vacante.modalidad}}
                                 </small><br>
                             </div>

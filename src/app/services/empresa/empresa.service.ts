@@ -18,14 +18,14 @@ export class EmpresaService {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/empresas?token=${token}`;
-    console.log(url);
+    //console.log(url);
     return this.http.get(url);
   }
 
   getEmpresasEncargado(encargadoID:String) {
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/empresas/empresa/${encargadoID}?token=${token}`;
-    console.log(url);
+    //console.log(url);
     return this.http.get(url);
   }
 

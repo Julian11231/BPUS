@@ -100,7 +100,7 @@ export class InscripcionPasantiaComponent implements OnInit {
                   if(respC){
                     Swal.fire({
                       title: '¡Bien Hecho!',
-                      html: `Su solicitud fue exitosa, el radicado de su solicitud es: <b> ${respP._id}</b>`,
+                      html: 'Su solicitud fue enviada exitosamente',
                       icon: 'warning',
                       confirmButtonText: 'Aceptar',
                       confirmButtonColor: '#60D89C',
