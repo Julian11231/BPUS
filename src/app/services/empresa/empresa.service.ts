@@ -40,7 +40,6 @@ export class EmpresaService {
       if (resp.ok == true) {
         return resp.empresaGuardada;
       }
-      return true;
 
     }), catchError((err) => {
 
@@ -64,13 +63,7 @@ export class EmpresaService {
     return this.http.put(url, empresa).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: 'Empresa actualizada correctamente',
-          icon: 'success'
-        }).then(() => {
-          location.reload();
-        });
+        return resp.empresaActualizada;
       }
 
       return true;

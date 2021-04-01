@@ -18,6 +18,9 @@
         </div>
         <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
             <h3><b>Estado:</b> </h3>
+            <ng-container *ngIf="pasantia.estado == 'PreInscrita'" class="text-success">
+                <span class="label btnDanger"> <b> {{ pasantia.estado }} </b></span>
+            </ng-container>
             <ng-container *ngIf="pasantia.estado == 'Enviada'" class="text-success">
                 <span class="label btnInfo"> <b> {{ pasantia.estado }} </b></span>
             </ng-container>

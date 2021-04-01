@@ -18,7 +18,7 @@
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-5 col-lg-4">
                                             <h5><b>Estado: &nbsp;</b>
-                                                <ng-container *ngIf="vacanteSelected.estado == 'Enviada'" class="text-success"><span
+                                                <ng-container *ngIf="vacanteSelected.estado == 'PreInscrita'" class="text-success"><span
                                                     class="label btnInfo"> <b> {{ vacanteSelected.estado }} </b></span>
                                                 </ng-container>
                                                 <ng-container *ngIf="vacanteSelected.estado == 'Aprobada'" class="text-success"><span
@@ -109,7 +109,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                             <h5 class="text-uppercase"><b>Estado de la Solicitud:</b></h5>
-                            <ng-container *ngIf="dato.estado == 'Enviada'" class="text-success"><span
+                            <ng-container *ngIf="dato.estado == 'PreInscrita'" class="text-success"><span
                                     class="label btnInfo"> <b> {{ dato.estado }} </b></span>
                             </ng-container>
 
@@ -130,7 +130,7 @@
                                 <button type="button" [disabled]="dato.estado == 'Aprobada'" (click)="getDataInfo(dato); aprobarSolicitud()" class="btn text-white mr-2" style="background-color: #6fbf73;">
                                     Aprobar
                                 </button>
-                                <button type="button" [disabled]="dato.estado == 'Rechazada'" (click)="getDataInfo(dato)" class="btn btn-danger mr-2">
+                                <button type="button" [disabled]="dato.estado == 'Rechazada'" (click)="getDataInfo(dato); rechazarSolicitud()" class="btn btnSuccess mr-2">
                                     Rechazar
                                 </button>
                             </div>

@@ -26,6 +26,7 @@ export class InscripcionPasantiaComponent implements OnInit {
   funciones: string;
   descripcion: string;
   cantidad: number;
+  lineaInvestigacion:string;
   pagada: string;
   personaCargo: string;
   correo: string;
@@ -80,7 +81,8 @@ export class InscripcionPasantiaComponent implements OnInit {
           let preInscripcion = new Pasantia(
             this.empresa,
             this.preInscripcion,
-            form.value.eps
+            form.value.eps,
+            this.lineaInvestigacion
           )
           this._pasantiaService.postSolicitud(idEstudiante, preInscripcion).subscribe((respP:any) => {
             console.log(this.personaCargoId);
@@ -89,12 +91,11 @@ export class InscripcionPasantiaComponent implements OnInit {
               this.personaCargoId,
               currentDate,
               'Nueva solicitd de pasantia',
-              `${this.info.nombres} te ha enviado una solicitude de pasantia para la empresa ${this.nombreEmpresa}`,
+              `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.nombreEmpresa}`,
               'EncargadoEmpresa' 
             );
             console.log(respP);
             this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
-              /*
               if(respN){
                 this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
                   if(respC){
@@ -107,7 +108,7 @@ export class InscripcionPasantiaComponent implements OnInit {
                 
                     }).then((result) => {
                       if (result.value) {
-                        this.router.navigate(['/mi-modalidad']);
+                        this.router.navigate(['/']);
                       }
                     });
                   }else{
@@ -115,7 +116,6 @@ export class InscripcionPasantiaComponent implements OnInit {
                   }
                 })
               }
-             */ 
             });
           });
 
@@ -182,6 +182,16 @@ export class InscripcionPasantiaComponent implements OnInit {
   }
 
   getVacanteSelected(dato: any) {
+    var radio1 = (document.getElementById("radio1")) as HTMLInputElement;
+    var radio2 = (document.getElementById("radio2")) as HTMLInputElement;
+    var radio3 = (document.getElementById("radio3")) as HTMLInputElement;
+    if(radio1.checked){
+      this.lineaInvestigacion = radio1.value;
+    }else if(radio2.checked){
+      this.lineaInvestigacion = radio2.value;
+    }else if(radio3.checked){
+      this.lineaInvestigacion = radio3.value;
+    }
     this.preInscripcion = dato._id;
     this.empresa = dato.empresa._id;
     this.nombreEmpresa = dato.empresa.nombre;

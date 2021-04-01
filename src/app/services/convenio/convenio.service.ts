@@ -87,7 +87,9 @@ export class ConvenioService {
   postDocumentoConvenio(idConvenio: string, documento_convenio: FormData) {
 
     let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idConvenio}?token=${token}`;
+    let url = `${URL_SERVICES}/upload_convenio/${idConvenio}?token=${token}`;
+
+    console.log("lol");
 
     return this.http.put(url, documento_convenio).pipe(map((resp: any) => {
 

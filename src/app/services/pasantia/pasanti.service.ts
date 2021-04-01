@@ -53,11 +53,10 @@ export class PasantiService {
 
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
 
-      if (resp.ok == true) {
-        let usuario = JSON.parse(localStorage.getItem("estudiante"));
-        usuario["modalidad"] = resp.solicitudGuardada._id;
+      if (resp.ok) {
         localStorage.removeItem("estudiante");
-        localStorage.setItem("estudiante", usuario);
+        console.log(resp.estudianteActualizado);
+        localStorage.setItem("estudiante",  JSON.stringify(resp.estudianteActualizado));
         return resp.solicitudGuardada;
       }else{
         return false;
@@ -82,15 +81,12 @@ export class PasantiService {
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/direct/${idEstudiante}?token=${token}`;
 
-    console.log(solicitud);
-
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-        let usuario = JSON.parse(localStorage.getItem("estudiante"));
-        usuario["modalidad"] = resp.solicitudGuardada._id;
         localStorage.removeItem("estudiante");
-        localStorage.setItem("estudiante", usuario);
+        console.log(resp.estudianteActualizado);
+        localStorage.setItem("estudiante",  JSON.stringify(resp.estudianteActualizado));
         return resp.solicitudGuardada;
       }else{
         return false;
@@ -145,18 +141,8 @@ export class PasantiService {
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: `Se ha actualizado correctamente la solicitud`,
-          icon: 'success'
-        }).then(() => {
-          location.reload();
-        });
+        return true;
       }
-
-      return true;
-
     }), catchError((err) => {
 
       Swal.fire({
@@ -209,16 +195,33 @@ export class PasantiService {
     return this.http.put(url, documento_propuesta).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: `Se ha enviado correctamente el documento`,
-          icon: 'success'
-        }).then(() => {
-          this.router.navigate(['/mi-modalidad'])
-        });
+        return true;
       }
-      return true;
+      
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
+
+  postCartaPresentacion(idEstudiante: string, carta_presentacion: FormData) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+
+    return this.http.put(url, carta_presentacion).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        return true;
+      }
+      
     }), catchError((err) => {
 
       Swal.fire({
@@ -240,16 +243,9 @@ export class PasantiService {
     return this.http.put(url, documento_fichaAcademica).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: `Se ha enviado correctamente la ficha academica`,
-          icon: 'success'
-        }).then(() => {
-          this.router.navigate(['/mi-modalidad'])
-        });
+        return true;
       }
-      return true;
+      
     }), catchError((err) => {
 
       Swal.fire({

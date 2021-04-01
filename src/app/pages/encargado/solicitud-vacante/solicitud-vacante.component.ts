@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PasantiService, TutoresService } from 'src/app/services/service.index';
-import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { PasantiaAdmin } from '../../../models/PasantiaAdmin';
-import { Pasantia } from 'src/app/models/Pasantia';
-
 
 @Component({
   selector: 'app-mod-solicitud-vacante',
@@ -53,7 +49,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
               timerProgressBar: true,
             }).then((result) => {
               /* Read more about handling dismissals below */
-              if (result.dismiss === Swal.DismissReason.timer) {
+              if (result.dismiss) {
                 this.getSolicitudes();
               }
             })
@@ -63,7 +59,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
     })
   }
 
-  rechazarSolicitud(form: NgForm){
+  rechazarSolicitud(){
     Swal.fire({
       title: 'Estas seguro?',
       text: 'Vas a rechazar la vacante de '+ this.vacanteSelected.estudiante.nombres,
@@ -71,7 +67,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Aprobar!',
+      confirmButtonText: 'Rechazar!',
       cancelButtonText: 'Cerrar'
     }).then((result) => {
       if (result.value) {
@@ -87,7 +83,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
               timerProgressBar: true,
             }).then((result) => {
               /* Read more about handling dismissals below */
-              if (result.dismiss === Swal.DismissReason.timer) {
+              if (result.dismiss) {
                 this.getSolicitudes();
               }
             })
@@ -101,7 +97,6 @@ export class EncarSolicitudVacanteComponent implements OnInit {
 
     this._pasantiaService.getSolicitudesEncargado(this.info.empresa._id).subscribe((resp: any) => {
       this.solicitudes = resp.pasantias;
-      console.log(this.solicitudes);
       this.vacanteSelected = this.solicitudes[0];
     });
   }

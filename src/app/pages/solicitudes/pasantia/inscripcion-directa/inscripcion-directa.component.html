@@ -3,19 +3,25 @@
     <!-- Selector del header -->
     <app-navbar-inscripcion></app-navbar-inscripcion>
 
-    <div class="container-fluid py-5 px-5">
-        
-        <button routerLink='/solicitud-pasantia-supervisada' class="btn btn-sm btnSuccess btn-sm mt-5 px-3" type="submit">
-            <i class="fa fa-arrow-left"></i>
-        </button>
-        <h2 class="text-center mt-n5">DESCRIPCIÓN</h2>
-        <h4 class="text-center">En el siguiente apartado, usted deberá subir el formato de propuesta de modalidad de grado (diligenciado) y la ficha academica</h4>
+    <div class="container-fluid p-5">
 
-        <hr>
+        <div class="clearfix mt-5">
+            <div class="float-left">
+                <button routerLink='/solicitud-pasantia-supervisada' class="d-inline btn btn-sm btnSuccess btn-sm px-3" type="submit">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+            </div>
+            <h2 class="text-center">Inscripcion directa de Pasantía
+                <a href="#" class="d-inline" data-toggle="tooltip" data-placement="right" title="En el siguiente apartado, usted deberá subir el formato de propuesta de modalidad de grado (diligenciado) y la ficha academica!">
+                    <i class="fa fa-info-circle"></i>
+                </a>
+            </h2>
+            <hr>
+          </div>
        
         <form (ngSubmit)="postSolicitud()">
-            <div class="row mt-3">
-                <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="row">
+                <div class="col-sm-12 col-md-4 col-lg-4 pl-2">
                     <h3 class="card-title text-uppercase"><b>1. Datos estudiante: </b></h3>
                     <h5><span class="font-weight-bold text-dark">Nombre: </span>{{info.nombres}} {{info.apellidos}}</h5>
                     <h5><span class="font-weight-bold text-dark mr-2 mt-2">Código: </span>{{info.codigo}} <span class="ml-3 font-weight-bold text-dark">ID:</span> {{info.identificacion}}</h5>
@@ -23,23 +29,23 @@
                     <h5><span class="font-weight-bold text-dark mr-2 mt-2">Correo: </span> {{info.correo}}</h5>
                     <h5><span class="font-weight-bold text-dark mr-2 mt-2">Teléfono: </span> {{info.telefono}}</h5>
                     <label for="eps" class="font-weight-bold text-dark">Empresa de Salud:</label>
-                    <div class="input-group">
+                    <div class="input-group w-75">
                         <input name="eps" type="text" class="form-control" id="eps" placeholder="Empres de salud" (change)="getInfoPropuesta()" required>
                     </div>
                     <label for="empresa" class="font-weight-bold text-dark mt-2">Empresa de la pasantia:</label>
-                    <select name="empresa" id="mySelect" class="form-control custom-select" (change)="getInfoPropuesta()" required>
+                    <select name="empresa" id="mySelect" class="form-control custom-select w-75" (change)="getInfoPropuesta()" required>
+                        <option selected>Selecciona una empresa...</option>
                         <ng-container *ngFor="let empresa of empresas">
-                            <option selected>Selecciona una empresa...</option>
                             <option *ngIf="empresa.estado === 'Activa'">{{empresa.nombre}}</option>
                         </ng-container>
                     </select>
                     <label for="eps" class="font-weight-bold text-dark mt-3">Linea de investigación:</label><br>
                     <div class="pl-4">
-                        <input type="radio" id="radio1" name="lineaInvestigacion" value="Ingenieria de software" checked>
+                        <input type="radio" id="radio1" name="lineaInvestigacion" (change)="getInfoPropuesta()" value="Ingenieria de software" checked>
                         <label for="radio1">Ingenieria de software</label><br>
-                        <input type="radio" id="radio2" name="lineaInvestigacion" value="Internet de las cosas">
+                        <input type="radio" id="radio2" name="lineaInvestigacion" (change)="getInfoPropuesta()" value="Internet de las cosas">
                         <label for="radio2">Internet de las cosas</label><br>
-                        <input type="radio" id="radio3" name="lineaInvestigacion" value="Inteligencia Artificial">
+                        <input type="radio" id="radio3" name="lineaInvestigacion" (change)="getInfoPropuesta()" value="Inteligencia Artificial">
                         <label for="radio3">Inteligencia Artificial</label>
                     </div>
                 </div>
@@ -52,32 +58,41 @@
                         <input name="tituloPasantia" type="text" class="form-control" id="tituloPasantia" (change)="getInfoPropuesta()" placeholder="Titulo de la pasantia" required>
                     </div>
 
-                    <label for="filePropuesta" *ngIf="nombreArchivoP == null" class="labels custom-file-upload py-3 mt-4">
-                        Click aquí para subir la Propuesta de Modalidad</label>
+                    <label for="descripcion" class="font-weight-bold text-dark mt-2">Descripción de la pasantia:</label>
+                    <textarea id="descripcion" class="form-control" rows="2" placeholder="Descripción de la pasantia" maxlength="500" required (keyup)="getInfoPropuesta()" style="resize: none;"></textarea>
 
-                    <label for="filePropuesta" *ngIf="nombreArchivoP != null"
-                        class="labels custom-file-upload text-center py-3 mt-4" style="color: #8F141B; font-weight: bold;">
-                        {{ nombreArchivoP }}</label><br>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-6">
+                            <label for="filePropuesta" *ngIf="nombreArchivoP == null" class="labels custom-file-upload py-3 mt-4">
+                                Click aquí para subir la Propuesta de Modalidad</label>
+        
+                            <label for="filePropuesta" *ngIf="nombreArchivoP != null"
+                                class="labels custom-file-upload text-center py-3 mt-4" style="color: #8F141B; font-weight: bold;">
+                                {{ nombreArchivoP }}</label><br>
+        
+                            <input name="filePropuesta" id="filePropuesta"
+                                (change)="getFilePropuesta( $event.target.files[0] )" type="file" accept="application/pdf"
+                                class="imagenes-secundarias" required /> 
+                        </div>
+                        <div class="col-sm-12 col-lg-6">
+                            <label for="fileFicha" *ngIf="nombreArchivoF == null" class="labels custom-file-upload py-3 mt-4">
+                                Click aquí para subir la ficha academica</label>
 
-                    <input name="filePropuesta" id="filePropuesta"
-                        (change)="getFilePropuesta( $event.target.files[0] )" type="file" accept="application/pdf"
-                        class="imagenes-secundarias" required /> 
+                            <label for="fileFicha" *ngIf="nombreArchivoF != null"
+                                class="labels custom-file-upload text-center py-3 mt-4" style="color: #8F141B; font-weight: bold;">
+                                {{ nombreArchivoF }}</label><br>
 
-                    <label for="fileFicha" *ngIf="nombreArchivoF == null" class="labels custom-file-upload py-3 mt-4">
-                        Click aquí para subir la ficha academica</label>
-
-                    <label for="fileFicha" *ngIf="nombreArchivoF != null"
-                        class="labels custom-file-upload text-center py-3 mt-4" style="color: #8F141B; font-weight: bold;">
-                        {{ nombreArchivoF }}</label><br>
-
-                    <input name="fileFicha" id="fileFicha"
-                        (change)="getFileFicha( $event.target.files[0] )" type="file" accept="application/pdf"
-                        class="imagenes-secundarias" required />
+                            <input name="fileFicha" id="fileFicha"
+                                (change)="getFileFicha( $event.target.files[0] )" type="file" accept="application/pdf"
+                                class="imagenes-secundarias" required />
+                        </div>
+                    </div>
                     
                     <div style="text-align: center;">
                         <button type="submit" class="btn btnInfo mt-4 mr-3"
                         [disabled]="(nombreArchivoF === undefined) || (nombreArchivoP === undefined) || (eps === undefined) || (nombreEmpresa === undefined)
-                                    || (eps === '') || (nombreEmpresa === '') || (tituloPasantia === undefined) || (tituloPasantia === '')">
+                                    || (eps === '') || (nombreEmpresa === '') || (tituloPasantia === undefined) || (tituloPasantia === '')
+                                    || (descripcion === undefined) || (descripcion === '')">
                             <b>Enviar propuesta</b>
                         </button>
 

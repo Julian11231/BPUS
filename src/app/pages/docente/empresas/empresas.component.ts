@@ -14,13 +14,15 @@ import {Router} from '@angular/router'
   templateUrl: './empresas.component.html',
   styleUrls: ['./empresas.component.css']
 })
+
 export class EmpresasComponent implements OnInit {
 
   convenios: any[];
   programa: string;
   usuario = JSON.parse(localStorage.getItem("administrativo"));
 
-  _id: String;
+  _id: string;
+  convienioId: string;
   nit: String;
   nombre: String;
   direccion: String;
@@ -33,10 +35,14 @@ export class EmpresasComponent implements OnInit {
   correo_persona: String;
   telefono_persona: String;
   estado: String;
+  rutapdf: string;
 
   documento_convenio = new FormData();
   nombreArchivoC:string;
 
+  documento_convenioUpdate = new FormData();
+  nombreArchivoCUpdate:string;
+  
   MAX_SIZE_FILE: number = 1000000
 
   constructor(public router: Router,
@@ -140,18 +146,21 @@ export class EmpresasComponent implements OnInit {
 
 
   getDataPut(dato: any) {
-
-    this._id = dato._id
+    this.convienioId = dato._id;
+    this._id = dato.empresa._id
+    this.nit = dato.empresa.nit
     this.nombre = dato.empresa.nombre;
     this.direccion = dato.empresa.direccion;
     this.telefono = dato.empresa.telefono;
     this.naturaleza = dato.empresa.naturaleza;
     this.actividad_economica = dato.empresa.actividad_economica;
-    this.nombre_persona = dato.persona_a_cargo.nombre;
-    this.cargo_persona = dato.persona_a_cargo.cargo;
-    this.correo_persona = dato.persona_a_cargo.correo;
-    this.telefono_persona = dato.persona_a_cargo.telefono;
-    this.estado = dato.estado;
+    this.nombre_persona = dato.encargado.nombre;
+    this.cargo_persona = dato.encargado.cargo;
+    this.correo_persona = dato.encargado.correo;
+    this.telefono_persona = dato.encargado.telefono;
+    this.rutapdf = dato.rutapdf;
+    console.log(this.rutapdf);
+    this.estado = dato.empresa.estado;
 
   }
 
@@ -170,20 +179,37 @@ export class EmpresasComponent implements OnInit {
       if (result.value) {
 
         let empresa = new Empresa(
-          form.value.nit,
+          this.nit,
           form.value.nombre,
           form.value.direccion,
           form.value.telEmpresa,
           form.value.naturaleza,
           form.value.actividadEc,
+          form.value.estado
         );
 
-        this._empresaService.putEmpresa(this._id, empresa).subscribe(resp => console.log(resp));
+        this._empresaService.putEmpresa(this._id, empresa).subscribe((resp:any) => {
+          this._convenioService.postDocumentoConvenio(this.convienioId, this.documento_convenioUpdate).subscribe((respp:any) => {
+            if(respp){
+              Swal.fire({
+                title: '¡Bien Hecho!',
+                text: `Se ha actualizado correctamente la empresa`,
+                icon: 'success'
+              }).then(() => {
+                if(this.usuario.rol === "JEFE_PROGRAMA"){
+                  this.getConveniosJefe();
+                }else {
+                  this.getConvenios();
+                }
+              });
+            }
+          });
+        });
       }
     })
   }
 
-  deleteEmpresa(dato: any) {
+  putEncargado(dato: any) {
 
     Swal.fire({
       title: '¿Eliminar Empresa?',
@@ -220,14 +246,43 @@ export class EmpresasComponent implements OnInit {
 
       this.nombreArchivoC = file.name;
       let documento_convenio = <File>file;
-      this.documento_convenio.append('documento_propuesta', documento_convenio, documento_convenio.name);
+      this.documento_convenio.append('documento_convenio', documento_convenio, documento_convenio.name);
     }
+  }
+
+  getFileConvenioUpdate(file: File) {
+
+    if (file.size > this.MAX_SIZE_FILE) {
+      Swal.fire({
+        title: '¡Lo Sentimos!',
+        html: `<p> El archivo: <b>${file.name}</b>, supera el 1 MB</p>`,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        showCancelButton: false,
+        confirmButtonColor: '#60D89C',
+      }).then(() => {
+        location.reload()
+      });
+
+    } else {
+
+      this.nombreArchivoCUpdate = file.name;
+      let documento_convenio = <File>file;
+      this.documento_convenioUpdate.append('documento_convenio', documento_convenio, documento_convenio.name);
+    }
+  }
+
+  clearDocumentoUpdate(){
+    this.nombreArchivoCUpdate = undefined;
+    this.documento_convenioUpdate = new FormData();
   }
 
   getDataBuscar(data) {
 
   }
 }
+
+
 
 
 

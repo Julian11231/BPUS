@@ -22,7 +22,9 @@ export class InscripcionDirectaComponent implements OnInit {
   empresas: any;
   eps:string;
   tituloPasantia:string;
+  descripcion:string;
   idEmpresa:string;
+  lineaInvestigacion:string;
 
   documento_propuesta = new FormData();
   documento_fichaAcademica = new FormData();
@@ -123,7 +125,9 @@ export class InscripcionDirectaComponent implements OnInit {
             this.idEmpresa,
             null,
             this.eps,
-            this.tituloPasantia
+            this.lineaInvestigacion,
+            this.tituloPasantia,
+            this.descripcion
           )
 
           this._pasantiaService.postSolicitudDirecta(idEstudiante, inscripcion).subscribe((respP:any) => {
@@ -143,7 +147,7 @@ export class InscripcionDirectaComponent implements OnInit {
                       if(respC){
                         Swal.fire({
                           title: '¡Bien Hecho!',
-                          html: `Su solicitud fue exitosa, el radicado de su solicitud es: <b> ${respP._id}</b>`,
+                          html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${respP._id}</b>`,
                           icon: 'warning',
                           confirmButtonText: 'Aceptar',
                           confirmButtonColor: '#60D89C',
@@ -163,7 +167,7 @@ export class InscripcionDirectaComponent implements OnInit {
             });
           });
 
-        }, 100);
+        });
 
       }
     })
@@ -171,9 +175,14 @@ export class InscripcionDirectaComponent implements OnInit {
 
   getInfoPropuesta(){
     var selectEmpresas = (document.getElementById("mySelect")) as HTMLSelectElement;
-    var eps = (document.getElementById("eps")) as HTMLSelectElement;
-    var tituloPasantia = (document.getElementById("tituloPasantia")) as HTMLSelectElement;
+    var radio1 = (document.getElementById("radio1")) as HTMLInputElement;
+    var radio2 = (document.getElementById("radio2")) as HTMLInputElement;
+    var radio3 = (document.getElementById("radio3")) as HTMLInputElement;
+    var eps = (document.getElementById("eps")) as HTMLInputElement;
+    var tituloPasantia = (document.getElementById("tituloPasantia")) as HTMLInputElement;
+    var descripcion = (document.getElementById("descripcion")) as HTMLInputElement;
     var selectedIndex = selectEmpresas.selectedIndex;
+
     if(selectedIndex > 0){
       selectedIndex = selectedIndex-1;
       this.nombreEmpresa = this.empresas[selectedIndex].nombre;
@@ -182,9 +191,21 @@ export class InscripcionDirectaComponent implements OnInit {
       this.nombreEmpresa = '';
       this.idEmpresa = '';
     }
+
+    if(radio1.checked){
+      this.lineaInvestigacion = radio1.value;
+    }else if(radio2.checked){
+      this.lineaInvestigacion = radio2.value;
+    }else if(radio3.checked){
+      this.lineaInvestigacion = radio3.value;
+    }
+
     var epsSelected = eps.value;
-    var tituloPasantiaText = tituloPasantia.value;
-    this.tituloPasantia = tituloPasantiaText;
+    this.tituloPasantia = tituloPasantia.value;
+    this.descripcion = descripcion.value;
+    descripcion.style.overflow = 'hidden';
+    descripcion.style.height = descripcion.getAttribute('data-min.rows');
+    descripcion.style.height = descripcion.scrollHeight + 'px';
     this.eps = epsSelected;
   }
 
@@ -194,6 +215,7 @@ export class InscripcionDirectaComponent implements OnInit {
     this.nombreEmpresa = undefined;
     this.eps = undefined;
     this.tituloPasantia = undefined;
+    this.descripcion = undefined;
     this.idEmpresa = undefined;
   
     this.documento_propuesta = new FormData();

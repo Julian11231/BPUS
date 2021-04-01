@@ -130,7 +130,10 @@
                             <a routerLink= "/mi-modalidad" *ngIf="aprobacionEmpresa === true" class="isDisabled">Enviar
                                 Pre-Inscripción
                             </a>
-                            <a  *ngIf="aprobacionEmpresa === false" routerLink="/preinscripcion-pasantia" routerLinkActive="active">Enviar
+                            <a  *ngIf="aprobacionEmpresa === false && EstadoPreInsc ==='Rechazada'" routerLink="/preinscripcion-pasantia" routerLinkActive="active">Enviar
+                                Pre-Inscripción
+                            </a>
+                            <a  *ngIf="aprobacionEmpresa === false && EstadoPreInsc ==='PreInscrita'" routerLink="/mi-modalidad" class="isDisabled" routerLinkActive="active">Enviar
                                 Pre-Inscripción
                             </a>
                         </li>
@@ -143,7 +146,9 @@
                         <li *ngIf="EstadoPreInsc ==='PreInscrita' && aprobacionEmpresa === false">
                             <a routerLink="/mi-modalidad" class="isDisabled">Inscripción de Propuesta</a>
                         </li>
-
+                        <li *ngIf="EstadoPreInsc ==='Rechazada' && aprobacionEmpresa === false">
+                            <a routerLink="/mi-modalidad" class="isDisabled">Inscripción de Propuesta</a>
+                        </li>
                         <li *ngIf="EstadoPreInsc ==='PreInscrita' && aprobacionEmpresa === true">
                             <a routerLink="/inscripcion-propuesta" routerLinkActive="active">Inscripción de Propuesta</a>
                         </li>
@@ -175,7 +180,7 @@
                             </a></li>
 
                         <li  *ngIf="EstadoPropuesta !== 'Aprobada' && EstadoPreInsc !== 'En ejecución'"><a routerLink="/mi-modalidad"
-                            routerLinkActive="active">Enviar Informe
+                            routerLinkActive="active" class="isDisabled">Enviar Informe
                         </a></li>
 
                         <li *ngIf="EstadoInforme7 ==='Rechazado'"><a routerLink="/informe-siete"
@@ -187,7 +192,7 @@
                             </a></li>
 
                         <li *ngIf="EstadoInforme7 ==='Aprobado'"><a routerLink="/mi-modalidad"
-                                routerLinkActive="active">Enviar Informe
+                                routerLinkActive="active" class="isDisabled">Enviar Informe
                             </a></li>
 
                     </ul>

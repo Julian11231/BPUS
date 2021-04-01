@@ -92,7 +92,7 @@
                             <!-- Modal Header -->
                             <div class="modal-header text-center text-light" style="background-color: #8F141B;">
                                 <h4 class="modal-title text-light">Rechazar solicitud</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal" style="color:#ffff">&times;</button>
                             </div>
                             
                             <!-- Modal body -->
@@ -120,7 +120,7 @@
                             <!-- Modal Header -->
                             <div class="modal-header text-white" style="background-color: #357a38;">
                                 <h4 class="modal-title text-white">Aprobar solicitud</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal" style="color:#ffff">&times;</button>
                             </div>
                             
                             <!-- Modal body -->
@@ -130,7 +130,8 @@
                                     <label class="control-label mt-2">
                                         <h5 class="text-uppercase"> <b>Asiganar tutor:</b> </h5>
                                     </label>
-                                    <select [(ngModel)]="tutor" name="tutor" class="form-control custom-select" required>
+                                    <select name="tutor" class="form-control custom-select" id="tutorSelected" (change)="getTutorSelected()" required>
+                                        <option value="" selected>Selecciona un tutor...</option>
                                         <ng-container *ngFor="let tutor of tutores">
                                             <option value="{{tutor._id}}">{{tutor.nombres}} {{tutor.apellidos}}</option>
                                         </ng-container>
@@ -161,47 +162,40 @@
                     </div>
                 </div>
 
-                <div class="row" *ngFor="let dato of propuestas">
+                <ng-container *ngFor="let dato of propuestas">
                     <ng-container *ngIf="dato.estado === 'Enviada'">
-                        <ng-container>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="row">
+                            <div class="col-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="vacantes">
                                     <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
                                             {{ dato.estudiante.apellidos }}</b></h5>
                                     <small *ngIf="dato.vacante"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{ dato.vacante.titulo }} - {{dato.empresa.nombre}}
+                                        {{dato.empresa.nombre}}
                                     </small><br *ngIf="dato.vacante">
-                                    <small *ngIf="dato.vacante">{{ dato.vacante.funciones }}</small>
                                     <small *ngIf="!dato.vacante"><i class="fa fa-briefcase">
                                         </i> &nbsp; {{dato.empresa.nombre}}
                                     </small>
                                 </div>
                             </div>
-                            <br>
-                            <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-                                <div class="px-auto text-center">
-                                    <button class="btn btn-lg descargar btnSuccess">
-                                        <a class="btnSuccess" [href]="dato.documento_propuesta | documento: dato.estudiante._id" download="dato.documento_propuesta" target="_blank">
-                                            <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Propuesta</b></small>
-                                        </a>
-                                    </button>
-                                </div>
+                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 mt-2">
+                                <a href="#{{dato._id}}" data-toggle="collapse">Ver mas <i class="fa fa-angle-down"></i></a>
                             </div>
-                            <br>
-                            <div class="col-6 col-sm-6 col-md-2 col-lg-2">
-                                <div class="px-auto text-center">
-                                    <button class="btn btn-lg descargar btnSuccess">
-                                        <a class="btnSuccess" [href]="dato.documento_fichaAcademica | documento: dato.estudiante._id" download="dato.documento_fichaAcademica" target="_blank">
-                                            <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ficha</b></small>
-                                        </a>
-                                    </button>
-                                </div>
-                            </div>                                
-
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="buttons">
+                        </div>
+                        <div id="{{dato._id}}" class="collapse mt-2">
+                            <div class="d-flex justify-content-end pr-5">
+                                <button class="btn descargar btnSuccess mb-2 mr-3">
+                                    <a class="btnSuccess" [href]="dato.documento_propuesta | documento: dato.estudiante._id" download="dato.documento_propuesta" target="_blank">
+                                        <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver Propuesta</b></small>
+                                    </a>
+                                </button>
+                                <button class="btn descargar btnSuccess mb-2 mr-5">
+                                    <a class="btnSuccess" [href]="dato.documento_fichaAcademica | documento: dato.estudiante._id" download="dato.documento_fichaAcademica" target="_blank">
+                                        <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver Ficha</b></small>
+                                    </a>
+                                </button>                            
+                                <div class="buttons mb-3 ml-5">
                                     <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target=".modal-propuesta" class="btn btn btn-outline-info btn-sm mr-2">
-                                        <i class="fa fa-info-circle"></i>
+                                        <i class="fa fa-info-circle" style="font-size: 20px;"></i>
                                     </button>
                                     <button type="button" [disabled]="dato.estado == 'Aprobada'" (click)="getDataInfo(dato)" class="btn text-white mr-2" data-toggle="modal" data-target="#AprobarModal" style="background-color: #6fbf73;">
                                         Aprobar
@@ -211,10 +205,12 @@
                                     </button>
                                 </div>
                             </div>
-                        </ng-container>
+                        </div>
+                        <hr>
                     </ng-container>
-                </div>
+                </ng-container>
             </div>
         </div>
     </div>
 </div>
+<img id='firmaJefe' src='../../../../assets/images/fima_jefe.jpeg' style='display:none'/>
