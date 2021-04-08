@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { Pasantia } from 'src/app/models/Pasantia';
-import { PasantiService } from 'src/app/services/service.index';
+import { PasantiService, EmpresaService, NotificacionesService, ProgramaService } from 'src/app/services/service.index';
+import { Notificacion } from 'src/app/models/notificacion.model';
+import { Router } from '@angular/router';
 
 declare function init_plugins()
 
@@ -10,19 +11,26 @@ declare function init_plugins()
   templateUrl: './propuesta-pasantia.component.html',
   styleUrls: ['./propuesta-pasantia.component.css']
 })
-export class ActaInicioComponent implements OnInit {
+export class PropuestaPasantiaComponent implements OnInit {
 
-  pasantia: string;
+  pasantia: any;
   nombreArchivoP: string;
   nombreArchivoF: string;
-  usuario:any;
+  info:any;
+  jefe:string;
+  tituloPasantia:string;
+  descripcion:string;
 
   documento_propuesta = new FormData();
   documento_fichaAcademica = new FormData();
 
-  MAX_SIZE_FILE: number = 2000000
+  MAX_SIZE_FILE: number = 1000000;
 
-  constructor(public _pasantiaService: PasantiService) { }
+  constructor(public _pasantiaService: PasantiService, 
+              public _empresaService: EmpresaService,
+              public _programaService: ProgramaService,
+              public _notificacionService: NotificacionesService,
+              public router: Router) { }
 
   ngOnInit(): void {
 
@@ -30,13 +38,20 @@ export class ActaInicioComponent implements OnInit {
     const estudiante = JSON.parse(localStorage.getItem('estudiante'));
     const admin = JSON.parse(localStorage.getItem('administrativo'));
     if(estudiante){
-      this.usuario = estudiante;
-      this.pasantia = estudiante.modalidad;
+      this.info = estudiante;
     }else{
-      this.usuario = admin;
-      this.pasantia = admin.modalidad
+      this.info = admin;
     }
-    console.log(this.nombreArchivoP);
+    if(this.info.modalidad !== null){
+      this.getPasantia();
+    }
+    this.getJefePrograma();
+  }
+
+  getPasantia() {
+    this._pasantiaService.getPasantia(this.info.modalidad._id).subscribe((resp: any) => {
+      this.pasantia = resp.pasantia;
+    })
   }
 
   getFilePropuesta(file: File) {
@@ -44,7 +59,7 @@ export class ActaInicioComponent implements OnInit {
     if (file.size > this.MAX_SIZE_FILE) {
       Swal.fire({
         title: '¡Lo Sentimos!',
-        html: `<p> El archivo: <b>${file.name}</b>, supera las 2 MB</p>`,
+        html: `<p> El archivo: <b>${file.name}</b>, supera el 1 MB</p>`,
         icon: 'error',
         confirmButtonText: 'Ok',
         showCancelButton: false,
@@ -66,7 +81,7 @@ export class ActaInicioComponent implements OnInit {
     if (file.size > this.MAX_SIZE_FILE) {
       Swal.fire({
         title: '¡Lo Sentimos!',
-        html: `<p> El archivo: <b>${file.name}</b>, supera las 2 MB</p>`,
+        html: `<p> El archivo: <b>${file.name}</b>, supera el 1 MB</p>`,
         icon: 'error',
         confirmButtonText: 'Ok',
         showCancelButton: false,
@@ -83,11 +98,12 @@ export class ActaInicioComponent implements OnInit {
     }
   }
 
-  enviarPropuesta() {
+  postSolicitud() {
+
+    let idEstudiante = this.info._id;
 
     Swal.fire({
-      title: '¿Enviar Propuesta de Pasantía?',
-      html: `<p> Se enviará el documento al Jefe de Programa</p>`,
+      title: '¿Hacer Inscripición?',
       icon: 'warning',
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si',
@@ -98,13 +114,70 @@ export class ActaInicioComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
-
-        let idEstudiante = this.usuario._id;
-        this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((resp:any) => {
-          this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe();
+        let currentDate = new Date();
+        let notificacion = new Notificacion(
+          this.jefe,
+          currentDate,
+          'Nueva solicitd de pasantia',
+          `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.pasantia.empresa.nombre}`,
+          'Administrativo' 
+        );
+        this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((respDP:any) => {
+          this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe((respDF:any) => {
+            this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
+              if(respN){
+                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
+                  if(respC){
+                    Swal.fire({
+                      title: '¡Bien Hecho!',
+                      html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${respDF._id}</b>`,
+                      icon: 'warning',
+                      confirmButtonText: 'Aceptar',
+                      confirmButtonColor: '#60D89C',
+                
+                    }).then((result) => {
+                      if (result.value) {
+                        this.router.navigate(['/']);
+                      }
+                    });
+                  }else{
+                    console.log("Error garrafal");
+                  }
+                })
+              }
+            });
+          });
         });
-
       }
+    })
+  }
+
+  getInfoPropuesta(){
+
+    var tituloPasantia = (document.getElementById("tituloPasantia")) as HTMLInputElement;
+    var descripcion = (document.getElementById("descripcion")) as HTMLInputElement;
+
+    this.tituloPasantia = tituloPasantia.value;
+    this.descripcion = descripcion.value;
+    descripcion.style.overflow = 'hidden';
+    descripcion.style.height = descripcion.getAttribute('data-min.rows');
+    descripcion.style.height = descripcion.scrollHeight + 'px';
+  }
+
+  cleardata(){
+    this.nombreArchivoP = undefined;
+    this.nombreArchivoF= undefined;
+    this.tituloPasantia = undefined;
+    this.descripcion = undefined;
+  
+    this.documento_propuesta = new FormData();
+    this.documento_fichaAcademica = new FormData();
+  }
+
+  getJefePrograma() {
+    this._programaService.getPrograma().subscribe((resp) => {
+      let infoPrograma = resp['programa'];
+      this.jefe = infoPrograma.jefe._id;
     });
   }
 

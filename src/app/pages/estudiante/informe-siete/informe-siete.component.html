@@ -1,53 +1,22 @@
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
+<div class="p-5 text-center" style="background-color: white;">
+    <div class="p-5 mx-auto w-75">
+        <label for="filePropuesta" *ngIf="nombreArchivoInforme == null"
+        class="labels custom-file-upload">
+        Click aquí para subir el el informe de la semana 7</label>
 
-                <div class="row">
-                    <h3 class="card-title text-uppercase" style="margin-left: 15px;"><b> Descripción de la fase </b>
-                    </h3>
-
-                    <p class="col-12 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum odio
-                        tempore
-                        veritatis maxime
-                        perferendis blanditiis animi qui perspiciatis molestiae fuga provident doloribus, fugiat eos
-                        voluptate ea cupiditate laudantium! Eos, ea! Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Animi totam libero assumenda tempore vero dolores corporis voluptatum.
-                    </p><br>
-
-                    <h5 class="text-uppercase" style="margin-left: 15px; color: #8F141B;"><b> Nota: </b>
-                    </h5>
-
-                    <p class="col-12 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum odio
-                        tempore
-                        veritatis maxime
-                        perferendis </p> <br><br><br>
-
-                </div>
-                <div class="row text-xl-center">
-                    <div class="col-lg-12">
-                        <label for="filePropuesta" *ngIf="nombreArchivoInforme == null"
-                            class="labels custom-file-upload">
-                            Click aquí para subir el el informe de la semana 7</label>
-
-                        <label for="filePropuesta" *ngIf="nombreArchivoInforme != null"
-                            class="labels custom-file-upload text-center" style="color: #8F141B; font-weight: bold;">
-                            {{ nombreArchivoInforme }}</label><br>
-                        <small>Recuerda que debe ser un archivo PDF, de tamaño menor a 2MB.</small><br>
+    <label for="filePropuesta" *ngIf="nombreArchivoInforme != null"
+        class="labels custom-file-upload text-center" style="color: #8F141B; font-weight: bold;">
+        {{ nombreArchivoInforme }}</label><br>
+    <small>Recuerda que debe ser un archivo PDF, de tamaño menor a 1 MB.</small><br>
 
 
-                        <input name="filePropuesta" id="filePropuesta"
-                            (change)="getFileInforme( $event.target.files[0] )" type="file" accept="application/pdf"
-                            class="imagenes-secundarias" required /> <br> <br>
+    <input name="filePropuesta" id="filePropuesta"
+        (change)="getFileInforme( $event.target.files[0] )" type="file" accept="application/pdf"
+        class="imagenes-secundarias" required /> <br> <br>
 
-                        <button class="btn btnSuccess" (click)="enviarInforme()"  [disabled]="(nombreArchivoInforme === undefined)">
-                            <b> Enviar Informe</b>
-                        </button>
-
-                    </div>
-
-                </div><br><br>
-            </div>
-        </div>
+    <button class="btn btnSuccess" (click)="enviarInforme()"  [disabled]="(nombreArchivoInforme === undefined)">
+        <b> Enviar Informe</b>
+    </button>
     </div>
 </div>
+

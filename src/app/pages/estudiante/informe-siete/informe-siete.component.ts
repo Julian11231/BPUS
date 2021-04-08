@@ -14,9 +14,9 @@ export class InformeSieteComponent implements OnInit {
   info:any;
   documento_informe7 = new FormData();
 
-  MAX_SIZE_FILE: number = 2000000
+  MAX_SIZE_FILE: number = 1000000
 
-  constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService,) { }
+  constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService) { }
 
   ngOnInit(): void {
     const estudiante = JSON.parse(localStorage.getItem('estudiante'));
@@ -33,7 +33,7 @@ export class InformeSieteComponent implements OnInit {
     if (file.size > this.MAX_SIZE_FILE) {
       Swal.fire({
         title: '¡Lo Sentimos!',
-        html: `<p> El archivo: <b>${file.name}</b>, supera las 2 MB</p>`,
+        html: `<p> El archivo: <b>${file.name}</b>, supera las 1 MB</p>`,
         icon: 'error',
         confirmButtonText: 'Ok',
         showCancelButton: false,

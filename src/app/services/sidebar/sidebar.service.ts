@@ -78,14 +78,14 @@ export class SidebarService {
       titulo: 'Gestión Vacantes',
       icono: 'fa fa-briefcase',
       submenu: [
-        { titulo: 'Gestión de Empresas', url: '/vacantes' },
+        { titulo: 'Gestión de vacantes', url: '/vacantes' },
       ]
     },
     {
       titulo: 'Solicitudes',
       icono: 'fa fa-briefcase',
       submenu: [
-        { titulo: 'Gestión de Empresas', url: '/solicitud-vacantes' },
+        { titulo: 'Gestión de solicitudes', url: '/solicitud-vacantes' },
       ]
     }
   ];

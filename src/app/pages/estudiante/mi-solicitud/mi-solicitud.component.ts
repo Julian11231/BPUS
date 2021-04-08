@@ -37,8 +37,7 @@ export class MiSolicitudComponent implements OnInit {
   getPasantia() {
     this._pasantiaService.getPasantia(this.info.modalidad._id).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
-    });
-
+    })
   }
 
 }

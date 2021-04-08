@@ -6,7 +6,7 @@ import { VacantesComponent } from './encargado/vacantes/vacantes.component';
 import { ModSolicitudVacanteComponent } from './docente/mod-solicitud-vacante/mod-solicitud-vacante.component';
 import { EncarSolicitudVacanteComponent } from './encargado/solicitud-vacante/solicitud-vacante.component';
 import { MiSolicitudComponent } from './estudiante/mi-solicitud/mi-solicitud.component';
-import { ActaInicioComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
+import { PropuestaPasantiaComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
 import { TutoriaPasantiaComponent } from './docente/tutoria-pasantia/tutoria-pasantia.component';
 import { PropuestasComponent } from './docente/propuestas/propuestas.component';
 import { InformeCatorceComponent } from './estudiante/informe-catorce/informe-catorce.component';
@@ -22,7 +22,7 @@ import { EmpresasComponent } from './docente/empresas/empresas.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
 import { MainComponent } from './main/main.component';
 import { LoginGuardGuard } from '../services/service.index';
-
+import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
 
 
 
@@ -44,7 +44,7 @@ const pagesRoutes: Routes = [
             { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil de Usuario' } },
             { path: 'empresas', component: EmpresasComponent, data: { titulo: 'Gestión de Empresas' } },
             { path: 'vacantes', component: VacantesComponent, data: { titulo: 'Gestión de Vacantes' } },
-            { path: 'inscripcion-propuesta', component: ActaInicioComponent, data: { titulo: 'Inscripción de la Propuesta' },canActivate: [LoginGuardGuard] },
+            { path: 'inscripcion-propuesta', component: PropuestaPasantiaComponent, data: { titulo: 'Inscripción de la Propuesta' },canActivate: [LoginGuardGuard] },
             { path: 'solicitudes', component: ModSolicitudVacanteComponent, data: { titulo: 'Solicitudes Por Vacantes' } },
             { path: 'mi-modalidad', component: MiSolicitudComponent, data: { titulo: 'Seguimiento a la Modalidad' } },
             { path: 'pasantias-asignadas', component: TutoriaPasantiaComponent, data: { titulo: 'Pasantías Asignadas' } },
@@ -53,6 +53,7 @@ const pagesRoutes: Routes = [
             { path: 'informe-catorce', component: InformeCatorceComponent, data: { titulo: 'Envío de Informe de la Semana 14' } },
             { path: 'informe-final', component: InformeFinalComponent, data: { titulo: 'Envío de Informe Final' } },
             { path: 'solicitud-vacantes', component: EncarSolicitudVacanteComponent, data: { titulo: 'Solicitudes de vacantes' } },
+            { path: 'acta-inicio', component: ActaInicioPasantiaComponent, data: { titulo: 'Acta de inicio' } },
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },

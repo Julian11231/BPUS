@@ -25,7 +25,7 @@ import { VacantesComponent } from './encargado/vacantes/vacantes.component';
 import { EncarSolicitudVacanteComponent } from './encargado/solicitud-vacante/solicitud-vacante.component';
 import { ModSolicitudVacanteComponent } from './docente/mod-solicitud-vacante/mod-solicitud-vacante.component';
 import { MiSolicitudComponent } from './estudiante/mi-solicitud/mi-solicitud.component';
-import { ActaInicioComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
+import { PropuestaPasantiaComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
 import { TutoriaPasantiaComponent } from './docente/tutoria-pasantia/tutoria-pasantia.component';
 import { PropuestasComponent } from './docente/propuestas/propuestas.component';
 import { InformeCatorceComponent } from './estudiante/informe-catorce/informe-catorce.component';
@@ -33,6 +33,7 @@ import { InformeFinalComponent } from './estudiante/informe-final/informe-final.
 import { InformeSieteComponent } from './estudiante/informe-siete/informe-siete.component';
 import { NotificacionesComponent} from './notificaciones/notificaciones.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
+import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
 
 
 
@@ -50,7 +51,7 @@ import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-d
     VacantesComponent,
     ModSolicitudVacanteComponent,
     MiSolicitudComponent,
-    ActaInicioComponent,
+    PropuestaPasantiaComponent,
     TutoriaPasantiaComponent,
     PropuestasComponent,
     InformeSieteComponent,
@@ -58,7 +59,8 @@ import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-d
     InformeFinalComponent,
     NotificacionesComponent,
     EncarSolicitudVacanteComponent,
-    InscripcionDirectaComponent
+    InscripcionDirectaComponent,
+    ActaInicioPasantiaComponent
 
   ],
   exports: [
@@ -73,7 +75,7 @@ import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-d
     VacantesComponent,
     ModSolicitudVacanteComponent,
     MiSolicitudComponent,
-    ActaInicioComponent,
+    PropuestaPasantiaComponent,
     TutoriaPasantiaComponent,
     PropuestasComponent,
     InformeSieteComponent,

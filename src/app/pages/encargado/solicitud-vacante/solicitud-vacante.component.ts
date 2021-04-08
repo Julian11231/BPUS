@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PasantiService, TutoresService } from 'src/app/services/service.index';
+import { PasantiService, NotificacionesService } from 'src/app/services/service.index';
 import Swal from 'sweetalert2';
+import { Notificacion } from 'src/app/models/notificacion.model';
 
 @Component({
   selector: 'app-mod-solicitud-vacante',
@@ -14,7 +15,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
   programa: string;
   vacanteSelected: any;
 
-  constructor(public _pasantiaService: PasantiService) { }
+  constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService,) { }
 
   ngOnInit(): void {
     //const estudiante = JSON.parse(localStorage.getItem('estudiante'));
@@ -37,26 +38,41 @@ export class EncarSolicitudVacanteComponent implements OnInit {
       cancelButtonText: 'Cerrar'
     }).then((result) => {
       if (result.value) {
+        let currentDate = new Date();
+        let notificacion = new Notificacion(
+          this.vacanteSelected.estudiante._id,
+          currentDate,
+          'Solicitud de vacante aprobada',
+          `Te han aprobado tu solicitud de vancante para la empresa ${this.info.empresa._id}`,
+          'EncargadoEmpresa' 
+        );
         this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, true).subscribe((resp:any) => {
-          console.log(resp);
           if(resp){
-            Swal.close();
-            Swal.fire({
-              title: 'Aprobada correctamente',
-              icon: 'success',
-              timer: 2000,
-              showConfirmButton:false,
-              timerProgressBar: true,
-            }).then((result) => {
-              /* Read more about handling dismissals below */
-              if (result.dismiss) {
-                this.getSolicitudes();
+            this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
+              if(respN){
+                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
+                  if(respC){
+                    Swal.close();
+                    Swal.fire({
+                      title: 'Aprobada correctamente',
+                      icon: 'success',
+                      timer: 2000,
+                      showConfirmButton:false,
+                      timerProgressBar: true,
+                    }).then((result) => {
+                      /* Read more about handling dismissals below */
+                      if (result.dismiss) {
+                        this.getSolicitudes();
+                      }
+                    });
+                  }  
+                });
               }
-            })
+            });    
           }
         });
       }
-    })
+    });
   }
 
   rechazarSolicitud(){
@@ -71,22 +87,37 @@ export class EncarSolicitudVacanteComponent implements OnInit {
       cancelButtonText: 'Cerrar'
     }).then((result) => {
       if (result.value) {
+        let currentDate = new Date();
+        let notificacion = new Notificacion(
+          this.vacanteSelected.estudiante._id,
+          currentDate,
+          'Solicitud de vacante rechazada',
+          `Te han rechazado tu solicitud de vancante en ${this.info.empresa.nombre}`,
+          'EncargadoEmpresa' 
+        );
         this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, false).subscribe((resp:any) => {
-          console.log(resp);
           if(resp){
-            Swal.close();
-            Swal.fire({
-              title: 'Rechazada correctamente',
-              icon: 'success',
-              timer: 2000,
-              showConfirmButton:false,
-              timerProgressBar: true,
-            }).then((result) => {
-              /* Read more about handling dismissals below */
-              if (result.dismiss) {
-                this.getSolicitudes();
+            this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
+              if(respN){
+                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
+                  if(respC){
+                    Swal.close();
+                    Swal.fire({
+                      title: 'Rechazada correctamente',
+                      icon: 'success',
+                      timer: 2000,
+                      showConfirmButton:false,
+                      timerProgressBar: true,
+                    }).then((result) => {
+                      /* Read more about handling dismissals below */
+                      if (result.dismiss) {
+                        this.getSolicitudes();
+                      }
+                    });
+                  }  
+                });
               }
-            })
+            });    
           }
         });
       }

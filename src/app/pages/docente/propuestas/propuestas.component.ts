@@ -42,8 +42,8 @@ export class PropuestasComponent implements OnInit {
 
   aprobarSolicitud(form: NgForm) {
     let pasantia = new PasantiaAdmin(
-      'Enviada',
-      form.value.tutor,
+      'En ejecución',
+      this.tutorSelected._id,
       'Aprobada',
       form.value.notas,
     )
@@ -99,7 +99,7 @@ export class PropuestasComponent implements OnInit {
                 'Estudiante' 
               );
               let notificacionT = new Notificacion(
-                this.pasantiaSup.estudiante._id,
+                this.tutorSelected._id,
                 currentDate,
                 'Asignación como tutor de pasantia',
                 `Te han asiganado como tutor de la pasantia del estudiante ${this.pasantiaSup.estudiante.nombres} ${this.pasantiaSup.estudiante.apellidos}`,

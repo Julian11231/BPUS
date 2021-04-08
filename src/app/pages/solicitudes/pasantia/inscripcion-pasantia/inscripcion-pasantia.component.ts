@@ -94,7 +94,6 @@ export class InscripcionPasantiaComponent implements OnInit {
               `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.nombreEmpresa}`,
               'EncargadoEmpresa' 
             );
-            console.log(respP);
             this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
               if(respN){
                 this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{

@@ -211,7 +211,7 @@ export class PasantiService {
 
   }
 
-  postCartaPresentacion(idEstudiante: string, carta_presentacion: FormData) {
+  postCartaPresentacion(idEstudiante: string, carta_presentacion: FormData,) {
 
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
@@ -243,6 +243,30 @@ export class PasantiService {
     return this.http.put(url, documento_fichaAcademica).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
+        return resp.pasantia;
+      }
+      
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
+
+  postDocumentoActInicio(idEstudiante: string, documento_actaInicio: FormData, fecha_actaInicio: string) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_actaInicio=${fecha_actaInicio}&token=${token}`;
+
+    return this.http.put(url, documento_actaInicio).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
         return true;
       }
       
@@ -259,6 +283,29 @@ export class PasantiService {
 
   }
 
+  postDocumentoARL(idEstudiante: string, documento_arl: FormData, fecha_arl:string) {
+
+    let token = localStorage.getItem('token')
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_arl=${fecha_arl}&token=${token}`;
+
+    return this.http.put(url, documento_arl).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        return true;
+      }
+      
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+
+  }
 
   postDocumentoInf7(idEstudiante: string, documento_informe7: FormData) {
 
