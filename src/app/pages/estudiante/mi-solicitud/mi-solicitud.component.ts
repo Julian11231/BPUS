@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PasantiService } from 'src/app/services/service.index';
-import { NgForm } from '@angular/forms';
-import Swal from 'sweetalert2';
+import { DatePipe } from '@angular/common';
 import { Pasantia } from '../../../models/Pasantia';
 import { Router } from '@angular/router';
 
@@ -16,6 +15,8 @@ export class MiSolicitudComponent implements OnInit {
 
   info: any;
   pasantia: any;
+  fechaInicio:string;
+  semanas:any;
 
   constructor(public _pasantiaService: PasantiService, public router: Router) { }
 
@@ -37,6 +38,12 @@ export class MiSolicitudComponent implements OnInit {
   getPasantia() {
     this._pasantiaService.getPasantia(this.info.modalidad._id).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
+      const pipe = new DatePipe('en-US');
+      let currentDate = new Date();
+      let fechaInicio = new Date(Date.parse(this.pasantia.fecha_actaInicio));
+      let diff = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate()) ) /(1000 * 60 * 60 * 24 * 7));
+      this.semanas = Math.floor(diff);
+      this.fechaInicio =  pipe.transform(fechaInicio, 'dd-MM-yyyy');
     })
   }
 

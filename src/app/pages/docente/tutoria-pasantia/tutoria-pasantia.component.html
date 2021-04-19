@@ -1,46 +1,66 @@
-<div class="container pt-2" style="background-color: #ffff;">
+<div class="container p-4" style="background-color: #ffff;">
 
-    <h3 class="text-uppercase"><b>Todas las Pasantías </b></h3>
-    <hr>
-
-    <div class="modal fade modal-pasantia" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="modalGestionPasantia">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
-
-                    <h5> <b class="text-uppercase">ID de la pasantía:</b> &nbsp;{{pasantiaSelected?._id}}</h5>
-
-                    <h5 class="text-uppercase"> <b>Documento de Propuesta de Pasantía: &nbsp;</b>
-                        <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_propuesta | documento: pasantiaSelected?.estudiante._id" download="pasantiaSup?.documento_propuesta" target="_blank">
-                            <small><b>Descargar</b></small>
-                        </a>
-                    </h5>
-
-                    <form ngNativeValidate #updateInformes="ngForm" (ngSubmit)="putEstadoInformes(updateInformes, pasantiaSelected?._id)" class="form-horizontal">
-
-                        <div class="d-flex">
-                            <div class="vacantesInfo">
-                                <h5 class="text-uppercase">
-                                    <b>{{ pasantiaSelected?.estudiante.nombres }} {{pasantiaSelected?.estudiante.apellidos}}</b>
-                                </h5>
-                                <small>
-                                    <i class="fa fa-briefcase"></i>&nbsp;&nbsp;{{ pasantiaSelected?.vacante.titulo }} - {{pasantiaSelected?.empresa.nombre}}
-                                </small><br>
-                                <small>
-                                    <i class="fa fa-globe"></i>&nbsp;&nbsp;{{pasantiaSelected?.vacante.ubicacion}}, {{pasantiaSelected?.vacante.modalidad}}
-                                </small><br>
-                                <small>
-                                    <i class="fa fa-code"></i>&nbsp;&nbsp;{{pasantiaSelected?.vacante.funciones}}
-                                </small>
+                    <h5 *ngIf="pasantiaSelected?.estado !== 'PreInscrita'" class="mb-2"><b>ID: </b>{{pasantiaSelected?._id}}</h5>
+                    <div *ngIf="pasantiaSelected?.fecha_actaInicio" class="row mb-1">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5><b>Fecha inicio: </b>{{pasantiaSelected?.fecha_actaInicio}}</h5>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5><b>Semana: </b>{{pasantiaSelected?.semanas}}/24</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-8 col-lg-8 pt-1">
+                            <h5><b>Estudiante: </b>{{pasantiaSelected?.estudiante.nombres}} {{pasantiaSelected?.estudiante.apellidos}}</h5>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <button class="btn btn-sm btn-info" data-toggle="collapse" data-target="#docsPasantia">Documentos pasantia</button>
+                        </div>
+                    </div>
+                    <div id="docsPasantia" class="collapse my-3">
+                        <hr>
+                        <div class="row mt-3 px-3">
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                                <button *ngIf="!pasantiaSelected?.documento_propuesta" class="btn btnSuccess descargar" disabled>
+                                    <small><b>Propuesta</b></small>
+                                </button>
+                                <a *ngIf="pasantiaSelected?.documento_propuesta" class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_propuesta | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_propuesta" target="_blank">
+                                    <small><b>Propuesta</b></small>
+                                </a>
                             </div>
-                            <div class="align-self-center mx-auto">
-                                <h5 class="text-uppercase"> <b>Tutor de Pasantía:</b> </h5>
-                                <span *ngIf="pasantiaSelected?.tutor == null" class="label btnDanger"> <b> No Asignado</b></span>
-                                <span class="label btnSuccess" *ngIf="pasantiaSelected?.tutor != null">
-                                        <b>{{pasantiaSelected?.tutor.nombres}} {{pasantiaSelected?.tutor.apellidos}}</b>
-                                </span>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                                <button *ngIf="!pasantiaSelected?.documento_arl" class="btn btnSuccess descargar px-4" disabled>
+                                    <small><b>ARL</b></small>
+                                </button>
+                                <a *ngIf="pasantiaSelected?.documento_arl" class="btn btnSuccess descargar px-4" [href]="pasantiaSelected?.documento_arl | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_arl" target="_blank">
+                                    <small><b>ARL</b></small>
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                                <button *ngIf="!pasantiaSelected?.documento_actaInicio" class="btn btnSuccess descargar" disabled>
+                                    <small><b>Acta de inicio</b></small>
+                                </button>
+                                <a *ngIf="pasantiaSelected?.documento_actaInicio" class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_actaInicio | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_actaInicio" target="_blank">
+                                    <small><b>Acta de inicio</b></small>
+                                </a>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                                <button *ngIf="!pasantiaSelected?.carta_presentacion" class="btn btnSuccess descargar" disabled>
+                                    <small><b>Carta presentacion</b></small>
+                                </button>
+                                <a *ngIf="pasantiaSelected?.carta_presentacion" class="btn btnSuccess descargar" [href]="pasantiaSelected?.carta_presentacion | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.carta_presentacion" target="_blank">
+                                    <small><b>Carta presentacion</b></small>
+                                </a>
                             </div>
                         </div>
+                        <hr>
+                    </div>
+
+                    <form ngNativeValidate #updateInformes="ngForm" (ngSubmit)="putEstadoInformes(updateInformes, pasantiaSelected?._id)" class="form-horizontal">
 
                         <h5 class="text-uppercase mt-3"> <b>Gestión de la Pasantía:</b></h5>
 
@@ -48,320 +68,187 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th><b> Documento</b></th>
-                                        <th><b> Estado</b></th>
-                                        <th><b> Notas</b></th>
-                                        <th><b> Descarga</b></th>
-                                        <th><b> Actualizar Estado </b></th>
+                                        <th><b>Informes</b></th>
+                                        <th><b>Estado</b></th>
+                                        <th><b>Notas</b></th>
+                                        <th><b>Descarga</b></th>
+                                        <th><b>Actualizar Estado</b></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Informe de la Semana 7</td>
+                                        <td> Semana 7</td>
                                         <td>
-
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 == null"
-                                                class="text-success"><span
-                                                    class="label btnDanger">
-                                                    <b> No enviado </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 == null">
+                                                <span class="label btnDanger"><b>No enviado</b></span>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 == 'Enviado'"
-                                                class="text-success"><span
-                                                    class="label btnInfo">
-                                                    <b> {{ pasantiaSelected?.estado_informe7 }}
-                                                    </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 == 'Enviado'">
+                                                <span class="label btnInfo"><b>{{pasantiaSelected?.estado_informe7}}</b></span>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 == 'Aprobado'"
-                                                class="text-success"><span
-                                                    class="label btnSuccess">
-                                                    <b> {{ pasantiaSelected?.estado_informe7 }}
-                                                    </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 == 'Aprobado'">
+                                                <span class="label" style="background-color: #6fbf73;"><b>{{pasantiaSelected?.estado_informe7}}</b></span><br>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 == 'Rechazado'"
-                                                class="text-success"><span
-                                                    class="label btnDanger">
-                                                    <b> {{ pasantiaSelected?.estado_informe7 }}
-                                                    </b></span><br>
-                                            </ng-container>
-                                        </td>
-                                        <td *ngIf="pasantiaSelected !== undefined">
-                                            <button type="button" class="fa fa-file" data-toggle="modal" data-target="#notas7" [disabled]="pasantiaSelected?.estado_informe7 == null"></button>
-                                              <!-- The Modal -->
-                                            <div class="modal fade modallol" id="notas7">
-                                                <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                
-                                                    <!-- Modal Header -->
-                                                    <div class="modal-header" style="background-color: #7C2A2A;">
-                                                        <h4 class="modal-title text-white">Notas informe semana 7</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    
-                                                    <!-- Modal body -->
-                                                    <div class="modal-body">
-                                                        <label class="control-label mt-2">
-                                                            <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                        </label>
-                                                        <textarea [(ngModel)]="pasantiaSelected.notas_informe7" name="notas7" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
-                                                        <div class="text-center">
-                                                            <button type="button" class="btn text-white" style="background-color: #7C2A2A;" data-dismiss="modal">OK</button>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 == null">
-                                                <button class="btn btnSuccess descargar"
-                                                    disabled><small><b>Descargar
-                                                            Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 != null">
-                                                <a class="btn btnSuccess descargar"
-                                                    [href]="pasantiaSelected?.documento_informe7 | documento: pasantiaSelected?.estudiante._id"
-                                                    download="pasantiaSup?.documento_informe7"
-                                                    target="_blank"><small><b>Descargar
-                                                            Documento</b></small></a>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 == 'Ajustar'">
+                                                <span class="label btnSuccess"><b>{{pasantiaSelected?.estado_informe7}}</b></span><br>
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 == null">
-                                                <select class="form-control custom-select"
-                                                    disabled>
+                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas7" [disabled]="pasantiaSelected?.estado_informe7 == null"></button>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_informe7">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Descargar Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_informe7">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informe7 | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informe7" target="_blank">
+                                                    <small><b>Descargar Documento</b></small>
+                                                </a>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 == null">
+                                                <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe7 != null">
-                                                <select
-                                                    [(ngModel)]="pasantiaSelected.estado_informe7"
-                                                    name="estado_informe7"
-                                                    class="form-control custom-select" required>
-                                                    <option value="Enviado">Enviado</option>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 != null">
+                                                <select [(ngModel)]="pasantiaSelected.estado_informe7" name="estado_informe7" class="form-control custom-select" required>
                                                     <option value="Aprobado">Aprobado</option>
-                                                    <option value="Rechazado">Rechazado</option>
+                                                    <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
                                         </td>
                                     </tr>
-
+                                    <tr id="notas7" class="collapse" *ngIf="pasantiaSelected?.notas_informe7 != null">
+                                        <th colspan="5">
+                                            <label class="control-label mt-2">
+                                                <h5> <b class="text-uppercase">Notas informe semana 7:</b></h5>
+                                            </label>
+                                            <textarea [(ngModel)]="pasantiaSelected.notas_informe7" name="notasSemana7" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                        </th>
+                                    </tr>
                                     <tr>
-                                        <td>Informe de la Semana 14</td>
+                                        <td>Semana 14</td>
                                         <td>
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 == null"
-                                                class="text-success"><span
-                                                    class="label btnDanger">
-                                                    <b> No enviado </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 == null">
+                                                <span class="label btnDanger"><b>No enviado</b></span>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 == 'Enviado'"
-                                                class="text-success"><span
-                                                    class="label btnInfo">
-                                                    <b> {{ pasantiaSelected?.estado_informe14 }}
-                                                    </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 == 'Enviado'">
+                                                <span class="label btnInfo"><b>{{pasantiaSelected?.estado_informe14}}</b></span>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 == 'Aprobado'"
-                                                class="text-success"><span
-                                                    class="label btnSuccess">
-                                                    <b> {{ pasantiaSelected?.estado_informe14 }}
-                                                    </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 == 'Aprobado'">
+                                                <span class="label" style="background-color: #6fbf73;"><b>{{pasantiaSelected?.estado_informe14}}</b></span><br>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 == 'Rechazado'"
-                                                class="text-success"><span
-                                                    class="label btnDanger">
-                                                    <b> {{ pasantiaSelected?.estado_informe14 }}
-                                                    </b></span><br>
-                                            </ng-container>
-                                        </td>
-                                        <td *ngIf="pasantiaSelected !== undefined">
-                                            <button type="button" class="fa fa-file" data-toggle="modal" data-target="#notas14" [disabled]="pasantiaSelected?.estado_informe14 == null"></button>
-                                              <!-- The Modal -->
-                                            <div class="modal fade" id="notas14">
-                                                <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                
-                                                    <!-- Modal Header -->
-                                                    <div class="modal-header" style="background-color: #7C2A2A;">
-                                                        <h4 class="modal-title text-white">Notas informe semana 14</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    
-                                                    <!-- Modal body -->
-                                                    <div class="modal-body">
-                                                        <label class="control-label mt-2">
-                                                            <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                        </label>
-                                                        <textarea [(ngModel)]="pasantiaSelected.notas_informe14" name="notas14" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
-                                                        <button type="button" style="background-color: #7C2A2A;" data-dismiss="modal">OK</button>
-                                                    </div>
-                                                    
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 == null">
-                                                <button class="btn btnSuccess descargar"
-                                                    disabled><small><b>Descargar
-                                                            Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 != null">
-                                                <a class="btn btnSuccess descargar"
-                                                    [href]="pasantiaSelected?.documento_informe14 | documento: pasantiaSelected?.estudiante._id"
-                                                    download="pasantiaSup?.documento_informe14"
-                                                    target="_blank"><small><b>Descargar
-                                                            Documento</b></small></a>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 == 'Ajustar'">
+                                                <span class="label btnSuccess"><b>{{pasantiaSelected?.estado_informe14}}</b></span><br>
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 == null">
-                                                <select class="form-control custom-select"
-                                                    disabled>
+                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas14" [disabled]="!pasantiaSelected?.estado_informe14"></button>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_informe14">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Descargar Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_informe14">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informe14 | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informe14" target="_blank">
+                                                    <small><b>Descargar Documento</b></small>
+                                                </a>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 == null">
+                                                <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informe14 != null">
-                                                <select
-                                                    [(ngModel)]="pasantiaSelected.estado_informe14"
-                                                    name="estado_informe14"
-                                                    class="form-control custom-select" required>
-                                                    <option value="Enviado">Enviado</option>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 != null">
+                                                <select [(ngModel)]="pasantiaSelected.estado_informe14" name="estado_informe14" class="form-control custom-select" required>
                                                     <option value="Aprobado">Aprobado</option>
-                                                    <option value="Rechazado">Rechazado</option>
+                                                    <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
                                         </td>
                                     </tr>
-
+                                    <tr id="notas14" class="collapse">
+                                        <th colspan="5">
+                                            <label class="control-label mt-2">
+                                                <h5> <b class="text-uppercase">Notas informe semana 14:</b></h5>
+                                            </label>
+                                            <textarea ngModel name="notasSemana14" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                        </th>
+                                    </tr>
                                     <tr>
-                                        <td>Informe Final</td>
+                                        <td>Final</td>
                                         <td>
-
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal == null"
-                                                class="text-success"><span
-                                                    class="label btnDanger">
-                                                    <b> No enviado </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal == null">
+                                                <span class="label btnDanger"><b>No enviado</b></span>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal == 'Enviado'"
-                                                class="text-success"><span
-                                                    class="label btnInfo">
-                                                    <b> {{ pasantiaSelected?.estado_informeFinal }}
-                                                    </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal == 'Enviado'">
+                                                <span class="label btnInfo"><b>{{pasantiaSelected?.estado_informeFinal}}</b></span>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal == 'Aprobado'"
-                                                class="text-success"><span
-                                                    class="label btnSuccess">
-                                                    <b> {{ pasantiaSelected?.estado_informeFinal }}
-                                                    </b></span><br>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal == 'Aprobado'">
+                                                <span class="label" style="background-color: #6fbf73;"><b>{{pasantiaSelected?.estado_informeFinal}}</b></span><br>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal == 'Rechazado'"
-                                                class="text-success"><span
-                                                    class="label btnDanger">
-                                                    <b> {{ pasantiaSelected?.estado_informeFinal }}
-                                                    </b></span><br>
-                                            </ng-container>
-                                        </td>
-                                        <td *ngIf="pasantiaSelected !== undefined">
-                                            <button type="button" class="fa fa-file" data-toggle="modal" data-target="#notasFinal" [disabled]="pasantiaSelected?.estado_informeFinal == null"></button>
-                                              <!-- The Modal -->
-                                            <div class="modal fade" id="notasFinal">
-                                                <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                
-                                                    <!-- Modal Header -->
-                                                    <div class="modal-header" style="background-color: #7C2A2A;">
-                                                        <h4 class="modal-title text-white">Notas informe final</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    
-                                                    <!-- Modal body -->
-                                                    <div class="modal-body">
-                                                        <label class="control-label mt-2">
-                                                            <h5 class="text-uppercase"> <b>Notas:</b> </h5>
-                                                        </label>
-                                                        <textarea [(ngModel)]="pasantiaSelected.notas_informeFinal" name="notasFinal" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
-                                                        <button type="button" style="background-color: #7C2A2A;" data-dismiss="modal">OK</button>
-                                                    </div>
-                                                    
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal == null">
-                                                <button class="btn btnSuccess descargar"
-                                                    disabled><small><b>Descargar
-                                                            Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal != null">
-                                                <a class="btn btnSuccess descargar"
-                                                    [href]="pasantiaSelected?.documento_informeFinal | documento: pasantiaSelected?.estudiante._id"
-                                                    download="pasantiaSup?.documento_informeFinal"
-                                                    target="_blank"><small><b>Descargar
-                                                            Documento</b></small></a>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal == 'Ajustar'">
+                                                <span class="label btnSuccess"><b>{{pasantiaSelected?.estado_informeFinal}}</b></span><br>
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal == null">
-                                                <select class="form-control custom-select"
-                                                    disabled>
+                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notasFinal" [disabled]="!pasantiaSelected?.estado_informeFinal"></button>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_informeFinal">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Descargar Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_informeFinal">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informeFinal | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informeFinal" target="_blank">
+                                                    <small><b>Descargar Documento</b></small>
+                                                </a>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal == null">
+                                                <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container
-                                                *ngIf="pasantiaSelected?.estado_informeFinal != null">
-                                                <select
-                                                    [(ngModel)]="pasantiaSelected.estado_informeFinal"
-                                                    name="estado_informeFinal"
-                                                    class="form-control custom-select" required>
-                                                    <option value="Enviado">Enviado</option>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal != null">
+                                                <select [(ngModel)]="pasantiaSelected.estado_informeFinal" name="estado_informeFinal" class="form-control custom-select" required>
                                                     <option value="Aprobado">Aprobado</option>
-                                                    <option value="Rechazado">Rechazado</option>
+                                                    <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
                                         </td>
                                     </tr>
+                                    <tr id="notasFinal" class="collapse">
+                                        <th colspan="5">
+                                            <label class="control-label mt-2">
+                                                <h5> <b class="text-uppercase">Notas informe final:</b></h5>
+                                            </label>
+                                            <textarea ngModel name="notasSemana14" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                        </th>
+                                    </tr>
+                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -383,48 +270,124 @@
 
     </div>
 
-    <div class="form-group">
-        <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
-            type="text" id="firstName" class="form-control"
-            placeholder="Busca la solicitud por Id, Estudiante o Empresa">
-    </div>
-
-    <div class="row" *ngFor="let dato of pasantias">
-
-        <ng-container *ngIf="(idTutor === dato.tutor?._id)">
-
-            <div class="col-lg-1">
-                <div class="vacantesImg text-center">
-                    <p class="text-center">{{dato.vacante.letra}}</p>
+    <div class="modal fade" id="infoPasantia">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5><b class="text-uppercase">Titulo:</b> &nbsp; {{pasantiaSelected?.titulo}}</h5>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5><b class="text-uppercase">ID:</b> &nbsp; {{pasantiaSelected?._id}}</h5>
+                        </div>
+                    </div>
+                    
+                    <div *ngIf="pasantiaSelected?.fecha_actaInicio" class="row mt-2">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5><b>Fecha inicio: </b>{{pasantiaSelected?.fecha_actaInicio}}</h5>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5><b>Semana: </b>{{pasantiaSelected?.semanas}}/24</h5>
+                        </div>
+                    </div>
+                    <h5 class="mt-2"><b class="text-uppercase">Descripción:</b></h5>
+                    <p class="px-3 text-justify" id="descripcionPasantia">{{pasantiaSelected?.descripcion}}</p>
+                    <h5 class="text-uppercase mt-3"> <b>Información del estudiante:</b></h5>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                            <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSelected?.estudiante.nombres }} {{pasantiaSelected?.estudiante.apellidos}}</small>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{pasantiaSelected?.estudiante.codigo}}</small>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{pasantiaSelected?.estudiante.identificacion}}</small>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{pasantiaSelected?.estudiante.correo}}</small>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">Tél:&nbsp; {{pasantiaSelected?.estudiante.telefono}}</small>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">EPS:&nbsp; {{pasantiaSelected?.estudiante.eps}}</small>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="pasantiaSelected?.vacante">
+                        <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b></h5>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                <div class="vacantesInfo">
+                                    <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSelected?.vacante.titulo}} - {{pasantiaSelected?.empresa.nombre}} </small><br>
+                                    <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSelected?.vacante.ubicacion}}, &nbsp;{{pasantiaSelected?.vacante.modalidad}}</small><br>
+                                    <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSelected?.vacante.funciones}}</small><br>
+                                    <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSelected?.vacante.pagada}}</small><br>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
+                                <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{pasantiaSelected?.vacante.encargado.nombre}}</small><br>
+                                <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{pasantiaSelected?.vacante.encargado.correo}}</small><br>
+                                <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{pasantiaSelected?.vacante.encargado.telefono}}</small>
+                            </div>
+                        </div>
+                        <div class="mt-3 ml-4">
+                            <h5 class="text-uppercase"> <b>Descripción:</b></h5>
+                            <p class="mt-2 ml-2">{{pasantiaSelected?.vacante.descripcion}}</p> 
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="!pasantiaSelected?.vacante">
+                        <h5 class="text-uppercase mt-3"> <b>Información de la empresa:</b> </h5>
+                        <div class="row mt-3">
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                <small><i class="fa fa-briefcase"></i> &nbsp;{{pasantiaSelected?.empresa.nombre}} </small>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSelected?.empresa.ciudad}}, &nbsp;{{pasantiaSelected?.empresa.direccion}}</small>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                <small><i class="fa fa-phone"></i> &nbsp; {{pasantiaSelected?.empresa.telefono}}</small>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                <small><i class="fa fa-money"></i> &nbsp;{{pasantiaSelected?.empresa.naturaleza}}</small>
+                            </div>    
+                        </div>
+                    </ng-container>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <ng-container *ngFor="let dato of pasantias">
+        <div class="row">
             <div class="col-lg-9">
                 <div class="vacantes">
                     <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
                             {{ dato.estudiante.apellidos }}</b></h5>
-                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                        {{ dato.vacante.titulo }} - {{dato.empresa.nombre}}
-                    </small><br>
-                    <small><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.vacante.ubicacion}},
-                        {{dato?.vacante.modalidad}}
+                    <small *ngIf="dato.vacante"><i class="fa fa-briefcase"></i> &nbsp;
+                        {{dato.empresa.nombre}}
+                    </small><br *ngIf="dato.vacante">
+                    <small *ngIf="!dato.vacante"><i class="fa fa-briefcase">
+                        </i> &nbsp; {{dato.empresa.nombre}}
                     </small>
                 </div>
-                <hr id="line">
             </div>
-
-
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="buttons">
-
-                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal"
-                        data-target=".modal-pasantia" class="btn btnInfo waves-effect text-left"><b>
-                            Gestionar
-                            <i class="fa fa-info-circle"></i></b></button>
+                    <button class="btn btn-outline-info btn-sm mr-2" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#infoPasantia"><i class="fa fa-info-circle"></i></button>
+                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#modalGestionPasantia" class="btn btnInfo">
+                        <b>Gestionar</b>
+                    </button>
                 </div>
-
             </div>
-        </ng-container>
-
-    </div>
+        </div>
+        <hr>
+    </ng-container>    
 
 </div>

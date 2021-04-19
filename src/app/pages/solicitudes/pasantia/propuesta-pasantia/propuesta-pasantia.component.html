@@ -18,7 +18,13 @@
         <div class="col-sm-12 col-md-8 col-lg-8 px-3">
             <form (ngSubmit)="postSolicitud()">
             <h3 class="card-title text-uppercase"><b>2. información de la propuesta: </b></h3>
-
+            <div class="float-right">
+                <button type="button" class="btn descargar btnSuccess mb-2 mr-3">
+                    <a class="btnSuccess" href="/assets/documentos/formatosSolicitudPasantia/formatoSolicitudPasantiaIngSoftware.docx" download target="_blank">
+                        <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Descargar formato</b></small>
+                    </a>
+                </button>
+            </div><br>
             <label for="tituloPasantia" class="font-weight-bold text-dark">Titulo de la pasantia:</label>
             <div class="input-group">
                 <input name="tituloPasantia" type="text" class="form-control" id="tituloPasantia" (change)="getInfoPropuesta()" placeholder="Titulo de la pasantia" required>

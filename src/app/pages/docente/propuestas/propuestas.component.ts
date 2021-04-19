@@ -90,6 +90,18 @@ export class PropuestasComponent implements OnInit {
           this.carta_presentacion.append('carta_presentacion', blop, this.pasantiaSup.estudiante._id+'-carta_presentacion.pdf');
           this._pasantiaService.postCartaPresentacion(this.pasantiaSup.estudiante._id, this.carta_presentacion).subscribe((respPC:any) => {
             if(respPC){
+              Swal.fire({
+                title: '¡Bien Hecho!',
+                html: `Propuesta aprobada correctamente`,
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#60D89C',
+          
+              }).then((result) => {
+                if (result.value) {
+                  this.getPropuestas();
+                }
+              });
               let currentDate = new Date();
               let notificacionE =new Notificacion(
                 this.pasantiaSup.estudiante._id,
@@ -105,27 +117,10 @@ export class PropuestasComponent implements OnInit {
                 `Te han asiganado como tutor de la pasantia del estudiante ${this.pasantiaSup.estudiante.nombres} ${this.pasantiaSup.estudiante.apellidos}`,
                 'Administrativo' 
               );
-              this._notificacionService.postNotificacion(notificacionE).subscribe((respNE:any)=> {
-                this._notificacionService.postNotificacion(notificacionT).subscribe((respNT:any)=> {
-                  this._notificacionService.sendCartaPresentacionCorreo(this.pasantiaSup.estudiante._id, notificacionE).subscribe((respCE:any)=>{
-                    this._notificacionService.sendNotificacionCorreo(notificacionT).subscribe((respCT:any)=>{
-                      Swal.fire({
-                        title: '¡Bien Hecho!',
-                        html: `Propuesta aprobada correctamente`,
-                        timer: 10000,
-                        icon: 'warning',
-                        confirmButtonText: 'Aceptar',
-                        confirmButtonColor: '#60D89C',
-                  
-                      }).then((result) => {
-                        if (result.value) {
-                          this.getPropuestas();
-                        }
-                      });
-                    });
-                  })
-                });
-              });
+              this._notificacionService.postNotificacion(notificacionE).subscribe();
+              this._notificacionService.postNotificacion(notificacionT).subscribe();
+              this._notificacionService.sendCartaPresentacionCorreo(this.pasantiaSup.estudiante._id, notificacionE).subscribe();
+              this._notificacionService.sendNotificacionCorreo(notificacionT).subscribe();
             }
           });
         });
@@ -140,8 +135,29 @@ export class PropuestasComponent implements OnInit {
         null,
         "Rechazada",
         form.value.notas,
-      )
-      this._pasantiaService.putSolicitudJefe(this.pasantiaSup._id, pasantia).subscribe();
+      );
+      let currentDate = new Date();
+      let notificacionE =new Notificacion(
+        this.pasantiaSup.estudiante._id,
+        currentDate,
+        'Solicitd de pasantia rechazada',
+        'Tu solicitud de pasantia ha sido rechazada',
+        'Estudiante' 
+      );
+      this._pasantiaService.putSolicitudJefe(this.pasantiaSup._id, pasantia).subscribe((resp:any)=>{
+        this._notificacionService.postNotificacion(notificacionE).subscribe();
+        this._notificacionService.sendNotificacionCorreo(notificacionE).subscribe();
+        Swal.fire({
+          html: `Propuesta rechazada correctamente`,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#60D89C',
+    
+        }).then((result) => {
+          if (result.value) {
+            this.getPropuestas();
+          }
+        });
+      });
     }
   }
 

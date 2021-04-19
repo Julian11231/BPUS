@@ -6,7 +6,7 @@
                 <h3 class="card-title text-uppercase"><b> Todas las Propuestas </b></h3>
                 <hr>
 
-                <div class="modal fade modal-propuesta" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal fade modal-propuesta">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -32,7 +32,7 @@
                                 <h5 class="text-uppercase"> <b>Información del estudiante:</b></h5>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                        <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSup?.estudiante.nombres }} {{pasantiaSup?.estudiante.apellido}}</small>
+                                        <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSup?.estudiante.nombres }} {{pasantiaSup?.estudiante.apellidos}}</small>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                         <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{pasantiaSup?.estudiante.codigo}}</small>
@@ -52,10 +52,9 @@
                                         <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">EPS:&nbsp; {{pasantiaSup?.estudiante.eps}}</small>
                                     </div>
                                 </div>
-                                <hr>
                                 <ng-container *ngIf="pasantiaSup?.vacante">
                                     <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
-                                    <div class="row">
+                                    <div class="row mt-3">
                                         <div class="col-12 col-sm-12 col-md-7 col-lg-7">
                                             <div class="vacantesInfo">
                                                 <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSup?.vacante.titulo}} - {{pasantiaSup?.empresa.nombre}} </small><br>
@@ -76,7 +75,24 @@
                                         <p class="mt-2 ml-2">{{pasantiaSup?.vacante.descripcion}}</p> 
                                     </div>
                                 </ng-container>
-                                <div class="modal-footer">
+                                <ng-container *ngIf="!pasantiaSup?.vacante">
+                                    <h5 class="text-uppercase mt-3"> <b>Información de la empresa:</b> </h5>
+                                    <div class="row mt-3">
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <small><i class="fa fa-briefcase"></i> &nbsp;{{pasantiaSup?.empresa.nombre}} </small>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSup?.empresa.ciudad}}, &nbsp;{{pasantiaSup?.empresa.direccion}}</small>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <small><i class="fa fa-phone"></i> &nbsp; {{pasantiaSup?.empresa.telefono}}</small>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <small><i class="fa fa-money"></i> &nbsp;{{pasantiaSup?.empresa.naturaleza}}</small>
+                                        </div>    
+                                    </div>
+                                </ng-container>
+                                <div class="modal-footer mt-3">
                                     <button type="button" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
                                 </div>
                             </div>

@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Empresa } from '../../../models/Empresa.model';
 import { EncargadoEmpresa } from '../../../models/EncargadoEmpresa.model';
-import { Convenio } from 'src/app/models/Convenio.model'
+import { Convenio } from 'src/app/models/Convenio.model';
 import Swal from 'sweetalert2';
 import { EmpresaService } from 'src/app/services/service.index';
-import { EncargadoEmpresaService } from 'src/app/services/service.index';
-import { ConvenioService } from 'src/app/services/service.index';
+import { EncargadoEmpresaService, ConvenioService } from 'src/app/services/service.index';
 import {Router} from '@angular/router'
 
 @Component({
@@ -25,6 +24,7 @@ export class EmpresasComponent implements OnInit {
   convienioId: string;
   nit: String;
   nombre: String;
+  ciudad:String;
   direccion: String;
   telefono: String;
   naturaleza: String;
@@ -99,6 +99,7 @@ export class EmpresasComponent implements OnInit {
         let empresa = new Empresa(
             form.value.nit,
             form.value.nombre,
+            form.value.ciudad,
             form.value.direccion,
             form.value.telEmpresa,
             form.value.naturaleza,
@@ -106,8 +107,6 @@ export class EmpresasComponent implements OnInit {
           );
 
         this._empresaService.postEmpresa(empresa).subscribe((resp:any) => {
-
-          console.log(resp);
           let encargadoEmpresa = new EncargadoEmpresa(
             form.value.cedula,
             form.value.persona,
@@ -122,21 +121,35 @@ export class EmpresasComponent implements OnInit {
           this._encargadoEmpresaService.postEncargadoEmpresa(encargadoEmpresa).subscribe((respp:any) => {
             let convenio = new Convenio(programa,  resp._id, respp._id);
             this._convenioService.postConvenio(convenio).subscribe((anws:any) => {
-              this._convenioService.postDocumentoConvenio(anws._id, this.documento_convenio).subscribe((ans:any) => {
-                if(ans){
-                  Swal.fire({
-                    title: '¡Bien Hecho!',
-                    text: `Se ha creado correctamente la empresa`,
-                    icon: 'success'
-                  }).then(() => {
-                    if(this.usuario.rol === "JEFE_PROGRAMA"){
-                      this.getConveniosJefe();
-                    }else {
-                      this.getConvenios();
-                    }
-                  });
-                }
-              });
+              if(typeof(this.nombreArchivoC) !== 'undefined'){
+                this._convenioService.postDocumentoConvenio(anws._id, this.documento_convenio).subscribe((ans:any) => {
+                  if(ans){
+                    Swal.fire({
+                      title: '¡Bien Hecho!',
+                      text: `Se ha creado correctamente la empresa`,
+                      icon: 'success'
+                    }).then(() => {
+                      if(this.usuario.rol === "JEFE_PROGRAMA"){
+                        this.getConveniosJefe();
+                      }else {
+                        this.getConvenios();
+                      }
+                    });
+                  }
+                });
+              }else{
+                Swal.fire({
+                  title: '¡Bien Hecho!',
+                  text: `Se ha creado correctamente la empresa`,
+                  icon: 'success'
+                }).then(() => {
+                  if(this.usuario.rol === "JEFE_PROGRAMA"){
+                    this.getConveniosJefe();
+                  }else {
+                    this.getConvenios();
+                  }
+                });
+              }
             });
           });
         }); 
@@ -150,6 +163,7 @@ export class EmpresasComponent implements OnInit {
     this._id = dato.empresa._id
     this.nit = dato.empresa.nit
     this.nombre = dato.empresa.nombre;
+    this.ciudad = dato.empresa.ciudad
     this.direccion = dato.empresa.direccion;
     this.telefono = dato.empresa.telefono;
     this.naturaleza = dato.empresa.naturaleza;
@@ -159,7 +173,6 @@ export class EmpresasComponent implements OnInit {
     this.correo_persona = dato.encargado.correo;
     this.telefono_persona = dato.encargado.telefono;
     this.rutapdf = dato.rutapdf;
-    console.log(this.rutapdf);
     this.estado = dato.empresa.estado;
 
   }
@@ -181,6 +194,7 @@ export class EmpresasComponent implements OnInit {
         let empresa = new Empresa(
           this.nit,
           form.value.nombre,
+          form.value.ciudad,
           form.value.direccion,
           form.value.telEmpresa,
           form.value.naturaleza,
@@ -189,21 +203,35 @@ export class EmpresasComponent implements OnInit {
         );
 
         this._empresaService.putEmpresa(this._id, empresa).subscribe((resp:any) => {
-          this._convenioService.postDocumentoConvenio(this.convienioId, this.documento_convenioUpdate).subscribe((respp:any) => {
-            if(respp){
-              Swal.fire({
-                title: '¡Bien Hecho!',
-                text: `Se ha actualizado correctamente la empresa`,
-                icon: 'success'
-              }).then(() => {
-                if(this.usuario.rol === "JEFE_PROGRAMA"){
-                  this.getConveniosJefe();
-                }else {
-                  this.getConvenios();
-                }
-              });
-            }
-          });
+          if(typeof(this.nombreArchivoCUpdate) !== 'undefined'){
+            this._convenioService.postDocumentoConvenio(this.convienioId, this.documento_convenioUpdate).subscribe((respp:any) => {
+              if(respp){
+                Swal.fire({
+                  title: '¡Bien Hecho!',
+                  text: `Se ha actualizado correctamente la empresa`,
+                  icon: 'success'
+                }).then(() => {
+                  if(this.usuario.rol === "JEFE_PROGRAMA"){
+                    this.getConveniosJefe();
+                  }else {
+                    this.getConvenios();
+                  }
+                });
+              }
+            });
+          }else{
+            Swal.fire({
+              title: '¡Bien Hecho!',
+              text: `Se ha actualizado correctamente la empresa`,
+              icon: 'success'
+            }).then(() => {
+              if(this.usuario.rol === "JEFE_PROGRAMA"){
+                this.getConveniosJefe();
+              }else {
+                this.getConvenios();
+              }
+            }); 
+          }
         });
       }
     })
@@ -267,6 +295,7 @@ export class EmpresasComponent implements OnInit {
     } else {
 
       this.nombreArchivoCUpdate = file.name;
+      console.log(this.nombreArchivoCUpdate );
       let documento_convenio = <File>file;
       this.documento_convenioUpdate.append('documento_convenio', documento_convenio, documento_convenio.name);
     }
@@ -275,6 +304,10 @@ export class EmpresasComponent implements OnInit {
   clearDocumentoUpdate(){
     this.nombreArchivoCUpdate = undefined;
     this.documento_convenioUpdate = new FormData();
+    var fileUpdate = (document.getElementById("nombreArchivoCUpdate")) as HTMLInputElement;
+    console.log(fileUpdate.value);
+    fileUpdate.value = "";
+    console.log(fileUpdate.value);
   }
 
   getDataBuscar(data) {

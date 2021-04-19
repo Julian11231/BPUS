@@ -43,7 +43,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
           this.vacanteSelected.estudiante._id,
           currentDate,
           'Solicitud de vacante aprobada',
-          `Te han aprobado tu solicitud de vancante para la empresa ${this.info.empresa._id}`,
+          `Te han aprobado tu solicitud de vancante para la empresa ${this.info.empresa.nombre}`,
           'EncargadoEmpresa' 
         );
         this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, true).subscribe((resp:any) => {

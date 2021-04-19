@@ -1,10 +1,7 @@
 export class PasantiaTutor {
 
     constructor(
-
-        public estado_propuesta?: String,
-        public notas_propuesta?: String,
-
+        
         public estado_informe7?: String,
         public notas_informe7?: String,
 

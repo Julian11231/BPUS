@@ -20,7 +20,7 @@
                         </li>
                     </ul>
 
-                    <form ngNativeValidate #f="ngForm" (ngSubmit)="postEmpresa(f)" class="form-horizontal" id="loginform">
+                    <form ngNativeValidate #f="ngForm" (ngSubmit)="postEmpresa(f)" class="form-horizontal">
 
                         <div class="tab-content">
                             <div id="empresa" class="container tab-pane active"><br>
@@ -30,13 +30,13 @@
                                         <div class="form-group">
                                             <label class="control-label">NIT de la Empresa:</label>
                                             <input ngModel name="nit" type="text" id="nit"
-                                                class="form-control" placeholder="NIT" required>
+                                                class="form-control" placeholder="NIT" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nombre de la Empresa:</label>
-                                            <input ngModel name="nombre" type="text" id="firstName"
+                                            <input ngModel name="nombre" type="text" 
                                                 class="form-control" placeholder="Nombre" required>
                                         </div>
                                     </div>
@@ -46,23 +46,31 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Dirección:</label>
-                                            <input ngModel name="direccion" type="text" id="firstName"
-                                                class="form-control" placeholder="Direccion" required>
+                                            <label class="control-label">Ciudad:</label>
+                                            <input ngModel name="ciudad" type="text" 
+                                                class="form-control" placeholder="Ciudad" required>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Teléfono de la Empresa</label>
-                                            <input ngModel name="telEmpresa" type="text" id="firstName"
-                                                class="form-control" placeholder="Teléfono" required>
+                                            <label class="control-label">Dirección:</label>
+                                            <input ngModel name="direccion" type="text" 
+                                                class="form-control" placeholder="Direccion" required>
                                         </div>
                                     </div>
 
                                 </div>
 
                                 <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Teléfono de la Empresa</label>
+                                            <input ngModel name="telEmpresa" type="text" 
+                                                class="form-control" placeholder="Teléfono" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' required>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -77,27 +85,30 @@
                                         </div>
                                     </div>
 
+                                </div>
+
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Actividad Económica:</label>
-                                            <input ngModel name="actividadEc" type="text" id="firstName"
+                                            <input ngModel name="actividadEc" type="text" 
                                                 class="form-control" placeholder="Actividad" required>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-md-6">
 
                                 <label class="control-label">Convenio:</label>
 
-                                <label for="fileConvenio" *ngIf="nombreArchivoC == null" class="labels custom-file-upload py-3 mt-4">
+                                <label for="fileConvenio" *ngIf="nombreArchivoC == null" class="labels custom-file-upload py-3 mt-1">
                                     Click aquí para subir el convenio</label>
             
                                 <label for="fileConvenio" *ngIf="nombreArchivoC != null"
-                                    class="labels custom-file-upload text-center py-3 mt-4" style="color: #8F141B; font-weight: bold;">
+                                    class="labels custom-file-upload text-center py-3 mt-1" style="color: #8F141B; font-weight: bold;">
                                     {{ nombreArchivoC }}</label><br>
             
-                                <input name="filePropuesta" id="fileConvenio"
-                                    (change)="getFileConvenio( $event.target.files[0] )" type="file" accept="application/pdf"
-                                    class="imagenes-secundarias" required /> 
+                                <input id="fileConvenio" ngModel name="filePropuesta" (change)="getFileConvenio( $event.target.files[0] )" type="file" accept="application/pdf" class="imagenes-secundarias"> 
+                                    </div>
+                                </div>
                         
                             </div>
                             <br>
@@ -106,7 +117,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Persona a Cargo:</label>
-                                            <input ngModel name="persona" type="text" id="firstName"
+                                            <input ngModel name="persona" type="text" 
                                                 class="form-control" placeholder="Nombre" required>
                                         </div>
                                     </div>
@@ -115,7 +126,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Cedula:</label>
                                             <input ngModel name="cedula" type="text" id="cedula"
-                                                class="form-control" placeholder="Cedula" required>
+                                                class="form-control" placeholder="Cedula" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' required>
                                         </div>
                                     </div>
                                 </div>    
@@ -123,7 +134,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Cargo:</label>
-                                            <input ngModel name="puesto" type="text" id="firstName"
+                                            <input ngModel name="puesto" type="text" 
                                                 class="form-control" placeholder="Puesto" required>
                                         </div>
                                     </div>
@@ -131,15 +142,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Teléfono:</label>
-                                            <input ngModel name="telPersona" type="text" id="firstName"
-                                                class="form-control" placeholder="Teléfono" required>
+                                            <input ngModel name="telPersona" type="text" 
+                                                class="form-control" placeholder="Teléfono" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label">Correo Electrónico:</label>
-                                        <input ngModel name="correo" type="text" id="firstName"
+                                        <input ngModel name="correo" type="text" 
                                             class="form-control" placeholder="Correo" required>
                                     </div>
                                 </div>
@@ -148,9 +159,9 @@
 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btnDanger waves-effect text-left"
+                            <button type="reset" (click)="f.reset()" class="btn btnDanger waves-effect text-left"
                                 data-dismiss="modal">Cancelar <i class="fa fa-times"></i></button>
-                            <button type="submit" class="btn btnSuccess waves-effect text-left">Añadir
+                            <button type="submit" class="btn btnSuccess waves-effect text-left" [disabled]="f.invalid">Añadir
                                 <i class="fa fa-plus"></i></button>
                         </div>
             
@@ -170,12 +181,6 @@
     <div class="modal fade modal-actualizar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title text-capitalize" id="myLargeModalLabel"> <b> Actualiza
-                            la Empresa: {{nombre}}</b> </h4>
-                    <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">×</button>
-                </div>
                 <div class="modal-body">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
@@ -188,13 +193,34 @@
                     <div class="tab-content pt-3">
                         <div id="Putempresa" class="container tab-pane active">
                             <form ngNativeValidate #updateEmpresa="ngForm" (ngSubmit)="putEmpresa(updateEmpresa)"
-                                class="form-horizontal" id="loginform">
+                                class="form-horizontal">
                                 <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">NIT de la Empresa:</label>
+                                            <input ngModel="{{nit}}" name="nit" type="text"
+                                                class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' placeholder="NIT" required>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nombre de la Empresa:</label>
-                                            <input ngModel="{{nombre}}" name="nombre" type="text" id="firstName"
+                                            <input ngModel="{{nombre}}" name="nombre" type="text" 
                                                 class="form-control" placeholder="Nombre" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Ciudad:</label>
+                                            <input ngModel="{{ciudad}}" name="ciudad" type="text" 
+                                                class="form-control" placeholder="Ciudad" required>
                                         </div>
                                     </div>
 
@@ -202,7 +228,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Dirección:</label>
                                             <input [(ngModel)]="direccion" name="direccion" type="text"
-                                                id="firstName" class="form-control" placeholder="Direccion"
+                                                 class="form-control" placeholder="Direccion"
                                                 required>
                                         </div>
                                     </div>
@@ -213,7 +239,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Teléfono de la Empresa</label>
                                             <input [(ngModel)]="telefono" name="telEmpresa" type="text"
-                                                id="firstName" class="form-control" placeholder="Teléfono"
+                                                 class="form-control" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' placeholder="Teléfono"
                                                 required>
                                         </div>
                                     </div>
@@ -237,7 +263,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Actividad Económica:</label>
                                             <input [(ngModel)]="actividad_economica" name="actividadEc"
-                                                type="text" id="firstName" class="form-control"
+                                                type="text"  class="form-control"
                                                 placeholder="Actividad" required>
                                         </div>
                                     </div>
@@ -255,31 +281,48 @@
 
                                 <label class="control-label">Convenio:</label>
 
-                                <label for="nombreArchivoCUpdate" *ngIf="nombreArchivoCUpdate == null && (rutapdf == null || rutapdf === '')" class="labels custom-file-upload py-3 mt-4">
-                                    Click aquí para subir el convenio</label>
-
                                 <ng-container *ngIf="rutapdf">
                                     <button class="btn descargar btnSuccess mb-2 ml-3">
                                         <a class="btnSuccess" [href]="rutapdf | documentoConvenio: _id" download="rutapdf" target="_blank">
                                             <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver convenio</b></small>
                                         </a>
                                     </button>
-                                </ng-container>    
-            
-                                <label for="nombreArchivoCUpdate" *ngIf="nombreArchivoCUpdate != null"
+                                    <a class="ml-3" href="#actDocumento" data-toggle="collapse">Actualizar documento</a>
+
+                                    <div id="actDocumento" class="collapse">
+                                        <label for="nombreArchivoCUpdate" *ngIf="nombreArchivoCUpdate == undefined" class="labels custom-file-upload py-3 mt-2">
+                                            Click aquí para subir el convenio</label>
+                                            
+                                        <label for="nombreArchivoCUpdate" *ngIf="nombreArchivoCUpdate != undefined"
+                                        class="labels custom-file-upload text-center py-3 mt-2" style="color: #8F141B; font-weight: bold;">
+                                        {{ nombreArchivoCUpdate }}</label><br>
+                
+                                        <input name="filePropuesta" id="nombreArchivoCUpdate"
+                                        (change)="getFileConvenioUpdate($event.target.files[0])" type="file" accept="application/pdf"
+                                        ngModel class="imagenes-secundarias"/>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="!rutapdf">
+                                    <label for="nombreArchivoCUpdate" *ngIf="nombreArchivoCUpdate == undefined" class="labels custom-file-upload py-3 mt-4">
+                                        Click aquí para subir el convenio</label>
+
+                                    <label for="nombreArchivoCUpdate" *ngIf="nombreArchivoCUpdate != undefined"
                                     class="labels custom-file-upload text-center py-3 mt-4" style="color: #8F141B; font-weight: bold;">
                                     {{ nombreArchivoCUpdate }}</label><br>
             
-                                <input name="filePropuesta" id="nombreArchivoCUpdate"
-                                    (change)="getFileConvenioUpdate( $event.target.files[0] )" type="file" accept="application/pdf"
-                                    class="imagenes-secundarias" required /> 
+                                    <input name="filePropuesta" id="nombreArchivoCUpdate"
+                                    (change)="getFileConvenioUpdate($event.target.files[0])" type="file" accept="application/pdf"
+                                    ngModel class="imagenes-secundarias"/>
 
+                                </ng-container>    
+    
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btnDanger waves-effect text-left"
-                                        data-dismiss="modal" (click)="clearDocumentoUpdate()" >Cancelar <i class="fa fa-times"></i>
+                                    <button type="reset" class="btn btnDanger waves-effect text-left"
+                                        data-dismiss="modal" (click)="clearDocumentoUpdate(); updateEmpresa.reset()" >Cancelar <i class="fa fa-times"></i>
                                     </button>
                                     <button type="submit" class="btn btnInfo waves-effect text-left">
-                                        <b>Actualizar<i class="mdi mdi-update"></i></b>
+                                        <b>Actualizar Empresa<i class="mdi mdi-update"></i></b>
                                     </button>
                                 </div>
                             </form>
@@ -290,7 +333,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Persona a Cargo:</label>
-                                            <input [(ngModel)]="nombre_persona" name="persona" type="text" id="firstName" class="form-control" placeholder="Nombre" required>
+                                            <input [(ngModel)]="nombre_persona" name="persona" type="text"  class="form-control" placeholder="Nombre" required>
                                         </div>
                                     </div>
 
@@ -299,7 +342,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Correo Electrónico:</label>
                                             <input [(ngModel)]="correo_persona" name="correo" type="text"
-                                                id="firstName" class="form-control" placeholder="Correo"
+                                                 class="form-control" placeholder="Correo"
                                                 required>
                                         </div>
                                     </div>
@@ -309,21 +352,21 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Puesto:</label>
-                                            <input [(ngModel)]="cargo_persona" name="puesto" type="text" id="firstName" class="form-control" placeholder="Puesto" required>
+                                            <input [(ngModel)]="cargo_persona" name="puesto" type="text"  class="form-control" placeholder="Puesto" required>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Teléfono:</label>
-                                            <input [(ngModel)]="telefono_persona" name="telPersona" type="text" id="firstName" class="form-control" placeholder="Teléfono" required>
+                                            <input [(ngModel)]="telefono_persona" name="telPersona" type="text"  class="form-control" placeholder="Teléfono" required>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btnDanger waves-effect text-left"
-                                        data-dismiss="modal">Cancelar <i class="fa fa-times"></i></button>
+                                    <button type="reset" class="btn btnDanger waves-effect text-left"
+                                    (click)="clearDocumentoUpdate();" data-dismiss="modal">Cancelar <i class="fa fa-times"></i></button>
                                     <button type="submit" class="btn btnInfo waves-effect text-left">
                                         <b>Actualizar<i class="mdi mdi-update"></i></b>
                                     </button>
@@ -346,7 +389,7 @@
             <div class="col-md-9">
                 <div class="form-group">
                     <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
-                        type="text" id="firstName" class="form-control"
+                        type="text"  class="form-control"
                         placeholder="Busca la empresa por Nombre o Estado">
                 </div>
             </div>

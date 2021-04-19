@@ -133,6 +133,28 @@ export class PasantiService {
 
   }
 
+  putSolicitudPropuesta(id: string, pasantia: any) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/propuesta${id}?token=${token}`;
+
+    return this.http.put(url, pasantia).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        return true;
+      }
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+  }
+
   putSolicitudJefe(id: string, pasantia: any) {
 
     let token = localStorage.getItem('token');
@@ -163,20 +185,9 @@ export class PasantiService {
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
 
       if (resp.ok == true) {
-
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: `Se ha actualizado correctamente la solicitud`,
-          icon: 'success'
-        }).then(() => {
-          location.reload();
-        });
+        return true;
       }
-
-      return true;
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,

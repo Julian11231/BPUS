@@ -107,7 +107,7 @@
                                 </small><br>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
                             <h5 class="text-uppercase"><b>Estado de la Solicitud:</b></h5>
                             <ng-container *ngIf="dato.estado == 'PreInscrita'" class="text-success"><span
                                     class="label btnInfo"> <b> {{ dato.estado }} </b></span>
@@ -122,7 +122,7 @@
                             </ng-container>
                         </div>
 
-                        <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-5 text-center">
                             <div class="buttons">
                                 <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target=".modal-info" class="btn btn btn-outline-info btn-sm mr-2">
                                     <i class="fa fa-info-circle"></i>

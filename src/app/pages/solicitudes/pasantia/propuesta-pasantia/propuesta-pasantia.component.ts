@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { PasantiService, EmpresaService, NotificacionesService, ProgramaService } from 'src/app/services/service.index';
 import { Notificacion } from 'src/app/models/notificacion.model';
 import { Router } from '@angular/router';
+import { Pasantia } from 'src/app/models/Pasantia';
 
 declare function init_plugins()
 
@@ -114,6 +115,14 @@ export class PropuestaPasantiaComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
+        let pasantia = new Pasantia(
+          null,
+          null,
+          null,
+          null,
+          this.tituloPasantia,
+          this.descripcion
+        )
         let currentDate = new Date();
         let notificacion = new Notificacion(
           this.jefe,
@@ -122,29 +131,30 @@ export class PropuestaPasantiaComponent implements OnInit {
           `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.pasantia.empresa.nombre}`,
           'Administrativo' 
         );
-        this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((respDP:any) => {
-          this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe((respDF:any) => {
-            this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
-              if(respN){
-                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
-                  if(respC){
-                    Swal.fire({
-                      title: '¡Bien Hecho!',
-                      html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${respDF._id}</b>`,
-                      icon: 'warning',
-                      confirmButtonText: 'Aceptar',
-                      confirmButtonColor: '#60D89C',
-                
-                    }).then((result) => {
-                      if (result.value) {
-                        this.router.navigate(['/']);
-                      }
-                    });
-                  }else{
-                    console.log("Error garrafal");
-                  }
-                })
-              }
+        this._pasantiaService.putSolicitudPropuesta(this.pasantia._id, pasantia).subscribe((awns:any) =>{
+          this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((respDP:any) => {
+            this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe((respDF:any) => {
+              Swal.fire({
+                title: '¡Bien Hecho!',
+                html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${respDF._id}</b>`,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#60D89C',
+          
+              }).then((result) => {
+                if (result.value) {
+                  this.router.navigate(['/']);
+                }
+              });
+              this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
+                if(respN){
+                  this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
+                    if(!respC){
+                      console.log("Error garrafal");
+                    }
+                  })
+                }
+              });
             });
           });
         });
