@@ -90,6 +90,25 @@ export class PropuestasComponent implements OnInit {
           this.carta_presentacion.append('carta_presentacion', blop, this.pasantiaSup.estudiante._id+'-carta_presentacion.pdf');
           this._pasantiaService.postCartaPresentacion(this.pasantiaSup.estudiante._id, this.carta_presentacion).subscribe((respPC:any) => {
             if(respPC){
+              let currentDate = new Date();
+              let notificacionE =new Notificacion(
+                this.pasantiaSup.estudiante._id,
+                currentDate,
+                'Solicitd de pasantia aprobada',
+                `Tu solicitud de pasantia ha sido aprobada, el director de tu pasantia será ${this.tutorSelected.nombres} ${this.tutorSelected.apellidos}, se adjunta la carta de presentación a la empresa`,
+                'Estudiante',
+                this.pasantiaSup.estudiante.correo);
+              let notificacionT = new Notificacion(
+                this.tutorSelected._id,
+                currentDate,
+                'Asignación como tutor de pasantia',
+                `Te han asiganado como director de la pasantia del estudiante ${this.pasantiaSup.estudiante.nombres} ${this.pasantiaSup.estudiante.apellidos}, se adjunta el documento de la solicitud.`,
+                'Administrativo',
+                this.tutorSelected.correo);
+              this._notificacionService.postNotificacion(notificacionE).subscribe();
+              this._notificacionService.postNotificacion(notificacionT).subscribe();
+              this._notificacionService.sendCartaPresentacionCorreo(this.pasantiaSup.estudiante._id, notificacionE).subscribe();
+              this._notificacionService.sendPropuestaCorreo(this.pasantiaSup.estudiante._id, notificacionT).subscribe();
               Swal.fire({
                 title: '¡Bien Hecho!',
                 html: `Propuesta aprobada correctamente`,
@@ -102,25 +121,6 @@ export class PropuestasComponent implements OnInit {
                   this.getPropuestas();
                 }
               });
-              let currentDate = new Date();
-              let notificacionE =new Notificacion(
-                this.pasantiaSup.estudiante._id,
-                currentDate,
-                'Solicitd de pasantia aprobada',
-                `Tu solicitud de pasantia ha sido aprobada, el director de tu pasantia será ${this.tutorSelected.nombres} ${this.tutorSelected.apellidos}, se adjunta la carta de presentación a la empresa`,
-                'Estudiante' 
-              );
-              let notificacionT = new Notificacion(
-                this.tutorSelected._id,
-                currentDate,
-                'Asignación como tutor de pasantia',
-                `Te han asiganado como tutor de la pasantia del estudiante ${this.pasantiaSup.estudiante.nombres} ${this.pasantiaSup.estudiante.apellidos}`,
-                'Administrativo' 
-              );
-              this._notificacionService.postNotificacion(notificacionE).subscribe();
-              this._notificacionService.postNotificacion(notificacionT).subscribe();
-              this._notificacionService.sendCartaPresentacionCorreo(this.pasantiaSup.estudiante._id, notificacionE).subscribe();
-              this._notificacionService.sendNotificacionCorreo(notificacionT).subscribe();
             }
           });
         });

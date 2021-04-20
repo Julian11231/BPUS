@@ -115,25 +115,20 @@ export class PropuestaPasantiaComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
-        let pasantia = new Pasantia(
-          null,
-          null,
-          null,
-          null,
-          this.tituloPasantia,
-          this.descripcion
-        )
+        let pasantia = new Pasantia(null,null,null,null,this.tituloPasantia,this.descripcion);
         let currentDate = new Date();
         let notificacion = new Notificacion(
           this.jefe,
           currentDate,
           'Nueva solicitd de pasantia',
-          `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.pasantia.empresa.nombre}`,
-          'Administrativo' 
-        );
+          `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.pasantia.empresa.nombre}, se adjunta el documento de la solicitud.`,
+          'Administrativo',
+          this.info.correo);
         this._pasantiaService.putSolicitudPropuesta(this.pasantia._id, pasantia).subscribe((awns:any) =>{
           this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((respDP:any) => {
             this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe((respDF:any) => {
+              this._notificacionService.postNotificacion(notificacion).subscribe();
+              this._notificacionService.sendPropuestaCorreo(idEstudiante, notificacion).subscribe();
               Swal.fire({
                 title: '¡Bien Hecho!',
                 html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${respDF._id}</b>`,
@@ -145,16 +140,7 @@ export class PropuestaPasantiaComponent implements OnInit {
                 if (result.value) {
                   this.router.navigate(['/']);
                 }
-              });
-              this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
-                if(respN){
-                  this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
-                    if(!respC){
-                      console.log("Error garrafal");
-                    }
-                  })
-                }
-              });
+              });                
             });
           });
         });

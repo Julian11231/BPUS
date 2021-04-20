@@ -15,6 +15,11 @@ export class TutoriaPasantiaComponent implements OnInit {
   idTutor: string;
   pasantias: any[];
   pasantiaSelected: any;
+  new_estado_prouesta:string = "";
+  new_estado_actaInicio:string = "";
+  new_estado_informe7:string = "";
+  new_estado_informe14:string = "";
+  new_estado_informeFinal:string = "";
 
   constructor(public _pasantiaService: PasantiService) { }
 
@@ -54,6 +59,8 @@ export class TutoriaPasantiaComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
+        let notas_propuesta:string;
+        let notas_actaInicio:string;
         let notasSemana7:string;
         let notasSemana14:string; 
         let notasFinal:string;
@@ -68,11 +75,14 @@ export class TutoriaPasantiaComponent implements OnInit {
         } 
 
         let pasantiaUpdate = new PasantiaTutor(
-          form.value.estado_informe7,
+          form.value.new_estado_prouesta,
+          notas_propuesta,
+          form.value.new_estado_actaInicio,
+          notas_actaInicio,
           notasSemana7,
-          form.value.estado_informe14,
+          form.value.new_estado_informe14,
           notasSemana14,
-          form.value.estado_informeFinal,
+          form.value.new_estado_informeFinal,
           notasFinal,
         );
 
@@ -95,6 +105,43 @@ export class TutoriaPasantiaComponent implements OnInit {
       }
     })
 
+  }
+
+  ajustePropuesta(){
+    this.new_estado_prouesta = 'Ajustar';
+    let notasPropuesta = (document.getElementById("notasPropuesta")) as HTMLElement;
+    notasPropuesta.setAttribute('colspan','5');
+    let cancelarAjustePropuesta = (document.getElementById('cancelarAjustePropuesta')) as HTMLButtonElement;
+    cancelarAjustePropuesta.setAttribute('style', 'display:block; color: #8F141B');
+    let btnAjustePropuesta = (document.getElementById("btnAjustePropuesta")) as HTMLElement;
+    btnAjustePropuesta.setAttribute('style','display:none');
+    let notas_propuesta = (document.getElementById("notas_propuesta")) as HTMLElement;
+    notas_propuesta.setAttribute('class','collapse');
+  }
+
+  notasPropuesta(){
+    let notasPropuesta = (document.getElementById("notasPropuesta")) as HTMLElement;
+    notasPropuesta.setAttribute('colspan','4');
+    let notas_propuesta = (document.getElementById("notas_propuesta")) as HTMLElement;
+    notas_propuesta.setAttribute('class','collapse show');
+    let ajustePropuesta = (document.getElementById('ajustePropuesta')) as HTMLButtonElement;
+    ajustePropuesta.setAttribute('style', 'display:none');
+    let btnAjustePropuesta = (document.getElementById("btnAjustePropuesta")) as HTMLElement;
+    btnAjustePropuesta.setAttribute('style','display:block');
+  }
+
+  cancelarAjustePropuesta(){
+    this.new_estado_prouesta = '';
+    let notasPropuesta = (document.getElementById("notasPropuesta")) as HTMLElement;
+    notasPropuesta.setAttribute('colspan','5');
+    let ajustePropuesta = (document.getElementById('ajustePropuesta')) as HTMLButtonElement;
+    ajustePropuesta.setAttribute('style', 'display:block');
+    let cancelarAjustePropuesta = (document.getElementById('cancelarAjustePropuesta')) as HTMLButtonElement;
+    cancelarAjustePropuesta.setAttribute('style', 'display:none;');
+    let btnAjustePropuesta = (document.getElementById("btnAjustePropuesta")) as HTMLElement;
+    btnAjustePropuesta.setAttribute('style','display:none');
+    let notas_propuesta = (document.getElementById("notas_propuesta")) as HTMLElement;
+    notas_propuesta.setAttribute('class','collapse');
   }
 
   getDataInfo(data: any) {

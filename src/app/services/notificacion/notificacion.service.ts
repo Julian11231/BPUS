@@ -106,6 +106,58 @@ export class NotificacionesService {
     }));
   }
 
+  sendPropuestaCorreo(idEstudiante:string ,notificacion: Notificacion) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/correoPropusta${idEstudiante}?token=${token}`;
+    return this.http.post(url, notificacion).pipe(map((resp: any) => {
+
+      if (resp.ok) {  
+        console.log('Notificacion Correo enviada');
+        return true;
+      }else{
+        return false;
+      }
+      
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+
+    }));
+  }
+
+  sendActInicioCorreo(idEstudiante:string ,notificacion: Notificacion) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/correoActInicio${idEstudiante}?token=${token}`;
+    return this.http.post(url, notificacion).pipe(map((resp: any) => {
+
+      if (resp.ok) {  
+        console.log('Notificacion Correo enviada');
+        return true;
+      }else{
+        return false;
+      }
+      
+    }), catchError((err) => {
+
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+
+    }));
+  }
+
   putNotificacion(id: String, notificacion: Notificacion) {
 
     let token = localStorage.getItem('token');

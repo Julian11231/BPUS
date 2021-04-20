@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { PasantiService, EmpresaService, NotificacionesService, ProgramaService } from 'src/app/services/service.index';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { Notificacion } from 'src/app/models/notificacion.model';
 
 @Component({
   selector: 'app-acta-inicio-pasantia',
@@ -106,6 +107,16 @@ export class ActaInicioPasantiaComponent implements OnInit {
   uploadActInicio(){
     this._pasantiaService.postDocumentoActInicio(this.info._id, this.documento_ActInicio, this.fecha_artInicio).subscribe((resp:any)=>{
       if(resp){
+        let currentDate = new Date();
+        let notificacionT = new Notificacion(
+          this.pasantia.tutor._id,
+          currentDate,
+          'Acta de inicio enviada',
+          `El estudiante ${this.info.nombres} ${this.info.apellidos} ha subido el acta de inicio de su pasantia, se adjunta el documento del acta.`,
+          'Administrativo',
+          this.pasantia.tutor.correo);
+        this._notificacionService.postNotificacion(notificacionT).subscribe();
+        this._notificacionService.sendActInicioCorreo(this.info._id, notificacionT).subscribe();
         Swal.fire({
           title: '¡Bien hecho!',
           html: `<p> Se ha enviado correctamente el documento.</p>`,

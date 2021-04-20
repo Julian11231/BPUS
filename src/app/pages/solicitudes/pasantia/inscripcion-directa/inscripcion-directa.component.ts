@@ -119,58 +119,46 @@ export class InscripcionDirectaComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        setTimeout(() => {
+        let inscripcion = new Pasantia(
+          this.idEmpresa,
+          null,
+          this.eps,
+          this.lineaInvestigacion,
+          this.tituloPasantia,
+          this.descripcion
+        );
 
-          let inscripcion = new Pasantia(
-            this.idEmpresa,
-            null,
-            this.eps,
-            this.lineaInvestigacion,
-            this.tituloPasantia,
-            this.descripcion
-          )
-
-          this._pasantiaService.postSolicitudDirecta(idEstudiante, inscripcion).subscribe((respP:any) => {
-            let currentDate = new Date();
-            let notificacion = new Notificacion(
-              this.jefe,
-              currentDate,
-              'Nueva solicitd de pasantia',
-              `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.nombreEmpresa}`,
-              'Administrativo' 
-            );
-            this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((resp:any) => {
-              this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe((resp:any) => {
-                this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
-                  if(respN){
-                    this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
-                      if(respC){
-                        Swal.fire({
-                          title: '¡Bien Hecho!',
-                          html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${respP._id}</b>`,
-                          icon: 'warning',
-                          confirmButtonText: 'Aceptar',
-                          confirmButtonColor: '#60D89C',
-                    
-                        }).then((result) => {
-                          if (result.value) {
-                            this.router.navigate(['/']);
-                          }
-                        });
-                      }else{
-                        console.log("Error garrafal");
-                      }
-                    })
-                  }
-                });
+        this._pasantiaService.postSolicitudDirecta(idEstudiante, inscripcion).subscribe((respP:any) => {
+          let currentDate = new Date();
+          let notificacion = new Notificacion(
+            this.jefe,
+            currentDate,
+            'Nueva solicitd de pasantia',
+            `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.nombreEmpresa}, se adjunta el documento de la solicitud.`,
+            'Administrativo',
+            this.info.correo);
+          this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((resp:any) => {
+            this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe((resp:any) => {
+              this._notificacionService.postNotificacion(notificacion).subscribe();
+              this._notificacionService.sendPropuestaCorreo(idEstudiante, notificacion).subscribe();
+              Swal.fire({
+                title: '¡Bien Hecho!',
+                html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${respP._id}</b>`,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#60D89C',
+          
+              }).then((result) => {
+                if (result.value) {
+                  this.router.navigate(['/']);
+                }
               });
             });
           });
-
         });
 
       }
-    })
+    });
   }
 
   getInfoPropuesta(){

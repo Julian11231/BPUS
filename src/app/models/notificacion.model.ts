@@ -6,6 +6,7 @@ export class Notificacion {
         public mensaje: string,
         public mensajeDetalle: string,
         public onModel : string,
+        public receptorCorreo?: string,
         public isRead? : boolean,
         public _id?: string
     ) {
