@@ -20,7 +20,14 @@
     color: #8F141B;
 }
 
-button.btnInfo:hover{
+button.btnInfo:disabled:hover{
+    cursor: not-allowed;
+    background-color: #DFD4A6;
+    border-color: #DFD4A6;
+    color: #8F141B
+}
+
+button.btnInfo:enabled:hover{
     background-color: #8F141B;
     color: #DFD4A6;
 }

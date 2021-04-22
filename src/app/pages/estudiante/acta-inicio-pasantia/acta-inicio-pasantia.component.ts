@@ -20,11 +20,13 @@ export class ActaInicioPasantiaComponent implements OnInit {
 
   nombreArchivoARL: string;
   nombreArchivoActIni: string;
+  nombreArchivoPropuesta: string;
 
   documento_ARL = new FormData();
   fecha_arl:string;
   documento_ActInicio = new FormData();
   fecha_artInicio:string;
+  documento_propuesta = new FormData();
 
   MAX_SIZE_FILE: number = 1000000
 
@@ -149,6 +151,53 @@ export class ActaInicioPasantiaComponent implements OnInit {
       let documento_ActInicio = <File>file;
       this.documento_ActInicio.append('documento_actaInicio', documento_ActInicio, documento_ActInicio.name);
     }
+  }
+
+  getFilePropuesta(file: File) {
+    if (file.size > this.MAX_SIZE_FILE) {
+      Swal.fire({
+        title: '¡Lo Sentimos!',
+        html: `<p> El archivo: <b>${file.name}</b>, supera el 1 MB</p>`,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        showCancelButton: false,
+        confirmButtonColor: '#60D89C',
+      }).then(() => {
+        location.reload()
+      });
+
+    } else {
+      this.nombreArchivoPropuesta = file.name;
+      let documento_propuesta= <File>file;
+      this.documento_propuesta.append('documento_propuesta', documento_propuesta, documento_propuesta.name);
+    }
+  }
+
+  uploadPropuesta(){
+    this._pasantiaService.postDocumentoPropuesta(this.info._id, this.documento_propuesta).subscribe((resp:any)=>{
+      if(resp){
+        let currentDate = new Date();
+        let notificacionT = new Notificacion(
+          this.pasantia.tutor._id,
+          currentDate,
+          'Propuesta Actualizada',
+          `El estudiante ${this.info.nombres} ${this.info.apellidos} ha actualizado la propuesta de su pasantia, se adjunta el documento.`,
+          'Administrativo',
+          this.pasantia.tutor.correo);
+        this._notificacionService.postNotificacion(notificacionT).subscribe();
+        this._notificacionService.sendPropuestaCorreo(this.info._id, notificacionT).subscribe();
+        Swal.fire({
+          title: '¡Bien hecho!',
+          html: `<p> Se ha enviado correctamente el documento.</p>`,
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          showCancelButton: false,
+          confirmButtonColor: '#60D89C',
+        }).then(() => {
+          location.reload()
+        });
+      }
+    });
   }
 
 }

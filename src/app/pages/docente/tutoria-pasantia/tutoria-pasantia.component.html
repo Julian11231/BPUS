@@ -31,23 +31,27 @@
 
                         <h5 class="text-uppercase mt-3"> <b>Gestión de la Pasantía:</b></h5>
 
-                        <div class="table-responsive text-center">
-                            <table class="table table-bordered">
+                        <div>
+                            <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th><b>Fase</b></th>
-                                        <th><b>Estado</b></th>
-                                        <th><b>Notas</b></th>
-                                        <th><b>Descarga</b></th>
-                                        <th><b>Actualizar Estado</b></th>
+                                        <th style="text-align: center"><b>Fase</b></th>
+                                        <th style="text-align: center"><b>Estado</b></th>
+                                        <th style="text-align: center"><b>Notas</b></th>
+                                        <th style="text-align: center"><b>Descarga</b></th>
+                                        <th style="text-align: center"><b>Actualizar Estado</b></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>Propuesta</td>
-                                        <td>
+                                        <td> 
                                             <ng-container *ngIf="!pasantiaSelected?.estado_propuesta">
                                                 <span class="label btnDanger"><b>No enviado</b></span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.estado_propuesta == 'Enviada'">
+                                                <span class="label btnInfo"><b>{{pasantiaSelected?.estado_propuesta}}</b></span><br>
                                             </ng-container>
 
                                             <ng-container *ngIf="pasantiaSelected?.estado_propuesta == 'Aprobada'">
@@ -73,26 +77,22 @@
                                             </ng-container>
                                         </td>
                                         <td class="text-center">
-                                            <ng-container *ngIf="!pasantiaSelected?.estado_propuesta">
+                                            <ng-container *ngIf="!pasantiaSelected?.estado_propuesta || pasantiaSelected?.estado_propuesta == 'Ajustar'">
                                                 <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
                                             <ng-container *ngIf="pasantiaSelected?.estado_propuesta === 'Enviada'">
-                                                <select [(ngModel)]="new_estado_prouesta" name="estado_propuesta" class="form-control custom-select" required>
+                                                <select (change)="notasPropuesta()" [(ngModel)]="new_estado_prouesta" name="new_estado_prouesta" class="form-control custom-select" >
                                                     <option value="" selected>Seleccionar...</option>
                                                     <option value="Aprobada">Aprobada</option>
                                                     <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container *ngIf="pasantiaSelected?.estado_propuesta == 'Ajustar'">
-                                                <span class="label btnSuccess"><b>{{pasantiaSelected?.estado_propuesta}}</b></span><br>
-                                            </ng-container>
-
                                             <ng-container *ngIf="pasantiaSelected?.estado_propuesta === 'Aprobada'">
-                                                <button type="button" (click)="notasPropuesta()" class="btn btnSuccess" style="display: block;" id="ajustePropuesta">Solicitar ajuste</button>
+                                                <button type="button" (click)="notasPropuesta()" class="btn btnSuccess btn-block" style="display: block;" id="ajustePropuesta">Solicitar ajuste</button>
                                                 <button type="button" class="btn btn-link" style="display: none;" (click)="cancelarAjustePropuesta()" id="cancelarAjustePropuesta">Cancelar ajuste</button>
                                             </ng-container>
 
@@ -104,12 +104,12 @@
                                                 <label class="control-label mt-2">
                                                     <h5> <b class="text-uppercase">Notas de la propuesta:</b></h5>
                                                 </label>
-                                                <textarea [(ngModel)]="pasantiaSelected.notas_propuesta" name="notas_propuesta" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                                <textarea [(ngModel)]="new_notas_propuesta" name="notasPropuesta" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
                                             </div>
                                         </th>
                                         <th colspan="1" id="btnAjustePropuesta" style="display: none;">
                                             <div class="btn-group py-5">
-                                                <button type="button" class="btn btn-success" (click)="ajustePropuesta()">Solicitar</button>
+                                                <button type="button" class="btn btn-success" (click)="ajustePropuesta()" [disabled]="new_notas_propuesta === ''">Aceptar</button>
                                                 <button type="button" class="btn btn-danger" (click)="cancelarAjustePropuesta()">Cancelar</button>
                                             </div>
                                         </th>
@@ -147,37 +147,40 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.estado_propuesta">
+                                            <ng-container *ngIf="!pasantiaSelected?.estado_actaInicio || pasantiaSelected?.estado_actaInicio == 'Ajustar'">
                                                 <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
                                             <ng-container *ngIf="pasantiaSelected?.estado_actaInicio === 'Enviada'">
-                                                <select [(ngModel)]="new_estado_actaInicio" name="estado_actaInicio" class="form-control custom-select" required>
+                                                <select (change)="notasActaInicio()" [(ngModel)]="new_estado_actaInicio" name="new_estado_actaInicio" class="form-control custom-select" >
                                                     <option value="" selected>Seleccionar...</option>
                                                     <option value="Aprobada">Aprobada</option>
                                                     <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container *ngIf="pasantiaSelected?.estado_actaInicio == 'Ajustar'">
-                                                <span class="label btnSuccess"><b>{{pasantiaSelected?.estado_actaInicio}}</b></span><br>
-                                            </ng-container>
-
                                             <ng-container *ngIf="pasantiaSelected?.estado_actaInicio === 'Aprobada'">
-                                                <button type="button" (click)="notasPropuesta()" class="btn btnSuccess btn-block" style="display: block;" id="ajustePropuesta">Solicitar ajuste</button>
-                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjustePropuesta()" id="cancelarAjustePropuesta">Cancelar ajuste</button>
+                                                <button type="button" (click)="notasActaInicio()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteActaInicio">Solicitar ajuste</button>
+                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteActaInicio()" id="cancelarAjusteActaInicio">Cancelar ajuste</button>
                                             </ng-container>
-
                                         </td>
                                     </tr>
                                     <tr id="notas_actaInicio" class="collapse" *ngIf="pasantiaSelected?.estado_actaInicio">
-                                        <th colspan="5">
-                                            <label class="control-label mt-2">
-                                                <h5> <b class="text-uppercase">Notas acta de inicio:</b></h5>
-                                            </label>
-                                            <textarea [(ngModel)]="pasantiaSelected.notas_actaInicio" name="notas_actaInicio" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                        <th colspan="5" id="notasActaInicio">
+                                            <div class="mr-3">
+                                                <label class="control-label mt-2">
+                                                    <h5> <b class="text-uppercase">Notas del acta de inicio:</b></h5>
+                                                </label>
+                                                <textarea [(ngModel)]="new_notas_actaInicio" name="notasActaInicio" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" id="btnAjusteActaInicio" style="display: none;">
+                                            <div class="btn-group py-5">
+                                                <button type="button" [disabled]="new_notas_actaInicio == ''" class="btn btn-success" (click)="ajusteActaInicio()">Aceptar</button>
+                                                <button type="button" class="btn btn-danger" (click)="cancelarAjusteActaInicio()">Cancelar</button>
+                                            </div>
                                         </th>
                                     </tr>
                                     <tr>
@@ -200,7 +203,7 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas7" [disabled]="!pasantiaSelected?.estado_informe7"></button>
+                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_informe7" [disabled]="!pasantiaSelected?.estado_informe7"></button>
                                         </td>
                                         <td>
                                             <ng-container *ngIf="!pasantiaSelected?.documento_informe7">
@@ -214,27 +217,40 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.estado_informe7">
+                                            <ng-container *ngIf="!pasantiaSelected?.estado_informe7 || pasantiaSelected?.estado_informe7 == 'Ajustar'">
                                                 <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7">
-                                                <select [(ngModel)]="new_estado_informe7" name="estado_informe7" class="form-control custom-select" required>
-                                                    <option value="Aprobado">Aprobado</option>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 === 'Enviado'">
+                                                <select (change)="notasInforme7()" [(ngModel)]="new_estado_informe7" name="new_estado_informe7" class="form-control custom-select" >
+                                                    <option value="" selected>Seleccionar...</option>
+                                                    <option value="Aprobada">Aprobada</option>
                                                     <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe7 === 'Aprobado'">
+                                                <button type="button" (click)="notasInforme7()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteInforme7">Solicitar ajuste</button>
+                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteInforme7()" id="cancelarAjusteInforme7">Cancelar ajuste</button>
+                                            </ng-container>
                                         </td>
                                     </tr>
-                                    <tr id="notas7" class="collapse" *ngIf="pasantiaSelected?.estado_informe7">
-                                        <th colspan="5">
-                                            <label class="control-label mt-2">
-                                                <h5> <b class="text-uppercase">Notas informe semana 7:</b></h5>
-                                            </label>
-                                            <textarea [(ngModel)]="pasantiaSelected.notas_informe7" name="notasSemana7" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                    <tr id="notas_informe7" class="collapse" *ngIf="pasantiaSelected?.estado_informe7">
+                                        <th colspan="5" id="notasSemana7">
+                                            <div class="mr-3">
+                                                <label class="control-label mt-2">
+                                                    <h5> <b class="text-uppercase">Notas informe 7:</b></h5>
+                                                </label>
+                                                <textarea [(ngModel)]="new_notas_informe7" name="notasSemana7" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" id="btnAjusteInforme7" style="display: none;">
+                                            <div class="btn-group py-5">
+                                                <button type="button" [disabled]="new_notas_informe7 == ''" class="btn btn-success" (click)="ajusteInfome7()">Aceptar</button>
+                                                <button type="button" class="btn btn-danger" (click)="cancelarAjusteInforme7()">Cancelar</button>
+                                            </div>
                                         </th>
                                     </tr>
                                     <tr>
@@ -257,7 +273,7 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas14" [disabled]="!pasantiaSelected?.estado_informe14"></button>
+                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_informe14" [disabled]="!pasantiaSelected?.estado_informe14"></button>
                                         </td>
                                         <td>
                                             <ng-container *ngIf="!pasantiaSelected?.documento_informe14">
@@ -271,27 +287,40 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.estado_informe14">
+                                            <ng-container *ngIf="!pasantiaSelected?.estado_informe14 || pasantiaSelected?.estado_informe14 == 'Ajustar'">
                                                 <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14">
-                                                <select [(ngModel)]="new_estado_informe14" name="estado_informe14" class="form-control custom-select" required>
-                                                    <option value="Aprobado">Aprobado</option>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 === 'Enviado'">
+                                                <select (change)="notasInforme14()" [(ngModel)]="new_estado_informe14" name="new_estado_informe14" class="form-control custom-select" >
+                                                    <option value="" selected>Seleccionar...</option>
+                                                    <option value="Aprobada">Aprobada</option>
                                                     <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informe14 === 'Aprobado'">
+                                                <button type="button" (click)="notasInforme14()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteInforme14">Solicitar ajuste</button>
+                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteInforme14()" id="cancelarAjusteInforme14">Cancelar ajuste</button>
+                                            </ng-container>
                                         </td>
                                     </tr>
-                                    <tr id="notas14" class="collapse" *ngIf="pasantiaSelected?.estado_informe14">
-                                        <th colspan="5">
-                                            <label class="control-label mt-2">
-                                                <h5> <b class="text-uppercase">Notas informe semana 14:</b></h5>
-                                            </label>
-                                            <textarea ngModel name="notasSemana14" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                    <tr id="notas_informe14" class="collapse" *ngIf="pasantiaSelected?.estado_informe14">
+                                        <th colspan="5" id="notasSemana14">
+                                            <div class="mr-3">
+                                                <label class="control-label mt-2">
+                                                    <h5> <b class="text-uppercase">Notas informe 14:</b></h5>
+                                                </label>
+                                                <textarea [(ngModel)]="new_notas_informe14" name="notasSemana14" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" id="btnAjusteInforme14" style="display: none;">
+                                            <div class="btn-group py-5">
+                                                <button type="button" [disabled]="new_notas_informe14 == ''"  class="btn btn-success" (click)="ajusteInfome14()">Aceptar</button>
+                                                <button type="button" class="btn btn-danger" (click)="cancelarAjusteInforme14()">Cancelar</button>
+                                            </div>
                                         </th>
                                     </tr>
                                     <tr>
@@ -314,7 +343,7 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notasFinal" [disabled]="!pasantiaSelected?.estado_informeFinal"></button>
+                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_informeFinal" [disabled]="!pasantiaSelected?.estado_informeFinal"></button>
                                         </td>
                                         <td>
                                             <ng-container *ngIf="!pasantiaSelected?.documento_informeFinal">
@@ -328,42 +357,57 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.estado_informeFinal">
+                                            <ng-container *ngIf="!pasantiaSelected?.estado_informeFinal || pasantiaSelected?.estado_informeFinal == 'Ajustar'">
                                                 <select class="form-control custom-select" disabled>
                                                     <option>No enviado</option>
                                                 </select>
                                             </ng-container>
 
-                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal">
-                                                <select [(ngModel)]="new_estado_informeFinal" name="estado_informeFinal" class="form-control custom-select" required>
-                                                    <option value="Aprobado">Aprobado</option>
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal === 'Enviado'">
+                                                <select (change)="notasInformeFinal()" [(ngModel)]="new_estado_informeFinal" name="new_estado_informeFinal" class="form-control custom-select" >
+                                                    <option value="" selected>Seleccionar...</option>
+                                                    <option value="Aprobada">Aprobada</option>
                                                     <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
 
+                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal === 'Aprobado'">
+                                                <button type="button" (click)="notasInformeFinal()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteInformeFinal">Solicitar ajuste</button>
+                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteInformeFinal()" id="cancelarAjusteInformeFinal">Cancelar ajuste</button>
+                                            </ng-container>
                                         </td>
                                     </tr>
-                                    <tr id="notasFinal" class="collapse" *ngIf="pasantiaSelected?.estado_informeFinal">
-                                        <th colspan="5">
-                                            <label class="control-label mt-2">
-                                                <h5> <b class="text-uppercase">Notas informe final:</b></h5>
-                                            </label>
-                                            <textarea ngModel name="notasFinal" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                    <tr id="notas_informeFinal" class="collapse" *ngIf="pasantiaSelected?.estado_informeFinal">
+                                        <th colspan="5" id="notasSemanaFinal">
+                                            <div class="mr-3">
+                                                <label class="control-label mt-2">
+                                                    <h5> <b class="text-uppercase">Notas informe Final:</b></h5>
+                                                </label>
+                                                <textarea [(ngModel)]="new_notas_informeFinal" name="notasSemanaFinal" class="form-control" rows="3" placeholder="Notas Para el Estudiante"></textarea>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" id="btnAjusteInformeFinal" style="display: none;">
+                                            <div class="btn-group py-5">
+                                                <button type="button" [disabled]="new_notas_informeFinal == ''" class="btn btn-success" (click)="ajusteInfomeFinal()">Aceptar</button>
+                                                <button type="button" class="btn btn-danger" (click)="cancelarAjusteInformeFinal()">Cancelar</button>
+                                            </div>
                                         </th>
                                     </tr>
-                                    
-
                                 </tbody>
                             </table>
                         </div>
     
                         <div class="modal-footer">
-                            <button type="button" class="btn btnSuccess waves-effect text-left"
-                                data-dismiss="modal"><b>Cerrar</b> <i class="fa fa-times"></i></button>
 
-                            <button type="submit" class="btn btnInfo waves-effect text-left"><b> Guardar
-                                    Cambios </b>
-                                <i class="mdi mdi-update"></i></button>
+                            <button type="button" (click)="resetDataInfo()" id="btnCloseModalGestion" class="btn btnSuccess" data-dismiss="modal"><b>Cerrar </b><i class="fa fa-times"></i></button>
+
+                            <button type="submit" class="btn btnInfo" 
+                            [disabled]="new_estado_prouesta == '' && new_estado_actaInicio == '' && new_estado_informe7 == '' &&  new_estado_informe14 == '' && new_estado_informeFinal == ''
+                            || (new_estado_prouesta === 'Ajustar' && new_notas_propuesta == '') || (new_estado_actaInicio === 'Ajustar' && new_notas_actaInicio == '')
+                            || (new_estado_informe7 === 'Ajustar' && new_notas_informe7== '') || (new_estado_informe14 === 'Ajustar' && new_notas_informe14 == '')
+                            || (new_estado_informeFinal === 'Ajustar' && new_notas_informeFinal == '')">
+                            <b>Guardar Cambios </b><i class="mdi mdi-update"></i>
+                            </button>
 
                         </div>
                     </form>
@@ -484,8 +528,8 @@
             </div>
             <div class="col-lg-3">
                 <div class="buttons">
-                    <button class="btn btn-outline-info btn-sm mr-2" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#infoPasantia"><i class="fa fa-info-circle"></i></button>
-                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#modalGestionPasantia" class="btn btnInfo">
+                    <button class="btn btn-outline-info btn-sm mr-2" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#infoPasantia" data-backdrop="static"><i class="fa fa-info-circle"></i></button>
+                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#modalGestionPasantia" data-backdrop="static" class="btn btnInfo">
                         <b>Gestionar</b>
                     </button>
                 </div>
