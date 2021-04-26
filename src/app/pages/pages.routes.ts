@@ -23,8 +23,7 @@ import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-d
 import { MainComponent } from './main/main.component';
 import { LoginGuardGuard } from '../services/service.index';
 import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
-
-
+import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component'
 
 const pagesRoutes: Routes = [
 
@@ -54,6 +53,7 @@ const pagesRoutes: Routes = [
             { path: 'informe-final', component: InformeFinalComponent, data: { titulo: 'Envío de Informe Final' } },
             { path: 'solicitud-vacantes', component: EncarSolicitudVacanteComponent, data: { titulo: 'Solicitudes de vacantes' } },
             { path: 'acta-inicio', component: ActaInicioPasantiaComponent, data: { titulo: 'Acta de inicio' } },
+            { path: 'gestion-estudiantes', component: AdminEstudiantesComponent, data: { titulo: 'Gestión de estudiantes' } },
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },

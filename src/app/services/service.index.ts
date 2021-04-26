@@ -12,4 +12,5 @@ export { SharedService } from './shared/shared.service';
 export { EncargadoEmpresaService } from './encargadoEmpresa/encargadoEmpresa.service';
 export { ConvenioService } from './convenio/convenio.service';
 export { NotificacionesService } from './notificacion/notificacion.service';
+export { EstudianteService } from './estudiante/estudiante.service';
 

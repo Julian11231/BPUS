@@ -8,15 +8,21 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-small-cap"><b>Modalidades de Grado</b> </li>
-                <li *ngFor="let menu of menuJefePrograma"> <a class="has-arrow waves-effect waves-dark" href="#"
-                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
-                            class="hide-menu">{{menu.titulo}}
-                            <span id="number"
-                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
+                <li *ngFor="let menu of menuJefePrograma"> 
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="{{menu.icono}}"></i>&nbsp;<span class="hide-menu">{{menu.titulo}}</span>
+                    </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
-                                routerLinkActive="active">{{submenu.titulo}} </a></li>
+                        <li *ngFor="let submenu of menu.submenu">
+                            <a [routerLink]="[submenu.url]" routerLinkActive="active">{{submenu.titulo}} </a>
+                        </li>
                     </ul>
+                </li>
+                <li class="nav-small-cap"><b>Gestión de estudiantes</b> </li>
+                <li>                    
+                    <a [routerLink]="['/gestion-estudiantes']" routerLinkActive="nav-link" style="background-color: transparent;">
+                        <i class="fa fa-user"></i>&nbsp;<span class="hide-menu">Estudiantes</span>
+                    </a>
                 </li>
             </ul>
         </nav>

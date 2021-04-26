@@ -34,6 +34,7 @@ import { InformeSieteComponent } from './estudiante/informe-siete/informe-siete.
 import { NotificacionesComponent} from './notificaciones/notificaciones.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
 import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
+import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component';
 
 
 
@@ -60,7 +61,8 @@ import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/a
     NotificacionesComponent,
     EncarSolicitudVacanteComponent,
     InscripcionDirectaComponent,
-    ActaInicioPasantiaComponent
+    ActaInicioPasantiaComponent,
+    AdminEstudiantesComponent
 
   ],
   exports: [
