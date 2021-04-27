@@ -156,8 +156,8 @@
                     </div>
                     <div class="mt-5 ml-3">
                         <h4><b>Notas de la propuesta:</b></h4>
-                        <p *ngIf="pasantia.notas_propuesta !== ''" class="pl-3 mt-2">{{pasantia?.notas_propuesta}}</p>
-                        <p *ngIf="pasantia.notas_propuesta == ''" class="pl-3 mt-2 font-italic">No hay notas de la propuesta ...</p>  
+                        <p *ngIf="pasantia.notas_propuesta && pasantia.notas_propuesta !== ''" class="pl-3 mt-2">{{pasantia?.notas_propuesta}}</p>
+                        <p *ngIf="!pasantia.notas_propuesta || pasantia.notas_propuesta == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
                     </div>        
                 </div>
                 <div *ngIf="pasantia?.documento_propuesta == null || pasantia?.documento_propuesta == ''"class="card-body">
@@ -198,7 +198,11 @@
                             </a>
                         </div>
                     </div>
-      
+                    <div class="mt-5 ml-3">
+                        <h4><b>Notas del acta de inicio:</b></h4>
+                        <p *ngIf="pasantia.notas_actaInicio && pasantia.notas_actaInicio !== ''" class="pl-3 mt-2">{{pasantia?.notas_actaInicio}}</p>
+                        <p *ngIf="!pasantia.notas_actaInicio || pasantia.notas_actaInicio == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
+                    </div>  
                   </div>
                   <div *ngIf="pasantia?.documento_propuesta == null || pasantia?.documento_propuesta == ''"class="card-body">
                       <h3 class="pl-3 font-italic">No has enviado la propuesta...</h3>
@@ -249,8 +253,8 @@
                     </div>
                     <div class="mt-5 ml-3">
                         <h4><b>Notas del informe 7:</b></h4>
-                        <p *ngIf="pasantia.notas_informe7 !== ''" class="pl-3 mt-2">{{pasantia?.notas_informe7}}</p>
-                        <p *ngIf="pasantia.notas_informe7 == ''" class="pl-3 mt-2 font-italic">No hay notas del informe 7...</p>  
+                        <p *ngIf="pasantia.notas_informe7 && pasantia.notas_informe7 !== ''" class="pl-3 mt-2">{{pasantia?.notas_informe7}}</p>
+                        <p *ngIf="!pasantia.notas_informe7 || pasantia.notas_informe7 == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
                     </div>        
                 </div>
                 <div *ngIf="pasantia?.documento_informe7 == null || pasantia?.documento_informe7 == ''"class="card-body">
@@ -297,8 +301,8 @@
                       </div>
                       <div class="mt-5 ml-3">
                           <h4><b>Notas del informe 14:</b></h4>
-                          <p *ngIf="pasantia.notas_informe14 !== ''" class="pl-3 mt-2">{{pasantia?.notas_informe14}}</p>
-                          <p *ngIf="pasantia.notas_informe14 == ''" class="pl-3 mt-2 font-italic">No hay notas del informe 14...</p>  
+                          <p *ngIf="pasantia.notas_informe14 && pasantia.notas_informe14 !== ''" class="pl-3 mt-2">{{pasantia?.notas_informe14}}</p>
+                          <p *ngIf="!pasantia.notas_informe14 || pasantia.notas_informe14 == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
                       </div>        
                   </div>
                   <div *ngIf="pasantia?.documento_informe14 == null || pasantia?.documento_informe14 == ''"class="card-body">
@@ -321,7 +325,7 @@
                 <div id="informeFinal" class="collapse" data-parent="#accordion">
                   <div *ngIf="pasantia?.documento_informeFinal !== undefined && pasantia?.documento_informeFinal !== null && pasantia?.documento_informeFinal !== ''" class="card-body">
                       <div class="row">
-                          <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                          <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
                               <h3><b>Estado:</b> </h3>
                               <ng-container *ngIf="pasantia.estado_informeFinal == 'Enviado'" class="text-success">
                                   <span class="label btnInfo"> <b> {{ pasantia.estado_informeFinal }} </b></span>
@@ -333,7 +337,7 @@
                                   <span class="label btnSuccess"> <b> {{ pasantia.estado_informeFinal }} </b></span>
                               </ng-container>
                           </div>
-                          <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                          <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
                               <h5><b>Documento informe final:</b></h5>
                               <button class="btn btnSuccess">
                                   <a class="btnSuccess" [href]="pasantia?.documento_informeFinal | documento: info._id" download="pasantia?.documento_informeFinal" target="_blank">
@@ -341,12 +345,20 @@
                                   </a>
                               </button>
                           </div>
+                          <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                            <h5><b>Documento aprobación empresa:</b></h5>
+                            <button class="btn btnSuccess">
+                                <a class="btnSuccess" [href]="pasantia?.documento_aprobacionEmpresa | documento: info._id" download="pasantia?.documento_aprobacionEmpresa" target="_blank">
+                                    <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver aprobación</b></small>
+                                </a>
+                            </button>
+                        </div>
                           <br> 
                       </div>
                       <div class="mt-5 ml-3">
                           <h4><b>Notas del informe final:</b></h4>
-                          <p *ngIf="pasantia.notas_informeFinal !== ''" class="pl-3 mt-2">{{pasantia?.notas_informeFinal}}</p>
-                          <p *ngIf="pasantia.notas_informeFinal == ''" class="pl-3 mt-2 font-italic">No hay notas del informe final...</p>  
+                          <p *ngIf="pasantia.notas_informeFinal && pasantia.notas_informeFinal !== ''" class="pl-3 mt-2">{{pasantia?.notas_informeFinal}}</p>
+                          <p *ngIf="!pasantia.notas_informeFinal || pasantia.notas_informeFinal == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
                       </div>        
                   </div>
                   <div *ngIf="pasantia?.documento_informeFinal == null || pasantia?.documento_informeFinal == ''"class="card-body">

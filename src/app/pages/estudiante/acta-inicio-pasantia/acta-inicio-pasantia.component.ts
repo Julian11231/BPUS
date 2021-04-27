@@ -26,7 +26,7 @@ export class ActaInicioPasantiaComponent implements OnInit {
   fecha_arl:string;
   documento_ActInicio = new FormData();
   fecha_artInicio:string;
-  documento_propuesta = new FormData();
+  documento_actpropuesta = new FormData();
 
   MAX_SIZE_FILE: number = 1000000
 
@@ -168,13 +168,13 @@ export class ActaInicioPasantiaComponent implements OnInit {
 
     } else {
       this.nombreArchivoPropuesta = file.name;
-      let documento_propuesta= <File>file;
-      this.documento_propuesta.append('documento_propuesta', documento_propuesta, documento_propuesta.name);
+      let documento_actpropuesta= <File>file;
+      this.documento_actpropuesta.append('documento_actpropuesta', documento_actpropuesta, documento_actpropuesta.name);
     }
   }
 
   uploadPropuesta(){
-    this._pasantiaService.postDocumentoPropuesta(this.info._id, this.documento_propuesta).subscribe((resp:any)=>{
+    this._pasantiaService.putDocumentoPropuesta(this.info._id, this.documento_actpropuesta).subscribe((resp:any)=>{
       if(resp){
         let currentDate = new Date();
         let notificacionT = new Notificacion(

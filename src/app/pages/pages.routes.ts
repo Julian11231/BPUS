@@ -23,7 +23,10 @@ import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-d
 import { MainComponent } from './main/main.component';
 import { LoginGuardGuard } from '../services/service.index';
 import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
-import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component'
+import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component';
+import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
+import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';
+import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.component';
 
 const pagesRoutes: Routes = [
 
@@ -54,6 +57,9 @@ const pagesRoutes: Routes = [
             { path: 'solicitud-vacantes', component: EncarSolicitudVacanteComponent, data: { titulo: 'Solicitudes de vacantes' } },
             { path: 'acta-inicio', component: ActaInicioPasantiaComponent, data: { titulo: 'Acta de inicio' } },
             { path: 'gestion-estudiantes', component: AdminEstudiantesComponent, data: { titulo: 'Gestión de estudiantes' } },
+            { path: 'asignacion-jurados', component: GestionJuradosComponent, data: { titulo: 'Asignación de jurados' } },
+            { path: 'jurado', component: JuradoPasantiaComponent, data: { titulo: 'Jurado' } },
+            { path: 'sustentacion-pasantia', component: SustentacionComponent, data: { titulo: 'Sustentación pasantia' } },
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },

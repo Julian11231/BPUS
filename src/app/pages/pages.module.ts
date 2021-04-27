@@ -35,6 +35,9 @@ import { NotificacionesComponent} from './notificaciones/notificaciones.componen
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
 import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
 import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component';
+import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
+import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';
+import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.component';
 
 
 
@@ -62,7 +65,10 @@ import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-est
     EncarSolicitudVacanteComponent,
     InscripcionDirectaComponent,
     ActaInicioPasantiaComponent,
-    AdminEstudiantesComponent
+    AdminEstudiantesComponent,
+    GestionJuradosComponent,
+    JuradoPasantiaComponent,
+    SustentacionComponent
 
   ],
   exports: [
@@ -85,7 +91,12 @@ import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-est
     InformeFinalComponent,
     NotificacionesComponent,
     EncarSolicitudVacanteComponent,
-    InscripcionDirectaComponent
+    InscripcionDirectaComponent,
+    ActaInicioPasantiaComponent,
+    AdminEstudiantesComponent,
+    GestionJuradosComponent,
+    JuradoPasantiaComponent,
+    SustentacionComponent
 
   ],
   imports: [

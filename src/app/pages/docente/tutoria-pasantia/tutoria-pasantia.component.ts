@@ -260,7 +260,7 @@ export class TutoriaPasantiaComponent implements OnInit {
       let notasSemana7 = (document.getElementById("notasSemana7")) as HTMLElement;
       let notas_informe7 = (document.getElementById("notas_informe7")) as HTMLElement;
       let btnAjusteInforme7 = (document.getElementById("btnAjusteInforme7")) as HTMLElement;
-      if(this.pasantiaSelected?.estado_informe7 === 'Aprobada'){
+      if(this.pasantiaSelected?.estado_informe7 === 'Aprobado'){
         let ajusteInforme7 = (document.getElementById('ajusteInforme7')) as HTMLButtonElement;
         notasSemana7.setAttribute('colspan','4')
         notas_informe7.setAttribute('class','collapse show');
@@ -313,7 +313,7 @@ export class TutoriaPasantiaComponent implements OnInit {
       let notasSemana14 = (document.getElementById("notasSemana14")) as HTMLElement;
       let notas_informe14 = (document.getElementById("notas_informe14")) as HTMLElement;
       let btnAjusteInforme14 = (document.getElementById("btnAjusteInforme14")) as HTMLElement;
-      if(this.pasantiaSelected?.estado_informe14 === 'Aprobada'){
+      if(this.pasantiaSelected?.estado_informe14 === 'Aprobado'){
         let ajusteInforme14 = (document.getElementById('ajusteInforme14')) as HTMLButtonElement;
         notasSemana14.setAttribute('colspan','4')
         notas_informe14.setAttribute('class','collapse show');
@@ -366,7 +366,7 @@ export class TutoriaPasantiaComponent implements OnInit {
       let notasSemanaFinal = (document.getElementById("notasSemanaFinal")) as HTMLElement;
       let notas_informeFinal = (document.getElementById("notas_informeFinal")) as HTMLElement;
       let btnAjusteInformeFinal = (document.getElementById("btnAjusteInformeFinal")) as HTMLElement;
-      if(this.pasantiaSelected?.estado_informeFinal === 'Aprobada'){
+      if(this.pasantiaSelected?.estado_informeFinal === 'Aprobado'){
         let ajusteInformeFinal = (document.getElementById('ajusteInformeFinal')) as HTMLButtonElement;
         notasSemanaFinal.setAttribute('colspan','4')
         notas_informeFinal.setAttribute('class','collapse show');

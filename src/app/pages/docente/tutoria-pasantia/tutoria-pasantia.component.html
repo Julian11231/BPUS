@@ -226,7 +226,7 @@
                                             <ng-container *ngIf="pasantiaSelected?.estado_informe7 === 'Enviado'">
                                                 <select (change)="notasInforme7()" [(ngModel)]="new_estado_informe7" name="new_estado_informe7" class="form-control custom-select" >
                                                     <option value="" selected>Seleccionar...</option>
-                                                    <option value="Aprobada">Aprobada</option>
+                                                    <option value="Aprobado">Aprobado</option>
                                                     <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
@@ -296,7 +296,7 @@
                                             <ng-container *ngIf="pasantiaSelected?.estado_informe14 === 'Enviado'">
                                                 <select (change)="notasInforme14()" [(ngModel)]="new_estado_informe14" name="new_estado_informe14" class="form-control custom-select" >
                                                     <option value="" selected>Seleccionar...</option>
-                                                    <option value="Aprobada">Aprobada</option>
+                                                    <option value="Aprobado">Aprobado</option>
                                                     <option value="Ajustar">Ajustar</option>
                                                 </select>
                                             </ng-container>
@@ -356,25 +356,31 @@
                                                 </a>
                                             </ng-container>
                                         </td>
+                                        <td *ngIf="!pasantiaSelected?.estado_informeFinal || pasantiaSelected?.estado_informeFinal == 'Ajustar'">
+                                            <select class="form-control custom-select" disabled>
+                                                <option>No enviado</option>
+                                            </select>
+                                        </td>
+                                        <th *ngIf="pasantiaSelected?.estado_informeFinal === 'Enviado'" rowspan="2">
+                                            <select (change)="notasInformeFinal()" [(ngModel)]="new_estado_informeFinal" name="new_estado_informeFinal" class="form-control custom-select mt-4">
+                                                <option value="" selected>Seleccionar...</option>
+                                                <option value="Aprobado">Aprobado</option>
+                                                <option value="Ajustar">Ajustar</option>
+                                            </select>
+                                        </th>
+                                        <th *ngIf="pasantiaSelected?.estado_informeFinal === 'Aprobado'" rowspan="2">
+                                            <button type="button" (click)="notasInformeFinal()" class="btn btnSuccess btn-block mt-4" style="display: block;" id="ajusteInformeFinal">Solicitar ajuste</button>
+                                            <button type="button" class="btn btn-link btn-block mt-4" style="display: none;" (click)="cancelarAjusteInformeFinal()" id="cancelarAjusteInformeFinal">Cancelar ajuste</button>
+                                        </th>
+                                    </tr>
+                                    <tr *ngIf="pasantiaSelected?.estado_informeFinal">
+                                        <th colspan="3">
+                                            <p class="mt-2">Certificado de aprobación de la empresa:</p>
+                                        </th>
                                         <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.estado_informeFinal || pasantiaSelected?.estado_informeFinal == 'Ajustar'">
-                                                <select class="form-control custom-select" disabled>
-                                                    <option>No enviado</option>
-                                                </select>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal === 'Enviado'">
-                                                <select (change)="notasInformeFinal()" [(ngModel)]="new_estado_informeFinal" name="new_estado_informeFinal" class="form-control custom-select" >
-                                                    <option value="" selected>Seleccionar...</option>
-                                                    <option value="Aprobada">Aprobada</option>
-                                                    <option value="Ajustar">Ajustar</option>
-                                                </select>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantiaSelected?.estado_informeFinal === 'Aprobado'">
-                                                <button type="button" (click)="notasInformeFinal()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteInformeFinal">Solicitar ajuste</button>
-                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteInformeFinal()" id="cancelarAjusteInformeFinal">Cancelar ajuste</button>
-                                            </ng-container>
+                                            <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_aprobacionEmpresa | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_aprobacionEmpresa" target="_blank">
+                                                <small><b>Ver Documento</b></small>
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr id="notas_informeFinal" class="collapse" *ngIf="pasantiaSelected?.estado_informeFinal">

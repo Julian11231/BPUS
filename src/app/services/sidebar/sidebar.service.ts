@@ -34,7 +34,9 @@ export class SidebarService {
       submenu: [
         { titulo: 'Gestión de Empresas', url: '/empresas' },
         { titulo: 'Propuestas de Pasantía', url: '/propuestas' },
-        { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' }
+        { titulo: 'Asignación de jurados', url: '/asignacion-jurados' },
+        { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' },
+        { titulo: 'Jurado', url: '/jurado' }
       ]
     }
   ];
@@ -118,6 +120,7 @@ export class SidebarService {
       icono: 'fa fa-briefcase',
       submenu: [
         { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' },
+        { titulo: 'Jurado', url: '/jurado' }
       ]
     }
   ];

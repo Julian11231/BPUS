@@ -180,7 +180,7 @@
                         <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Informe - Semana 7</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li *ngIf="(diff >= 14 && pasantia?.estado === 'En ejecución' && !pasantia?.estado_informe7) || pasantia?.estado_informe7 === 'Ajustar'; else elseInforme7">
+                        <li *ngIf="(diff >= 1 && pasantia?.estado === 'En ejecución' && !pasantia?.estado_informe7) || pasantia?.estado_informe7 === 'Ajustar'; else elseInforme7">
                             <a routerLink="/informe-siete" routerLinkActive="active">Enviar Informe</a>
                         </li>
                         <ng-template #elseInforme7>
@@ -193,8 +193,8 @@
                         <i class="fa fa-file-text-o"></i><span class="hide-menu">Informe - Semana 14</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li *ngIf="(diff >= 14 && pasantia?.estado === 'En ejecución' && !pasantia?.estado_informe14) || pasantia?.estado_informe14 === 'Ajustar'; else elseInforme14">
-                            <a routerLink="/informe-siete" routerLinkActive="active">Enviar Informe</a>
+                        <li *ngIf="(diff >= 1 && pasantia?.estado === 'En ejecución' && !pasantia?.estado_informe14) || pasantia?.estado_informe14 === 'Ajustar'; else elseInforme14">
+                            <a routerLink="/informe-catorce" routerLinkActive="active">Enviar Informe</a>
                         </li>
                         <ng-template #elseInforme14>
                             <li><a class="isDisabled text-white">Informe 14</a></li>
@@ -206,8 +206,8 @@
                         <i class="fa fa-file-word-o"></i><span class="hide-menu">Informe Final</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li *ngIf="(diff >= 24 && pasantia?.estado === 'En ejecución' && !pasantia?.estado_informeFinal) || pasantia?.estado_informeFinal === 'Ajustar'; else elseInformeFinal">
-                            <a routerLink="/informe-siete" routerLinkActive="active">Enviar Informe</a>
+                        <li *ngIf="(diff >= 1 && pasantia?.estado === 'En ejecución' && !pasantia?.estado_informeFinal) || pasantia?.estado_informeFinal === 'Ajustar'; else elseInformeFinal">
+                            <a routerLink="/informe-final" routerLinkActive="active">Enviar Informe</a>
                         </li>
                         <ng-template #elseInformeFinal>
                             <li><a class="isDisabled text-white">Informe Final</a></li>
