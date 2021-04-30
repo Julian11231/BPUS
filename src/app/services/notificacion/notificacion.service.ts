@@ -144,17 +144,34 @@ export class NotificacionesService {
       }else{
         return false;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
+    }));
+  }
 
+  sendArchivosJurado(idEstudiante:string ,notificacion: Notificacion) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/archivosJurado${idEstudiante}?token=${token}`;
+    return this.http.post(url, notificacion).pipe(map((resp: any) => {
+      if (resp.ok) {  
+        console.log('Notificacion Correo enviada');
+        return true;
+      }else{
+        return false;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
     }));
   }
 

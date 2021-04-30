@@ -1,14 +1,12 @@
 <div class="p-5 text-center" style="background-color: white;">
     <div class="p-5 mx-auto w-75">
-        <label for="filePropuesta" *ngIf="nombreArchivoInforme == null"
-        class="labels custom-file-upload">
-        Click aquí para subir el el informe de la semana 7</label>
+    
+    <label for="filePropuesta" *ngIf="nombreArchivoInforme == null" class="labels custom-file-upload">Click aquí para subir el informe de la semana 7</label>
 
     <label for="filePropuesta" *ngIf="nombreArchivoInforme != null"
         class="labels custom-file-upload text-center" style="color: #8F141B; font-weight: bold;">
         {{ nombreArchivoInforme }}</label><br>
     <small>Recuerda que debe ser un archivo PDF, de tamaño menor a 1 MB.</small><br>
-
 
     <input name="filePropuesta" id="filePropuesta"
         (change)="getFileInforme( $event.target.files[0] )" type="file" accept="application/pdf"

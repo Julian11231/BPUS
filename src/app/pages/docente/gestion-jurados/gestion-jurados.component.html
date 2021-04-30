@@ -5,7 +5,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                            <h5><b class="text-uppercase">Titulo:</b> &nbsp; {{pasantiaSelected?.titulo}}</h5>
+                            <h5><b>Titulo:</b> &nbsp; {{pasantiaSelected?.titulo}}</h5>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                             <h5><b class="text-uppercase">ID:</b> &nbsp; {{pasantiaSelected?._id}}</h5>
@@ -20,9 +20,10 @@
                             <h5><b>Semana: </b>{{pasantiaSelected?.semanas}}/24</h5>
                         </div>
                     </div>
-                    <h5 class="mt-2"><b class="text-uppercase">Descripción:</b></h5>
+                    <h5 class="mt-2"><b>Director: </b>{{pasantiaSelected?.tutor.nombres}} {{pasantiaSelected?.tutor.apellidos}}</h5>
+                    <h5 class="mt-3"><b>Descripción:</b></h5>
                     <p class="px-3 text-justify" id="descripcionPasantia">{{pasantiaSelected?.descripcion}}</p>
-                    <h5 class="text-uppercase mt-3"> <b>Información del estudiante:</b></h5>
+                    <h5 class="mt-3"> <b>Información del estudiante:</b></h5>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-5 col-lg-5">
                             <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSelected?.estudiante.nombres }} {{pasantiaSelected?.estudiante.apellidos}}</small>
@@ -46,7 +47,7 @@
                         </div>
                     </div>
                     <ng-container *ngIf="pasantiaSelected?.vacante">
-                        <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b></h5>
+                        <h5 class="mt-3"> <b>Información de la vacante:</b></h5>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-7 col-lg-7">
                                 <div class="vacantesInfo">
@@ -69,7 +70,7 @@
                         </div>
                     </ng-container>
                     <ng-container *ngIf="!pasantiaSelected?.vacante">
-                        <h5 class="text-uppercase mt-3"> <b>Información de la empresa:</b> </h5>
+                        <h5 class="mt-3"> <b>Información de la empresa:</b> </h5>
                         <div class="row my-3">
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                                 <small><i class="fa fa-briefcase"></i> &nbsp;{{pasantiaSelected?.empresa.nombre}} </small>
@@ -93,6 +94,58 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalJurados">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2>Asignación de jurados</h2>
+                    <hr>
+                    <form ngNativeValidate #asignarJurados="ngForm" (ngSubmit)="AsignarJurados(pasantiaSelected._id, asignarJurados)">
+                        <div *ngIf="pasantiaSelected" class="row">
+                            <div class="col-6">
+                                <label class="font-weight-bold">Primer jurado:</label>
+                                <select name="jurado1" [(ngModel)]="jurado1" class="form-control custom-select" id="jurado1" (change)="checkJurados()" required>
+                                    <option value="" selected>Selecciona un jurado...</option>
+                                    <ng-container *ngFor="let jurado of jurados">
+                                        <option *ngIf="jurado._id !== pasantiaSelected.tutor._id" value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="font-weight-bold">Segundo jurado:</label>
+                                <select name="jurado2" [(ngModel)]="jurado2" class="form-control custom-select" id="jurado2" (change)="checkJurados()" required>
+                                    <option value="" selected>Selecciona un jurado...</option>
+                                    <ng-container *ngFor="let jurado of jurados">
+                                        <option *ngIf="jurado._id !== pasantiaSelected.tutor._id" value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="font-weight-bold ml-4 my-3" id="errorJurados" style="display: none;">Los jurados deben ser diferentes</p>
+                        <div class="row mt-4">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="fecha">Fecha de la sustentación:</label>
+                                    <input type="date" class="form-control" ngModel #fecha="ngModel" id="fecha" name="fecha" min="{{fechamin}}" max="{{fechamax}}" required>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label class="font-weight-bold" for="lugar">Lugar de sustentación:</label>
+                                    <input type="text" class="form-control" ngModel #lugar="ngModel" id="lugar" name="lugar" maxlength="50" placeholder="Lugar de sustentación" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btnInfo" [disabled]="jurado1 === '' || jurado2 === '' || jurado1 === jurado2 || asignarJurados.invalid">Asignar jurados</button>
+                            <button type="button" id="btnCerrar" (click)="lugar.reset(); fecha.reset(); clearDataInfo();" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <ng-container *ngFor="let dato of pasantias">
         <div class="row">
             <div class="col-lg-9">
@@ -110,8 +163,8 @@
             <div class="col-lg-3">
                 <div class="buttons">
                     <button class="btn btn-outline-info btn-sm mr-2" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#infoPasantia" data-backdrop="static"><i class="fa fa-info-circle"></i></button>
-                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#modalGestionPasantia" data-backdrop="static" class="btn btnInfo">
-                        <b>Gestionar</b>
+                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#modalJurados" data-backdrop="static" class="btn btnInfo">
+                        <b>Asignar jurados</b>
                     </button>
                 </div>
             </div>

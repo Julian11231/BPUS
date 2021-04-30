@@ -18,42 +18,36 @@ export class PasantiService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getSolicitudes() {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia?token=${token}`;
     return this.http.get(url);
   }
 
   getSolicitudesEncargado(empresa: string) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/empresa${empresa}?token=${token}`;
     return this.http.get(url);
   }
 
   getSolicitudesTutor(tutor: string) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/tutor${tutor}?token=${token}`;
     return this.http.get(url);
   }
 
-  getSolicitudesAsignarJurado() {
+  getSolicitudesJurado(jurado: string) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/jurado${jurado}?token=${token}`;
+    return this.http.get(url);
+  }
 
+  getSolicitudesAsignarJurado() {
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/asignarJurado?token=${token}`;
     return this.http.get(url);
   }
 
-  getSolicitudesJurado(tutor: string) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/tutor${tutor}?token=${token}`;
-    return this.http.get(url);
-  }
-
   getPasantia(id: string) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
     return this.http.get(url);
@@ -195,6 +189,28 @@ export class PasantiService {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/tutor${id}?token=${token}`;
+
+    return this.http.put(url, pasantia).pipe(map((resp: any) => {
+
+      if (resp.ok == true) {
+        return true;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+
+      return throwError(err);
+    }));
+  }
+
+
+  asignarJurado(id: string, pasantia: any) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/asignarJurados${id}?token=${token}`;
 
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
 
