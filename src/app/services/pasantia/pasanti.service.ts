@@ -53,14 +53,10 @@ export class PasantiService {
     return this.http.get(url);
   }
 
-
   postSolicitud(id: String, solicitud: Pasantia) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
-
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
-
       if (resp.ok) {
         localStorage.removeItem("estudiante");
         console.log(resp.estudianteActualizado);
@@ -69,28 +65,20 @@ export class PasantiService {
       }else{
         return false;
       }
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
-
     }));
-
   }
 
   postSolicitudDirecta(idEstudiante: String, solicitud: Pasantia) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/direct/${idEstudiante}?token=${token}`;
-
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         localStorage.removeItem("estudiante");
         console.log(resp.estudianteActualizado);
@@ -99,99 +87,73 @@ export class PasantiService {
       }else{
         return false;
       }
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
-
     }));
-
   }
 
   cambiarEstadoEncargado(id: String, estado: boolean) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/cambiarEstado${id}?estado=${estado}&token=${token}`;
-
     return this.http.put(url, estado).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }else{
         return false;
       }
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
-
     }));
-
   }
 
   putSolicitudPropuesta(id: string, pasantia: any) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/propuesta${id}?token=${token}`;
-
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
   }
 
   putSolicitudJefe(id: string, pasantia: any) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/jefe${id}?token=${token}`;
-
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
   }
 
   putSolicitudTutor(id: string, pasantia: any) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/tutor${id}?token=${token}`;
-
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
@@ -201,19 +163,14 @@ export class PasantiService {
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
   }
 
-
   asignarJurado(id: string, pasantia: any) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/pasantia/asignarJurados${id}?token=${token}`;
-
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
@@ -223,248 +180,193 @@ export class PasantiService {
         text: err.error.mensaje,
         icon: 'error',
       });
+      return throwError(err);
+    }));
+  }
 
+  evaluar(id: string, pasantia: any) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/pasantia/evaluar${id}?token=${token}`;
+    return this.http.put(url, pasantia).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        return true;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
       return throwError(err);
     }));
   }
 
   postDocumentoPropuesta(idEstudiante: string, documento_propuesta: FormData) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, documento_propuesta).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   putDocumentoPropuesta(idEstudiante: string, documento_actpropuesta: FormData) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, documento_actpropuesta).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   postCartaPresentacion(idEstudiante: string, carta_presentacion: FormData,) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, carta_presentacion).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   postDocumentoFichaAcademica(idEstudiante: string, documento_fichaAcademica: FormData) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, documento_fichaAcademica).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return resp.pasantia;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   postDocumentoActInicio(idEstudiante: string, documento_actaInicio: FormData, fecha_actaInicio: string) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_actaInicio=${fecha_actaInicio}&token=${token}`;
-
     return this.http.put(url, documento_actaInicio).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   postDocumentoARL(idEstudiante: string, documento_arl: FormData, fecha_arl:string) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_arl=${fecha_arl}&token=${token}`;
-
     return this.http.put(url, documento_arl).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   postDocumentoInf7(idEstudiante: string, documento_informe7: FormData) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, documento_informe7).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
-
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: `Se ha enviado correctamente el documento`,
-          icon: 'success'
-        }).then(() => {
-          this.router.navigate(['/mi-modalidad'])
-        });
+        return true;
       }
-      return true;
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
-
   postDocumentoInf14(idEstudiante: string, documento_informe14: FormData) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, documento_informe14).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
-
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: `Se ha enviado correctamente el documento`,
-          icon: 'success'
-        }).then(() => {
-          this.router.navigate(['/mi-modalidad'])
-        });
+        return true;
       }
-      return true;
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   postDocumentoInfFinal(idEstudiante: string, documento_informeFinal: FormData) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, documento_informeFinal).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
     }));
 
   }
 
   postDocumentoAprobacionEmpresa(idEstudiante: string, documento_aprobacionEmpresa: FormData) {
-
     let token = localStorage.getItem('token')
     let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
-
     return this.http.put(url, documento_aprobacionEmpresa).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
@@ -476,7 +378,23 @@ export class PasantiService {
       });
       return throwError(err);
     }));
+  }
 
+  postDocumentoEvaluacion(idEstudiante: string, jurado:string, documento_evaluacion_jurado: FormData) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?jurado=${jurado}&token=${token}`;
+    return this.http.put(url, documento_evaluacion_jurado).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        return resp.pasantiaActualizada;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
   }
 
 }

@@ -1,1 +1,61 @@
-<p>sustentacion works!</p>
+<div class="p-3" style="background-color: white;">
+    <ng-container *ngIf="pasantia?.sustentacion_fecha">
+        <div class="row py-5 text-center">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <h5><b>JURADOS ASIGNADOS</b></h5>
+            <h6 class="mt-4">{{pasantia?.jurado1.nombres}} {{pasantia?.jurado1.apellidos}}</h6>
+            <h6 class="mt-4">{{pasantia?.jurado2.nombres}} {{pasantia?.jurado2.apellidos}}</h6>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                <h5 class="text-uppercase"><b>FECHA DE sustención</b></h5>
+                <h6 class="mt-4">{{pasantia?.sustentacion_fecha}}</h6>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                <h5 class="text-uppercase"><b>Lugar de sustención</b></h5>
+                <h6 class="mt-4">{{pasantia?.sustentacion_lugar}}</h6>
+            </div>
+        </div>
+        <ng-container *ngIf="pasantia?.evaluacion_jurado1 || pasantia?.evaluacion_jurado2">
+            <h5 class="pl-2"><b>CALIFICACIONES:</b></h5>
+            <div class="row mt-2 mx-5 px-5">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <h6>{{pasantia?.jurado1.nombres}} {{pasantia?.jurado1.apellidos}}</h6>
+                    <ng-container *ngIf="!pasantia.evaluacion_jurado1" class="text-success">
+                        <span class="label btnDanger"> <b> No enviada </b></span><br>
+                    </ng-container>
+                    <ng-container *ngIf="pasantia.evaluacion_jurado1 == 'Aprobada'" class="text-success">
+                        <span class="label" style="background-color: green;"> <b> {{ pasantia.evaluacion_jurado1 }} </b></span><br>
+                    </ng-container>
+                    <ng-container *ngIf="pasantia.evaluacion_jurado1 == 'Ajustar'" class="text-success">
+                        <span class="label btnSuccess"> <b> {{ pasantia.evaluacion_jurado1 }} </b></span><br>
+                    </ng-container>
+                    <a *ngIf="pasantia?.documento_evaluacion_jurado1" class="btn btnSuccess descargar mt-2" [href]="pasantia?.documento_evaluacion_jurado1 | documento: pasantia?.estudiante._id" download="pasantiaSelected?.documento_evaluacion_jurado1" target="_blank">
+                        <small><b>Ver documento de evaluación</b></small>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <h6>{{pasantia?.jurado2.nombres}} {{pasantia?.jurado2.apellidos}}</h6>
+                    <ng-container *ngIf="!pasantia.evaluacion_jurado2" class="text-success">
+                        <span class="label btnDanger"> <b> No enviada </b></span><br>
+                    </ng-container>
+                    <ng-container *ngIf="pasantia.evaluacion_jurado2 == 'Aprobada'" class="text-success">
+                        <span class="label" style="background-color: green;"> <b> {{ pasantia.evaluacion_jurado2 }} </b></span><br>
+                    </ng-container>
+                    <ng-container *ngIf="pasantia.evaluacion_jurado2 == 'Ajustar'" class="text-success">
+                        <span class="label btnSuccess"> <b> {{ pasantia.evaluacion_jurado2 }} </b></span><br>
+                    </ng-container>
+                    <a *ngIf="pasantia?.documento_evaluacion_jurado2" class="btn btnSuccess descargar mt-2" [href]="pasantia?.documento_evaluacion_jurado2 | documento: pasantia?.estudiante._id" download="pasantiaSelected?.documento_evaluacion_jurado2" target="_blank">
+                        <small><b>Ver documento de evaluación</b></small>
+                    </a>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!pasantia?.sustentacion_fecha ">
+        <div class="container-main">
+            <div class="center">
+              <h2>No te han asignado sustención</h2>
+            </div>
+        </div>
+    </ng-container>
+</div>

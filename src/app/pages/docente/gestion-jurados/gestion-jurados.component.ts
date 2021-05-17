@@ -118,7 +118,7 @@ export class GestionJuradosComponent implements OnInit {
             currentDate,
             'Te han asignado como jurado de una pasantia',
             `Has sido asignado como jurado de la pasantia del estudiante ${this.pasantiaSelected.estudiante.nombres} ${this.pasantiaSelected.estudiante.apellidos}`,
-            'Estudiante',
+            'Administrativo',
             this.jurados[selectedIndex1].correo);
             
           let notificacionJ2 =new Notificacion(
@@ -126,7 +126,7 @@ export class GestionJuradosComponent implements OnInit {
             currentDate,
             'Te han asignado como jurado de una pasantia',
             `Has sido asignado como jurado de la pasantia del estudiante ${this.pasantiaSelected.estudiante.nombres} ${this.pasantiaSelected.estudiante.apellidos}`,
-            'Estudiante',
+            'Administrativo',
             this.jurados[selectedIndex2].correo);
 
           this._notificacionService.postNotificacion(notificacionE).subscribe();

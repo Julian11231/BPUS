@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { PasantiService, NotificacionesService } from 'src/app/services/service.index';
 import { Notificacion } from 'src/app/models/notificacion.model';
-import { PasantiaAsignarJurado } from '../../../models/pasantiaAsignarJurado.model';
+import { PasantiaEvaluar } from '../../../models/PasantiaEvaluar.model';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -18,6 +18,7 @@ export class JuradoPasantiaComponent implements OnInit {
   pasantiaSelected:any;
   
   evaluacion_jurado:string = "";
+  notas_jurado = "";
 
   documento_evaluacion_jurado = new FormData();
   MAX_SIZE_FILE: number = 1000000;
@@ -31,7 +32,6 @@ export class JuradoPasantiaComponent implements OnInit {
   }
 
   getPasantias() {
-    console.log(this.user._id);
     this._pasantiaService.getSolicitudesJurado(this.user._id).subscribe((resp: any) => {
       this.pasantias = resp.pasantias;
       console.log(this.pasantias);
@@ -76,13 +76,71 @@ export class JuradoPasantiaComponent implements OnInit {
     if(this.evaluacion_jurado === "Ajustar"){
       notas_jurado.setAttribute('class','collapse show');
     }else{
+      this.notas_jurado = "";
       notas_jurado.setAttribute('class','collapse');
     }
+  }
+
+  evaluarPasantia(f: NgForm){
+    Swal.fire({
+      html: `Evaluaras de la sustentación de la pasantia de ${this.pasantiaSelected.estudiante.nombres}`,
+      icon: 'warning',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Enviar',
+      showCancelButton: true,
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
+      if(result.value){
+        const pasantia = new PasantiaEvaluar(this.user._id, this.evaluacion_jurado, this.notas_jurado);
+        this._pasantiaService.evaluar(this.pasantiaSelected._id, pasantia).subscribe((resp:any) => {
+          this._pasantiaService.postDocumentoEvaluacion(this.pasantiaSelected.estudiante._id, this.user._id, this.documento_evaluacion_jurado).subscribe((respp:any) => {
+            const fecha = new Date();
+            const notificacion = new Notificacion(
+              this.pasantiaSelected.estudiante._id,
+              fecha,
+              'Evaluacion de pasantia',
+              `El jurado ${this.user.nombres} ${this.user.apellidos} te ha calificado la sustentación`,
+              'Estudiante',
+              this.pasantiaSelected.estudiante.correo);
+              this._notificacionService.postNotificacion(notificacion).subscribe();
+              if(respp.estado == 'Aprobada'){
+                const notificacionA = new Notificacion(
+                  this.pasantiaSelected.estudiante._id,
+                  fecha,
+                  'Pasantia completada',
+                  `Ambos jurados te han aprobado la pasantia, felicidades!`,
+                  'Estudiante',
+                  this.pasantiaSelected.estudiante.correo);
+                  this._notificacionService.postNotificacion(notificacionA).subscribe();
+                  this._notificacionService.sendNotificacionCorreo(notificacionA).subscribe();
+              }
+              this._notificacionService.sendEvaluacion(this.pasantiaSelected.estudiante._id, this.user._id, notificacion).subscribe();
+              const btnCerrar = (document.getElementById('btnCerrar')) as HTMLElement;
+              btnCerrar.click();
+              this.getPasantias();
+              Swal.fire({
+                title: '¡Bien hecho!',
+                text: 'Evaluación enviada correctamente',
+                icon: 'success',
+                timer: 2000,
+                confirmButtonText: 'Aceptar',
+                showCancelButton: false,
+                confirmButtonColor: '#60D89C',
+              });
+          });
+        });
+      }
+    });
   }
 
   clearDataInfo(){
     this.documento_evaluacion_jurado = new FormData();
     this.nombreArchivoEvaluacion = null;
+    this.evaluacion_jurado = "";
+    this.notas_jurado = "";
+    const notas_jurado = (document.getElementById('notas_jurado')) as HTMLElement;
+    notas_jurado.setAttribute('class','collapse');
   }
 
   getDataInfo(data: any) {

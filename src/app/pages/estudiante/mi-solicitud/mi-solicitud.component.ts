@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PasantiService } from 'src/app/services/service.index';
 import { DatePipe } from '@angular/common';
-import { Pasantia } from '../../../models/Pasantia';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,8 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./mi-solicitud.component.css']
 })
 export class MiSolicitudComponent implements OnInit {
-
-  pasantiaSup: Pasantia;
 
   info: any;
   pasantia: any;

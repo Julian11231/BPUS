@@ -133,11 +133,49 @@ export class NotificacionesService {
   }
 
   sendActInicioCorreo(idEstudiante:string ,notificacion: Notificacion) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/notificaciones/correoActInicio${idEstudiante}?token=${token}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
+      if (resp.ok) {  
+        console.log('Notificacion Correo enviada');
+        return true;
+      }else{
+        return false;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
 
+  sendInforme7Correo(idEstudiante:string ,notificacion: Notificacion) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/correoInforme7${idEstudiante}?token=${token}`;
+    return this.http.post(url, notificacion).pipe(map((resp: any) => {
+      if (resp.ok) {  
+        console.log('Notificacion Correo enviada');
+        return true;
+      }else{
+        return false;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
+  sendInforme14Correo(idEstudiante:string ,notificacion: Notificacion) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/correoInforme14${idEstudiante}?token=${token}`;
+    return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if (resp.ok) {  
         console.log('Notificacion Correo enviada');
         return true;
@@ -155,9 +193,29 @@ export class NotificacionesService {
   }
 
   sendArchivosJurado(idEstudiante:string ,notificacion: Notificacion) {
-
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/notificaciones/archivosJurado${idEstudiante}?token=${token}`;
+    return this.http.post(url, notificacion).pipe(map((resp: any) => {
+      if (resp.ok) {  
+        console.log('Notificacion Correo enviada');
+        return true;
+      }else{
+        return false;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
+
+  sendEvaluacion(idEstudiante:string, jurado:string, notificacion: Notificacion) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/evaluacion${idEstudiante}?jurado=${jurado}&token=${token}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if (resp.ok) {  
         console.log('Notificacion Correo enviada');

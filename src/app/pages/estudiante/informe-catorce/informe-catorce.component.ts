@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PasantiService, NotificacionesService } from 'src/app/services/service.index';
 import Swal from 'sweetalert2';
 import { Notificacion } from 'src/app/models/notificacion.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-informe-catorce',
@@ -16,7 +17,7 @@ export class InformeCatorceComponent implements OnInit {
 
   MAX_SIZE_FILE: number = 1000000;
 
-  constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService) { }
+  constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService, public router: Router) { }
 
   ngOnInit(): void {
     const estudiante = JSON.parse(localStorage.getItem('estudiante'));
@@ -69,17 +70,33 @@ export class InformeCatorceComponent implements OnInit {
       if (result.value) {
         let idEstudiante = localStorage.getItem('id');
         this._pasantiaService.postDocumentoInf14(idEstudiante, this.documento_informe14).subscribe((resp:any)=>{
-          let currentDate = new Date();
-          let notificacion = new Notificacion(
-            this.info.modalidad.tutor,
-            currentDate,
-            'Envio de informe 14',
-            `${this.info.nombres} te ha enviado el informe de la semana 14`,
-            'Administrativo' 
-          );
-          this._notificacionService.postNotificacion(notificacion).subscribe();
+          if(resp){
+            let currentDate = new Date();
+            let notificacion = new Notificacion(
+              this.info.modalidad.tutor._id,
+              currentDate,
+              'Envio de informe 14',
+              `${this.info.nombres} ${this.info.apellidos}  te ha enviado el informe de la semana 14`,
+              'Administrativo',
+              this.info.modalidad.tutor.correo
+            );
+            this._notificacionService.postNotificacion(notificacion).subscribe();
+            this._notificacionService.sendInforme14Correo(this.info._id, notificacion).subscribe();
+            Swal.fire({
+              title: '¡Bien Hecho!',
+              text: `Se ha enviado correctamente el documento`,
+              icon: 'success',
+              confirmButtonText: 'Ok',
+              showCancelButton: false,
+              confirmButtonColor: '#60D89C',
+              timer: 2000
+            }).then((result) => {
+              if(result.value || result.dismiss){
+                this.router.navigate(['/mi-modalidad']);
+              }
+            });
+          }
         });
-
       }
     });
   }

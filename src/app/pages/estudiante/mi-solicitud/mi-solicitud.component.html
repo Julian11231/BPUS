@@ -168,20 +168,32 @@
 
             <div class="card">
                 <div class="card-header">
-                  <h3><a class="collapsed card-link" data-toggle="collapse" href="#inicioPasantia"><b>Inicio pasantia</b></a></h3>
+                  <h3><a class="collapsed card-link" data-toggle="collapse" href="#inicioPasantia"><b>Inicio pasantia </b>
+                        <i *ngIf="pasantia?.estado_actaInicio === 'Enviada'" class="mdi mdi-update" style="color:#C7B363"></i>
+                        <i *ngIf="pasantia?.estado_actaInicio === 'Aprobada'" class="fa fa-check" style="color: green;"></i>
+                        <i *ngIf="pasantia?.estado_actaInicio === 'Rechazada'" class="fa fa-times" style="color:#77181C"></i>
+                    </a>
+                </h3>
                 </div>
                 <div id="inicioPasantia" class="collapse" data-parent="#accordion">
                   <div *ngIf="pasantia?.documento_propuesta || pasantia.estado_propuesta === 'Aprobada'" class="card-body">
                     <div class="row mt-1">
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
-                            <button *ngIf="!pasantia?.documento_arl" class="btn btnSuccess descargar px-4" disabled>
-                                <small><b>ARL</b></small>
-                            </button>
-                            <a *ngIf="pasantia?.documento_arl" class="btn btnSuccess descargar px-4" [href]="pasantia?.documento_arl | documento: pasantia?.estudiante._id" download="pasantia?.documento_arl" target="_blank">
-                                <small><b>ARL</b></small>
-                            </a>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                            <h3><b>Estado:</b> </h3>
+                            <ng-container *ngIf="!pasantia.estado_actaInicio" class="text-success">
+                                <span class="label btnDanger"> <b>No Enviada</b></span>
+                            </ng-container>
+                            <ng-container *ngIf="pasantia.estado_actaInicio == 'Enviada'" class="text-success">
+                                <span class="label btnInfo"> <b> {{ pasantia.estado_actaInicio }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="pasantia.estado_actaInicio == 'Aprobada'" class="text-success">
+                                <span class="label" style="background-color: green;"> <b> {{ pasantia.estado_actaInicio }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="pasantia.estado_actaInicio == 'Ajustar'" class="text-success">
+                                <span class="label btnSuccess"> <b> {{ pasantia.estado_actaInicio }} </b></span>
+                            </ng-container>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
                             <button *ngIf="!pasantia?.documento_actaInicio" class="btn btnSuccess descargar" disabled>
                                 <small><b>Acta de inicio</b></small>
                             </button>
@@ -189,7 +201,15 @@
                                 <small><b>Acta de inicio</b></small>
                             </a>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                            <button *ngIf="!pasantia?.documento_arl" class="btn btnSuccess descargar px-4" disabled>
+                                <small><b>ARL</b></small>
+                            </button>
+                            <a *ngIf="pasantia?.documento_arl" class="btn btnSuccess descargar px-4" [href]="pasantia?.documento_arl | documento: pasantia?.estudiante._id" download="pasantia?.documento_arl" target="_blank">
+                                <small><b>ARL</b></small>
+                            </a>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
                             <button *ngIf="!pasantia?.carta_presentacion" class="btn btnSuccess descargar" disabled>
                                 <small><b>Carta presentacion</b></small>
                             </button>

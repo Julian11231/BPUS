@@ -214,6 +214,11 @@
                         </ng-template>
                     </ul>
                 </li>
+                <li *ngIf="pasantia?.estado_informeFinal === 'Aprobado'">                    
+                    <a [routerLink]="['/sustentacion-pasantia']" routerLinkActive="nav-link" style="background-color: transparent;">
+                        <i class="fa fa-legal"></i>&nbsp;<span class="hide-menu">Sustentación</span>
+                    </a>
+                </li>
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="fa fa-info-circle"></i><span class="hide-menu">Estado de mi Modalidad</span>

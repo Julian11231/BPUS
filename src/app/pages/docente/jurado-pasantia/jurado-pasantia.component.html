@@ -23,6 +23,15 @@
                     <h5 class="mt-2"><b>Director: </b>{{pasantiaSelected?.tutor.nombres}} {{pasantiaSelected?.tutor.apellidos}}</h5>
                     <h5 class="mt-3"><b>Descripción:</b></h5>
                     <p class="px-3 text-justify" id="descripcionPasantia">{{pasantiaSelected?.descripcion}}</p>
+                    <h5 class="mt-3"> <b>Documentos:</b></h5>
+                    <div class="buttons py-2 px-5">
+                        <a class="btn btnSuccess descargar mr-4" [href]="pasantiaSelected?.documento_informeFinal | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informeFinal" target="_blank">
+                            <small><b>Informe final</b></small>
+                        </a>
+                        <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_aprobacionEmpresa | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_aprobacionEmpresa" target="_blank">
+                            <small><b>Aprobación empresa</b></small>
+                        </a>
+                    </div>
                     <h5 class="mt-3"> <b>Información del estudiante:</b></h5>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-5 col-lg-5">
@@ -100,14 +109,17 @@
                 <div class="modal-body">
                     <h2>Evaluar pasantia</h2>
                     <hr>
-                    <form ngNativeValidate #updateInformes="ngForm">
+                    <form ngNativeValidate #updateInformes="ngForm" (ngSubmit)="evaluarPasantia(updateInformes)">
+                        <div class="buttons mt-4">
+                            <label class="font-weight-bold text-dark mr-3">Estado: </label>
+                            <select (change)="notasJurado();" name="evaluacion_jurado" [(ngModel)]="evaluacion_jurado" class="custom-select">
+                                <option value="">Seleccionar...</option>
+                                <option value="Aprobada">Aprobada</option>
+                                <option value="Ajustar">Ajustar</option>
+                            </select>
+                            <button type="button" class="btn btn-info ml-3" data-toggle="collapse" data-target="#notas_jurado">Agregar notas</button>
+                        </div>
 
-                        <label class="font-weight-bold text-dark mr-3">Estado: </label>
-                        <select (change)="notasJurado();" name="evaluacion_jurado" [(ngModel)]="evaluacion_jurado" class="custom-select">
-                            <option value="">Seleccionar...</option>
-                            <option value="Aprobada">Aprobada</option>
-                            <option value="Ajustar">Ajustar</option>
-                        </select>
                         <br>
                         <label class="font-weight-bold text-dark my-3 mr-3">Documento evaluación jurado: </label>
                         <div class="mb-3 px-5 text-center">
@@ -121,17 +133,17 @@
     
                             <small class="font-italic">Recuerda que debe ser un archivo PDF, de tamaño menor a 1 MB.</small><br>
                         
-                            <input name="documento_evaluacion_jurado" id="documento_evaluacion_jurado" (change)="getFileEvaluacion($event.target.files[0])" type="file" accept="application/pdf" class="imagenes-secundarias" required />
+                            <input ngModel #documentoJurado="ngModel" name="documento_jurado" id="documento_evaluacion_jurado" (change)="getFileEvaluacion($event.target.files[0])" type="file" accept="application/pdf" class="imagenes-secundarias" required />
                         </div> 
                         <div id="notas_jurado" class="collapse">
                             <div class="form-group px-3">
-                                <label class="font-weight-bold text-dark" for="comment">Notas:</label>
-                                <textarea class="form-control" rows="3" id="comment"></textarea>
+                                <label class="font-weight-bold text-dark" for="comment">Notas: <span *ngIf="evaluacion_jurado == 'Ajustar'">(requerido)</span></label>
+                                <textarea [(ngModel)]="notas_jurado" name="notas_jurado" class="form-control" rows="3" id="comment" maxlength="300"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btnInfo">Evaluar</button>
-                            <button type="button" (click)="clearDataInfo();" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                            <button id="btnCerrar" type="button" (click)="clearDataInfo(); documentoJurado.reset();" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                            <button type="submit" class="btn btnInfo" [disabled]="evaluacion_jurado === '' || nombreArchivoEvaluacion == null || (evaluacion_jurado === 'Ajustar' && notas_jurado === '')">Evaluar</button>
                         </div>
                     </form>
                 </div>
@@ -140,27 +152,29 @@
     </div>
 
     <ng-container *ngFor="let dato of pasantias">
-        <div class="row">
-            <div class="col-lg-9">
-                <div class="vacantes">
-                    <h5 class="text-uppercase"> 
-                        <b>{{ dato.estudiante.nombres }} {{ dato.estudiante.apellidos }}</b>
-                    </h5>
-                    <h5><b>{{ dato.empresa.mombre }}</b></h5>
-                    <h5><small><b>Fecha de sustentación: </b>{{ dato.sustentacion_fecha }}</small></h5>
-                    <h5><small><b>Lugar de sustentación: </b>{{ dato.sustentacion_lugar }}</small></h5>
+        <ng-container *ngIf="(dato.jurado1 == user._id && !dato.evaluacion_jurado1) || (dato.jurado2 == user._id && !dato.evaluacion_jurado2)">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="vacantes">
+                        <h5 class="text-uppercase"> 
+                            <b>{{ dato.estudiante.nombres }} {{ dato.estudiante.apellidos }}</b>
+                        </h5>
+                        <h5><b>{{ dato.empresa.mombre }}</b></h5>
+                        <h5><small><b>Fecha de sustentación: </b>{{ dato.sustentacion_fecha }}</small></h5>
+                        <h5><small><b>Lugar de sustentación: </b>{{ dato.sustentacion_lugar }}</small></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="buttons mt-4">
+                        <button class="btn btn-outline-info btn-sm mr-2" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#infoPasantia" data-backdrop="static"><i class="fa fa-info-circle"></i></button>
+                        <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#evaluarPasantia" data-backdrop="static" class="btn btnInfo">
+                            <b>Evaluar</b>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="buttons">
-                    <button class="btn btn-outline-info btn-sm mr-2" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#infoPasantia" data-backdrop="static"><i class="fa fa-info-circle"></i></button>
-                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#evaluarPasantia" data-backdrop="static" class="btn btnInfo">
-                        <b>Evaluar</b>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <hr>
+            <hr>
+        </ng-container>
     </ng-container>  
     
 </div>

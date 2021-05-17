@@ -101,19 +101,21 @@ export class InformeFinalComponent implements OnInit {
               if(respp){
                 let currentDate = new Date();
                 let notificacion = new Notificacion(
-                  this.info.modalidad.tutor,
+                  this.info.modalidad.tutor._id,
                   currentDate,
                   'Envio de informe final',
-                  `${this.info.nombres} te ha enviado el informe final y el certificado de aprobación de la empresa`,
-                  'Administrativo' 
+                  `${this.info.nombres} ${this.info.apellidos} te ha enviado el informe final y el certificado de aprobación de la empresa`,
+                  'Administrativo',
+                  this.info.modalidad.tutor.correo 
                 );
                 this._notificacionService.postNotificacion(notificacion).subscribe();
+                this._notificacionService.sendArchivosJurado(this.info._id, notificacion).subscribe();
                 Swal.fire({
                   title: '¡Bien Hecho!',
                   text: `Se han enviado correctamente los documentos`,
                   icon: 'success'
                 }).then((result) => {
-                  if(result.dismiss){
+                  if(result.value || result.dismiss){
                     this.router.navigate(['/mi-modalidad']);
                   }
                   //this.router.navigate(['/mi-modalidad']);
