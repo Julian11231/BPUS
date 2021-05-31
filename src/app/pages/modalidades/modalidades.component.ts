@@ -14,7 +14,7 @@ declare function init_plugins();
   styleUrls: ['./modalidades.component.css'],
 })
 export class ModalidadesComponent implements OnInit {
-  info: any; // Almacenará la info del estudiante (en JSON)
+  info = JSON.parse(localStorage.getItem("user"));
   modalidades: any[] = []; // Lista que almacenará la información de las modalidades
   porcentajeAprobado: Number; // Porcentaje de créditos aprobados del estudiante
 
@@ -31,20 +31,9 @@ export class ModalidadesComponent implements OnInit {
 
   ngOnInit(): void {
     init_plugins();
-
     // Pasamos el porcentaje calculado en el servicio de la modalidad al la variable "porcentajeAprobado"
     this.porcentajeAprobado = this._modalidadesService.porcentaje;
-
-    // Obtenemos la información del estudiante y se la pasamos a la variable info
-    let estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    let administrativo = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else if(administrativo.rol === "ADMIN"){
-      this.info = administrativo;
-    }
     this.getModalidades();
-
     // Enviamos los elemntos que queremos al servicio de la modalidad
     this._modalidadesService.seleccionarModalidad(
       this.btnSeleccionar,

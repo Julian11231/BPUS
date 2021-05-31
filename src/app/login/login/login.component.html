@@ -18,13 +18,20 @@
                             <label for="inputUsuario">Usuario</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" required>
-                            <span class="bar"></span>
-                            <label for="inputContra">Contraseña</label>
+                    
+                    <div class="row">
+                        <div class="col-11">
+                            <div class="form-group">
+                                <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" required>
+                                <span class="bar"></span>
+                                <label for="inputContra">Contraseña</label>
+                            </div>
+                        </div>
+                        <div class="col-1 px-2 mx-auto">
+                            <button (click)="showPass()" type="button" class="btn"><i class="fa fa-eye" id="showPass"></i></button>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="checkbox checkbox-primary pull-left p-t-0">

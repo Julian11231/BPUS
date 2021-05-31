@@ -18,7 +18,9 @@ import {
   EncargadoEmpresaService,
   ConvenioService,
   NotificacionesService,
-  EstudianteService
+  EstudianteService,
+  EstudianteGuard,
+  RolesService
 } from './service.index'
 
 
@@ -42,7 +44,9 @@ import {
     EncargadoEmpresaService,
     ConvenioService,
     NotificacionesService,
-    EstudianteService
+    EstudianteService,
+    EstudianteGuard,
+    RolesService
   ]
 })
 export class ServiceModule { }

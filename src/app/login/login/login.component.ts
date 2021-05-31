@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   // la variable recordar pertenece al check "recordarme", por defecto será falso
   recordar: boolean = false;
   usuario: string;
-
   // Inyectamos el servicio del login, y el Router
   constructor(public __loginService: LoginService, public router: Router) { }
 
@@ -33,18 +32,16 @@ export class LoginComponent implements OnInit {
 
     // Llamamos a la función login del servicio Login y le pasamos el usuario y la variable recordar
     this.__loginService.login(usuario, this.recordar).subscribe((resp) => {
+      const user = JSON.parse(localStorage.getItem("user"));
       // Si se inicia un estudiante...
-      if (localStorage.getItem('estudiante')) {
-        if (JSON.parse(localStorage.getItem('estudiante')).modalidad) {
-
+      if (user.rol.nombre == "ESTUDIANTE") {
+        if (user.modalidad) {
           this.__loginService.dejaPasar();
           this.router.navigate(['/panel-principal']);
-
         } else {
           this.router.navigate(['/requisitos']);
         }
-
-      } else if(localStorage.getItem('encargadoEmpresa')){
+      } else if(user.rol.nombre == "ENCARGADOEMPRESA"){
         this.router.navigate(['/vacantes']);
       }else{
         this.router.navigate(['/panel-principal']);
@@ -64,16 +61,22 @@ export class LoginComponent implements OnInit {
 
     // Se eliminan los datos de inicio de sesión
     localStorage.removeItem('token');
-    localStorage.removeItem('id');
 
     // Si es estudiante, se elimina el campo estudiante, si no...
-    if (localStorage.getItem('estudiante')) {
-      localStorage.removeItem('estudiante');
-    } else {
-      localStorage.removeItem('administrativo');
-      localStorage.removeItem('encargadoEmpresa');
-    }
-
+      localStorage.removeItem('user');
     // En resumen, si el check está activado, sólo deja el dato del usuario "recordado"
+  }
+
+  showPass(){
+    var showPass = (document.getElementById('showPass')) as HTMLHtmlElement;
+    var inputContra = (document.getElementById('inputContra')) as HTMLInputElement;
+    var showPassClass = showPass.getAttribute('class');
+    if(showPassClass == 'fa fa-eye'){
+      showPass.setAttribute('class', 'fa fa-eye-slash');
+      inputContra.setAttribute('type', 'text');
+    }else{
+      showPass.setAttribute('class', 'fa fa-eye');
+      inputContra.setAttribute('type', 'password');
+    }
   }
 }

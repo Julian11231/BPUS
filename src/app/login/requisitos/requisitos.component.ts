@@ -18,10 +18,7 @@ export class RequisitosComponent implements OnInit {
   // Se capturan los elementos html que van a cambiar
   icon: any = document.getElementsByClassName('fa');
   btnContinuar: any = document.getElementsByClassName('btn');
-  info: any;
-  estudiante = JSON.parse(localStorage.getItem("estudiante"));
-  admin = JSON.parse(localStorage.getItem("administrativo"));
-
+  info = JSON.parse(localStorage.getItem("user"));
   // Inyectamos todos los servicios que necesitamos
   constructor(
     public router: Router,
@@ -36,17 +33,9 @@ export class RequisitosComponent implements OnInit {
     // Se llama la función confirmarRequisitos y se le pasa los elementos capturados
     this._programaService.getPrograma();
     this._requisitosService.confirmarRequisitos(this.btnContinuar, this.icon);
-
     // Cargamos el porcentaje de los créditos cumplidos por el estudiante.
     this._modalidadesService.calcularPorcentaje();
-    if(this.estudiante){
-      this.info = this.estudiante;
-    }else if(this.admin && this.admin.rol == "ADMIN"){
-      this.info = this.admin;
-    }
-
   }
-
   // Función que se llama cuando se da click en el botón "continuar"
   continuar() {
     this._loginService.dejaPasar();

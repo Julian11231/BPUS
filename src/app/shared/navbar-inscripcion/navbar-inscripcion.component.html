@@ -35,17 +35,14 @@
                 <!-- Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"><img [src]="info.imagen | imagen: tipoUsuario"
-                            height="45" alt="user" class="profile-pic" /></a>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                    </a>
                     <div class="dropdown-menu dropdown-menu-right animated fadeIn">
                         <ul class="dropdown-user">
                             <li>
                                 <div class="text-center">
                                     <div class="dw-user-box">
-                                        <!-- De esta forma llamamos el pipe -->
-                                        <div class="u-img"><img [src]="info.imagen | imagen: tipoUsuario" alt="user">
-                                        </div>
                                         <div class="u-text">
                                             <br>
                                             <h4>{{info.nombres}} {{ info.apellidos }} </h4>

@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   menuEstudiante: any[];
   menuEncargadoEmpresa: any[];
   menuAdmin: any[];
-
+  user = JSON.parse(localStorage.getItem('user'));
   pasantia:any;
   diff:any
 
@@ -27,11 +27,10 @@ export class SidebarComponent implements OnInit {
   }
 
   getMenu() {
-
-    if (localStorage.getItem('estudiante')) {
+    if (this.user.rol.nombre == "ESTUDIANTE") {
       this.menuEstudiante = this._sidebarService.menuEstudiante;
-      if (JSON.parse(localStorage.getItem('estudiante')).modalidad) {
-        let idPasantia = JSON.parse(localStorage.getItem('estudiante'))?.modalidad._id;
+      if (this.user.modalidad) {
+        let idPasantia = this.user.modalidad._id;
         this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
           this.pasantia = resp.pasantia;
           if(this.pasantia.fecha_actaInicio){
@@ -40,13 +39,10 @@ export class SidebarComponent implements OnInit {
             this.diff = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate()) ) /(1000 * 60 * 60 * 24 * 7));
           }
         });
-
       }
-    } else if (localStorage.getItem('encargadoEmpresa')){
-      this.menuEncargadoEmpresa = this._sidebarService.menuEncargadoEmpresa;
-    }else if (JSON.parse(localStorage.getItem('administrativo')).rol === "JEFE_PROGRAMA") {
+    } else if (this.user.rol.nombre === "JEFE_PROGRAMA") {
       this.menuJefePrograma = this._sidebarService.menuJefePrograma;
-    }else if (JSON.parse(localStorage.getItem('administrativo')).rol === "ADMIN") {
+    }else if (this.user.rol.nombre === "ADMIN") {
       let idPasantia = JSON.parse(localStorage.getItem('administrativo'))?.modalidad._id;
       this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
         this.pasantia = resp.pasantia;

@@ -12,7 +12,7 @@ declare function init_plugins();
 })
 export class NavbarComponent implements OnInit {
   // Obtenemos toda la información del usuario
-  info: any;
+  info = JSON.parse(localStorage.getItem('user'));
   tipoUsuario: string;
   numeroNotificaciones: number;
   notificacionesNav:any;
@@ -27,7 +27,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     init_plugins();
-    this.setInfo();
     this.cargarNotificacionesNav();
     const contador = interval(60000);
     contador.subscribe((n) => {
@@ -53,24 +52,6 @@ export class NavbarComponent implements OnInit {
       }
     });
 
-  }
-
-  // "Ponemos" el restod e información a las variables globales
-  setInfo() {
-    let estudiante = localStorage.getItem('estudiante');
-    let administrativo = localStorage.getItem('administrativo');
-    let encargadoEmpresa = localStorage.getItem('encargadoEmpresa');
-
-    if (estudiante) {
-      this.tipoUsuario = 'estudiante';
-      this.info = JSON.parse(estudiante);
-    } else if (administrativo){
-      this.tipoUsuario = 'administrativo';
-      this.info = JSON.parse(administrativo);
-    }else{
-      this.tipoUsuario = 'encargadoEmpresa';
-      this.info = JSON.parse(encargadoEmpresa);
-    }
   }
 
   // Función que direcciona cuando se da click en "perfil"

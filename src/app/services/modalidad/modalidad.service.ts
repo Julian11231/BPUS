@@ -20,23 +20,13 @@ export class ModalidadService {
   // Calculamos el porcentaje y se lo pasamos a la variable global
   calcularPorcentaje() {
     this._programaService.getPrograma().subscribe((resp: any) => {
-      let infoEstudiante = JSON.parse(localStorage.getItem('estudiante'));
-      let admin = JSON.parse(localStorage.getItem('administrativo'));
+      let infoEstudiante = JSON.parse(localStorage.getItem('user'));
       let credAprob:any;
-      if(infoEstudiante){
-        credAprob = infoEstudiante.creditos_aprobados;
-      }else if(admin.rol === "ADMIN"){
-        credAprob = admin.creditos_aprobados;
-      }
-      
-
+      credAprob = infoEstudiante.creditos_aprobados;
       let programa = resp.programa;
       let creditosTotales = programa.creditos_totales;
-
       let porcent = (credAprob * 100) / creditosTotales;
-
       this.porcentaje = porcent.toFixed(1);
-
       return this.porcentaje;
     });
   }

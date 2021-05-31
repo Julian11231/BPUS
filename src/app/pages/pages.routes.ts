@@ -21,22 +21,27 @@ import { ModalidadesComponent } from './modalidades/modalidades.component';
 import { EmpresasComponent } from './docente/empresas/empresas.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
 import { MainComponent } from './main/main.component';
-import { LoginGuardGuard } from '../services/service.index';
 import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
 import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component';
 import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
 import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';
 import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.component';
+//admin
+import { RolesComponent } from './roles/roles.component';
+import { PermisosComponent } from './permisos/permisos.component';
+//Guards
+import { LoginGuardGuard } from '../services/service.index';
+import { EstudianteGuard } from '../services/service.index';
 
 const pagesRoutes: Routes = [
 
-    { path: 'modalidades', component: ModalidadesComponent, data: { titulo: 'Modalidades Disponibles' }, canActivate: [LoginGuardGuard] },
-    { path: 'solicitud-pasantia-supervisada', component: PasantiaComponent, data: { titulo: 'Solicitud Pasantía' }, canActivate: [LoginGuardGuard] },
-    { path: 'solicitud-proyecto-de-grado', component: ProyectoComponent, data: { titulo: 'Solicitud Proyecto' }, canActivate: [LoginGuardGuard] },
-    { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard] },
+    { path: 'modalidades', component: ModalidadesComponent, data: { titulo: 'Modalidades Disponibles' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
+    { path: 'solicitud-pasantia-supervisada', component: PasantiaComponent, data: { titulo: 'Solicitud Pasantía' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
+    { path: 'solicitud-proyecto-de-grado', component: ProyectoComponent, data: { titulo: 'Solicitud Proyecto' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
+    { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
     { path: 'notificaciones', component: NotificacionesComponent, data: { titulo: 'Notificaciones' }, canActivate: [LoginGuardGuard] },
-    { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard] },
-    { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard] },
+    { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard,EstudianteGuard] },
+    { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard,EstudianteGuard] },
     {
         path: '',
         component: PagesComponent,
@@ -60,10 +65,12 @@ const pagesRoutes: Routes = [
             { path: 'asignacion-jurados', component: GestionJuradosComponent, data: { titulo: 'Asignación de jurados' } },
             { path: 'jurado', component: JuradoPasantiaComponent, data: { titulo: 'Jurado' } },
             { path: 'sustentacion-pasantia', component: SustentacionComponent, data: { titulo: 'Sustentación pasantia' } },
+            { path: 'roles', component: RolesComponent, data: { titulo: 'Administración de roles' } },
+            { path: 'permisos', component: PermisosComponent, data: { titulo: 'Administración de permisos'}},
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },
 
 ];
 
-export const PAGES_ROUTES = RouterModule.forRoot(pagesRoutes, { useHash: true });
+export const PAGES_ROUTES = RouterModule.forRoot(pagesRoutes, { useHash: false });

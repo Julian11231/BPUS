@@ -38,6 +38,8 @@ import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-est
 import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
 import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';
 import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.component';
+import { RolesComponent } from './roles/roles.component';
+import { PermisosComponent } from './permisos/permisos.component';
 
 
 
@@ -68,7 +70,9 @@ import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.co
     AdminEstudiantesComponent,
     GestionJuradosComponent,
     JuradoPasantiaComponent,
-    SustentacionComponent
+    SustentacionComponent,
+    RolesComponent,
+    PermisosComponent
 
   ],
   exports: [

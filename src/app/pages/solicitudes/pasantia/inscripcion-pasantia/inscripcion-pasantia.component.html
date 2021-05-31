@@ -104,7 +104,7 @@
                     <h3 class="card-title text-uppercase"><b>2. Vacantes Disponibles: </b></h3>
                     <div class="row" *ngFor="let dato of vacantes">
                         <ng-container *ngIf="(info.programa._id === dato.programa._id) && (dato.estado === 'Activa')">
-                            <div class="col-sm-8 col-md-7 col-lg-7">
+                            <div class="col-sm-8 col-md-7 col-lg-7 mb-3">
                                 <div class="vacantes">
                                     <h5 class="text-uppercase"> <b>{{ dato.titulo }}</b></h5>
                                     <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;

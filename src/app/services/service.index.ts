@@ -5,6 +5,7 @@ export { EmpresaService } from './empresa/empresa.service';
 export { ModalidadService } from './modalidad/modalidad.service';
 export { ProgramaService } from './programa/programa.service';
 export { LoginGuardGuard } from './guards/login-guard.guard';
+export { EstudianteGuard } from './guards/estudiante.guard';
 export { RequisitosService } from './requisitos/requisitos.service';
 export { LoginService } from './login/login.service';
 export { SidebarService } from './sidebar/sidebar.service';
@@ -13,4 +14,5 @@ export { EncargadoEmpresaService } from './encargadoEmpresa/encargadoEmpresa.ser
 export { ConvenioService } from './convenio/convenio.service';
 export { NotificacionesService } from './notificacion/notificacion.service';
 export { EstudianteService } from './estudiante/estudiante.service';
-
+export { RolesService } from './roles/roles.service';
+export { PermisosService } from './permisos/permisos.service';
