@@ -9,14 +9,12 @@ import { DatePipe } from '@angular/common';
 })
 export class SustentacionComponent implements OnInit {
 
-  info: any;
+  info = JSON.parse(localStorage.getItem('user'));
   pasantia: any;
 
   constructor(public _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    this.info = estudiante;
     this.getPasantia();
   }
 

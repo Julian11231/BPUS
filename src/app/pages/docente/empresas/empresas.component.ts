@@ -18,7 +18,7 @@ export class EmpresasComponent implements OnInit {
 
   convenios: any[];
   programa: string;
-  usuario = JSON.parse(localStorage.getItem("administrativo"));
+  usuario = JSON.parse(localStorage.getItem('user'));
 
   _id: string;
   convienioId: string;
@@ -51,9 +51,9 @@ export class EmpresasComponent implements OnInit {
               public _convenioService: ConvenioService) { }
 
   ngOnInit(): void {
-    if(this.usuario.rol === "JEFE_PROGRAMA"){
+    if(this.usuario.rol.nombre === "JEFE_PROGRAMA"){
       this.getConveniosJefe();
-    }else if (this.usuario.rol === "ADMIN"){
+    }else if (this.usuario.rol.nombre === "ADMIN"){
       this.getConvenios();
     }else{
       this.router.navigate(['/panel-principal']);

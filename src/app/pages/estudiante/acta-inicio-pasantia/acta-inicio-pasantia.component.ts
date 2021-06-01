@@ -15,7 +15,7 @@ import { Notificacion } from 'src/app/models/notificacion.model';
 export class ActaInicioPasantiaComponent implements OnInit {
 
   pasantia: any;
-  info:any;
+  info = JSON.parse(localStorage.getItem('user'));
   jefe:string;
 
   nombreArchivoARL: string;
@@ -37,13 +37,6 @@ export class ActaInicioPasantiaComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit(): void {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else{
-      this.info = admin;
-    }
     if(this.info.modalidad !== null){
       this.getPasantia();
     }

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class MiSolicitudComponent implements OnInit {
 
-  info: any;
+  info = JSON.parse(localStorage.getItem('user'));
   pasantia: any;
   fechaInicio:string;
   semanas:any;
@@ -18,13 +18,6 @@ export class MiSolicitudComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService, public router: Router) { }
 
   ngOnInit(): void {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else{
-      this.info = admin;
-    }
     if(this.info.modalidad !== null){
       this.getPasantia();
     }else{

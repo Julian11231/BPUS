@@ -18,12 +18,31 @@ export class RolesService {
     return this.http.get(url);
   }
 
-  postRol(empresa: any) {
+  postRol(rol: any) {
 
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/roles?token=${token}`;
 
-    return this.http.post(url, empresa).pipe(map((resp: any) => {
+    return this.http.post(url, rol).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        return resp.rolGuardado;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
+  putRol(rol: any) {
+
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/roles?token=${token}`;
+
+    return this.http.put(url, rol).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return resp.rolGuardado;
       }

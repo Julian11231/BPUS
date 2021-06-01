@@ -16,8 +16,7 @@ export class VacantesComponent implements OnInit {
 
   vacantes: any[];
   empresa: any;
-  encargado = JSON.parse(localStorage.getItem("encargadoEmpresa"));
-  admin = JSON.parse(localStorage.getItem("administrativo"));
+  encargado = JSON.parse(localStorage.getItem("user"));
   programa: string;
 
   _id: String;
@@ -34,15 +33,11 @@ export class VacantesComponent implements OnInit {
   constructor(public router: Router, public _vacantesService: VacantesService) { }
 
   ngOnInit(): void {
-    if((this.admin) && (this.admin.rol == "ADMIN")){
-      console.log('aaaaaaaaa');
+    if(this.encargado.rol.nombre == "ADMIN"){
       this.getVacantes();
-    }else if(this.encargado){
+    }else if(this.encargado.rol.nombre == "ENCARGADO_EMPRESA"){
       this.getVacantesEncargado();
-    }else{
-      this.router.navigate(['/panel-principal']);
     }
-    
   }
 
   getDataBuscar(data) {

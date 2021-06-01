@@ -1,1 +1,29 @@
-<p>permisos works!</p>
+<div class="p-3" style="background-color: white;">
+  <button type="button" class="btn btnSuccess my-3">Agregar permiso&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></button>
+  <table class="table table-bordered table-hover text-center">
+      <thead>
+        <tr>
+          <th class="text-center">Nombre</th>
+          <th class="text-center">Estado</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rol of roles">
+              <td>{{rol.nombre}}</td>
+              <td>
+                  <h3 *ngIf="rol.estado == true"><span class="badge badge-success">Activo</span></h3>
+                  <h5 *ngIf="rol.estado == false"><span class="badge badge-danger">Inactivo</span></h5>
+              </td>
+              <td>
+                  <button *ngIf="rol.estado == true" type="button" class="btn btn-sm btnSuccess mr-2">
+                      Desactivar <i class="fa fa-ban"></i>
+                  </button>
+                  <button *ngIf="rol.estado == false" type="button" class="btn btn-danger">Activar</button>
+                  <button type="button" class="btn btn-info mr-2"><i class="fa fa-edit"></i></button>
+                  <button type="button" class="btn btnInfo">Permisos</button> 
+              </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

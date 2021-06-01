@@ -12,22 +12,14 @@ import { Router } from '@angular/router';
 export class InformeSieteComponent implements OnInit {
 
   nombreArchivoInforme: string;
-  info:any;
+  info = JSON.parse(localStorage.getItem('user'));
   documento_informe7 = new FormData();
 
   MAX_SIZE_FILE: number = 1000000
 
   constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService, public router:Router) { }
 
-  ngOnInit(): void {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else{
-      this.info = admin;
-    }
-  }
+  ngOnInit(): void {}
 
   getFileInforme(file: File) {
 

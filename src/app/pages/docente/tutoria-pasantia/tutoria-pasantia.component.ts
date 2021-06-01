@@ -12,7 +12,6 @@ import { DatePipe } from '@angular/common';
 })
 export class TutoriaPasantiaComponent implements OnInit {
 
-  idTutor: string;
   pasantias: any[];
   pasantiaSelected: any;
   //Nuevos estados
@@ -35,8 +34,8 @@ export class TutoriaPasantiaComponent implements OnInit {
   }
 
   getPasantias() {
-    this.idTutor = localStorage.getItem('id');
-    this._pasantiaService.getSolicitudesTutor(this.idTutor).subscribe((resp: any) => {
+    const user  = JSON.parse(localStorage.getItem('user'));
+    this._pasantiaService.getSolicitudesTutor(user._id).subscribe((resp: any) => {
       this.pasantias = resp.pasantias;
       let currentDate = new Date();
       for (let i = 0; i < this.pasantias.length; i++) {

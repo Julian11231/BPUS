@@ -12,26 +12,16 @@ import { Router } from '@angular/router';
 export class InformeCatorceComponent implements OnInit {
 
   nombreArchivoInforme: string;
-  info:any;
+  info = JSON.parse(localStorage.getItem('user'));
   documento_informe14 = new FormData();
 
   MAX_SIZE_FILE: number = 1000000;
 
   constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService, public router: Router) { }
 
-  ngOnInit(): void {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else{
-      this.info = admin;
-    }
-  }
-
+  ngOnInit(): void {}
 
   getFileInforme(file: File) {
-
     if (file.size > this.MAX_SIZE_FILE) {
       Swal.fire({
         title: '¡Lo Sentimos!',
@@ -43,9 +33,7 @@ export class InformeCatorceComponent implements OnInit {
       }).then(() => {
         location.reload()
       });
-
     } else {
-
       this.nombreArchivoInforme = file.name;
       let documento_informe14 = <File>file;
       this.documento_informe14.append('documento_informe14', documento_informe14, documento_informe14.name);
@@ -54,7 +42,6 @@ export class InformeCatorceComponent implements OnInit {
 
 
   enviarInforme() {
-
     Swal.fire({
       title: '¿Enviar Informe?',
       html: `<p> Se enviará el documento a su tutor asignado</p>`,

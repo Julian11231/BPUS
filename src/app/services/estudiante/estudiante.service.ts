@@ -11,13 +11,33 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 })
 export class EstudianteService {
 
+  totalEstudiantes:number = 0;
+
   constructor(public http: HttpClient, public router: Router) { }
 
-  postEstudiante(programa:string, documento_est: FormData) {
+  getEstudiantes(programa:string, desde: number) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/estudiantes?programa=${programa}&desde=${desde}&token=${token}`;
+    return this.http.get(url).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        this.totalEstudiantes = resp.total;
+        return resp.estudiantes;
+      }else{
+        return false;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
 
+  postEstudiante(programa:string, documento_est: FormData) {
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/estudiantes/actualizar?programa=${programa}&token=${token}`;
-
     return this.http.post(url, documento_est).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;

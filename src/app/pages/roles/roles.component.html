@@ -1,5 +1,31 @@
 <div class="p-3" style="background-color: white;">
-    <button type="button" class="btn btnSuccess my-3">Agregar rol&nbsp;<i class="fa fa-plus-circle"></i></button>
+    <button type="button" class="btn btnSuccess my-3" data-toggle="modal" data-target="#addRol" data-backdrop="static" data-keyboard="false">
+      Agregar rol&nbsp;&nbsp;<i class="fa fa-plus-circle"></i>
+    </button>
+    
+    <!-- The Modal -->
+    <div class="modal fade" id="addRol">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Agregar Rol</h4>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form ngNativeValidate #f="ngForm" (ngSubmit)="postRol(f)">
+              <input type="text" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 95))' ngModel name="nuevoRol" placeholder="Nombre del rol" class="form-control" maxlength="30" pattern="[a-zA-Z_]+" required>
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btnInfo" [disabled]="f.invalid">Aceptar</button>
+                <button type="button" (click)="f.reset()" id="btnClose" class="btn btnSuccess" data-dismiss="modal">Close</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <table class="table table-bordered table-hover text-center">
         <thead>
           <tr>
@@ -10,7 +36,13 @@
         </thead>
         <tbody>
           <tr *ngFor="let rol of roles">
-                <td>{{rol.nombre}}</td>
+                <td>
+                  <input type="text" id="{{rol._id}}" value="{{rol.nombre}}" placeholder="{{rol.nombre}}" class="form-control-plaintext" maxlength="30" disabled>
+                  <br>
+                  <div class="mt-3" id="btn{{rol._id}}" style="display: none;">
+                    <button (click)="editRol(rol._id)" type="button" class="btn btn-success mr-2">Aceptar</button>
+                    <button (click)="cancelEditRol(rol._id, rol.nombre)" type="button" class="btn btnSuccess">Cancelar</button>
+                  </div>
                 <td>
                     <h3 *ngIf="rol.estado == true"><span class="badge badge-success">Activo</span></h3>
                     <h5 *ngIf="rol.estado == false"><span class="badge badge-danger">Inactivo</span></h5>
@@ -20,10 +52,10 @@
                         Desactivar <i class="fa fa-ban"></i>
                     </button>
                     <button *ngIf="rol.estado == false" type="button" class="btn btn-danger">Activar</button>
-                    <button type="button" class="btn btn-info mr-2"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-info mr-2" (click)="editRol(rol._id)"><i class="fa fa-edit"></i></button>
                     <button type="button" class="btn btnInfo" (click)="goPermisos(rol._id, rol.nombre)">Permisos</button> 
                 </td>
           </tr>
         </tbody>
-      </table>
+    </table>
 </div>

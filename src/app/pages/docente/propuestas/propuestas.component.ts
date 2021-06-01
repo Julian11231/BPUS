@@ -29,7 +29,7 @@ export class PropuestasComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService, public _tutoresService: TutoresService, public _notificacionService: NotificacionesService) { }
 
   ngOnInit(): void {
-    this.user  = JSON.parse(localStorage.getItem('administrativo'));
+    this.user  = JSON.parse(localStorage.getItem('user'));
     this.getPropuestas();
     this.getTutores();
   }

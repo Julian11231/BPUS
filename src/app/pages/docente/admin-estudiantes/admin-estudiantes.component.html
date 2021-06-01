@@ -1,5 +1,5 @@
-<div style="background-color: white;">
-    <div class="row pt-4 px-3">
+<div class="p-3" style="background-color: white;">
+    <div class="row">
         <div class="col-md-9">
             <div class="form-group">
                 <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar" type="text"  class="form-control" placeholder="Buscar">
@@ -50,6 +50,37 @@
             </div>
         </div>
     </div>
-
+    <ul class="pagination">
+        <li class="page-item"><button class="page-link" (click)="cambiarDesde(-10)">Anteriores</button></li>
+        <li class="page-item"><input (change)="cambiarDesdeInput(input.value)" #input class="form-control" type="number" id="pagina" value="{{pagina}}" min="1" max="{{totalpaginas}}"></li>
+        <li class="page-item"><button class="page-link">/ {{totalpaginas}}</button></li>
+        <li class="page-item"><button class="page-link" (click)="cambiarDesde(10)">Siguientes</button></li>
+    </ul>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Código</th>
+                <th>Identificación</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Teléfono</th>
+                <th class="text-center">Cred.aprobados</th>
+                <th>EPS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let estudiante of estudiantes">
+                <td>{{estudiante.codigo}}</td>
+                <td>{{estudiante.identificacion}}</td>
+                <td>{{estudiante.nombres}}</td>
+                <td>{{estudiante.apellidos}}</td>
+                <td>{{estudiante.telefono}}</td>
+                <td class="text-center">{{estudiante.creditos_aprobados}}</td>
+                <td>{{estudiante.eps}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 

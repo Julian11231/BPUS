@@ -26,7 +26,7 @@ export class GestionJuradosComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService, public _tutoresService: TutoresService, public _notificacionService: NotificacionesService) { }
 
   ngOnInit(): void {
-    this.user  = JSON.parse(localStorage.getItem('administrativo'));
+    this.user  = JSON.parse(localStorage.getItem('user'));
     this.fecha =  new Date();
     const pipe = new DatePipe('en-US');
     var mes:string; var dia:string;

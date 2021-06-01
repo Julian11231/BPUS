@@ -11,27 +11,16 @@ import {interval} from 'rxjs';
 })
 
 export class NotificacionesComponent {
-  //notificaciones: Notificacion[] = [];
   notificacionesLeidas: Notificacion[] = [];
   notificacionesNoLeidas: Notificacion[] = [];
   numeroNotificacionesLeidas: number = 0;
   numeroNotificacionesNoLeidas: number = 0;
-  usuario: any;
+  usuario = JSON.parse(localStorage.getItem('user'));
 
 
   constructor(public _notificacionService: NotificacionesService) {}
 
    ngOnInit() {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const administrativo = JSON.parse(localStorage.getItem('administrativo'));
-    const encargadoEmpresa = JSON.parse(localStorage.getItem('encargadoEmpresa'));
-    if(estudiante){
-      this.usuario = estudiante;
-    }else if (administrativo){
-      this.usuario = administrativo;
-    }else{
-      this.usuario = encargadoEmpresa;
-    }
     this.cargarNotificaciones();
     const contador = interval(60000);
     contador.subscribe((n) => {

@@ -18,12 +18,9 @@ export class EncarSolicitudVacanteComponent implements OnInit {
   constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService,) { }
 
   ngOnInit(): void {
-    //const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const encargado = JSON.parse(localStorage.getItem('encargadoEmpresa'));
-    this.info = encargado;
+    this.info = JSON.parse(localStorage.getItem('user'));
     this.programa = this.info.programa._id;
     this.getSolicitudes();
-    //this.vacanteSelected = this.solicitudes[0];
   }
 
   aprobarSolicitud() {
