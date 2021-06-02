@@ -17,7 +17,7 @@ export class EncargadoEmpresaService {
   getEncargado() {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/encargadoEmpresa?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos?token=${token}`;
 
     return this.http.get(url);
   }
@@ -26,15 +26,12 @@ export class EncargadoEmpresaService {
   postEncargadoEmpresa(encargadoEmpresa: EncargadoEmpresa) {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/encargadoEmpresa?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos/encargado?token=${token}`;
 
     return this.http.post(url, encargadoEmpresa).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
-        return resp.encargadoEmpresaGuardada;
+        return resp.encargadoEmpresaGuardado;
       }
-      //return true;
-
     }), catchError((err) => {
       Swal.fire({
         title: '¡Error!',
@@ -42,7 +39,6 @@ export class EncargadoEmpresaService {
         icon: 'error',
       });
       return throwError(err);
-
     }));
 
   }

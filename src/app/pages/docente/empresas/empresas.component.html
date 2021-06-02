@@ -116,12 +116,21 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Persona a Cargo:</label>
-                                            <input ngModel name="persona" type="text" 
-                                                class="form-control" placeholder="Nombre" required>
+                                            <label class="control-label">Nombre(s):</label>
+                                            <input ngModel name="nombres" type="text" 
+                                                class="form-control" placeholder="Nombre(s)" required>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Apellidos:</label>
+                                            <input ngModel name="apellidos" type="text" 
+                                                class="form-control" placeholder="Apellidos" required>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Cedula:</label>
@@ -129,7 +138,15 @@
                                                 class="form-control" placeholder="Cedula" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' required>
                                         </div>
                                     </div>
-                                </div>    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Correo Electrónico:</label>
+                                            <input ngModel name="correo" type="text" 
+                                                class="form-control" placeholder="Correo" required>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -138,7 +155,6 @@
                                                 class="form-control" placeholder="Puesto" required>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Teléfono:</label>
@@ -147,13 +163,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Correo Electrónico:</label>
-                                        <input ngModel name="correo" type="text" 
-                                            class="form-control" placeholder="Correo" required>
-                                    </div>
-                                </div>
+
                             </div>
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { VacantesService, EmpresaService } from 'src/app/services/service.index';
+import { VacantesService, ConvenioService } from 'src/app/services/service.index';
 import { Vacante } from '../../../models/Vacante';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class VacantesComponent implements OnInit {
 
   vacantes: any[];
-  empresa: any;
+  convenio: any;
   encargado = JSON.parse(localStorage.getItem("user"));
   programa: string;
 
@@ -30,30 +30,33 @@ export class VacantesComponent implements OnInit {
   pagada: String;
   estado: String;
 
-  constructor(public router: Router, public _vacantesService: VacantesService) { }
+  constructor(private router: Router, 
+              private _vacantesService: VacantesService, 
+              private _convenioService: ConvenioService) { }
 
   ngOnInit(): void {
     if(this.encargado.rol.nombre == "ADMIN"){
       this.getVacantes();
     }else if(this.encargado.rol.nombre == "ENCARGADO_EMPRESA"){
-      this.getVacantesEncargado();
+      this.getConvenio();
     }
   }
 
   getDataBuscar(data) {
-
   }
 
-  getVacantesEncargado() {
-    this._vacantesService.getVacantesEncargado(this.encargado._id).subscribe((resp: any) => {
-      this.vacantes = resp.vacantes;
-    });    
+  getConvenio(){
+    this._convenioService.getConvenioEncargado(this.encargado._id).subscribe((resp:any)=>{
+      this.convenio = resp.convenio;
+      this._vacantesService.getVacantesEncargado(this.convenio._id).subscribe((resp: any) => {
+        this.vacantes = resp.vacantes;
+      }); 
+    })
   }
 
   getVacantes() {
     this._vacantesService.getVacantes().subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
-      console.log(resp);
     });    
   }
 
@@ -70,20 +73,16 @@ export class VacantesComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
-
         let vacante = new Vacante(
           form.value.titulo,
           form.value.funciones,
           form.value.descripcion,
-          this.encargado.empresa._id,
-          this.encargado.programa._id,
-          this.encargado._id,
+          this.convenio._id,
           form.value.ubicacion,
           form.value.modalidad,
           form.value.cantidad,
           form.value.pagada
         );
-
         this._vacantesService.postVacantes(vacante).subscribe();
       }
     })
@@ -97,7 +96,7 @@ export class VacantesComponent implements OnInit {
     this.titulo = dato.titulo;
     this.funciones = dato.funciones;
     this.descripcion = dato.descripcion;
-    this.empresaSelcted = dato.empresa.nombre;
+    this.empresaSelcted = dato.convenio.empresa.nombre;
     this.ubicacion = dato.ubicacion;
     this.modalidad = dato.modalidad;
     this.cantidad = dato.cantidad;
@@ -126,9 +125,7 @@ export class VacantesComponent implements OnInit {
           form.value.titulo,
           form.value.funciones,
           form.value.descripcion,
-          this.encargado.empresa._id,
-          this.encargado.programa._id,
-          this.encargado._id,
+          this.convenio._id,
           form.value.ubicacion,
           form.value.modalidad,
           form.value.cantidad,

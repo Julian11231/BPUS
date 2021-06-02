@@ -93,8 +93,7 @@ export class EmpresasComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let administrativo: any = JSON.parse(localStorage.getItem("administrativo"));
-        let programa = administrativo.programa._id
+        let programa = this.usuario.programa._id;
         
         let empresa = new Empresa(
             form.value.nit,
@@ -109,14 +108,13 @@ export class EmpresasComponent implements OnInit {
         this._empresaService.postEmpresa(empresa).subscribe((resp:any) => {
           let encargadoEmpresa = new EncargadoEmpresa(
             form.value.cedula,
-            form.value.persona,
+            form.value.nombres,
+            form.value.apellidos,
             form.value.correo,
             form.value.telPersona,
-            "123456",
             programa,
-            resp._id,
             form.value.puesto,
-            "EncargadoEmpresa",
+            "60b66f2b5756933d5096d51a",
           )
           this._encargadoEmpresaService.postEncargadoEmpresa(encargadoEmpresa).subscribe((respp:any) => {
             let convenio = new Convenio(programa,  resp._id, respp._id);

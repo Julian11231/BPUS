@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PasantiService, NotificacionesService } from 'src/app/services/service.index';
+import { PasantiService, NotificacionesService, ConvenioService } from 'src/app/services/service.index';
 import Swal from 'sweetalert2';
 import { Notificacion } from 'src/app/models/notificacion.model';
 
@@ -12,15 +12,28 @@ export class EncarSolicitudVacanteComponent implements OnInit {
 
   info: any;
   solicitudes: any[];
+  convenio:any;
   programa: string;
   vacanteSelected: any;
 
-  constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService,) { }
+  constructor(private _pasantiaService: PasantiService, 
+              private _notificacionService: NotificacionesService,
+              private _convenioService: ConvenioService) { }
 
   ngOnInit(): void {
     this.info = JSON.parse(localStorage.getItem('user'));
     this.programa = this.info.programa._id;
     this.getSolicitudes();
+  }
+
+  getSolicitudes() {
+    this._convenioService.getConvenioEncargado(this.info._id).subscribe((resp:any)=>{
+      this.convenio = resp.convenio;
+      this._pasantiaService.getSolicitudesEncargado(this.convenio.empresa._id).subscribe((resp: any) => {
+        this.solicitudes = resp.pasantias;
+        this.vacanteSelected = this.solicitudes[0];
+      });
+    });
   }
 
   aprobarSolicitud() {
@@ -40,7 +53,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
           this.vacanteSelected.estudiante._id,
           currentDate,
           'Solicitud de vacante aprobada',
-          `Te han aprobado tu solicitud de vancante para la empresa ${this.info.empresa.nombre}`,
+          `Te han aprobado tu solicitud de vancante para la empresa ${this.convenio.empresa.nombre}`,
           'EncargadoEmpresa' 
         );
         this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, true).subscribe((resp:any) => {
@@ -89,7 +102,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
           this.vacanteSelected.estudiante._id,
           currentDate,
           'Solicitud de vacante rechazada',
-          `Te han rechazado tu solicitud de vancante en ${this.info.empresa.nombre}`,
+          `Te han rechazado tu solicitud de vancante en ${this.convenio.empresa.nombre}`,
           'EncargadoEmpresa' 
         );
         this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, false).subscribe((resp:any) => {
@@ -121,19 +134,9 @@ export class EncarSolicitudVacanteComponent implements OnInit {
     })
   }
 
-  getSolicitudes() {
-
-    this._pasantiaService.getSolicitudesEncargado(this.info.empresa._id).subscribe((resp: any) => {
-      this.solicitudes = resp.pasantias;
-      this.vacanteSelected = this.solicitudes[0];
-    });
-  }
-
   getDataInfo(data: any) {
     this.vacanteSelected = data;
   }
-
-
 
   getDataBuscar(data) {
 

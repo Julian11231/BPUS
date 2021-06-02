@@ -26,6 +26,12 @@ export class ConvenioService {
     return this.http.get(url);
   }
 
+  getConvenioEncargado(convenio: string) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/convenios/encargado${convenio}?token=${token}`;;
+    return this.http.get(url);
+  }
+
 
   postConvenio(convenio: Convenio) {
 

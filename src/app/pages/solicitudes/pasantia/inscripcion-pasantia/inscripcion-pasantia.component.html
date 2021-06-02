@@ -19,26 +19,20 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <div class="row" style="margin-top: 15px; margin-left: 10px;">
-                            <div class="col-lg-1">
-                                <div class="vacantesImg text-center">
-                                    <p class="text-center">{{ letra }}</p>
-                                </div>
+                        <div class="col-lg-8">
+                            <div class="vacantesInfo">
+                                <h5 class="text-uppercase"> <b>{{ titulo }}</b></h5>
+                                <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
+                                    {{empresa}}
+                                </small><br>
+                                <small><i class="fa fa-globe"></i>&nbsp;
+                                    &nbsp;{{ubicacion}}, {{modalidad}}
+                                </small> <br>
+                                <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
+                                </small>
                             </div>
-                            <div class="col-lg-8">
-                                <div class="vacantesInfo">
-                                    <h5 class="text-uppercase"> <b>{{ titulo }}</b></h5>
-                                    <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{empresa}}
-                                    </small><br>
-                                    <small><i class="fa fa-globe"></i>&nbsp;
-                                        &nbsp;{{ubicacion}}, {{modalidad}}
-                                    </small> <br>
-                                    <small><i class="fa fa-code"></i>&nbsp; &nbsp;{{funciones}}
-                                    </small>
-                                </div>
-                            </div>
-                        </div> <br>
+                        </div>
+                        <br>
                         <div class="row" style=" margin-top: 15px; margin-left: 25px;">
                             <h5 class="text-uppercase"> <b>descripción:</b> </h5>
                         </div>
@@ -103,12 +97,12 @@
                 <div class="col-sm-6 col-md-8 col-lg-8 w-100">
                     <h3 class="card-title text-uppercase"><b>2. Vacantes Disponibles: </b></h3>
                     <div class="row" *ngFor="let dato of vacantes">
-                        <ng-container *ngIf="(info.programa._id === dato.programa._id) && (dato.estado === 'Activa')">
+                        <ng-container *ngIf="(info.programa._id === dato.convenio.programa) && (dato.estado == true)">
                             <div class="col-sm-8 col-md-7 col-lg-7 mb-3">
                                 <div class="vacantes">
                                     <h5 class="text-uppercase"> <b>{{ dato.titulo }}</b></h5>
                                     <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{dato.empresa.nombre}}
+                                        {{dato.convenio.empresa.nombre}}
                                     </small><br>
                                     <small><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.ubicacion}},
                                         {{dato.modalidad}}

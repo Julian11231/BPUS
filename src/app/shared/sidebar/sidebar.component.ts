@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit {
     if (this.user.rol.nombre == "ESTUDIANTE") {
       this.menuEstudiante = this._sidebarService.menuEstudiante;
       if (this.user.modalidad) {
-        let idPasantia = this.user.modalidad._id;
+        let idPasantia = this.user.modalidad;
         this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
           this.pasantia = resp.pasantia;
           if(this.pasantia.fecha_actaInicio){
@@ -42,8 +42,10 @@ export class SidebarComponent implements OnInit {
       }
     } else if (this.user.rol.nombre === "JEFE_PROGRAMA") {
       this.menuJefePrograma = this._sidebarService.menuJefePrograma;
+    }else if(this.user.rol.nombre === "ENCARGADO_EMPRESA"){
+      this.menuEncargadoEmpresa = this._sidebarService.menuEncargadoEmpresa;
     }else if (this.user.rol.nombre === "ADMIN") {
-      let idPasantia = JSON.parse(localStorage.getItem('administrativo'))?.modalidad._id;
+      let idPasantia = this.user.modalidad;
       this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
         this.pasantia = resp.pasantia;
       });

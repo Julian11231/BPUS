@@ -5,8 +5,6 @@ import { Notificacion } from 'src/app/models/notificacion.model';
 import { Router } from '@angular/router';
 import { Pasantia } from 'src/app/models/Pasantia';
 
-declare function init_plugins()
-
 @Component({
   selector: 'app-acta-inicio',
   templateUrl: './propuesta-pasantia.component.html',
@@ -17,7 +15,7 @@ export class PropuestaPasantiaComponent implements OnInit {
   pasantia: any;
   nombreArchivoP: string;
   nombreArchivoF: string;
-  info:any;
+  info = JSON.parse(localStorage.getItem('user'));
   jefe:string;
   tituloPasantia:string;
   descripcion:string;
@@ -34,15 +32,6 @@ export class PropuestaPasantiaComponent implements OnInit {
               public router: Router) { }
 
   ngOnInit(): void {
-
-    init_plugins()
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else{
-      this.info = admin;
-    }
     if(this.info.modalidad !== null){
       this.getPasantia();
     }

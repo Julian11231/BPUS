@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class InscripcionPasantiaComponent implements OnInit {
 
-  info: any;
+  info = JSON.parse(localStorage.getItem('user'));
   vacantes: any[];
 
   jefeProgramaID:string;
@@ -43,19 +43,17 @@ export class InscripcionPasantiaComponent implements OnInit {
               public router: Router) { }
 
   ngOnInit(): void {
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
     this._programaService.getPrograma().subscribe((resp:any) => {
       this.jefeProgramaID = resp.programa.jefe._id;
-    } )
-    if(estudiante){
-      this.info = estudiante;
-      this.getVacantesEstudiante();
-    }else{
-      this.info = admin;
-      this.getVacantes();
-    }
-    
+    });
+    this.getVacantes();
+  }
+
+  getVacantes() {
+    this._vacantesService.getVacantesEstudiante(this.info.programa._id).subscribe((resp: any) => {
+      this.vacantes = resp.vacantes;
+      console.log(resp)
+    });
   }
 
   postSolicitud(form: NgForm) {
@@ -124,60 +122,19 @@ export class InscripcionPasantiaComponent implements OnInit {
     })
   }
 
-  getVacantes() {
-    this._vacantesService.getVacantes().subscribe((resp: any) => {
-      this.vacantes = resp.vacantes;
-    });
-  }
-
-  testCorreo(){
-
-    let currentDate = new Date();
-    let notificacion = new Notificacion(
-      this.personaCargoId,
-      currentDate,
-      'Nueva solicitd de pasantia',
-      `${this.info.nombres} te ha enviado una solicitude de pasantia para la empresa ${this.nombreEmpresa}`,
-      'EncargadoEmpresa' 
-    );
-    this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((resp:any)=>{
-      if(resp){
-        Swal.fire({
-          title: '¡Bien Hecho!',
-          text: `Se ha enviado el corrreo correctamente`,
-          icon: 'success'
-        });
-      }else{
-        Swal.fire({
-          title: '¡Error!',
-          text: 'Se ha producido un error al mandar el correo',
-          icon: 'error',
-        });
-      }
-    })
-  }
-
-  getVacantesEstudiante() {
-    this._vacantesService.getVacantesEstudiante(this.info.programa._id).subscribe((resp: any) => {
-      this.vacantes = resp.vacantes;
-    });
-  }
-
   getDataInfo(data: any) {
-
-    this.letra = data.letra;
     this.titulo = data.titulo;
-    this.empresa = data.empresa.nombre;
+    this.empresa = data.convenio.empresa.nombre;
     this.ubicacion = data.ubicacion;
     this.modalidad = data.modalidad;
     this.funciones = data.funciones;
     this.descripcion = data.descripcion;
     this.cantidad = data.cantidad;
     this.pagada = data.pagada;
-    this.personaCargo = data.encargado.nombre;
-    this.personaCargoId = data.encargado._id;
-    this.correo = data.encargado.correo;
-    this.telefono = data.encargado.telefono;
+    this.personaCargo = data.convenio.encargado.nombres+" "+data.convenio.encargado.apellidos;
+    this.personaCargoId = data.convenio.encargado._id;
+    this.correo = data.convenio.encargado.correo;
+    this.telefono = data.convenio.encargado.telefono;
   }
 
   getVacanteSelected(dato: any) {
@@ -192,9 +149,9 @@ export class InscripcionPasantiaComponent implements OnInit {
       this.lineaInvestigacion = radio3.value;
     }
     this.preInscripcion = dato._id;
-    this.empresa = dato.empresa._id;
-    this.nombreEmpresa = dato.empresa.nombre;
-    this.personaCargoId = dato.encargado._id;
+    this.empresa = dato.convenio.empresa._id;
+    this.nombreEmpresa = dato.convenio.empresa.nombre;
+    this.personaCargoId = dato.convenio.encargado._id;
   }
 
 }

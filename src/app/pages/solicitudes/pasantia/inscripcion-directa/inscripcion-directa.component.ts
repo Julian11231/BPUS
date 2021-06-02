@@ -5,8 +5,6 @@ import { PasantiService, EmpresaService, NotificacionesService, ProgramaService 
 import { Notificacion } from 'src/app/models/notificacion.model';
 import { Router } from '@angular/router';
 
-declare function init_plugins()
-
 @Component({
   selector: 'app-acta-inicio',
   templateUrl: './inscripcion-directa.component.html'
@@ -16,7 +14,7 @@ export class InscripcionDirectaComponent implements OnInit {
   pasantia: string;
   nombreArchivoP: string;
   nombreArchivoF: string;
-  info:any;
+  info = JSON.parse(localStorage.getItem('user'));
   nombreEmpresa:string;
   jefe:string;
   empresas: any;
@@ -38,15 +36,6 @@ export class InscripcionDirectaComponent implements OnInit {
               public router: Router) { }
 
   ngOnInit(): void {
-
-    init_plugins()
-    const estudiante = JSON.parse(localStorage.getItem('estudiante'));
-    const admin = JSON.parse(localStorage.getItem('administrativo'));
-    if(estudiante){
-      this.info = estudiante;
-    }else{
-      this.info = admin;
-    }
     this.getEmpresas();
     this.getJefePrograma();
   }

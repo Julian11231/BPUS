@@ -21,13 +21,12 @@
                                 <div class="modal-body">
 
 
-                                    <form ngNativeValidate #f="ngForm" (ngSubmit)="postVacante(f)"
-                                        class="form-horizontal" id="loginform">
+                                    <form ngNativeValidate #f="ngForm" (ngSubmit)="postVacante(f)" class="form-horizontal">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Título:</label>
-                                                    <input ngModel name="titulo" type="text" id="firstName"
+                                                    <input ngModel name="titulo" type="text" 
                                                         class="form-control" placeholder="Título de la Vacante"
                                                         required>
                                                 </div>
@@ -36,7 +35,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Funciones:</label>
-                                                    <input ngModel name="funciones" type="text" id="firstName"
+                                                    <input ngModel name="funciones" type="text" 
                                                         class="form-control" placeholder="Funciones a Realizar"
                                                         required>
                                                 </div>
@@ -60,9 +59,9 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Empresa:</label>
-                                                    <input *ngIf="encargado" ngModel name="empresa" type="text" id="firstName"
-                                                    class="form-control" placeholder="{{encargado.empresa.nombre}}"
-                                                    value="{{encargado.empresa.nombre}}" required disabled>
+                                                    <input *ngIf="encargado" ngModel name="empresa" type="text" 
+                                                    class="form-control" placeholder="{{convenio?.empresa.nombre}}"
+                                                    value="{{convenio?.empresa.nombre}}" required disabled>
                                                 </div>
                                         </div>
                                         </div>
@@ -71,7 +70,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Ubicación:</label>
-                                                    <input ngModel name="ubicacion" type="text" id="firstName"
+                                                    <input ngModel name="ubicacion" type="text" 
                                                         class="form-control" placeholder="Ubicación" required>
                                                 </div>
                                             </div>
@@ -94,7 +93,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Cantidad de Puestos:</label>
-                                                    <input ngModel name="cantidad" type="number" id="firstName"
+                                                    <input ngModel name="cantidad" type="number" 
                                                         class="form-control" placeholder="Cantidad" required>
                                                 </div>
                                             </div>
@@ -147,12 +146,12 @@
 
 
                                     <form ngNativeValidate #form="ngForm" (ngSubmit)="putVacante(form)"
-                                        class="form-horizontal" id="loginform">
+                                        class="form-horizontal">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label">Título:</label>
-                                                    <input [(ngModel)]="titulo" name="titulo" type="text" id="firstName"
+                                                    <input [(ngModel)]="titulo" name="titulo" type="text" 
                                                         class="form-control" placeholder="Título de la Vacante"
                                                         required>
                                                 </div>
@@ -162,7 +161,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label">Funciones:</label>
                                                     <input [(ngModel)]="funciones" name="funciones" type="text"
-                                                        id="firstName" class="form-control"
+                                                         class="form-control"
                                                         placeholder="Funciones a Realizar" required>
                                                 </div>
                                             </div>
@@ -188,7 +187,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label">Ubicación:</label>
                                                     <input [(ngModel)]="ubicacion" name="ubicacion" type="text"
-                                                        id="firstName" class="form-control" placeholder="Ubicación"
+                                                         class="form-control" placeholder="Ubicación"
                                                         required>
                                                 </div>
                                             </div>
@@ -213,7 +212,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label">Cantidad de Puestos:</label>
                                                     <input [(ngModel)]="cantidad" name="cantidad" type="number"
-                                                        id="firstName" class="form-control" placeholder="Cantidad"
+                                                         class="form-control" placeholder="Cantidad"
                                                         required>
                                                 </div>
                                             </div>
@@ -223,8 +222,8 @@
                                                     <label class="control-label">Estado:</label>
                                                     <select [(ngModel)]="estado" name="estado"
                                                         class="form-control custom-select" required>
-                                                        <option value="Activa">Activa</option>
-                                                        <option value="Inactiva">Inactiva</option>
+                                                        <option value="true">Activa</option>
+                                                        <option value="false">Inactiva</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -268,7 +267,7 @@
                         <div class="col-md-9">
                             <div class="form-group">
                                 <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
-                                    type="text" id="firstName" class="form-control"
+                                    type="text"  class="form-control"
                                     placeholder="Busca la Vacate por Nombre o Estado">
                             </div>
                         </div>
@@ -301,14 +300,14 @@
                         <tbody>
                             <tr *ngFor="let dato of vacantes">
                                 <td>{{ dato.titulo }}</td>
-                                <td>{{ dato.empresa.nombre }}</td>
+                                <td>{{ dato.convenio.empresa.nombre }}</td>
                                 <td>{{ dato.modalidad }}</td>
                                 <td>{{ dato.cantidad }}</td>
-                                <td *ngIf="dato.estado == 'Activa'" class="text-success"><span
-                                        class="label btnSuccess"> <b> {{ dato.estado }} </b></span>
+                                <td *ngIf="dato.estado == true" class="text-success"><span
+                                        class="label btnSuccess"> <b> Activa</b></span>
                                 </td>
-                                <td *ngIf="dato.estado == 'Inactiva'" class="text-danger"><span
-                                        class="label btnDanger"> <b> {{ dato.estado }} </b></span>
+                                <td *ngIf="dato.estado == false" class="text-danger"><span
+                                        class="label btnDanger"> <b> Inactiva </b></span>
                                 </td>
                                 <td>
 
