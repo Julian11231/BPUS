@@ -43,7 +43,7 @@ export class ActaInicioPasantiaComponent implements OnInit {
   }
 
   getPasantia() {
-    this._pasantiaService.getPasantia(this.info.modalidad._id).subscribe((resp: any) => {
+    this._pasantiaService.getPasantia(this.info.modalidad).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
       if(this.pasantia.fecha_arl !== null && typeof(this.pasantia.fecha_arl) !== 'undefined'){
         const pipe = new DatePipe('en-US');

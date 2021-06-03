@@ -111,7 +111,12 @@ export class PropuestasComponent implements OnInit {
                 confirmButtonColor: '#60D89C',
           
               }).then((result) => {
+                const btnCloseAprobar = (document.getElementById('btnCloseRechazar')) as HTMLButtonElement;
                 if (result.value) {
+                  btnCloseAprobar.click();
+                  this.getPropuestas();
+                }else{
+                  btnCloseAprobar.click();
                   this.getPropuestas();
                 }
               });
@@ -147,7 +152,12 @@ export class PropuestasComponent implements OnInit {
           confirmButtonColor: '#60D89C',
     
         }).then((result) => {
+          const btnCloseRechazar = (document.getElementById('btnCloseRechazar')) as HTMLButtonElement;
           if (result.value) {
+            btnCloseRechazar.click();
+            this.getPropuestas();
+          }else{
+            btnCloseRechazar.click();
             this.getPropuestas();
           }
         });
@@ -179,7 +189,7 @@ export class PropuestasComponent implements OnInit {
   }
 
   getTutores() {
-    let idPrograma = this.user.programa._id;
+    let idPrograma = this.user.programa;
     this._tutoresService.getTutores(idPrograma).subscribe((resp: any) => {
       this.tutores = resp.admins;
     });

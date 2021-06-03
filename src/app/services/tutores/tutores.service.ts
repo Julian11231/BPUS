@@ -12,7 +12,7 @@ export class TutoresService {
   getTutores(idPrograma: string) {
 
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/tutores/${idPrograma}?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos/${idPrograma}?token=${token}`;
     return this.http.get(url);
   }
 

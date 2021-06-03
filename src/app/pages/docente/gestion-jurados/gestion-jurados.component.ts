@@ -157,7 +157,7 @@ export class GestionJuradosComponent implements OnInit {
   }
 
   getJurados() {
-    let idPrograma = this.user.programa._id;
+    let idPrograma = this.user.programa;
     this._tutoresService.getTutores(idPrograma).subscribe((resp: any) => {
       this.jurados = resp.admins;
     });

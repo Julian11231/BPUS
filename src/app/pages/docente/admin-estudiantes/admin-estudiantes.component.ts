@@ -28,7 +28,7 @@ export class AdminEstudiantesComponent implements OnInit {
   }
 
   getEstudiantes(){
-    this._estudianteService.getEstudiantes(this.user.programa._id, this.desde).subscribe((resp:any)=>{
+    this._estudianteService.getEstudiantes(this.user.programa, this.desde).subscribe((resp:any)=>{
       this.estudiantes = resp;
       console.log(this._estudianteService.totalEstudiantes);
       this.totalpaginas = Math.ceil(this._estudianteService.totalEstudiantes/10);

@@ -6,7 +6,7 @@
                 <h3 class="card-title text-uppercase"><b>Solicitudes </b></h3>
                 <hr>
 
-                <ng-container *ngIf="vacanteSelected !== undefined">
+                <ng-container *ngIf="pasantiaSelected !== undefined">
                     <div class="modal fade modal-info" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                         aria-hidden="true" style="display: none;">
                         <div class="modal-dialog modal-lg">
@@ -14,18 +14,18 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-7 col-lg-8">
-                                            <h5><b class="text-uppercase">ID de la solicitud:</b> &nbsp; {{vacanteSelected._id}}</h5>
+                                            <h5><b class="text-uppercase">ID de la solicitud:</b> &nbsp; {{pasantiaSelected._id}}</h5>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-5 col-lg-4">
                                             <h5><b>Estado: &nbsp;</b>
-                                                <ng-container *ngIf="vacanteSelected.estado == 'PreInscrita'" class="text-success"><span
-                                                    class="label btnInfo"> <b> {{ vacanteSelected.estado }} </b></span>
+                                                <ng-container *ngIf="pasantiaSelected.estado == 'PreInscrita'" class="text-success"><span
+                                                    class="label btnInfo"> <b> {{ pasantiaSelected.estado }} </b></span>
                                                 </ng-container>
-                                                <ng-container *ngIf="vacanteSelected.estado == 'Aprobada'" class="text-success"><span
-                                                        class="label btnSuccess"> <b> {{ vacanteSelected.estado }} </b></span>
+                                                <ng-container *ngIf="pasantiaSelected.estado == 'Aprobada'" class="text-success"><span
+                                                        class="label btnSuccess"> <b> {{ pasantiaSelected.estado }} </b></span>
                                                 </ng-container>
-                                                <ng-container *ngIf="vacanteSelected.estado == 'Rechazada'" class="text-success"><span
-                                                        class="label btnDanger"> <b> {{ vacanteSelected.estado }} </b></span>
+                                                <ng-container *ngIf="pasantiaSelected.estado == 'Rechazada'" class="text-success"><span
+                                                        class="label btnDanger"> <b> {{ pasantiaSelected.estado }} </b></span>
                                                 </ng-container>
                                             </h5>
                                         </div>
@@ -34,37 +34,37 @@
                                     <h5 class="text-uppercase"> <b>Información del estudiante:</b></h5>
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                            <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ vacanteSelected.estudiante.nombres }} {{vacanteSelected.estudiante.nombres }}</small>
+                                            <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSelected.estudiante.nombres }} {{pasantiaSelected.estudiante.nombres }}</small>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                            <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{vacanteSelected.estudiante.codigo}}</small>
+                                            <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{pasantiaSelected.estudiante.codigo}}</small>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                            <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{vacanteSelected.estudiante.identificacion}}</small>
+                                            <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{pasantiaSelected.estudiante.identificacion}}</small>
                                         </div>
                                     </div><br>
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{vacanteSelected.estudiante.correo}}</small>
+                                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{pasantiaSelected.estudiante.correo}}</small>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                            <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">Tél:&nbsp; {{vacanteSelected.estudiante.telefono}}</small>
+                                            <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">Tél:&nbsp; {{pasantiaSelected.estudiante.telefono}}</small>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                            <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">EPS:&nbsp; {{vacanteSelected.estudiante.eps}}</small>
+                                            <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">EPS:&nbsp; {{pasantiaSelected.estudiante.eps}}</small>
                                         </div>
                                     </div>
                                     <hr>
                                     <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
                                         <div class="vacantesInfo">
-                                            <small><i class="fa fa-briefcase"></i> &nbsp; {{vacanteSelected.vacante.titulo}} - {{vacanteSelected.empresa.nombre}} </small><br>
-                                            <small><i class="fa fa-globe"></i> &nbsp; {{vacanteSelected.vacante.ubicacion}}, &nbsp;{{vacanteSelected.vacante.modalidad}}</small><br>
-                                            <small><i class="fa fa-code"></i> &nbsp; {{vacanteSelected.vacante.funciones}}</small><br>
-                                            <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{vacanteSelected.vacante.pagada}}</small><br>
+                                            <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSelected.vacante.titulo}} - {{pasantiaSelected.empresa.nombre}} </small><br>
+                                            <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSelected.vacante.ubicacion}}, &nbsp;{{pasantiaSelected.vacante.modalidad}}</small><br>
+                                            <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSelected.vacante.funciones}}</small><br>
+                                            <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSelected.vacante.pagada}}</small><br>
                                         </div>
                                     <div class="mt-3 ml-4">
                                         <h5 class="text-uppercase"> <b>Descripción:</b></h5>
-                                        <p class="mt-2 ml-2">{{vacanteSelected.vacante.descripcion}}</p> 
+                                        <p class="mt-2 ml-2">{{pasantiaSelected.vacante.descripcion}}</p> 
                                     </div>
 
                                     <div class="modal-footer">

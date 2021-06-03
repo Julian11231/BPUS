@@ -14,7 +14,7 @@ export class ProgramaService {
   // Función para obtener el programa que corresponde el estudiante
   getPrograma() {
     // Obtenemos el id del programa que corresponde al usuario
-    let idPrograma = this.usuario.programa._id;
+    let idPrograma = this.usuario.programa;
     // Se obtiene del backend
     let url = URL_SERVICES + '/programa/' + idPrograma;
     return this.http.get(url);

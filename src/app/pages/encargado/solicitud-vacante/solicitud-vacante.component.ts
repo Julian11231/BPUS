@@ -14,7 +14,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
   solicitudes: any[];
   convenio:any;
   programa: string;
-  vacanteSelected: any;
+  pasantiaSelected: any;
 
   constructor(private _pasantiaService: PasantiService, 
               private _notificacionService: NotificacionesService,
@@ -31,7 +31,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
       this.convenio = resp.convenio;
       this._pasantiaService.getSolicitudesEncargado(this.convenio.empresa._id).subscribe((resp: any) => {
         this.solicitudes = resp.pasantias;
-        this.vacanteSelected = this.solicitudes[0];
+        this.pasantiaSelected = this.solicitudes[0];
       });
     });
   }
@@ -39,7 +39,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
   aprobarSolicitud() {
     Swal.fire({
       title: 'Estas seguro?',
-      text: 'Vas a aprobar la vacante de '+ this.vacanteSelected.estudiante.nombres,
+      text: 'Vas a aprobar la vacante de '+ this.pasantiaSelected.estudiante.nombres,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -50,13 +50,14 @@ export class EncarSolicitudVacanteComponent implements OnInit {
       if (result.value) {
         let currentDate = new Date();
         let notificacion = new Notificacion(
-          this.vacanteSelected.estudiante._id,
+          this.pasantiaSelected.estudiante._id,
           currentDate,
           'Solicitud de vacante aprobada',
           `Te han aprobado tu solicitud de vancante para la empresa ${this.convenio.empresa.nombre}`,
-          'EncargadoEmpresa' 
+          'Administrativo',
+          this.pasantiaSelected.estudiante.correo 
         );
-        this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, true).subscribe((resp:any) => {
+        this._pasantiaService.cambiarEstadoEncargado(this.pasantiaSelected._id, true).subscribe((resp:any) => {
           if(resp){
             this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
               if(respN){
@@ -88,7 +89,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
   rechazarSolicitud(){
     Swal.fire({
       title: 'Estas seguro?',
-      text: 'Vas a rechazar la vacante de '+ this.vacanteSelected.estudiante.nombres,
+      text: 'Vas a rechazar la vacante de '+ this.pasantiaSelected.estudiante.nombres,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -99,13 +100,14 @@ export class EncarSolicitudVacanteComponent implements OnInit {
       if (result.value) {
         let currentDate = new Date();
         let notificacion = new Notificacion(
-          this.vacanteSelected.estudiante._id,
+          this.pasantiaSelected.estudiante._id,
           currentDate,
           'Solicitud de vacante rechazada',
           `Te han rechazado tu solicitud de vancante en ${this.convenio.empresa.nombre}`,
-          'EncargadoEmpresa' 
+          'Estudiante',
+          this.pasantiaSelected.estudiante.correo  
         );
-        this._pasantiaService.cambiarEstadoEncargado(this.vacanteSelected._id, false).subscribe((resp:any) => {
+        this._pasantiaService.cambiarEstadoEncargado(this.pasantiaSelected._id, false).subscribe((resp:any) => {
           if(resp){
             this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
               if(respN){
@@ -135,7 +137,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
   }
 
   getDataInfo(data: any) {
-    this.vacanteSelected = data;
+    this.pasantiaSelected = data;
   }
 
   getDataBuscar(data) {

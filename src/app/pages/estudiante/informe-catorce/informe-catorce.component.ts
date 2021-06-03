@@ -13,13 +13,20 @@ export class InformeCatorceComponent implements OnInit {
 
   nombreArchivoInforme: string;
   info = JSON.parse(localStorage.getItem('user'));
+  pasantia:any;
   documento_informe14 = new FormData();
 
   MAX_SIZE_FILE: number = 1000000;
 
   constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService, public router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {this.getPasantia()}
+
+  getPasantia() {
+    this._pasantiaService.getPasantia(this.info.modalidad).subscribe((resp: any) => {
+      this.pasantia = resp.pasantia;
+    })
+  }
 
   getFileInforme(file: File) {
     if (file.size > this.MAX_SIZE_FILE) {
@@ -55,17 +62,17 @@ export class InformeCatorceComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
-        let idEstudiante = localStorage.getItem('id');
+        let idEstudiante = this.info._id;
         this._pasantiaService.postDocumentoInf14(idEstudiante, this.documento_informe14).subscribe((resp:any)=>{
           if(resp){
             let currentDate = new Date();
             let notificacion = new Notificacion(
-              this.info.modalidad.tutor._id,
+              this.pasantia.tutor._id,
               currentDate,
               'Envio de informe 14',
               `${this.info.nombres} ${this.info.apellidos}  te ha enviado el informe de la semana 14`,
               'Administrativo',
-              this.info.modalidad.tutor.correo
+              this.pasantia.tutor.correo
             );
             this._notificacionService.postNotificacion(notificacion).subscribe();
             this._notificacionService.sendInforme14Correo(this.info._id, notificacion).subscribe();

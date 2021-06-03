@@ -64,9 +64,6 @@ export class TutoriaPasantiaComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
-        console.log(form.value);
-        console.log(this.pasantiaSelected.notas_actaInicio);
-        console.log(form.value.notasActaInicio);
         let notasPropuesta:string;let notasActaInicio:string;let notasSemana7:string;let notasSemana14:string; let notasFinal:string;
         if(form.value.notasPropuesta !== ''){
           notasPropuesta = form.value.notasPropuesta;
