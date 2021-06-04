@@ -35,6 +35,23 @@ export class EstudianteService {
     }));
   }
 
+  cambiarClave(usuario: string, clave:string){
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/estudiantes/cambiarclave?token=${token}`;
+    return this.http.put(url, {usuario: usuario, clave: clave}).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        return true;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
   postEstudiante(programa:string, documento_est: FormData) {
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/estudiantes/actualizar?programa=${programa}&token=${token}`;

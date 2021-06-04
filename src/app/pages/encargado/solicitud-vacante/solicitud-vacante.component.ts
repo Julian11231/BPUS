@@ -12,7 +12,6 @@ export class EncarSolicitudVacanteComponent implements OnInit {
 
   info: any;
   solicitudes: any[];
-  convenio:any;
   programa: string;
   pasantiaSelected: any;
 
@@ -22,17 +21,14 @@ export class EncarSolicitudVacanteComponent implements OnInit {
 
   ngOnInit(): void {
     this.info = JSON.parse(localStorage.getItem('user'));
-    this.programa = this.info.programa._id;
+    this.programa = this.info.programa;
     this.getSolicitudes();
   }
 
   getSolicitudes() {
-    this._convenioService.getConvenioEncargado(this.info._id).subscribe((resp:any)=>{
-      this.convenio = resp.convenio;
-      this._pasantiaService.getSolicitudesEncargado(this.convenio.empresa._id).subscribe((resp: any) => {
-        this.solicitudes = resp.pasantias;
-        this.pasantiaSelected = this.solicitudes[0];
-      });
+    this._pasantiaService.getSolicitudesEncargado().subscribe((resp: any) => {
+      this.solicitudes = resp.pasantias;
+      this.pasantiaSelected = this.solicitudes[0];
     });
   }
 
@@ -53,33 +49,29 @@ export class EncarSolicitudVacanteComponent implements OnInit {
           this.pasantiaSelected.estudiante._id,
           currentDate,
           'Solicitud de vacante aprobada',
-          `Te han aprobado tu solicitud de vancante para la empresa ${this.convenio.empresa.nombre}`,
-          'Administrativo',
+          `Te han aprobado tu solicitud de vancante para la empresa ${this.pasantiaSelected.vacante.convenio.empresa.nombre}`,
+          'Estudiante',
           this.pasantiaSelected.estudiante.correo 
         );
         this._pasantiaService.cambiarEstadoEncargado(this.pasantiaSelected._id, true).subscribe((resp:any) => {
           if(resp){
-            this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
-              if(respN){
-                this._notificacionService.sendNotificacionCorreo(notificacion).subscribe((respC:any)=>{
-                  if(respC){
-                    Swal.close();
-                    Swal.fire({
-                      title: 'Aprobada correctamente',
-                      icon: 'success',
-                      timer: 2000,
-                      showConfirmButton:false,
-                      timerProgressBar: true,
-                    }).then((result) => {
-                      /* Read more about handling dismissals below */
-                      if (result.dismiss) {
-                        this.getSolicitudes();
-                      }
-                    });
-                  }  
-                });
+            this._notificacionService.postNotificacion(notificacion).subscribe();
+            this._notificacionService.sendNotificacionCorreo(notificacion).subscribe();                     
+            Swal.close();
+            Swal.fire({
+              title: 'Aprobada correctamente',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton:false,
+              timerProgressBar: true,
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss) {
+                this.getSolicitudes();
+              }else{
+                this.getSolicitudes();
               }
-            });    
+            });
           }
         });
       }
@@ -103,7 +95,7 @@ export class EncarSolicitudVacanteComponent implements OnInit {
           this.pasantiaSelected.estudiante._id,
           currentDate,
           'Solicitud de vacante rechazada',
-          `Te han rechazado tu solicitud de vancante en ${this.convenio.empresa.nombre}`,
+          `Te han rechazado tu solicitud de vancante en ${this.pasantiaSelected.vacante.convenio.empresa.nombre}`,
           'Estudiante',
           this.pasantiaSelected.estudiante.correo  
         );

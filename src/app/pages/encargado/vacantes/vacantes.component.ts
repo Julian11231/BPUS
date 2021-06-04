@@ -34,13 +34,7 @@ export class VacantesComponent implements OnInit {
               private _vacantesService: VacantesService, 
               private _convenioService: ConvenioService) { }
 
-  ngOnInit(): void {
-    if(this.encargado.rol.nombre == "ADMIN"){
-      this.getVacantes();
-    }else if(this.encargado.rol.nombre == "ENCARGADO_EMPRESA"){
-      this.getConvenio();
-    }
-  }
+  ngOnInit(): void {this.getConvenio();}
 
   getDataBuscar(data) {
   }
@@ -52,12 +46,6 @@ export class VacantesComponent implements OnInit {
         this.vacantes = resp.vacantes;
       }); 
     })
-  }
-
-  getVacantes() {
-    this._vacantesService.getVacantes().subscribe((resp: any) => {
-      this.vacantes = resp.vacantes;
-    });    
   }
 
   postVacante(form: NgForm) {

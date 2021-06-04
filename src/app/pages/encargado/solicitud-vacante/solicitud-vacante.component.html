@@ -57,7 +57,7 @@
                                     <hr>
                                     <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
                                         <div class="vacantesInfo">
-                                            <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSelected.vacante.titulo}} - {{pasantiaSelected.empresa.nombre}} </small><br>
+                                            <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSelected.vacante.titulo}} - {{pasantiaSelected.vacante.convenio.empresa.nombre}} </small><br>
                                             <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSelected.vacante.ubicacion}}, &nbsp;{{pasantiaSelected.vacante.modalidad}}</small><br>
                                             <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSelected.vacante.funciones}}</small><br>
                                             <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSelected.vacante.pagada}}</small><br>
@@ -100,7 +100,7 @@
                                 <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
                                         {{ dato.estudiante.apellidos }}</b></h5>
                                 <small style="margin-top: -50px;"><i class="fa fa-briefcase"></i> &nbsp;
-                                    {{ dato.vacante.titulo }} - {{dato.empresa.nombre}}
+                                    {{ dato.vacante.titulo }} - {{dato.vacante.convenio.empresa.nombre}}
                                 </small><br>
                                 <small><i class="fa fa-globe"></i>&nbsp; &nbsp;{{dato.vacante.ubicacion}},
                                     {{dato.vacante.modalidad}}

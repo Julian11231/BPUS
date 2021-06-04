@@ -14,9 +14,9 @@ export class ConvenioService {
 
   constructor(public http: HttpClient, public router: Router) { }
 
-  getConveniosJefe(programa:String) {
+  getConveniosPrograma(programa:String) {
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios/jefePrograma${programa}?token=${token}`;;
+    let url = `${URL_SERVICES}/convenios/programa${programa}?token=${token}`;;
     return this.http.get(url);
   }
 

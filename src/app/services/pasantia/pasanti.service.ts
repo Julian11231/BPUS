@@ -23,9 +23,9 @@ export class PasantiService {
     return this.http.get(url);
   }
 
-  getSolicitudesEncargado(empresa: string) {
+  getSolicitudesEncargado() {
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/empresa${empresa}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/encargado?token=${token}`;
     return this.http.get(url);
   }
 
@@ -58,9 +58,9 @@ export class PasantiService {
     let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
       if (resp.ok) {
-        localStorage.removeItem("estudiante");
+        localStorage.removeItem("user");
         console.log(resp.estudianteActualizado);
-        localStorage.setItem("estudiante",  JSON.stringify(resp.estudianteActualizado));
+        localStorage.setItem("user",  JSON.stringify(resp.estudianteActualizado));
         return resp.solicitudGuardada;
       }else{
         return false;
@@ -80,9 +80,9 @@ export class PasantiService {
     let url = `${URL_SERVICES}/pasantia/direct/${idEstudiante}?token=${token}`;
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
       if (resp.ok == true) {
-        localStorage.removeItem("estudiante");
+        localStorage.removeItem("user");
         console.log(resp.estudianteActualizado);
-        localStorage.setItem("estudiante",  JSON.stringify(resp.estudianteActualizado));
+        localStorage.setItem("user",  JSON.stringify(resp.estudianteActualizado));
         return resp.solicitudGuardada;
       }else{
         return false;

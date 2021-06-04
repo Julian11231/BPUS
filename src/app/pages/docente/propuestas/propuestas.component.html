@@ -12,18 +12,18 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-7 col-lg-8">
-                                        <h5><b class="text-uppercase">ID de la solicitud:</b> &nbsp; {{pasantiaSup?._id}}</h5>
+                                        <h5><b class="text-uppercase">ID de la solicitud:</b> &nbsp; {{pasantiaSelected?._id}}</h5>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-4">
                                         <h5><b>Estado: &nbsp;</b>
-                                            <ng-container *ngIf="pasantiaSup?.estado == 'Enviada'" class="text-success"><span
-                                                class="label btnInfo"> <b> {{ pasantiaSup?.estado }} </b></span>
+                                            <ng-container *ngIf="pasantiaSelected?.estado == 'Enviada'" class="text-success"><span
+                                                class="label btnInfo"> <b> {{ pasantiaSelected?.estado }} </b></span>
                                             </ng-container>
-                                            <ng-container *ngIf="pasantiaSup?.estado == 'Aprobada'" class="text-success"><span
-                                                    class="label btnSuccess"> <b> {{ pasantiaSup?.estado }} </b></span>
+                                            <ng-container *ngIf="pasantiaSelected?.estado == 'Aprobada'" class="text-success"><span
+                                                    class="label btnSuccess"> <b> {{ pasantiaSelected?.estado }} </b></span>
                                             </ng-container>
-                                            <ng-container *ngIf="pasantiaSup?.estado == 'Rechazada'" class="text-success"><span
-                                                    class="label btnDanger"> <b> {{ pasantiaSup?.estado }} </b></span>
+                                            <ng-container *ngIf="pasantiaSelected?.estado == 'Rechazada'" class="text-success"><span
+                                                    class="label btnDanger"> <b> {{ pasantiaSelected?.estado }} </b></span>
                                             </ng-container>
                                         </h5>
                                     </div>
@@ -32,64 +32,66 @@
                                 <h5 class="text-uppercase"> <b>Información del estudiante:</b></h5>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                        <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSup?.estudiante.nombres }} {{pasantiaSup?.estudiante.apellidos}}</small>
+                                        <i class="fa fa-user-circle-o"></i> &nbsp; <small class="text-uppercase">{{ pasantiaSelected?.estudiante.nombres }} {{pasantiaSelected?.estudiante.apellidos}}</small>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                        <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{pasantiaSup?.estudiante.codigo}}</small>
+                                        <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{pasantiaSelected?.estudiante.codigo}}</small>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                        <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{pasantiaSup?.estudiante.identificacion}}</small>
+                                        <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{pasantiaSelected?.estudiante.identificacion}}</small>
                                     </div>
                                 </div><br>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                        <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{pasantiaSup?.estudiante.correo}}</small>
+                                        <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{pasantiaSelected?.estudiante.correo}}</small>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                        <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">Tél:&nbsp; {{pasantiaSup?.estudiante.telefono}}</small>
+                                        <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">Tél:&nbsp; {{pasantiaSelected?.estudiante.telefono}}</small>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                        <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">EPS:&nbsp; {{pasantiaSup?.estudiante.eps}}</small>
+                                        <i class="fa fa-phone"></i> &nbsp; <small class="text-justify">EPS:&nbsp; {{pasantiaSelected?.estudiante.eps}}</small>
                                     </div>
                                 </div>
-                                <ng-container *ngIf="pasantiaSup?.vacante">
-                                    <h5 class="text-uppercase mt-3"> <b>Información de la vacante:</b> </h5>
-                                    <div class="row mt-3">
+                                <ng-container *ngIf="pasantiaSelected?.vacante">
+                                    <h5 class="mt-3"> <b>Información de la vacante:</b></h5>
+                                    <div class="row">
                                         <div class="col-12 col-sm-12 col-md-7 col-lg-7">
                                             <div class="vacantesInfo">
-                                                <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSup?.vacante.titulo}} - {{pasantiaSup?.empresa.nombre}} </small><br>
-                                                <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSup?.vacante.ubicacion}}, &nbsp;{{pasantiaSup?.vacante.modalidad}}</small><br>
-                                                <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSup?.vacante.funciones}}</small><br>
-                                                <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSup?.vacante.pagada}}</small><br>
+                                                <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSelected?.vacante.titulo}} - {{pasantiaSelected?.vacante.convenio.empresa.nombre}} </small><br>
+                                                <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSelected?.vacante.ubicacion}}, &nbsp;{{pasantiaSelected?.vacante.modalidad}}</small><br>
+                                                <small><i class="fa fa-code"></i> &nbsp; {{pasantiaSelected?.vacante.funciones}}</small><br>
+                                                <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSelected?.vacante.pagada}}</small><br>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-5 col-lg-5">
                                             <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
-                                            <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{pasantiaSup?.vacante.convenio.encargado.nombres}} {{pasantiaSup?.vacante.convenio.encargado.apellidos}}</small><br>
-                                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{pasantiaSup?.vacante.convenio.encargado.correo}}</small><br>
-                                            <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{pasantiaSup?.vacante.convenio.encargado.telefono}}</small>
+                                            <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{pasantiaSelected?.vacante.convenio.encargado.nombres}} {{pasantiaSelected?.vacante.convenio.encargado.apellidos}}</small><br>
+                                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{pasantiaSelected?.vacante.convenio.encargado.correo}}</small><br>
+                                            <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{pasantiaSelected?.vacante.convenio.encargado.telefono}}</small>
                                         </div>
                                     </div>
                                     <div class="mt-3 ml-4">
                                         <h5 class="text-uppercase"> <b>Descripción:</b></h5>
-                                        <p class="mt-2 ml-2">{{pasantiaSup?.vacante.descripcion}}</p> 
+                                        <p class="mt-2 ml-2">{{pasantiaSelected?.vacante.descripcion}}</p> 
                                     </div>
                                 </ng-container>
-                                <ng-container *ngIf="!pasantiaSup?.vacante">
-                                    <h5 class="text-uppercase mt-3"> <b>Información de la empresa:</b> </h5>
-                                    <div class="row mt-3">
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                            <small><i class="fa fa-briefcase"></i> &nbsp;{{pasantiaSup?.empresa.nombre}} </small>
+                                <ng-container *ngIf="!pasantiaSelected?.vacante">
+                                    <h5 class="mt-3"> <b>Información de empresa:</b></h5>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                            <div class="vacantesInfo">
+                                                <small><i class="fa fa-briefcase"></i> &nbsp; {{pasantiaSelected?.convenio.empresa.nombre}} </small><br>
+                                                <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSelected?.convenio.empresa.ciudad}}, &nbsp;{{pasantiaSelected?.convenio.empresa.direccion}}</small><br>
+                                                <small><i class="fa fa-phone"></i> &nbsp; {{pasantiaSelected?.convenio.empresa.telefono}}</small><br>
+                                                <small><i class="fa fa-money"></i>  &nbsp; Pagada: &nbsp;{{pasantiaSelected?.convenio.empresa.naturaleza}}</small><br>
+                                            </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                            <small><i class="fa fa-globe"></i> &nbsp; {{pasantiaSup?.empresa.ciudad}}, &nbsp;{{pasantiaSup?.empresa.direccion}}</small>
+                                        <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                            <h5 class="text-uppercase"> <b>Persona a Cargo:</b></h5>
+                                            <i class="fa fa-user"></i> &nbsp; <small class="text-justify"> {{pasantiaSelected?.convenio.encargado.nombres}} {{pasantiaSelected?.convenio.encargado.apellidos}}</small><br>
+                                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">{{pasantiaSelected?.convenio.encargado.correo}}</small><br>
+                                            <i class="fa fa-phone"></i> &nbsp;<small class="text-justify"> {{pasantiaSelected?.convenio.encargado.telefono}}</small>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                            <small><i class="fa fa-phone"></i> &nbsp; {{pasantiaSup?.empresa.telefono}}</small>
-                                        </div>
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                            <small><i class="fa fa-money"></i> &nbsp;{{pasantiaSup?.empresa.naturaleza}}</small>
-                                        </div>    
                                     </div>
                                 </ng-container>
                                 <div class="modal-footer mt-3">
@@ -113,7 +115,7 @@
                             
                             <!-- Modal body -->
                             <div class="modal-body">
-                                Estas a punto de rechazar la solicitud de pasantia de <span class="text-capitalize">{{pasantiaSup?.estudiante.nombres}} {{pasantiaSup?.estudiante.apellidos}}</span> en {{pasantiaSup?.empresa.nombre}}
+                                Estas a punto de rechazar la solicitud de pasantia de <span class="text-capitalize">{{pasantiaSelected?.estudiante.nombres}} {{pasantiaSelected?.estudiante.apellidos}}</span>
                                 <form ngNativeValidate #rechazar="ngForm" (ngSubmit)="rechazarSolicitud(rechazar)">
                                     <label class="control-label mt-2">
                                         <h5> <b class="text-uppercase">Notas</b> (escribe el motivo del rechazo) <b>:</b></h5>
@@ -141,7 +143,7 @@
                             
                             <!-- Modal body -->
                             <div class="modal-body">
-                                Estas a punto de aprobar la solicitud de pasantia de <span class="text-capitalize">{{pasantiaSup?.estudiante.nombres}} {{pasantiaSup?.estudiante.apellidos}}</span> en {{pasantiaSup?.empresa.nombre}}
+                                Estas a punto de aprobar la solicitud de pasantia de <span class="text-capitalize">{{pasantiaSelected?.estudiante.nombres}} {{pasantiaSelected?.estudiante.apellidos}}</span>
                                 <form ngNativeValidate #aprobar="ngForm" (ngSubmit)="aprobarSolicitud(aprobar)">
                                     <label class="control-label mt-2">
                                         <h5 class="text-uppercase"> <b>Asiganar tutor:</b> </h5>
@@ -186,10 +188,10 @@
                                     <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
                                             {{ dato.estudiante.apellidos }}</b></h5>
                                     <small *ngIf="dato.vacante"><i class="fa fa-briefcase"></i> &nbsp;
-                                        {{dato.empresa.nombre}}
+                                        {{dato.vacante.convenio.empresa.nombre}}
                                     </small><br *ngIf="dato.vacante">
                                     <small *ngIf="!dato.vacante"><i class="fa fa-briefcase">
-                                        </i> &nbsp; {{dato.empresa.nombre}}
+                                        </i> &nbsp; {{dato.convenio.empresa.nombre}}
                                     </small>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@ export class ActaInicioPasantiaComponent implements OnInit {
 
   pasantia: any;
   info = JSON.parse(localStorage.getItem('user'));
-  jefe:string;
+  programa:string;
 
   nombreArchivoARL: string;
   nombreArchivoActIni: string;
@@ -40,6 +40,14 @@ export class ActaInicioPasantiaComponent implements OnInit {
     if(this.info.modalidad !== null){
       this.getPasantia();
     }
+    this.getPrograma();
+  }
+
+  getPrograma(){
+    this._programaService.getPrograma().subscribe((resp) => {
+      let infoPrograma = resp['programa'];
+      this.programa = infoPrograma.nombre;
+    });
   }
 
   getPasantia() {
@@ -107,7 +115,7 @@ export class ActaInicioPasantiaComponent implements OnInit {
           this.pasantia.tutor._id,
           currentDate,
           'Acta de inicio enviada',
-          `El estudiante ${this.info.nombres} ${this.info.apellidos} ha subido el acta de inicio de su pasantia, se adjunta el documento del acta.`,
+          `El estudiante ${this.info.nombres} ${this.info.apellidos} ha subido el acta de inicio de su pasantia`,
           'Administrativo',
           this.pasantia.tutor.correo);
         this._notificacionService.postNotificacion(notificacionT).subscribe();

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { EstudianteService } from 'src/app/services/service.index';
-import { any } from 'codelyzer/util/function';
 
 @Component({
   selector: 'app-admin-estudiantes',

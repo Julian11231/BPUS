@@ -17,7 +17,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
 })
 export class PropuestasComponent implements OnInit {
 
-  pasantiaSup: any;
+  pasantiaSelected: any;
 
   user: any;
   propuestas: any[];
@@ -35,13 +35,20 @@ export class PropuestasComponent implements OnInit {
   }
 
   aprobarSolicitud(form: NgForm) {
+
+    let empresa: any;
+    if(this.pasantiaSelected.vacante){
+      empresa = this.pasantiaSelected.vacante.convenio.empresa;
+    }else{
+      empresa = this.pasantiaSelected.convenio.empresa;
+    }
     let pasantia = new PasantiaAdmin(
       'En ejecución',
       this.tutorSelected._id,
       'Aprobada',
       form.value.notas,
     )
-    this._pasantiaService.putSolicitudJefe(this.pasantiaSup._id, pasantia).subscribe((resp:any) => {
+    this._pasantiaService.putSolicitudJefe(this.pasantiaSelected._id, pasantia).subscribe((resp:any) => {
       const pdf = new PdfMakeWrapper();
       pdf.pageSize('A4');
       pdf.pageMargins(80); 
@@ -52,14 +59,14 @@ export class PropuestasComponent implements OnInit {
       pdf.add(new Txt('Neiva, '+dateText).alignment('left').end);
       
       pdf.add(new Txt('Señores').margin([0, 40, 0, 0]).alignment('left').end);
-      pdf.add(new Txt(this.pasantiaSup.empresa.nombre).alignment('left').end);
-      pdf.add(new Txt('Neiva').alignment('left').end);
+      pdf.add(new Txt(empresa.nombre).alignment('left').end);
+      pdf.add(new Txt(empresa.ciudad).alignment('left').end);
       pdf.add(new Txt('Cordial saludo.').margin([0, 30, 0, 0]).alignment('left').end);
-      pdf.add(new Txt(`De acuerdo a las políticas institucionales y teniendo en cuenta que se realizó el Convenio de “Cooperación Académica para la Realización de Prácticas Académicas y Pasantías celebrado entre la Universidad Surcolombiana y ${this.pasantiaSup.empresa.nombre}", me permito presentar e informar que el estudiante cumple con los requisitos para realizar pasantías,`).margin([0, 20, 0, 0]).alignment('justify').end)
+      pdf.add(new Txt(`De acuerdo a las políticas institucionales y teniendo en cuenta que se realizó el Convenio de “Cooperación Académica para la Realización de Prácticas Académicas y Pasantías celebrado entre la Universidad Surcolombiana y ${empresa.nombre}", me permito presentar e informar que el estudiante cumple con los requisitos para realizar pasantías,`).margin([0, 20, 0, 0]).alignment('justify').end)
   
       pdf.add(new Table([
         [ new Txt('ÍTEM').alignment('center').end, new Txt('NOMBRE Y APELLIDOS').alignment('center').end, new Txt('CODIGO').alignment('center').end, new Txt('C.C.#').alignment('center').end],
-        [ new Txt('1').alignment('center').end, new Txt(`${this.pasantiaSup.estudiante.nombres} ${this.pasantiaSup.estudiante.apellidos}`).alignment('center').end, new Txt(`${this.pasantiaSup.estudiante.codigo}`).alignment('center').end, new Txt(`${this.pasantiaSup.estudiante.identificacion}`).alignment('center').end]
+        [ new Txt('1').alignment('center').end, new Txt(`${this.pasantiaSelected.estudiante.nombres} ${this.pasantiaSelected.estudiante.apellidos}`).alignment('center').end, new Txt(`${this.pasantiaSelected.estudiante.codigo}`).alignment('center').end, new Txt(`${this.pasantiaSelected.estudiante.identificacion}`).alignment('center').end]
       ]).margin([0, 20, 0, 0]).end);
   
       pdf.add(new Txt(`Estará supervisada por un delegado de la empresa y por docente ${this.tutorSelected.nombres} ${this.tutorSelected.apellidos}, e-mail ${this.tutorSelected.correo} Número del celular ${this.tutorSelected.telefono}, del programa, información que quedará registrada en el acta de inicio de la práctica`).margin([0, 20, 0, 0]).alignment('justify').end)
@@ -81,28 +88,28 @@ export class PropuestasComponent implements OnInit {
         pdf.add(new Txt('y Tecnología en Desarrollo de Software').alignment('justify').end)
         
         pdf.create().getBlob((blop) => {
-          this.carta_presentacion.append('carta_presentacion', blop, this.pasantiaSup.estudiante._id+'-carta_presentacion.pdf');
-          this._pasantiaService.postCartaPresentacion(this.pasantiaSup.estudiante._id, this.carta_presentacion).subscribe((respPC:any) => {
+          this.carta_presentacion.append('carta_presentacion', blop, this.pasantiaSelected.estudiante._id+'-carta_presentacion.pdf');
+          this._pasantiaService.postCartaPresentacion(this.pasantiaSelected.estudiante._id, this.carta_presentacion).subscribe((respPC:any) => {
             if(respPC){
               let currentDate = new Date();
               let notificacionE =new Notificacion(
-                this.pasantiaSup.estudiante._id,
+                this.pasantiaSelected.estudiante._id,
                 currentDate,
                 'Solicitd de pasantia aprobada',
                 `Tu solicitud de pasantia ha sido aprobada, el director de tu pasantia será ${this.tutorSelected.nombres} ${this.tutorSelected.apellidos}, se adjunta la carta de presentación a la empresa`,
                 'Estudiante',
-                this.pasantiaSup.estudiante.correo);
+                this.pasantiaSelected.estudiante.correo);
               let notificacionT = new Notificacion(
                 this.tutorSelected._id,
                 currentDate,
                 'Asignación como tutor de pasantia',
-                `Te han asiganado como director de la pasantia del estudiante ${this.pasantiaSup.estudiante.nombres} ${this.pasantiaSup.estudiante.apellidos}, se adjunta el documento de la solicitud.`,
+                `Te han asiganado como director de la pasantia del estudiante ${this.pasantiaSelected.estudiante.nombres} ${this.pasantiaSelected.estudiante.apellidos}, se adjunta el documento de la solicitud.`,
                 'Administrativo',
                 this.tutorSelected.correo);
               this._notificacionService.postNotificacion(notificacionE).subscribe();
               this._notificacionService.postNotificacion(notificacionT).subscribe();
-              this._notificacionService.sendCartaPresentacionCorreo(this.pasantiaSup.estudiante._id, notificacionE).subscribe();
-              this._notificacionService.sendPropuestaCorreo(this.pasantiaSup.estudiante._id, notificacionT).subscribe();
+              this._notificacionService.sendCartaPresentacionCorreo(this.pasantiaSelected.estudiante._id, notificacionE).subscribe();
+              this._notificacionService.sendPropuestaCorreo(this.pasantiaSelected.estudiante._id, notificacionT).subscribe();
               Swal.fire({
                 title: '¡Bien Hecho!',
                 html: `Propuesta aprobada correctamente`,
@@ -137,13 +144,13 @@ export class PropuestasComponent implements OnInit {
       );
       let currentDate = new Date();
       let notificacionE =new Notificacion(
-        this.pasantiaSup.estudiante._id,
+        this.pasantiaSelected.estudiante._id,
         currentDate,
         'Solicitd de pasantia rechazada',
         'Tu solicitud de pasantia ha sido rechazada',
         'Estudiante' 
       );
-      this._pasantiaService.putSolicitudJefe(this.pasantiaSup._id, pasantia).subscribe((resp:any)=>{
+      this._pasantiaService.putSolicitudJefe(this.pasantiaSelected._id, pasantia).subscribe((resp:any)=>{
         this._notificacionService.postNotificacion(notificacionE).subscribe();
         this._notificacionService.sendNotificacionCorreo(notificacionE).subscribe();
         Swal.fire({
@@ -172,7 +179,8 @@ export class PropuestasComponent implements OnInit {
   }
 
   getDataInfo(data: any) {
-    this.pasantiaSup = data;
+    this.pasantiaSelected = data;
+    console.log(this.pasantiaSelected)
     this.notas = data.notas;
   }
 

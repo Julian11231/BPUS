@@ -6,11 +6,11 @@
             <h5><span class="font-weight-bold text-dark">Nombre: </span></h5>
             <h5>{{info.nombres}} {{info.apellidos}}</h5>
             <h5><span class="font-weight-bold text-dark mr-2 mt-4">Código: </span>{{info.codigo}} <span class="ml-3 font-weight-bold text-dark">ID:</span> {{info.identificacion}}</h5>
-            <h5><span class="font-weight-bold text-dark mr-2 mt-4">Programa: </span> {{info.programa.nombre}}</h5>
+            <h5><span class="font-weight-bold text-dark mr-2 mt-4">Programa: </span> {{programa}}</h5>
             <h5><span class="font-weight-bold text-dark mr-2 mt-4">Correo: </span> {{info.correo}}</h5>
             <h5><span class="font-weight-bold text-dark mr-2 mt-4">Teléfono: </span> {{info.telefono}}</h5>
             <h5><span class="font-weight-bold text-dark mr-2 mt-4">EPS: </span> {{info.eps}}</h5>
-            <h5><span class="font-weight-bold text-dark mr-2 mt-4">Empresa: </span> {{pasantia?.empresa.nombre}}</h5>
+            <h5><span class="font-weight-bold text-dark mr-2 mt-4">Empresa: </span> {{pasantia?.vacante.convenio.empresa.nombre}}</h5>
             <h5 class="font-weight-bold text-dark mt-3">Linea de investigación:</h5>
             <h5>{{pasantia?.lineaInvestigacion}}</h5>
         </div>

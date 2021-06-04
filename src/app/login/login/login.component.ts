@@ -33,18 +33,20 @@ export class LoginComponent implements OnInit {
     // Llamamos a la función login del servicio Login y le pasamos el usuario y la variable recordar
     this.__loginService.login(usuario, this.recordar).subscribe((resp) => {
       const user = JSON.parse(localStorage.getItem("user"));
-      // Si se inicia un estudiante...
-      if (user.rol.nombre == "ESTUDIANTE") {
-        if (user.modalidad) {
-          this.__loginService.dejaPasar();
-          this.router.navigate(['/panel-principal']);
-        } else {
-          this.router.navigate(['/requisitos']);
-        }
-      } else if(user.rol.nombre == "ENCARGADOEMPRESA"){
-        this.router.navigate(['/vacantes']);
+      if(user.contraseña === ':('){
+        this.router.navigate(['/cambio-contraseña']);
       }else{
-        this.router.navigate(['/panel-principal']);
+        // Si se inicia un estudiante...
+        if (user.codigo) {
+          if (user.modalidad) {
+            this.__loginService.dejaPasar();
+            this.router.navigate(['/panel-principal']);
+          } else {
+            this.router.navigate(['/requisitos']);
+          }
+        } else{
+          this.router.navigate(['/panel-principal']);
+        }
       }
     });
   }

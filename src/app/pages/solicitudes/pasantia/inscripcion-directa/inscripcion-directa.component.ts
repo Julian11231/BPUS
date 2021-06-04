@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Pasantia } from 'src/app/models/Pasantia';
-import { PasantiService, EmpresaService, NotificacionesService, ProgramaService } from 'src/app/services/service.index';
+import { PasantiService, ConvenioService, NotificacionesService, ProgramaService } from 'src/app/services/service.index';
 import { Notificacion } from 'src/app/models/notificacion.model';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class InscripcionDirectaComponent implements OnInit {
   info = JSON.parse(localStorage.getItem('user'));
   nombreEmpresa:string;
   jefe:string;
-  empresas: any;
+  convenios: any;
   eps:string;
   tituloPasantia:string;
   descripcion:string;
@@ -30,7 +30,7 @@ export class InscripcionDirectaComponent implements OnInit {
   MAX_SIZE_FILE: number = 1000000
 
   constructor(public _pasantiaService: PasantiService, 
-              public _empresaService: EmpresaService,
+              public _convenioService: ConvenioService,
               public _programaService: ProgramaService,
               public _notificacionService: NotificacionesService,
               public router: Router) { }
@@ -41,10 +41,9 @@ export class InscripcionDirectaComponent implements OnInit {
   }
 
   getEmpresas(){
-    this._empresaService.getEmpresas().subscribe((resp:any) => {
-      this.empresas = resp.empresas;
-      console.log(this.empresas);
-    })
+    this._convenioService.getConveniosPrograma(this.info.programa).subscribe((resp:any) => {
+      this.convenios = resp.convenios;
+    });
   }
 
   getFilePropuesta(file: File) {
@@ -162,8 +161,8 @@ export class InscripcionDirectaComponent implements OnInit {
 
     if(selectedIndex > 0){
       selectedIndex = selectedIndex-1;
-      this.nombreEmpresa = this.empresas[selectedIndex].nombre;
-      this.idEmpresa =  this.empresas[selectedIndex]._id;
+      this.nombreEmpresa = this.convenios[selectedIndex].empresa.nombre;
+      this.idEmpresa =  this.convenios[selectedIndex]._id;
     }else{
       this.nombreEmpresa = '';
       this.idEmpresa = '';

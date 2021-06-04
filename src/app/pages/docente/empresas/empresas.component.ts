@@ -50,31 +50,13 @@ export class EmpresasComponent implements OnInit {
               public _encargadoEmpresaService: EncargadoEmpresaService,
               public _convenioService: ConvenioService) { }
 
-  ngOnInit(): void {
-    if(this.usuario.rol.nombre === "JEFE_PROGRAMA"){
-      this.getConveniosJefe();
-    }else if (this.usuario.rol.nombre === "ADMIN"){
-      this.getConvenios();
-    }else{
-      this.router.navigate(['/panel-principal']);
-    }
-  }
+  ngOnInit(): void {this.getConveniosJefe();}
 
   getConveniosJefe() {
-    let programa = this.usuario.programa._id
-    this.programa = programa
+    let programa = this.usuario.programa;
+    this.programa = programa;
 
-    this._convenioService.getConveniosJefe(programa).subscribe((resp: any) => {
-      this.convenios = resp.convenios;
-    });
-  }
-
-  getConvenios() {
-    
-    let programa = this.usuario.programa._id
-    this.programa = programa
-    
-    this._convenioService.getConvenios().subscribe((resp: any) => {
+    this._convenioService.getConveniosPrograma(programa).subscribe((resp: any) => {
       this.convenios = resp.convenios;
     });
   }
@@ -127,11 +109,7 @@ export class EmpresasComponent implements OnInit {
                       text: `Se ha creado correctamente la empresa`,
                       icon: 'success'
                     }).then(() => {
-                      if(this.usuario.rol === "JEFE_PROGRAMA"){
-                        this.getConveniosJefe();
-                      }else {
-                        this.getConvenios();
-                      }
+                      this.getConveniosJefe();
                     });
                   }
                 });
@@ -141,11 +119,7 @@ export class EmpresasComponent implements OnInit {
                   text: `Se ha creado correctamente la empresa`,
                   icon: 'success'
                 }).then(() => {
-                  if(this.usuario.rol === "JEFE_PROGRAMA"){
-                    this.getConveniosJefe();
-                  }else {
-                    this.getConvenios();
-                  }
+                  this.getConveniosJefe();
                 });
               }
             });
@@ -209,11 +183,7 @@ export class EmpresasComponent implements OnInit {
                   text: `Se ha actualizado correctamente la empresa`,
                   icon: 'success'
                 }).then(() => {
-                  if(this.usuario.rol === "JEFE_PROGRAMA"){
-                    this.getConveniosJefe();
-                  }else {
-                    this.getConvenios();
-                  }
+                  this.getConveniosJefe();
                 });
               }
             });
@@ -223,11 +193,7 @@ export class EmpresasComponent implements OnInit {
               text: `Se ha actualizado correctamente la empresa`,
               icon: 'success'
             }).then(() => {
-              if(this.usuario.rol === "JEFE_PROGRAMA"){
-                this.getConveniosJefe();
-              }else {
-                this.getConvenios();
-              }
+              this.getConveniosJefe();
             }); 
           }
         });

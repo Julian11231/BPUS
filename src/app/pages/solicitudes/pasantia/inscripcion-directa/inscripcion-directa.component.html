@@ -35,8 +35,8 @@
                     <label for="empresa" class="font-weight-bold text-dark mt-2">Empresa de la pasantia:</label>
                     <select name="empresa" id="mySelect" class="form-control custom-select w-75" (change)="getInfoPropuesta()" required>
                         <option selected>Selecciona una empresa...</option>
-                        <ng-container *ngFor="let empresa of empresas">
-                            <option *ngIf="empresa.estado === 'Activa'">{{empresa.nombre}}</option>
+                        <ng-container *ngFor="let convenio of convenios">
+                            <option>{{convenio.empresa.nombre}}</option>
                         </ng-container>
                     </select>
                     <label for="eps" class="font-weight-bold text-dark mt-3">Linea de investigación:</label><br>

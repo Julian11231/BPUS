@@ -22,6 +22,7 @@ import { APP_ROUTES } from './app.routes';
 // Import pdfmake-wrapper and the fonts to use
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { CambioClaveComponent } from './login/cambio-clave/cambio-clave.component';
 //import pdfFonts from "pdfmake/build/vfs_fonts"; // fonts provided for pdfmake
 
 // Set the fonts to use
@@ -34,6 +35,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     AppComponent,
     LoginComponent,
     RequisitosComponent,
+    CambioClaveComponent,
 
   ],
   imports: [

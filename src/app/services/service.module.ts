@@ -20,7 +20,8 @@ import {
   NotificacionesService,
   EstudianteService,
   EstudianteGuard,
-  RolesService
+  RolesService,
+  AdministrativoService
 } from './service.index'
 
 
@@ -46,7 +47,8 @@ import {
     NotificacionesService,
     EstudianteService,
     EstudianteGuard,
-    RolesService
+    RolesService,
+    AdministrativoService
   ]
 })
 export class ServiceModule { }

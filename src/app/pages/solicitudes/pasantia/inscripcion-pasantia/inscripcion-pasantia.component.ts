@@ -50,9 +50,8 @@ export class InscripcionPasantiaComponent implements OnInit {
   }
 
   getVacantes() {
-    this._vacantesService.getVacantesEstudiante(this.info.programa._id).subscribe((resp: any) => {
+    this._vacantesService.getVacantesEstudiante(this.info.programa).subscribe((resp: any) => {
       this.vacantes = resp.vacantes;
-      console.log(resp)
     });
   }
 
@@ -77,7 +76,7 @@ export class InscripcionPasantiaComponent implements OnInit {
         setTimeout(() => {
 
           let preInscripcion = new Pasantia(
-            this.empresa,
+            null,
             this.preInscripcion,
             form.value.eps,
             this.lineaInvestigacion
@@ -90,7 +89,7 @@ export class InscripcionPasantiaComponent implements OnInit {
               currentDate,
               'Nueva solicitd de pasantia',
               `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.nombreEmpresa}`,
-              'EncargadoEmpresa' 
+              'Administrativo' 
             );
             this._notificacionService.postNotificacion(notificacion).subscribe((respN:any)=> {
               if(respN){

@@ -13,10 +13,11 @@ import { Pasantia } from 'src/app/models/Pasantia';
 export class PropuestaPasantiaComponent implements OnInit {
 
   pasantia: any;
+  programa:string;
   nombreArchivoP: string;
   nombreArchivoF: string;
   info = JSON.parse(localStorage.getItem('user'));
-  jefe:string;
+  jefe:any;
   tituloPasantia:string;
   descripcion:string;
 
@@ -107,12 +108,12 @@ export class PropuestaPasantiaComponent implements OnInit {
         let pasantia = new Pasantia(null,null,null,null,this.tituloPasantia,this.descripcion);
         let currentDate = new Date();
         let notificacion = new Notificacion(
-          this.jefe,
+          this.jefe._id,
           currentDate,
           'Nueva solicitd de pasantia',
-          `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.pasantia.empresa.nombre}, se adjunta el documento de la solicitud.`,
+          `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.pasantia.vacante.convenio.empresa.nombre}, se adjunta el documento de la solicitud.`,
           'Administrativo',
-          this.info.correo);
+          this.jefe.correo);
         this._pasantiaService.putSolicitudPropuesta(this.pasantia._id, pasantia).subscribe((awns:any) =>{
           this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((respDP:any) => {
             this._pasantiaService.postDocumentoFichaAcademica(idEstudiante, this.documento_fichaAcademica).subscribe((respDF:any) => {
@@ -162,7 +163,8 @@ export class PropuestaPasantiaComponent implements OnInit {
   getJefePrograma() {
     this._programaService.getPrograma().subscribe((resp) => {
       let infoPrograma = resp['programa'];
-      this.jefe = infoPrograma.jefe._id;
+      this.programa = infoPrograma.nombre;
+      this.jefe = infoPrograma.jefe;
     });
   }
 

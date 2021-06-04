@@ -16,3 +16,4 @@ export { NotificacionesService } from './notificacion/notificacion.service';
 export { EstudianteService } from './estudiante/estudiante.service';
 export { RolesService } from './roles/roles.service';
 export { PermisosService } from './permisos/permisos.service';
+export { AdministrativoService } from './administrativo/administrativo.service';
