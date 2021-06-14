@@ -5,7 +5,7 @@ export { EmpresaService } from './empresa/empresa.service';
 export { ModalidadService } from './modalidad/modalidad.service';
 export { ProgramaService } from './programa/programa.service';
 export { LoginGuardGuard } from './guards/login-guard.guard';
-export { EstudianteGuard } from './guards/estudiante.guard';
+export { PermisosGuard } from './guards/permisos.guard';
 export { RequisitosService } from './requisitos/requisitos.service';
 export { LoginService } from './login/login.service';
 export { SidebarService } from './sidebar/sidebar.service';

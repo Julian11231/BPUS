@@ -31,17 +31,17 @@ import { RolesComponent } from './roles/roles.component';
 import { PermisosComponent } from './permisos/permisos.component';
 //Guards
 import { LoginGuardGuard } from '../services/service.index';
-import { EstudianteGuard } from '../services/service.index';
+import { PermisosGuard } from '../services/service.index';
 
 const pagesRoutes: Routes = [
 
-    { path: 'modalidades', component: ModalidadesComponent, data: { titulo: 'Modalidades Disponibles' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
-    { path: 'solicitud-pasantia-supervisada', component: PasantiaComponent, data: { titulo: 'Solicitud Pasantía' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
-    { path: 'solicitud-proyecto-de-grado', component: ProyectoComponent, data: { titulo: 'Solicitud Proyecto' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
-    { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard,EstudianteGuard] },
+    { path: 'modalidades', component: ModalidadesComponent, data: { titulo: 'Modalidades Disponibles' }, canActivate: [LoginGuardGuard,PermisosGuard] },
+    { path: 'solicitud-pasantia-supervisada', component: PasantiaComponent, data: { titulo: 'Solicitud Pasantía' }, canActivate: [LoginGuardGuard,PermisosGuard] },
+    { path: 'solicitud-proyecto-de-grado', component: ProyectoComponent, data: { titulo: 'Solicitud Proyecto' }, canActivate: [LoginGuardGuard,PermisosGuard] },
+    { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard,PermisosGuard] },
     { path: 'notificaciones', component: NotificacionesComponent, data: { titulo: 'Notificaciones' }, canActivate: [LoginGuardGuard] },
-    { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard,EstudianteGuard] },
-    { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard,EstudianteGuard] },
+    { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard,PermisosGuard] },
+    { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard,PermisosGuard] },
     {
         path: '',
         component: PagesComponent,
@@ -49,24 +49,24 @@ const pagesRoutes: Routes = [
         children: [
             { path: 'panel-principal', component: MainComponent, data: { titulo: 'Panel Principal' } },
             { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil de Usuario' } },
-            { path: 'empresas', component: EmpresasComponent, data: { titulo: 'Gestión de Empresas' } },
-            { path: 'vacantes', component: VacantesComponent, data: { titulo: 'Gestión de Vacantes' } },
-            { path: 'inscripcion-propuesta', component: PropuestaPasantiaComponent, data: { titulo: 'Inscripción de la Propuesta' },canActivate: [EstudianteGuard] },
-            { path: 'solicitudes', component: ModSolicitudVacanteComponent, data: { titulo: 'Solicitudes Por Vacantes' } },
-            { path: 'mi-modalidad', component: MiSolicitudComponent, data: { titulo: 'Seguimiento a la Modalidad' } },
-            { path: 'pasantias-asignadas', component: TutoriaPasantiaComponent, data: { titulo: 'Pasantías Asignadas' } },
-            { path: 'propuestas', component: PropuestasComponent, data: { titulo: 'Propuestas de Pasantía' } },
-            { path: 'informe-siete', component: InformeSieteComponent, data: { titulo: 'Envío de Informe de la Semana 7' } },
-            { path: 'informe-catorce', component: InformeCatorceComponent, data: { titulo: 'Envío de Informe de la Semana 14' } },
-            { path: 'informe-final', component: InformeFinalComponent, data: { titulo: 'Envío de Informe Final' } },
-            { path: 'solicitud-vacantes', component: EncarSolicitudVacanteComponent, data: { titulo: 'Solicitudes de vacantes' } },
-            { path: 'acta-inicio', component: ActaInicioPasantiaComponent, data: { titulo: 'Acta de inicio' } },
-            { path: 'gestion-estudiantes', component: AdminEstudiantesComponent, data: { titulo: 'Gestión de estudiantes' } },
-            { path: 'asignacion-jurados', component: GestionJuradosComponent, data: { titulo: 'Asignación de jurados' } },
-            { path: 'jurado', component: JuradoPasantiaComponent, data: { titulo: 'Jurado' } },
-            { path: 'sustentacion-pasantia', component: SustentacionComponent, data: { titulo: 'Sustentación pasantia' } },
-            { path: 'roles', component: RolesComponent, data: { titulo: 'Administración de roles' } },
-            { path: 'permisos', component: PermisosComponent, data: { titulo: 'Administración de permisos'}},
+            { path: 'empresas', component: EmpresasComponent, data: { titulo: 'Gestión de Empresas' } ,canActivate: [PermisosGuard]},
+            { path: 'vacantes', component: VacantesComponent, data: { titulo: 'Gestión de Vacantes' } ,canActivate: [PermisosGuard]},
+            { path: 'inscripcion-propuesta', component: PropuestaPasantiaComponent, data: { titulo: 'Inscripción de la Propuesta' },canActivate: [PermisosGuard] },
+            { path: 'solicitudes', component: ModSolicitudVacanteComponent, data: { titulo: 'Solicitudes Por Vacantes' } ,canActivate: [PermisosGuard]},
+            { path: 'mi-modalidad', component: MiSolicitudComponent, data: { titulo: 'Seguimiento a la Modalidad' } ,canActivate: [PermisosGuard]},
+            { path: 'pasantias-asignadas', component: TutoriaPasantiaComponent, data: { titulo: 'Pasantías Asignadas' } ,canActivate: [PermisosGuard]},
+            { path: 'propuestas', component: PropuestasComponent, data: { titulo: 'Propuestas de Pasantía' } ,canActivate: [PermisosGuard]},
+            { path: 'informe-siete', component: InformeSieteComponent, data: { titulo: 'Envío de Informe de la Semana 7' } ,canActivate: [PermisosGuard]},
+            { path: 'informe-catorce', component: InformeCatorceComponent, data: { titulo: 'Envío de Informe de la Semana 14' } ,canActivate: [PermisosGuard]},
+            { path: 'informe-final', component: InformeFinalComponent, data: { titulo: 'Envío de Informe Final' } ,canActivate: [PermisosGuard]},
+            { path: 'solicitud-vacantes', component: EncarSolicitudVacanteComponent, data: { titulo: 'Solicitudes de vacantes' } ,canActivate: [PermisosGuard]},
+            { path: 'acta-inicio', component: ActaInicioPasantiaComponent, data: { titulo: 'Acta de inicio' } ,canActivate: [PermisosGuard]},
+            { path: 'gestion-estudiantes', component: AdminEstudiantesComponent, data: { titulo: 'Gestión de estudiantes' } ,canActivate: [PermisosGuard]},
+            { path: 'asignacion-jurados', component: GestionJuradosComponent, data: { titulo: 'Asignación de jurados' } ,canActivate: [PermisosGuard]},
+            { path: 'jurado', component: JuradoPasantiaComponent, data: { titulo: 'Jurado' } ,canActivate: [PermisosGuard]},
+            { path: 'sustentacion-pasantia', component: SustentacionComponent, data: { titulo: 'Sustentación pasantia' } ,canActivate: [PermisosGuard]},
+            { path: 'roles', component: RolesComponent, data: { titulo: 'Administración de roles' } ,canActivate: [PermisosGuard]},
+            { path: 'permisos', component: PermisosComponent, data: { titulo: 'Administración de permisos'},canActivate: [PermisosGuard]},
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },

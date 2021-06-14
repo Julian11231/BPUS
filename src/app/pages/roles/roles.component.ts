@@ -26,10 +26,6 @@ export class RolesComponent implements OnInit {
     });
   }
 
-  goPermisos(rol:string, rol_name:string) {
-    this.router.navigate(['/permisos'], { queryParams: { rol: rol, rol_name: rol_name } });
-  }
-
   editRol(rol:string){
     const btnRoles = 'btn'+rol
     var rolInput = (document.getElementById(rol)) as HTMLInputElement;
@@ -53,7 +49,6 @@ export class RolesComponent implements OnInit {
   postRol(form: NgForm){
     console.log(form.value.nuevoRol);
     const rol = {nombre: form.value.nuevoRol.toUpperCase()};
-    console.log(rol);
     Swal.fire({
       title: 'Crear rol?',
       text:`Crearas el rol ${rol.nombre}, estás seguro?`,

@@ -19,7 +19,7 @@ import {
   ConvenioService,
   NotificacionesService,
   EstudianteService,
-  EstudianteGuard,
+  PermisosGuard,
   RolesService,
   AdministrativoService
 } from './service.index'
@@ -46,7 +46,7 @@ import {
     ConvenioService,
     NotificacionesService,
     EstudianteService,
-    EstudianteGuard,
+    PermisosGuard,
     RolesService,
     AdministrativoService
   ]
