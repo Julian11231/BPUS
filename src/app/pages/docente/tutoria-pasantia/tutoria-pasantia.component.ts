@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PasantiService } from 'src/app/services/service.index';
+import { PasantiService, NotificacionesService } from 'src/app/services/service.index';
 import { NgForm } from '@angular/forms';
 import { PasantiaTutor } from '../../../models/PasantiaTutor';
+import { Notificacion } from 'src/app/models/notificacion.model';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 
@@ -27,7 +28,7 @@ export class TutoriaPasantiaComponent implements OnInit {
   new_notas_informe14:string = "";
   new_notas_informeFinal:string = "";
 
-  constructor(public _pasantiaService: PasantiService) { }
+  constructor(private _notificacionService: NotificacionesService, private _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
     this.getPasantias();
@@ -51,7 +52,6 @@ export class TutoriaPasantiaComponent implements OnInit {
   }
 
   putEstadoInformes(form: NgForm, idPasantia: string) {
-
     Swal.fire({
       title: '¿Actualizar Pasantía?',
       icon: 'warning',
@@ -64,7 +64,13 @@ export class TutoriaPasantiaComponent implements OnInit {
 
     }).then((result) => {
       if (result.value) {
+
+        const fecha = new Date();
         let notasPropuesta:string;let notasActaInicio:string;let notasSemana7:string;let notasSemana14:string; let notasFinal:string;
+        let notiPropuesta = true; let notiActa = true;
+        let notiInforme7 = true; let notiInforme14 = true; let notiInformeFinal = true;
+        let notiPropuestaCorreo: Notificacion; let notiActaCorreo: Notificacion; let notiInfo7Correo: Notificacion; let notiInfo14Correo: Notificacion; let notiInfoFinalCorreo: Notificacion;
+        
         if(form.value.notasPropuesta !== ''){
           notasPropuesta = form.value.notasPropuesta;
         }
@@ -82,18 +88,23 @@ export class TutoriaPasantiaComponent implements OnInit {
         }
         if(this.new_estado_prouesta == ""){
           this.new_estado_prouesta = this.pasantiaSelected.estado_propuesta;
+          notiPropuesta = false;
         }
         if(this.new_estado_actaInicio == ""){
           this.new_estado_actaInicio = this.pasantiaSelected.estado_actaInicio;
+          notiActa = false;
         } 
         if(this.new_estado_informe7 == ""){
           this.new_estado_informe7 = this.pasantiaSelected.estado_informe7;
+          notiInforme7 = false;
         } 
         if(this.new_estado_informe14 == ""){
           this.new_estado_informe14 = this.pasantiaSelected.estado_informe14;
+          notiInforme14 = false;
         } 
         if(this.new_estado_informeFinal == ""){
           this.new_estado_informeFinal = this.pasantiaSelected.estado_informeFinal;
+          notiInformeFinal = false;
         }  
 
         let pasantiaUpdate = new PasantiaTutor(
@@ -109,23 +120,130 @@ export class TutoriaPasantiaComponent implements OnInit {
           notasFinal,
         );
         this._pasantiaService.putSolicitudTutor(idPasantia, pasantiaUpdate).subscribe((resp:any)=>{
-          if(resp){
-            Swal.fire({
-              title: '¡Bien hecho!',
-              text: 'Pasantia actualizada correctamente',
-              icon: 'success',
-              confirmButtonText: 'Si',
-              showCancelButton: false,
-              confirmButtonColor: '#60D89C'        
-            }).then((result) => {
-              if (result.value) {
-                const btnCloseModalGestion = (document.getElementById("btnCloseModalGestion")) as HTMLElement;
-                btnCloseModalGestion.click();
-                this.resetDataInfo();
-                this.getPasantias();
-              }
-            });
+          Swal.close();
+          if(notiPropuesta){
+            let mensaje:string; let mensajeDetalle:string;
+            if(this.new_estado_prouesta == "Ajustar"){
+              mensaje = "Solicitud de ajuste de la propuesta";
+              mensajeDetalle = "El director de tu pasantia te ha solicitado ajustar la propuesta de pasantia. Notas: "+this.new_notas_propuesta;
+            }else{
+              mensaje = "Propuesta de pasantia aprobada";
+              mensajeDetalle = "El director de tu pasantia te ha aprobado la propuesta";
+            }
+              notiPropuestaCorreo = new Notificacion(
+                this.pasantiaSelected.estudiante._id,
+                fecha,
+                mensaje,
+                mensajeDetalle,
+                "Estudiante",
+                this.pasantiaSelected.estudiante.correo
+              );
+              this._notificacionService.sendNotificacionCorreo(notiPropuestaCorreo).subscribe();
+              this._notificacionService.postNotificacion(notiPropuestaCorreo).subscribe();
           }
+          if(notiActa){
+            let mensaje:string; let mensajeDetalle:string;
+            if(this.new_estado_actaInicio == "Ajustar"){
+              mensaje = "Solicitud de ajuste del acta de inicio";
+              mensajeDetalle = "El director de tu pasantia te ha solicitado ajustar el acta de inicio. Notas: "+this.new_notas_actaInicio;
+            }else{
+              mensaje = "Acta de inicio aprobada";
+              mensajeDetalle = "El director de tu pasantia te ha aprobado el acta de inicio";
+            }
+              notiActaCorreo = new Notificacion(
+                this.pasantiaSelected.estudiante._id,
+                fecha,
+                mensaje,
+                mensajeDetalle,
+                "Estudiante",
+                this.pasantiaSelected.estudiante.correo
+              );
+              this._notificacionService.sendNotificacionCorreo(notiActaCorreo).subscribe();
+              this._notificacionService.postNotificacion(notiActaCorreo).subscribe();
+          }
+          if(notiInforme7){
+            let mensaje:string; let mensajeDetalle:string;
+            if(this.new_estado_informe7 == "Ajustar"){
+              mensaje = "Solicitud de ajuste del informe de la semana 7";
+              mensajeDetalle = "El director de tu pasantia te ha solicitado ajustar el informe de la semana 7. Notas: "+this.new_notas_informe7;
+            }else{
+              mensaje = "Informe de la semana 7 aprobado";
+              mensajeDetalle = "El director de tu pasantia te ha aprobado el informe de la semana 7";
+            }
+              notiInfo7Correo = new Notificacion(
+                this.pasantiaSelected.estudiante._id,
+                fecha,
+                mensaje,
+                mensajeDetalle,
+                "Estudiante",
+                this.pasantiaSelected.estudiante.correo
+              );
+              this._notificacionService.sendNotificacionCorreo(notiInfo7Correo).subscribe();
+              this._notificacionService.postNotificacion(notiInfo7Correo).subscribe();
+          }
+          if(notiInforme14){
+            let mensaje:string; let mensajeDetalle:string;
+            if(this.new_estado_informe14 == "Ajustar"){
+              mensaje = "Solicitud de ajuste del informe de la semana 14";
+              mensajeDetalle = "El director de tu pasantia te ha solicitado ajustar el informe de la semana 14. Notas: "+this.new_notas_informe14;
+            }else{
+              mensaje = "Informe de la semana 14 aprobado";
+              mensajeDetalle = "El director de tu pasantia te ha aprobado el informe de la semana 14";
+            }
+              notiInfo14Correo = new Notificacion(
+                this.pasantiaSelected.estudiante._id,
+                fecha,
+                mensaje,
+                mensajeDetalle,
+                "Estudiante",
+                this.pasantiaSelected.estudiante.correo
+              );
+              this._notificacionService.sendNotificacionCorreo(notiInfo14Correo).subscribe();
+              this._notificacionService.postNotificacion(notiInfo14Correo).subscribe();
+          }
+          if(notiInformeFinal){
+            let mensaje:string; let mensajeDetalle:string;
+            if(this.new_estado_informeFinal == "Ajustar"){
+              mensaje = "Solicitud de ajuste del informe final";
+              mensajeDetalle = "El director de tu pasantia te ha solicitado ajustar el informe final. Notas: "+this.new_notas_informeFinal;
+            }else{
+              mensaje = "Informe final aprobado";
+              mensajeDetalle = "El director de tu pasantia te ha aprobado el informe final";
+            }
+              notiInfoFinalCorreo = new Notificacion(
+                this.pasantiaSelected.estudiante._id,
+                fecha,
+                mensaje,
+                mensajeDetalle,
+                "Estudiante",
+                this.pasantiaSelected.estudiante.correo
+              );
+              this._notificacionService.sendNotificacionCorreo(notiInfoFinalCorreo).subscribe();
+              this._notificacionService.postNotificacion(notiInfoFinalCorreo).subscribe();
+          }
+          Swal.fire({
+            title: '¡Bien hecho!',
+            text: 'Pasantia actualizada correctamente',
+            icon: 'success',
+            showConfirmButton: false,
+            showCancelButton: false,
+            allowEnterKey: false,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            timer: 1000,
+            timerProgressBar: true     
+          }).then((result) => {
+            const btnCloseModalGestion = (document.getElementById("btnCloseModalGestion")) as HTMLElement;
+            if (result.value) {
+              btnCloseModalGestion.click();
+              this.resetDataInfo();
+              this.getPasantias();
+            }else{
+              btnCloseModalGestion.click();
+              this.resetDataInfo();
+              this.getPasantias();
+            }
+          });
         });
       }
     })

@@ -135,9 +135,10 @@ export class InscripcionDirectaComponent implements OnInit {
                 icon: 'warning',
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#60D89C',
-          
               }).then((result) => {
                 if (result.value) {
+                  this.router.navigate(['/']);
+                }else{
                   this.router.navigate(['/']);
                 }
               });

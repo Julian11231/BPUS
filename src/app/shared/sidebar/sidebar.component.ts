@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit {
         this.pasantia = resp.pasantia;
       });
         this.menuAdmin = this._sidebarService.menuAdmin;
-    }else{
+    }else if (this.user.rol.nombre === "PROFESOR"){
       this.menuTutor = this._sidebarService.menuTutor;
     }
   }
