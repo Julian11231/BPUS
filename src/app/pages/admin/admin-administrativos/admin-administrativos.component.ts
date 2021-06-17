@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdministrativoService } from 'src/app/services/service.index';
 
 @Component({
   selector: 'app-admin-administrativos',
@@ -7,9 +8,61 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminAdministrativosComponent implements OnInit {
 
-  constructor() { }
+  user = JSON.parse(localStorage.getItem('user'));
+  admins:any;
+
+  desde: number = 0;
+  campo:string = "nombres"
+  pagina:number = 1;
+  totalpaginas:number = 0
+
+  constructor(public _adminService:AdministrativoService) { }
 
   ngOnInit(): void {
+    this.getAdmins();
   }
 
+  getAdmins(){
+    this._adminService.getAdmins(this.desde, this.campo).subscribe((resp:any)=>{
+      this.admins = resp;
+      console.log(resp);
+      this.totalpaginas = Math.ceil(this._adminService.totalAdmins/10);
+    })
+  }
+
+  cambiarDesde(valor:number){
+
+    let desde = this.desde + valor;
+  
+    if (desde >= this._adminService.totalAdmins) {
+      return;
+    }
+    if (desde <0 ) {
+      return;
+    }
+    this.desde += valor;
+    this.pagina = (this.desde/10)+1;
+    this.getAdmins();
+  }
+
+  cambiarDesdeInput(valor:number){
+    this.desde = (valor-1)*10;
+    if(valor > this.totalpaginas){
+      const inputPagina = (document.getElementById('pagina')) as HTMLInputElement;
+      inputPagina.value = this.pagina.toString();
+      return;
+    }
+    if (this.desde >= this._adminService.totalAdmins) {
+      return;
+    }
+    if (this.desde <0 ) {
+      return;
+    }
+    this.pagina = (this.desde/10)+1;
+    this.getAdmins();
+  }
+
+  getDataBuscar(data: string){
+
+  }
 }

@@ -1,1 +1,60 @@
-<p>admin-administrativos works!</p>
+<div class="p-3" style="background-color: white;">
+
+    <div class="form-group">
+        <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
+            type="text"  class="form-control"
+            placeholder="Buscar admin">
+    </div>
+
+    <ul class="pagination">
+        <li class="page-item"><button class="page-link" (click)="cambiarDesde(-10)">Anteriores</button></li>
+        <li class="page-item"><input (change)="cambiarDesdeInput(input.value)" #input class="form-control" type="number" id="pagina" value="{{pagina}}" min="1" max="{{totalpaginas}}"></li>
+        <li class="page-item"><button class="page-link">/ {{totalpaginas}}</button></li>
+        <li class="page-item"><button class="page-link" (click)="cambiarDesde(10)">Siguientes</button></li>
+    </ul>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="text-center">Identificación</th>
+                <th class="text-center">Nombres</th>
+                <th class="text-center">Apellidos</th>
+                <th class="text-center">Rol</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let admin of admins; let indice=index">
+                    <tr>
+                        <td>{{admin.identificacion}}</td>
+                        <td>{{admin.nombres}}</td>
+                        <td>{{admin.apellidos}}</td>
+                        <td>{{admin.rol.nombre}}</td>
+                        <td><a href="#admin{{indice}}" data-toggle="collapse">Ver mas <i class="fa fa-angle-down"></i></a></td>
+                    </tr>
+                    <tr id="admin{{indice}}" class="collapse">
+                        <td colspan="5">
+                            <div class="row">
+                                <div class="col-3">
+                                    <h6><b>Correo: </b>{{admin.correo}}</h6>
+                                </div>
+                                <div class="col-3">
+                                    <h6><b>tel: </b>{{admin.telefono}}</h6>
+                                </div>
+                                <div *ngIf="admin.programa" class="col-3">
+                                    <h6><b>programa: </b>{{admin.programa.nombre}}</h6>
+                                </div>
+                                <div *ngIf="admin.cargo" class="col-3">
+                                    <h6><b>cargo: </b>{{admin.cargo}}</h6>
+                                </div>
+                                <div class="col-3">
+                                    <h6><b>estado: </b>{{admin.estado}}</h6>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>

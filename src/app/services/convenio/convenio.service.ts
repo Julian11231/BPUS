@@ -12,6 +12,8 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 })
 export class ConvenioService {
 
+  totalConvenios:number = 0;
+
   constructor(public http: HttpClient, public router: Router) { }
 
   getConveniosPrograma(programa:String) {
@@ -20,10 +22,17 @@ export class ConvenioService {
     return this.http.get(url);
   }
 
-  getConvenios() {
+  getConvenios(desde:number) {
     let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios?token=${token}`;;
-    return this.http.get(url);
+    let url = `${URL_SERVICES}/convenios?desde=${desde}&token=${token}`;
+    return this.http.get(url).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        this.totalConvenios = resp.total;
+        return resp.convenios;
+      }else{
+        return false;
+      }
+    }));
   }
 
   getConvenioEncargado(convenio: string) {

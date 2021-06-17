@@ -94,7 +94,6 @@ export class EmpresasComponent implements OnInit {
             form.value.apellidos,
             form.value.correo,
             form.value.telPersona,
-            programa,
             form.value.puesto,
             "60b66f2b5756933d5096d51a",
           )

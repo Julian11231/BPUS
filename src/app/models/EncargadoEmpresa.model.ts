@@ -7,7 +7,6 @@ export class EncargadoEmpresa {
         public apellidos: String,
         public correo: String,
         public telefono: String,
-        public programa: String,
         public cargo:String,
         public rol: String,
         public estado?: String,

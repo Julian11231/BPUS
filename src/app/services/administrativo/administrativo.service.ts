@@ -11,7 +11,28 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 })
 export class AdministrativoService {
 
-    constructor(public http: HttpClient, public router: Router) { }
+  constructor(public http: HttpClient, public router: Router) { }
+
+  totalAdmins:number = 0;
+
+  getAdmins(desde:number, campo: string) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/administrativos?campo=${campo}&desde=${desde}&token=${token}`;
+    return this.http.get(url).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        this.totalAdmins = resp.total;
+        return resp.admins;
+      }else{
+        return false;
+      }
+    }));
+  }
+
+  getDocentes() {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/administrativos/docentes?token=${token}`;
+    return this.http.get(url);
+  }
 
   cambiarClave(usuario: string, clave:string){
     let token = localStorage.getItem('token');

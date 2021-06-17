@@ -48,11 +48,11 @@
                     <h5 *ngIf="rol.estado == false"><span class="badge badge-danger">Inactivo</span></h5>
                 </td>
                 <td>
+                  <button type="button" class="btn btn-info mr-2" (click)="editRol(rol._id)"><i class="fa fa-edit"></i></button>
                     <button *ngIf="rol.estado == true" type="button" class="btn btn-sm btnSuccess mr-2">
                         Desactivar <i class="fa fa-ban"></i>
                     </button>
                     <button *ngIf="rol.estado == false" type="button" class="btn btn-danger">Activar</button>
-                    <button type="button" class="btn btn-info mr-2" (click)="editRol(rol._id)"><i class="fa fa-edit"></i></button>
                 </td>
           </tr>
         </tbody>
