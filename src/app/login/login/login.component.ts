@@ -40,11 +40,13 @@ export class LoginComponent implements OnInit {
         if (user.codigo) {
           if (user.modalidad) {
             this.__loginService.dejaPasar();
+            localStorage.setItem("reload", "true");
             this.router.navigate(['/panel-principal']);
           } else {
             this.router.navigate(['/requisitos']);
           }
         } else{
+          localStorage.setItem("reload", "true");
           this.router.navigate(['/panel-principal']);
         }
       }

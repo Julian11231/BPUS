@@ -22,13 +22,18 @@ import { EmpresasComponent } from './docente/empresas/empresas.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
 import { MainComponent } from './main/main.component';
 import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
-import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component';
+import { AdminEstudiantesComponent } from './admin/admin-estudiantes/admin-estudiantes.component';
 import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
 import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';
 import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.component';
 //admin
-import { RolesComponent } from './roles/roles.component';
-import { PermisosComponent } from './permisos/permisos.component';
+import { RolesComponent } from './admin/roles/roles.component';
+import { PermisosComponent } from './admin/permisos/permisos.component';
+import { AdminAdministrativosComponent } from './admin/admin-administrativos/admin-administrativos.component';
+import { AdminConveniosComponent } from './admin/admin-convenios/admin-convenios.component';
+import { AdminEmpresasComponent } from './admin/admin-empresas/admin-empresas.component';
+import { AdminModalidadComponent } from './admin/admin-modalidad/admin-modalidad.component';
+import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.component';
 //Guards
 import { LoginGuardGuard } from '../services/service.index';
 import { PermisosGuard } from '../services/service.index';
@@ -67,6 +72,11 @@ const pagesRoutes: Routes = [
             { path: 'sustentacion-pasantia', component: SustentacionComponent, data: { titulo: 'Sustentación pasantia' } ,canActivate: [PermisosGuard]},
             { path: 'roles', component: RolesComponent, data: { titulo: 'Administración de roles' } ,canActivate: [PermisosGuard]},
             { path: 'permisos', component: PermisosComponent, data: { titulo: 'Administración de permisos'},canActivate: [PermisosGuard]},
+            { path: 'admin-administrativos', component: AdminAdministrativosComponent, data: { titulo: 'Administración de administrativos'},canActivate: [PermisosGuard]},
+            { path: 'admin-convenios', component: AdminConveniosComponent, data: { titulo: 'Administración de convenios'},canActivate: [PermisosGuard]},
+            { path: 'admin-empresas', component: AdminEmpresasComponent, data: { titulo: 'Administración de empresas'},canActivate: [PermisosGuard]},
+            { path: 'admin-modalidades', component: AdminModalidadComponent, data: { titulo: 'Administración de modalidades'},canActivate: [PermisosGuard]},
+            { path: 'admin-programas', component: AdminProgramaComponent, data: { titulo: 'Administración de programas'},canActivate: [PermisosGuard]},
             { path: '', redirectTo: '/panel-principal', pathMatch: 'full' }
         ]
     },

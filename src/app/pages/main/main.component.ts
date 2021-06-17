@@ -10,6 +10,10 @@ export class MainComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if(localStorage.getItem("reload")){
+      localStorage.removeItem("reload");
+      location.reload();
+    }
   }
 
 }

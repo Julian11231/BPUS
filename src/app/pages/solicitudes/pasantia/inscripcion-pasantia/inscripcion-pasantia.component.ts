@@ -102,8 +102,10 @@ export class InscripcionPasantiaComponent implements OnInit {
             timerProgressBar: true,
           }).then((result) => {
             if (result.value) {
+              localStorage.setItem("reload", "true");
               this.router.navigate(['/']);
             }else{
+              localStorage.setItem("reload", "true");
               this.router.navigate(['/']);
             }
           });

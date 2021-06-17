@@ -34,12 +34,17 @@ import { InformeSieteComponent } from './estudiante/informe-siete/informe-siete.
 import { NotificacionesComponent} from './notificaciones/notificaciones.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
 import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
-import { AdminEstudiantesComponent } from './docente/admin-estudiantes/admin-estudiantes.component';
+import { AdminEstudiantesComponent } from './admin/admin-estudiantes/admin-estudiantes.component';
 import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
 import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';
 import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.component';
-import { RolesComponent } from './roles/roles.component';
-import { PermisosComponent } from './permisos/permisos.component';
+import { RolesComponent } from './admin/roles/roles.component';
+import { PermisosComponent } from './admin/permisos/permisos.component';
+import { AdminAdministrativosComponent } from './admin/admin-administrativos/admin-administrativos.component';
+import { AdminConveniosComponent } from './admin/admin-convenios/admin-convenios.component';
+import { AdminEmpresasComponent } from './admin/admin-empresas/admin-empresas.component';
+import { AdminModalidadComponent } from './admin/admin-modalidad/admin-modalidad.component';
+import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.component';
 
 
 
@@ -72,7 +77,12 @@ import { PermisosComponent } from './permisos/permisos.component';
     JuradoPasantiaComponent,
     SustentacionComponent,
     RolesComponent,
-    PermisosComponent
+    PermisosComponent,
+    AdminAdministrativosComponent,
+    AdminConveniosComponent,
+    AdminEmpresasComponent,
+    AdminModalidadComponent,
+    AdminProgramaComponent
 
   ],
   exports: [

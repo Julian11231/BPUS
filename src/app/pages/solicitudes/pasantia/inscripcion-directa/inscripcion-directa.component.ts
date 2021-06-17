@@ -137,8 +137,10 @@ export class InscripcionDirectaComponent implements OnInit {
                 confirmButtonColor: '#60D89C',
               }).then((result) => {
                 if (result.value) {
+                  localStorage.setItem("reload", "true");
                   this.router.navigate(['/']);
                 }else{
+                  localStorage.setItem("reload", "true");
                   this.router.navigate(['/']);
                 }
               });

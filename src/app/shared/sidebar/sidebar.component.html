@@ -36,17 +36,12 @@
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="nav-small-cap"><b>Perfiles</b> </li>
-                <li *ngFor="let menu of menuAdmin"> <a class="has-arrow waves-effect waves-dark" href="#"
-                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
-                            class="hide-menu">{{menu.titulo}}
-                            <span id="number"
-                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
-                                routerLinkActive="active">{{submenu.titulo}} </a></li>
-                    </ul>
+            <ul>
+                <li class="nav-small-cap"><b>Gestionar</b> </li>
+                <li *ngFor="let menu of menuAdmin"> 
+                    <a [routerLink]="[menu.url]" routerLinkActive="nav-link" style="background-color: transparent;">
+                        <i class="{{menu.icono}}"></i>&nbsp;<span class="hide-menu">{{menu.titulo}}</span>
+                    </a>
                 </li>
             </ul>
         </nav>

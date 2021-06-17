@@ -42,37 +42,13 @@ export class SidebarService {
   ];
 
   menuAdmin: any = [
-    {
-      titulo: 'Estudiate',
-      icono: 'fa fa-book',
-      submenu: [
-        { titulo: 'Requisitos', url: '/requisitos' },
-        { titulo: 'Modalidades', url: '/modalidades' },
-        { titulo: 'Preinscripcion pasantia', url: '/preinscripcion-pasantia' },
-        { titulo: 'Mi modalidad', url: '/mi-modalidad' },
-        { titulo: 'Informe siete', url: '/informe-siete' },
-        { titulo: 'Informe catorce', url: '/informe-catorce' },
-        { titulo: 'Informe final', url: '/informe-final' }
-      ]
-    },
-    {
-      titulo: 'Jefe Programa',
-      icono: 'mdi mdi-school',
-      submenu: [
-        { titulo: 'Gestión de Empresas', url: '/empresas' },
-        { titulo: 'Solicitudes Por Vacantes', url: '/solicitudes' },
-        { titulo: 'Propuestas de Pasantía', url: '/propuestas' },
-        { titulo: 'Tutorías Asignadas', url: '/pasantias-asignadas' }
-      ]
-    },
-    {
-      titulo: 'Encargado',
-      icono: 'fa fa-briefcase',
-      submenu: [
-        { titulo: 'Gestión de vacantes', url: '/vacantes' },
-
-      ]
-    },
+    { titulo: 'Administrativos', icono: 'fa fa-user', url: '/admin-administrativos'},
+    { titulo: 'Convenios', icono: 'fa fa-briefcase', url: '/admin-convenios' },
+    { titulo: 'Empresas', icono: 'fa fa-building', url: '/admin-empresas' },
+    { titulo: 'Modalidades', icono: 'fa fa-graduation-cap', url: '/admin-modalidades' },
+    { titulo: 'Programas', icono: 'fa fa-university', url: '/admin-programas' },
+    { titulo: 'Roles', icono: 'fa fa-group', url: '/roles' },
+    { titulo: 'Permisos', icono: 'fa fa-gears', url: '/permisos' }
   ];
 
   menuEncargadoEmpresa: any = [
