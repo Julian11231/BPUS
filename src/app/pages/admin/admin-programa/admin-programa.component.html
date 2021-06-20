@@ -42,7 +42,6 @@
             </div>
           </form>
         </div>
-        
       </div>
     </div>
   </div>
@@ -60,6 +59,22 @@
         <!-- Modal body -->
         <div class="modal-body">
           <form ngNativeValidate #f="ngForm" (ngSubmit)="putPrograma()">
+            <label for="nombre">Nombre del programa:</label>
+            <input type="text" ngModel class="form-control" id="nombreEdit" name="nombre" value="{{programaSelected?.nombre}}"  placeholder="{{programaSelected?.nombre}}" maxlength="150" required autocomplete="off"> 
+            <label class="mt-2" for="creditos_totales">Creditos totales:</label>
+            <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="cred_totales_edit" name="creditos_totales" value="{{programaSelected?.creditos_totales}}" placeholder="{{programaSelected?.creditos_totales}}" maxlength="3" required autocomplete="off">
+            <label class="mt-2" for="jefe">Jefe de programa:</label>
+            <input class="form-control" ngModel name="jefe" id="jefeEdit" value="{{nombreJefeSelected}}" placeholder="{{nombreJefeSelected}}" list="docentesEdit" required autocomplete="off">
+            <datalist id="docentesEdit">
+                <ng-container *ngFor="let docente of docentes">
+                    <option value="{{docente.nombres}}">
+                </ng-container>
+            </datalist>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btnInfo" [disabled]="addPrograma.invalid">Aceptar</button>
+              <button (click)="f.reset();" id="btnCancelarEdit" type="button" class="btn btnSuccess" data-dismiss="modal">Cancelar</button>
+            </div>
           </form>
         </div>
         
@@ -89,7 +104,7 @@
                     <td class="text-center">{{programa.creditos_totales}}</td>
                     <td>{{programa.jefe?.nombres}} {{programa.jefe?.apellidos}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#editPrograma" data-backdrop="static" data-keyboard="false"><i class="fa fa-edit"></i></button>
+                        <button (click)="getProgramaSelected(programa)" stype="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#editPrograma" data-backdrop="static" data-keyboard="false"><i class="fa fa-edit"></i></button>
                         <button type="button" class="btn btnSuccess"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>

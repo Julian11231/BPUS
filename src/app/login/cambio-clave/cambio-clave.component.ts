@@ -18,6 +18,9 @@ export class CambioClaveComponent implements OnInit {
     private _administrativoService: AdministrativoService) { }
 
   ngOnInit(): void {
+    if(this.info.contraseña == ":)"){
+      this.router.navigate(['/panel-principal']);
+    }
   }
 
   cambiarClave(){
@@ -37,7 +40,7 @@ export class CambioClaveComponent implements OnInit {
   checkPassword(){
     const newPassword = (document.getElementById('newPassword')) as HTMLInputElement;
     const invalidPassword = (document.getElementById('invalidPassword')) as HTMLInputElement;
-    if (newPassword.value.match('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,32}')) {
+    if (newPassword.value.match('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,30}$')) {
       this.invalidPassword = false;
       invalidPassword.setAttribute('style','display: none');
     } else if(newPassword.value == ''){

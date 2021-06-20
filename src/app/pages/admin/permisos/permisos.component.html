@@ -68,7 +68,7 @@
             <label class="mt-2" for="roles">Roles:</label><br>
             <div class="row">
               <div class="col-5">
-                <select (click)="permisoEditAddRol()" id="permiso_roles_edit" name="roles" class="custom-select">
+                <select (change)="permisoEditAddRol()" id="permiso_roles_edit" name="roles" class="custom-select">
                   <option selected>Seleccione...</option>
                   <ng-container *ngFor="let rol of roles">
                     <option>{{rol.nombre}}</option>
@@ -83,7 +83,7 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-              <button type="submit" class="btn btnInfo" [disabled]="new_pagina == '' || new_nombre == '' || new_permiso_roles_ids.length == 0 || (new_permiso_roles_ids.length == permisoSelected?.roles.length && new_nombre == permisoSelected?.nombre && new_pagina == permisoSelected?.pagina)">Aceptar</button>
+              <button type="submit" class="btn btnInfo" [disabled]="new_pagina == '' || new_nombre == '' || new_permiso_roles_ids.length == 0 || (new_nombre == permisoSelected?.nombre && new_pagina == permisoSelected?.pagina && isEqual)">Aceptar</button>
               <button (click)="clearDataEdit(); f.reset()" id="btnCancelarEdit" type="button" class="btn btnSuccess" data-dismiss="modal">Cancelar</button>
             </div>
           </form>

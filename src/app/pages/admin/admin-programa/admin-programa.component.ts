@@ -10,7 +10,10 @@ import { ProgramaService, AdministrativoService } from 'src/app/services/service
 export class AdminProgramaComponent implements OnInit {
 
   programas:any;
+  programaSelected:any;
+  nombreJefeSelected:string;
   docentes:any
+
   desde: number = 0;
   pagina:number = 1;
   totalpaginas:number = 0
@@ -25,7 +28,6 @@ export class AdminProgramaComponent implements OnInit {
   getProgramas(){
     this._programaService.getProgramas(this.desde).subscribe((resp:any)=>{
       this.programas = resp;
-      console.log(resp);
       this.totalpaginas = Math.ceil(this._programaService.totalprogramas/10);
     })
   }
@@ -81,6 +83,15 @@ export class AdminProgramaComponent implements OnInit {
 
   getDataBuscar(data: string){
 
+  }
+
+  getProgramaSelected(dato:any){
+    this.programaSelected = dato;
+    if(this.programaSelected.jefe){
+      this.nombreJefeSelected = this.programaSelected.jefe.nombres+" "+this.programaSelected.jefe.apellidos;
+    }else{
+      this.nombreJefeSelected = "";
+    }
   }
 
 }

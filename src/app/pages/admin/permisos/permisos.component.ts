@@ -22,6 +22,7 @@ export class PermisosComponent implements OnInit {
   new_pagina:string = '';
   new_permiso_roles = [];
   new_permiso_roles_ids = [];
+  isEqual:boolean = true;
 
   constructor(private route: ActivatedRoute, 
     private _permisosService: PermisosService,
@@ -62,6 +63,15 @@ export class PermisosComponent implements OnInit {
   permisoRolesEditRemove(index: number){
     this.new_permiso_roles.splice(index, 1);
     this.new_permiso_roles_ids.splice(index, 1);
+    if(this.new_permiso_roles.length === this.permisoSelected.roles.length){
+      for(let i = 0; i < this.new_permiso_roles.length; i++){
+        if(this.new_permiso_roles[i]._id == this.permisoSelected.roles[i]._id){
+          this.isEqual = false;
+        }
+      }
+    }else{
+      this.isEqual = false;
+    } 
   }
 
   clearDataAdd(){
@@ -70,6 +80,7 @@ export class PermisosComponent implements OnInit {
   }
 
   clearDataEdit(){
+    this.isEqual = true;
     this.permisoSelected = undefined;
     this.new_nombre = "";
     this.new_pagina = "";
@@ -114,6 +125,15 @@ export class PermisosComponent implements OnInit {
         this.new_permiso_roles.push(new_permiso_rol);
         this.new_permiso_roles_ids.push(new_permiso_rol._id);
       }
+    }
+    if(this.new_permiso_roles.length === this.permisoSelected.roles.length){
+      for(let i = 0; i < this.new_permiso_roles.length; i++){
+        if(this.new_permiso_roles[i]._id == this.permisoSelected.roles[i]._id){
+          this.isEqual = false;
+        }
+      }
+    }else{
+      this.isEqual = false;
     } 
   }
 

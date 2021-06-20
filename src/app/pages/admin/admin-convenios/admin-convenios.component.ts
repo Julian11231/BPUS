@@ -21,7 +21,7 @@ export class AdminConveniosComponent implements OnInit {
   getConvenios(){
     this._convenioService.getConvenios(this.desde).subscribe((resp:any) => {
       console.log(resp)
-      this.convenios = resp.convenios;
+      this.convenios = resp
     });
   }
 

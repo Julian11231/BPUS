@@ -61,7 +61,6 @@ export class NotificacionesService {
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
 
       if (resp.ok) {  
-        console.log('Notificacion Correo enviada');
         return true;
       }else{
         return false;
