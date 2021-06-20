@@ -39,6 +39,8 @@ export class AdministrativoService {
     let url = `${URL_SERVICES}/administrativos/cambiarclave?token=${token}`;
     return this.http.put(url, {usuario: usuario, clave: clave}).pipe(map((resp: any) => {
       if (resp.ok == true) {
+        localStorage.removeItem("user");
+        localStorage.setItem("user",  JSON.stringify(resp.administrativoAct));
         return true;
       }
     }), catchError((err) => {

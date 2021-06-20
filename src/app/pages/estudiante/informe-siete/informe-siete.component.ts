@@ -20,7 +20,9 @@ export class InformeSieteComponent implements OnInit {
 
   constructor(public _pasantiaService: PasantiService, public _notificacionService: NotificacionesService, public router:Router) { }
 
-  ngOnInit(): void { this.getPasantia(); }
+  ngOnInit(): void { 
+    this.getPasantia(); 
+  }
 
   getFileInforme(file: File) {
 
@@ -47,7 +49,7 @@ export class InformeSieteComponent implements OnInit {
   getPasantia() {
     this._pasantiaService.getPasantia(this.info.modalidad).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
-    })
+    });
   }
 
 

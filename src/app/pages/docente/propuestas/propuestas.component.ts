@@ -102,15 +102,15 @@ export class PropuestasComponent implements OnInit {
         pdf.add(new Txt('Atentamente,').margin([0, 20, 0, 70]).alignment('justify').end)
         
         // FIRMA
-        var fimaJefe = (document.getElementById('firmaJefe')) as HTMLImageElement;
-        var canvas = (document.createElement('canvas')) as HTMLCanvasElement;
-        canvas.width = fimaJefe.width; 
-        canvas.height = fimaJefe.height; 
-        canvas.getContext('2d').drawImage(fimaJefe, 0, 0);
-        var img = canvas.toDataURL('image/jpeg');
+        //var fimaJefe = (document.getElementById('firmaJefe')) as HTMLImageElement;
+        //var canvas = (document.createElement('canvas')) as HTMLCanvasElement;
+        //canvas.width = fimaJefe.width; 
+        //canvas.height = fimaJefe.height; 
+        //canvas.getContext('2d').drawImage(fimaJefe, 0, 0);
+        //var img = canvas.toDataURL('image/jpeg');
   
-        new Img(img).build().then( img => {
-          pdf.add(img);      
+        //new Img(img).build().then( img => {
+        //pdf.add(img);      
           pdf.add(new Txt(this.user.nombres+''+this.user.apellidos).alignment('justify').end)
           pdf.add(new Txt('Jefe del programa de '+this.programa).alignment('justify').end)
   
@@ -167,7 +167,7 @@ export class PropuestasComponent implements OnInit {
                 }
               });
             })
-          });
+          //});
         });
       });
     });

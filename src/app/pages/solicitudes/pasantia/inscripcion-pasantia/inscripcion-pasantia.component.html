@@ -43,7 +43,7 @@
                             <h5 class="text-uppercase"> <b>Persona a Cargo:</b> </h5>
                         </div>
                         <div class="row" style="margin-left: 25px;">
-                            <p class="text-justify"> {{personaCargo.nombres}} {{personaCargo.apellidos}}</p>
+                            <p class="text-justify"> {{personaCargo?.nombres}} {{personaCargo?.apellidos}}</p>
                         </div>
                         <div class="row" style="margin-top: -13px; margin-left: 25px;">
                             <i class="mdi mdi-email"></i> &nbsp; &nbsp;<small class="text-justify">
@@ -118,7 +118,7 @@
                                             <i class="fa fa-info-circle"></i></b>
                                     </button>
         
-                                    <button type="submit" (click)="getVacanteSelected(dato)"
+                                    <button type="submit" (click)="getVacanteSelected(dato); getDataInfo(dato);"
                                         class="btn btnSuccess btn-outline-success"><b>
                                         Pre-Incribirme
                                         <i class="fa fa-check"></i></b>

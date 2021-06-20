@@ -20,6 +20,10 @@ import {
   NotificacionesService,
   EstudianteService,
   PermisosGuard,
+  ModalidadGuard,
+  InformeSieteGuard,
+  InformeCatorceGuard,
+  InformeFinalGuard,
   RolesService,
   AdministrativoService
 } from './service.index'
@@ -47,6 +51,10 @@ import {
     NotificacionesService,
     EstudianteService,
     PermisosGuard,
+    ModalidadGuard,
+    InformeSieteGuard,
+    InformeCatorceGuard,
+    InformeFinalGuard,
     RolesService,
     AdministrativoService
   ]

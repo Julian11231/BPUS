@@ -68,26 +68,4 @@ export class AdminAdministrativosComponent implements OnInit {
 
   }
 
-  testCorreo(){
-    let currentDate = new Date();
-    let notificacion =new Notificacion(
-      this.user._id,
-      currentDate,
-      "Prueba de correo",
-      "Probando el servicio de correo con OAuth2 y Gmail",
-      "Estudiante",
-      "u20161146030@usco.edu.co"
-    );
-    this._notiService.sendNotificacionCorreo(notificacion).subscribe((resp:any) => {
-      Swal.fire({
-        title: 'Correo enviado!',
-        icon: 'success',
-        allowEnterKey: false,
-        allowEscapeKey: false,
-        allowOutsideClick:false,
-        timer: 1000,
-        timerProgressBar: true
-      });
-    });
-  }
 }

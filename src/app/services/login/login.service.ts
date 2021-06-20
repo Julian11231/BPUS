@@ -23,6 +23,7 @@ export class LoginService {
   // por el loginGuard que confirma si está el token en el local storage --> Al hacer click
   // En el botón continuar, se llama esta función y se guarda el token en el local storage
   dejaPasar() {
+    console.log(this.token);
     localStorage.setItem('token', this.token);
   }
 
@@ -61,6 +62,7 @@ export class LoginService {
           localStorage.setItem('user', JSON.stringify(resp.estudiante));
           // Se le asigna el token de la respuesta a la variable token
           this.token = resp.token;
+          console.log(this.token);
           // Es el mismo procedimiento anterior(Administrativo)
         } else if(resp['administrativo']) {
           // Si el check está activado, se guarda el usuario en el localStorage

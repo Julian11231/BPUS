@@ -9,6 +9,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NavbarInscripcionComponent } from './navbar-inscripcion/navbar-inscripcion.component';
+import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 
 
 
@@ -23,7 +24,8 @@ import { NavbarInscripcionComponent } from './navbar-inscripcion/navbar-inscripc
     NavbarComponent,
     SidebarComponent,
     BreadcrumbsComponent,
-    NavbarInscripcionComponent
+    NavbarInscripcionComponent,
+    NopagefoundComponent
   ],
   providers: [
     NavbarComponent,

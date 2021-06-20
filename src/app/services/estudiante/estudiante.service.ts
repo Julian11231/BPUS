@@ -40,6 +40,8 @@ export class EstudianteService {
     let url = `${URL_SERVICES}/estudiantes/cambiarclave?token=${token}`;
     return this.http.put(url, {usuario: usuario, clave: clave}).pipe(map((resp: any) => {
       if (resp.ok == true) {
+        localStorage.removeItem("user");
+        localStorage.setItem("user",  JSON.stringify(resp.estudianteActualizado));
         return true;
       }
     }), catchError((err) => {

@@ -6,7 +6,7 @@ import { PermisosService } from 'src/app/services/permisos/permisos.service';
   providedIn: 'root'
 })
 export class PermisosGuard implements CanActivate {
-  constructor (private _permisoService:PermisosService, public router:Router) {}
+  constructor (private _permisoService:PermisosService, private router:Router) {}
 
     async canActivate (route: ActivatedRouteSnapshot) {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -21,7 +21,7 @@ export class PermisosGuard implements CanActivate {
     if(user_has_permiso == true){
       return true;
     }else{
-      this.router.navigate(['/panel-principal'])
+      this.router.navigate(['/panel-principal']);
     }
   }
 

@@ -30,11 +30,15 @@ export class RequisitosComponent implements OnInit {
 
   ngOnInit() {
     init_plugins();
+    if(this.info !== null && this.info.contraseña !== ":("){
     // Se llama la función confirmarRequisitos y se le pasa los elementos capturados
     this._programaService.getPrograma();
     this._requisitosService.confirmarRequisitos(this.btnContinuar, this.icon);
     // Cargamos el porcentaje de los créditos cumplidos por el estudiante.
     this._modalidadesService.calcularPorcentaje();
+    }else{
+      this.router.navigate(["/login"]);
+    }
   }
   // Función que se llama cuando se da click en el botón "continuar"
   continuar() {

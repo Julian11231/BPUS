@@ -59,7 +59,6 @@ export class PasantiService {
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
       if (resp.ok) {
         localStorage.removeItem("user");
-        console.log(resp.estudianteActualizado);
         localStorage.setItem("user",  JSON.stringify(resp.estudianteActualizado));
         return resp.solicitudGuardada;
       }else{
@@ -81,7 +80,6 @@ export class PasantiService {
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
       if (resp.ok == true) {
         localStorage.removeItem("user");
-        console.log(resp.estudianteActualizado);
         localStorage.setItem("user",  JSON.stringify(resp.estudianteActualizado));
         return resp.solicitudGuardada;
       }else{
