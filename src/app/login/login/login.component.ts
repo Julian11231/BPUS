@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
 
     // Se eliminan los datos de inicio de sesión
     localStorage.removeItem('token');
-
+    localStorage.removeItem('menu');
     // Si es estudiante, se elimina el campo estudiante, si no...
       localStorage.removeItem('user');
     // En resumen, si el check está activado, sólo deja el dato del usuario "recordado"

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarService, PasantiService } from 'src/app/services/service.index';
+import { PasantiService } from 'src/app/services/service.index';
 
 
 @Component({
@@ -10,25 +10,18 @@ import { SidebarService, PasantiService } from 'src/app/services/service.index';
 })
 export class SidebarComponent implements OnInit {
 
-  menuJefePrograma: any[];
-  menuTutor: any[];
-  menuEstudiante: any[];
-  menuEncargadoEmpresa: any[];
-  menuAdmin: any[];
   user = JSON.parse(localStorage.getItem('user'));
+  menu = JSON.parse(localStorage.getItem('menu'));
+  menuEstudiante:boolean = false;
   pasantia:any;
   diff:any
 
   // Inyectamos el _sidebarService para leer el menu
-  constructor(public _sidebarService: SidebarService, public _pasantiaService: PasantiService) { }
+  constructor(private _pasantiaService: PasantiService) { }
 
   ngOnInit(): void {
-    this.getMenu()
-  }
-
-  getMenu() {
-    if (this.user.rol.nombre == "ESTUDIANTE") {
-      this.menuEstudiante = this._sidebarService.menuEstudiante;
+    if (this.user.codigo) {
+      this.menuEstudiante = true;
       if (this.user.modalidad) {
         let idPasantia = this.user.modalidad;
         this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
@@ -40,18 +33,6 @@ export class SidebarComponent implements OnInit {
           }
         });
       }
-    } else if (this.user.rol.nombre === "JEFE_PROGRAMA") {
-      this.menuJefePrograma = this._sidebarService.menuJefePrograma;
-    }else if(this.user.rol.nombre === "ENCARGADO_EMPRESA"){
-      this.menuEncargadoEmpresa = this._sidebarService.menuEncargadoEmpresa;
-    }else if (this.user.rol.nombre === "ADMIN") {
-      let idPasantia = this.user.modalidad;
-      this._pasantiaService.getPasantia(idPasantia).subscribe((resp: any) => {
-        this.pasantia = resp.pasantia;
-      });
-        this.menuAdmin = this._sidebarService.menuAdmin;
-    }else if (this.user.rol.nombre === "PROFESOR"){
-      this.menuTutor = this._sidebarService.menuTutor;
     }
   }
 

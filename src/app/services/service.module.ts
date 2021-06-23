@@ -24,6 +24,7 @@ import {
   InformeSieteGuard,
   InformeCatorceGuard,
   InformeFinalGuard,
+  VerificaTokenGuard,
   RolesService,
   AdministrativoService
 } from './service.index'
@@ -55,6 +56,7 @@ import {
     InformeSieteGuard,
     InformeCatorceGuard,
     InformeFinalGuard,
+    VerificaTokenGuard,
     RolesService,
     AdministrativoService
   ]

@@ -10,7 +10,7 @@ export class ModalidadGuard implements CanActivate {
 
     canActivate () {
         const user = JSON.parse(localStorage.getItem('user'));
-        if(user.rol.nombre === "ESTUDIANTE"){
+        if(user.codigo){
           if(user.modalidad){
             return true;
           }else{

@@ -6,6 +6,7 @@ import { RequisitosComponent } from './login/requisitos/requisitos.component';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 
 import { LoginGuardGuard } from './services/service.index';
+import { VerificaTokenGuard } from './services/service.index';
 
 // Rutas principales de la aplicación
 const appRoutes: Routes = [
@@ -13,7 +14,7 @@ const appRoutes: Routes = [
     {path: 'login', component: LoginComponent, data: {titulo: 'login'}},
     {path: 'requisitos', component: RequisitosComponent, data: {titulo: 'requisitos'} },
     {path: 'cambio-contraseña', component: CambioClaveComponent, data: {titulo: 'Cambio de contraseña'} },
-    {path: '', component: PagesComponent, canActivate: [LoginGuardGuard]},
+    {path: '', component: PagesComponent, canActivate: [VerificaTokenGuard, LoginGuardGuard]},
     { path: '**' , component: NopagefoundComponent}
 
 ];

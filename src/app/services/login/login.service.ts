@@ -27,12 +27,33 @@ export class LoginService {
     localStorage.setItem('token', this.token);
   }
 
+  renuevaToken(){
+    let url = URL_SERVICES+'/login/renuevatoken?token='+this.token;
+    return this.http.get(url).pipe(map((resp: any) => {
+      this.token = resp.token;
+      localStorage.setItem('token',this.token);
+      return true;
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+        confirmButtonColor: '#8F141B'
+      });
+      return throwError(err);
+    }));
+  }
 
   // Devuelve una bandera (true/false) confirmando si el usuario está logueado (tiene el token
   // en el local storage)
   logueado() {
     this.token = localStorage.getItem("token");
-    return (this.token) ? true : false;
+    if(this.token){
+      return (this.token.length > 5) ? true : false;
+    }else{
+      return false;
+    }
+
   }
 
   // Redirije a la pagina del login
@@ -78,6 +99,7 @@ export class LoginService {
           localStorage.setItem('user', JSON.stringify(resp.administrativo));
           localStorage.setItem('token', resp.token);
         }
+        localStorage.setItem('menu',JSON.stringify(resp.menu));
         return true;
       }),
         // Si existen errores (status code de la petición), los capturamos y los ponemos en un

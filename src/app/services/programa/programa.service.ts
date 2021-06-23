@@ -26,6 +26,18 @@ export class ProgramaService {
     }));
   }
 
+  getTodosProgramas() {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/programa/todos?token=${token}`;
+    return this.http.get(url).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        return resp.programas;
+      }else{
+        return false;
+      }
+    }));
+  }
+
   // Función para obtener el programa que corresponde el estudiante
   getPrograma() {
     // Obtenemos el id del programa que corresponde al usuario

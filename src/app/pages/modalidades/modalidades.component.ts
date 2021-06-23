@@ -4,7 +4,6 @@ import {
   ModalidadService,
   ProgramaService,
 } from 'src/app/services/service.index';
-import { Modalidad } from 'src/app/models/modalidad.model';
 
 declare function init_plugins();
 

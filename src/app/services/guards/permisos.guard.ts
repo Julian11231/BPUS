@@ -9,19 +9,12 @@ export class PermisosGuard implements CanActivate {
   constructor (private _permisoService:PermisosService, private router:Router) {}
 
     async canActivate (route: ActivatedRouteSnapshot) {
-    const user = JSON.parse(localStorage.getItem('user'));
     const pagina = route.url[0].path;
-    const permiso:any = await this._permisoService.getPermisosPagina(pagina).toPromise();
-    let user_has_permiso = false;
-    for(let rol of permiso.permiso.roles){
-      if(rol._id == user.rol._id){
-        user_has_permiso = true;
-      }
-    }
-    if(user_has_permiso == true){
+    const resp:any = await this._permisoService.getPermisosPagina(pagina).toPromise();
+    if(resp.permiso == true){
       return true;
     }else{
-      this.router.navigate(['/panel-principal']);
+      this.router.navigate(["/panel-principal"]);
     }
   }
 

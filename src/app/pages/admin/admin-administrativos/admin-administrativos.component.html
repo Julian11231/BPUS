@@ -1,58 +1,132 @@
 <div class="p-3" style="background-color: white;">
 
-    <div class="form-group">
-        <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
+    <div class="row">
+        <div class="col-9">
+            <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
             type="text"  class="form-control"
             placeholder="Buscar admin">
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btnSuccess" data-toggle="modal" data-target="#addAdmin" data-backdrop="static" data-keyboard="false"> 
+                Agregar admin&nbsp;&nbsp;<i class="fa fa-plus-circle"></i>
+            </button>
+        </div>
     </div>
 
-    <ul class="pagination">
+       <!-- The Modal Add-->
+   <div class="modal fade" id="addAdmin">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar administrador</h4>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form ngNativeValidate #addAdmin="ngForm" (ngSubmit)="postAdmin(addAdmin)">
+            <div class="input-group">
+                <input type="text" ngModel class="form-control" id="nombre" name="nombre" placeholder="Nombre(s)" maxlength="50" required autocomplete="off" autofocus>
+                <input type="text" ngModel class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos" maxlength="50" required autocomplete="off">
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="identificacion">Identificación:</label>
+                    <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="identificacion" name="identificacion" placeholder="Identificación" maxlength="10" minlength="10" required autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="roles">Rol:&nbsp;</label><br>
+                    <select (change)="getPersonRolAdd()" id="personRol" name="roles" class="custom-select">
+                        <option selected>Seleccione...</option>
+                        <ng-container *ngFor="let rol of roles">
+                            <option>{{rol.nombre}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="porcentaje_creditos">Correo:</label>
+                    <input type="email" ngModel class="form-control" id="correo" name="correo" placeholder="Correo" maxlength="50" required autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="porcentaje_creditos">Teléfono:</label>
+                    <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="telefono" name="telefono" placeholder="Teléfono" maxlength="10" minlength="10" required autocomplete="off">
+                </div>
+            </div>
+            <ng-container *ngIf="personRolAdd == 'PROFESOR'">
+                <label class="mt-2" for="roles">Programa:&nbsp;</label><br>
+                <select id="personProgramaAdd" ngModel name="programa" class="custom-select">
+                    <ng-container *ngFor="let programa of programas">
+                        <option value="{{programa._id}}">{{programa.nombre}}</option>
+                    </ng-container>
+                </select>
+            </ng-container>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="submit" class="btn btnInfo" [disabled]="addAdmin.invalid">Aceptar</button>
+              <button (click)="addAdmin.reset();" id="btnCancelarAdd" type="button" class="btn btnSuccess" data-dismiss="modal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+    <ul class="pagination mt-3">
         <li class="page-item"><button class="page-link" (click)="cambiarDesde(-10)">Anteriores</button></li>
         <li class="page-item"><input (change)="cambiarDesdeInput(input.value)" #input class="form-control" type="number" id="pagina" value="{{pagina}}" min="1" max="{{totalpaginas}}"></li>
         <li class="page-item"><button class="page-link">/ {{totalpaginas}}</button></li>
         <li class="page-item"><button class="page-link" (click)="cambiarDesde(10)">Siguientes</button></li>
     </ul>
     <div class="table-responsive">
-        <table class="table table-bordered table-hover">
+        <table class="table borderless">
             <thead>
             <tr>
-                <th class="text-center">Identificación</th>
-                <th class="text-center">Nombres</th>
-                <th class="text-center">Apellidos</th>
-                <th class="text-center">Rol</th>
-                <th class="text-center">Acciones</th>
+                <th colspan="2" class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
             </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let admin of admins; let indice=index">
                     <tr>
-                        <td>{{admin.identificacion}}</td>
-                        <td>{{admin.nombres}}</td>
-                        <td>{{admin.apellidos}}</td>
-                        <td>{{admin.rol.nombre}}</td>
-                        <td><a href="#admin{{indice}}" data-toggle="collapse">Ver mas <i class="fa fa-angle-down"></i></a></td>
-                    </tr>
-                    <tr id="admin{{indice}}" class="collapse">
-                        <td colspan="5">
-                            <div class="row">
-                                <div class="col-3">
-                                    <h6><b>Correo: </b>{{admin.correo}}</h6>
-                                </div>
-                                <div class="col-3">
-                                    <h6><b>tel: </b>{{admin.telefono}}</h6>
-                                </div>
-                                <div *ngIf="admin.programa" class="col-3">
-                                    <h6><b>programa: </b>{{admin.programa.nombre}}</h6>
-                                </div>
-                                <div *ngIf="admin.cargo" class="col-3">
-                                    <h6><b>cargo: </b>{{admin.cargo}}</h6>
-                                </div>
-                                <div class="col-3">
-                                    <h6><b>estado: </b>{{admin.estado}}</h6>
-                                </div>
-                            </div>
+                        <td colspan="2"><h5>{{admin.nombres}} {{admin.apellidos}}</h5></td>
+                        <td>
+                            <span *ngIf="admin.estado == true" class="label btn-success">Activo</span>
+                            <span *ngIf="admin.estado == false" class="label btnSuccess">Inactivo</span>
+                        </td>
+                        <td><h6>{{admin.identificacion}}</h6></td>
+                        <td colspan="2"><h6>{{admin.rol.nombre}}</h6></td>
+                        <td>
+                            <a href="#admin{{indice}}" data-toggle="collapse" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye"></i></a>
+                            <button type="button" class="btn btnInfo btn-sm mr-2"><i class="fa fa-edit"></i></button>
+                            <button *ngIf="admin.estado == true" type="button" class="btn btn-sm btnSuccess mr-2">
+                                Desactivar <i class="fa fa-ban"></i>
+                            </button>
+                            <button *ngIf="admin.estado == false" type="button" class="btn btn-danger">Activar</button>
                         </td>
                     </tr>
+                    <tr id="admin{{indice}}" class="collapse">
+                        <td colspan="2">
+                            <h6><b>Correo: </b>{{admin.correo}}</h6>
+                        </td>
+                        <td>
+                            <h6><b>tel: </b>{{admin.telefono}}</h6>
+                        </td>
+                        <td *ngIf="admin.programa" colspan="4">
+                            <h6><b>programa: </b>{{admin.programa.nombre}}</h6>
+                        </td>
+                        <td *ngIf="admin.cargo" colspan="4">
+                            <h6><b>cargo: </b>{{admin.cargo}}</h6>
+                        </td>
+                    </tr>
+                    <tr><td colspan="7"><hr style="margin: 1px;"></td></tr>
                 </ng-container>
             </tbody>
         </table>

@@ -1,95 +1,26 @@
-<!-- ============================================================== -->
-<!-- Left Sidebar - style you can find in sidebar.scss  -->
-<!-- ============================================================== -->
-<aside class="left-sidebar" *ngIf="menuJefePrograma">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="nav-small-cap"><b>Modalidades de Grado</b> </li>
-                <li *ngFor="let menu of menuJefePrograma"> 
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="{{menu.icono}}"></i>&nbsp;<span class="hide-menu">{{menu.titulo}}</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li *ngFor="let submenu of menu.submenu">
-                            <a [routerLink]="[submenu.url]" routerLinkActive="active">{{submenu.titulo}} </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-small-cap"><b>Gestión de estudiantes</b> </li>
-                <li>                    
-                    <a [routerLink]="['/gestion-estudiantes']" routerLinkActive="nav-link" style="background-color: transparent;">
-                        <i class="fa fa-user"></i>&nbsp;<span class="hide-menu">Estudiantes</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
-
-<aside class="left-sidebar" *ngIf="menuAdmin">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul>
-                <li class="nav-small-cap"><b>Gestionar</b> </li>
-                <li *ngFor="let menu of menuAdmin"> 
-                    <a [routerLink]="[menu.url]" routerLinkActive="nav-link" style="background-color: transparent;">
-                        <i class="{{menu.icono}}"></i>&nbsp;<span class="hide-menu">{{menu.titulo}}</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
-
-<aside class="left-sidebar" *ngIf="menuEncargadoEmpresa">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="nav-small-cap"><b>Perfiles</b> </li>
-                <li *ngFor="let menu of menuEncargadoEmpresa"> <a class="has-arrow waves-effect waves-dark" href="#"
-                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
-                            class="hide-menu">{{menu.titulo}}
-                            <span id="number"
-                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
-                                routerLinkActive="active">{{submenu.titulo}} </a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
-</aside>
-
-<aside class="left-sidebar" *ngIf="menuTutor">
+<aside class="left-sidebar" *ngIf="menuEstudiante == false">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-small-cap"><b>Tutorías de Grado</b> </li>
-                <li *ngFor="let menu of menuTutor"> <a class="has-arrow waves-effect waves-dark" href="#"
-                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
-                            class="hide-menu">{{menu.titulo}}
-                            <span id="number"
-                                class="label label-rouded label-themecolor pull-right">{{menu.submenu.length}}</span></span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
-                                routerLinkActive="active">{{submenu.titulo}} </a></li>
-                    </ul>
+                <li *ngFor="let item of menu"> 
+                    <a  *ngIf="item.submenu; else sinSubmenu" class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="{{item.icono}}"></i>&nbsp;<span class="hide-menu">{{item.titulo}}</span>
+                    </a>
+                    <ng-template #sinSubmenu>
+                        <a [routerLink]="[item.url]" routerLinkActive="nav-link" style="background-color: transparent;">
+                            <i class="{{item.icono}}"></i>&nbsp;<span class="hide-menu">{{item.titulo}}</span>
+                        </a>
+                    </ng-template>
+                    <ng-container *ngIf="item.submenu">
+                        <ul aria-expanded="false" class="collapse">
+                            <li *ngFor="let submenu of item.submenu">
+                                <a [routerLink]="[submenu.url]" routerLinkActive="active">{{submenu.titulo}} </a>
+                            </li>
+                        </ul>
+                    </ng-container>
                 </li>
             </ul>
         </nav>
@@ -97,25 +28,6 @@
     </div>
     <!-- End Sidebar scroll-->
 </aside>
-
-<!--<aside class="left-sidebar" *ngIf="menuEstudiante">
-    <div class="scroll-sidebar">
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="nav-small-cap"><b>Fases de la Modalidad</b> </li>
-                <li *ngFor="let menu of menuEstudiante"> <a class="has-arrow waves-effect waves-dark" href="#"
-                        aria-expanded="false"><i class="{{menu.icono}}"></i>&nbsp;<span
-                            class="hide-menu">{{menu.titulo}}
-                        </span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li *ngFor="let submenu of menu.submenu"><a [routerLink]="[submenu.url]"
-                                routerLinkActive="active">{{submenu.titulo}} </a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</aside>-->
 
 <aside class="left-sidebar" *ngIf="menuEstudiante">
     <!-- Sidebar scroll-->
