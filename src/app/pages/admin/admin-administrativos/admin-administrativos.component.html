@@ -33,14 +33,13 @@
             <div class="row mt-2">
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="identificacion">Identificación:</label>
-                    <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="identificacion" name="identificacion" placeholder="Identificación" maxlength="10" minlength="10" required autocomplete="off">
+                    <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="identificacion" name="identificacion" placeholder="Identificación" maxlength="10" minlength="8" required autocomplete="off">
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="roles">Rol:&nbsp;</label><br>
-                    <select (change)="getPersonRolAdd()" id="personRol" name="roles" class="custom-select">
-                        <option selected>Seleccione...</option>
+                    <select (change)="getPersonRolAdd()" ngModel id="personRol" name="rol" class="custom-select">
                         <ng-container *ngFor="let rol of roles">
-                            <option>{{rol.nombre}}</option>
+                            <option value="{{rol._id}}">{{rol.nombre}}</option>
                         </ng-container>
                     </select>
                 </div>
@@ -57,14 +56,18 @@
             </div>
             <ng-container *ngIf="personRolAdd == 'PROFESOR'">
                 <label class="mt-2" for="roles">Programa:&nbsp;</label><br>
-                <select id="personProgramaAdd" ngModel name="programa" class="custom-select">
+                <select id="personProgramaAdd" ngModel name="programa" class="custom-select" required>
                     <ng-container *ngFor="let programa of programas">
                         <option value="{{programa._id}}">{{programa.nombre}}</option>
                     </ng-container>
                 </select>
             </ng-container>
+            <ng-container *ngIf="personRolAdd == 'ENCARGADO_EMPRESA'">
+                <label class="mt-2" for="cargo">Cargo:</label>
+                <input type="text" ngModel class="form-control" id="cargo" name="cargo" placeholder="Cargo" maxlength="50" minlength="3" required autocomplete="off">
+            </ng-container>
             <!-- Modal footer -->
-            <div class="modal-footer">
+            <div class="modal-footer mt-2">
               <button type="submit" class="btn btnInfo" [disabled]="addAdmin.invalid">Aceptar</button>
               <button (click)="addAdmin.reset();" id="btnCancelarAdd" type="button" class="btn btnSuccess" data-dismiss="modal">Cancelar</button>
             </div>
@@ -99,17 +102,18 @@
                         <td colspan="2"><h5>{{admin.nombres}} {{admin.apellidos}}</h5></td>
                         <td>
                             <span *ngIf="admin.estado == true" class="label btn-success">Activo</span>
-                            <span *ngIf="admin.estado == false" class="label btnSuccess">Inactivo</span>
+                            <span *ngIf="admin.estado == false" class="label btnDanger">Inactivo</span>
                         </td>
                         <td><h6>{{admin.identificacion}}</h6></td>
                         <td colspan="2"><h6>{{admin.rol.nombre}}</h6></td>
                         <td>
                             <a href="#admin{{indice}}" data-toggle="collapse" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye"></i></a>
                             <button type="button" class="btn btnInfo btn-sm mr-2"><i class="fa fa-edit"></i></button>
-                            <button *ngIf="admin.estado == true" type="button" class="btn btn-sm btnSuccess mr-2">
+                            <button *ngIf="admin.estado == true" type="button" class="btn btn-sm btnDanger mr-2">
                                 Desactivar <i class="fa fa-ban"></i>
                             </button>
-                            <button *ngIf="admin.estado == false" type="button" class="btn btn-danger">Activar</button>
+                            <button *ngIf="admin.estado == false" type="button" class="btn btn-success">Activar</button>
+                            <button (click)="deleteAdmin(admin._id)" type="button" class="btn sm-btn btnSuccess"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr id="admin{{indice}}" class="collapse">

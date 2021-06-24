@@ -20,7 +20,9 @@ export class AdminAdministrativosComponent implements OnInit {
 
   roles:any;
   programas:any;
-  personRolAdd:string;
+  personRolAdd:string = "PROFESOR";
+
+  programaAddValid = false; 
 
   desde: number = 0;
   campo:string = "nombres"
@@ -69,11 +71,7 @@ export class AdminAdministrativosComponent implements OnInit {
   getPersonRolAdd(){
     const personRolAdd = (document.getElementById("personRol")) as HTMLSelectElement;
     const selectedIndex = personRolAdd.selectedIndex;
-    if(selectedIndex > 0){
-      this.personRolAdd = this.roles[selectedIndex-1].nombre;
-    }else{
-      this.personRolAdd = "";
-    }
+    this.personRolAdd = this.roles[selectedIndex].nombre;
   }
 
   cambiarDesde(valor:number){
@@ -113,7 +111,118 @@ export class AdminAdministrativosComponent implements OnInit {
   }
 
   postAdmin(f:NgForm){
+    Swal.fire({
+      title:"Crear "+this.personRolAdd+"?",
+      icon: "question",
+      showCancelButton: true,
+      showConfirmButton:true,
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33',
+      showCloseButton:false,
+    }).then((result) => {
+      if(result.value){
+        let admin:any;
+        if(f.value.programa){
+          admin = {
+            identificacion: f.value.identificacion,
+            nombres: f.value.nombre,
+            apellidos: f.value.apellidos,
+            correo: f.value.correo,
+            telefono: f.value.telefono,
+            programa: f.value.programa,
+            rol: f.value.rol,
+          }
+        }else if(f.value.cargo){
+          admin = {
+            identificacion: f.value.identificacion,
+            nombres: f.value.nombre,
+            apellidos: f.value.apellidos,
+            correo: f.value.correo,
+            telefono: f.value.telefono,
+            cargo: f.value.cargo,
+            rol: f.value.rol,
+          }
+        }else{
+          admin = {
+            identificacion: f.value.identificacion,
+            nombres: f.value.nombre,
+            apellidos: f.value.apellidos,
+            correo: f.value.correo,
+            telefono: f.value.telefono,
+            rol: f.value.rol,
+          }
+        }
+        this._adminService.postAdmin(admin).subscribe((resp:any)=>{
+          if(resp){
+            Swal.close();
+            Swal.fire({
+              title: this.personRolAdd+" creado correctamente",
+              icon: "success",
+              showCancelButton: false,
+              showConfirmButton:false,
+              showCloseButton:false,
+              allowEnterKey: false,
+              allowEscapeKey:false,
+              allowOutsideClick: false,
+              timer:1000,
+              timerProgressBar: true,
+            }).then((result) => {
+              const btnCancelarAdd = (document.getElementById("btnCancelarAdd")) as HTMLButtonElement;
+              if(result.value){
+                btnCancelarAdd.click()
+                this.getAdmins();
+              }else{
+                btnCancelarAdd.click();
+                this.getAdmins();
+              }
+            });
+          }
+        });
+      }
+    });
+  }
 
+  deleteAdmin(id:string){
+    Swal.fire({
+      title:"ELiminar?",
+      text:"Esta operacion no se puede deshacer....estas seguro?",
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton:true,
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33',
+      showCloseButton:false,
+    }).then((result) => {
+      if(result.value){
+        this._adminService.deleteAdmin(id).subscribe((resp:any) => {
+          if(resp){
+            Swal.close();
+            Swal.fire({
+              title: "Administrador eliminado correctamente",
+              icon: "success",
+              showCancelButton: false,
+              showConfirmButton:false,
+              showCloseButton:false,
+              allowEnterKey: false,
+              allowEscapeKey:false,
+              allowOutsideClick: false,
+              timer:1000,
+              timerProgressBar: true,
+            }).then((result) => {
+              if(result.value){
+                this.getAdmins();
+              }else{
+                this.getAdmins();
+              }
+            });
+          }
+        });
+      }
+    });  
   }
 
 }
