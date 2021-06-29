@@ -123,46 +123,28 @@ export class AdminAdministrativosComponent implements OnInit {
     identificacionEdit.value = identificacionEdit.value.replace(/\D/g, "");
     telefonoEdit.value = telefonoEdit.value.replace(/\D/g, "");
     //check si es valido
-    console.log();
+    if(
+      nombreEdit.value !== "" &&
+      apellidosEdit.value !== "" &&
+      identificacionEdit.value !== "" && identificacionEdit.value.length > 7 && parseInt(identificacionEdit.value) !== NaN &&
+      personRolEdit.value !== "" &&
+      correoEdit.value !== "" &&
+      telefonoEdit.value !== "" && telefonoEdit.value.length >= 10 && parseInt(telefonoEdit.value) !== NaN
+    ){
+      this.editValid = true;
+    }else{
+      this.editValid = false;
+    }
     if(this.personRolEdit === "PROFESOR"){
       const personProgramaEdit = (document.getElementById("personProgramaEdit")) as HTMLSelectElement;
-      if(
-        nombreEdit.value !== "" &&
-        apellidosEdit.value !== "" &&
-        identificacionEdit.value !== "" && identificacionEdit.value.length > 7 && !isNaN(parseInt(identificacionEdit.value)) &&
-        personRolEdit.value !== "" &&
-        correoEdit.value !== "" &&
-        telefonoEdit.value !== "" && telefonoEdit.value.length >= 10 && parseInt(telefonoEdit.value) !== NaN &&
-        personProgramaEdit.value !== ""
-      ){
+      if(personProgramaEdit.value !== ""){
         this.editValid = true;
       }else{
         this.editValid = false;
       }
     }else if(this.personRolEdit == "ENCARGADO_EMPRESA"){
       const cargoEdit = (document.getElementById("cargoEdit")) as HTMLInputElement;
-      if(
-        nombreEdit.value !== "" &&
-        apellidosEdit.value !== "" &&
-        identificacionEdit.value !== "" && identificacionEdit.value.length > 7 && parseInt(identificacionEdit.value) !== NaN &&
-        personRolEdit.value !== "" &&
-        correoEdit.value !== "" &&
-        telefonoEdit.value !== "" && telefonoEdit.value.length >= 10 && parseInt(telefonoEdit.value) !== NaN &&
-        cargoEdit.value !== ""
-      ){
-        this.editValid = true;
-      }else{
-        this.editValid = false;
-      }
-    }else{
-      if(
-        nombreEdit.value !== "" &&
-        apellidosEdit.value !== "" &&
-        identificacionEdit.value !== "" && identificacionEdit.value.length > 7 && parseInt(identificacionEdit.value) !== NaN &&
-        personRolEdit.value !== "" &&
-        correoEdit.value !== "" &&
-        telefonoEdit.value !== "" && telefonoEdit.value.length >= 10 && parseInt(telefonoEdit.value) !== NaN
-      ){
+      if(cargoEdit.value !== ""){
         this.editValid = true;
       }else{
         this.editValid = false;
@@ -271,36 +253,18 @@ export class AdminAdministrativosComponent implements OnInit {
       showCloseButton:false,
     }).then((result) => {
       if(result.value){
-        let admin:any;
+        let admin:any = {
+          identificacion: f.value.identificacion,
+          nombres: f.value.nombre,
+          apellidos: f.value.apellidos,
+          correo: f.value.correo,
+          telefono: f.value.telefono,
+          rol: f.value.rol
+        }
         if(f.value.programa){
-          admin = {
-            identificacion: f.value.identificacion,
-            nombres: f.value.nombre,
-            apellidos: f.value.apellidos,
-            correo: f.value.correo,
-            telefono: f.value.telefono,
-            programa: f.value.programa,
-            rol: f.value.rol,
-          }
+          admin.programa = f.value.programa;
         }else if(f.value.cargo){
-          admin = {
-            identificacion: f.value.identificacion,
-            nombres: f.value.nombre,
-            apellidos: f.value.apellidos,
-            correo: f.value.correo,
-            telefono: f.value.telefono,
-            cargo: f.value.cargo,
-            rol: f.value.rol,
-          }
-        }else{
-          admin = {
-            identificacion: f.value.identificacion,
-            nombres: f.value.nombre,
-            apellidos: f.value.apellidos,
-            correo: f.value.correo,
-            telefono: f.value.telefono,
-            rol: f.value.rol,
-          }
+          admin.cargo = f.value.cargo;
         }
         this._adminService.postAdmin(admin).subscribe((resp:any)=>{
           if(resp){
@@ -333,8 +297,13 @@ export class AdminAdministrativosComponent implements OnInit {
     });
   }
 
-  putAdmin(f:NgForm){
-    console.log(f.value);
+  putAdmin(){
+    const nombreEdit = (document.getElementById("nombreEdit")) as HTMLInputElement;
+    const apellidosEdit = (document.getElementById("apellidosEdit")) as HTMLInputElement;
+    const identificacionEdit = (document.getElementById("identificacionEdit")) as HTMLInputElement;
+    const personRolEdit = (document.getElementById("personRolEdit")) as HTMLSelectElement;
+    const correoEdit = (document.getElementById("correoEdit")) as HTMLInputElement;
+    const telefonoEdit = (document.getElementById("telefonoEdit")) as HTMLInputElement;
     Swal.fire({
       title:"Cambiar datos de "+this.adminSelected.nombres+" ?",
       icon: "question",
@@ -347,45 +316,27 @@ export class AdminAdministrativosComponent implements OnInit {
       showCloseButton:false,
     }).then((result) => {
       if(result.value){
-        let admin:any;
-        if(f.value.programa){
-          admin = {
-            _id:this.adminSelected._id,
-            identificacion: f.value.identificacion,
-            nombres: f.value.nombre,
-            apellidos: f.value.apellidos,
-            correo: f.value.correo,
-            telefono: f.value.telefono,
-            programa: f.value.programa,
-            rol: f.value.rol,
-          }
-        }else if(f.value.cargo){
-          admin = {
-            _id:this.adminSelected._id,
-            identificacion: f.value.identificacion,
-            nombres: f.value.nombre,
-            apellidos: f.value.apellidos,
-            correo: f.value.correo,
-            telefono: f.value.telefono,
-            cargo: f.value.cargo,
-            rol: f.value.rol,
-          }
-        }else{
-          admin = {
-            _id:this.adminSelected._id,
-            identificacion: f.value.identificacion,
-            nombres: f.value.nombre,
-            apellidos: f.value.apellidos,
-            correo: f.value.correo,
-            telefono: f.value.telefono,
-            rol: f.value.rol,
-          }
+        let admin:any = {
+          _id: this.adminSelected._id,
+          identificacion: identificacionEdit.value,
+          nombres: nombreEdit.value,
+          apellidos: apellidosEdit.value,
+          correo: correoEdit.value,
+          telefono: telefonoEdit.value,
+          rol: personRolEdit.value
+        }
+        if(this.personRolEdit == "PROFESOR" || this.personRolEdit == "  JEFE_PROGRAMA"){
+          const personProgramaEdit = (document.getElementById("personProgramaEdit")) as HTMLSelectElement;
+          admin.programa = personProgramaEdit.value;
+        }else if(this.personRolEdit == "ENCARGADO_EMPRESA"){
+          const cargoEdit = (document.getElementById("cargoEdit")) as HTMLInputElement;
+          admin.cargo = cargoEdit.value;
         }
         this._adminService.putAdmin(admin).subscribe((resp:any)=>{
           if(resp){
             Swal.close();
             Swal.fire({
-              title: this.personRolAdd+" creado correctamente",
+              title: "Editado correctamente",
               icon: "success",
               showCancelButton: false,
               showConfirmButton:false,
@@ -490,9 +441,29 @@ export class AdminAdministrativosComponent implements OnInit {
         }
       }
     });
-    if (check.value) {
-      Swal.fire(`Entered password: ${check.value}`);
-      //this._adminService.deleteAdmin(id).subscribe();  
+    if (check.value == admin.identificacion) {
+      this._adminService.deleteAdmin(admin._id).subscribe((resp:any)=>{
+        if(resp){
+          Swal.fire({
+            title: "Eliminado correctamente",
+            icon: "success",
+            showCancelButton: false,
+            showConfirmButton:false,
+            showCloseButton:false,
+            allowEnterKey: false,
+            allowEscapeKey:false,
+            allowOutsideClick: false,
+            timer:1000,
+            timerProgressBar: true,
+          }).then((result) => {
+            if(result.value){
+              this.getAdmins();
+            }else{
+              this.getAdmins();
+            }
+          });
+        }
+      });  
     }
   }
 

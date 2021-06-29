@@ -98,19 +98,19 @@
         
         <!-- Modal body -->
         <div class="modal-body">
-          <form ngNativeValidate #editAdmin="ngForm" (ngSubmit)="putAdmin(editAdmin)">
+          <form (ngSubmit)="putAdmin()">
             <div class="input-group">
-                <input (keyup)="checkEdit()" type="text" ngModel class="form-control" id="nombreEdit" name="nombres" maxlength="50" required autocomplete="off" autofocus>
-                <input (keyup)="checkEdit()" type="text" ngModel class="form-control" id="apellidosEdit" name="apellidos" maxlength="50" required autocomplete="off">
+                <input (keyup)="checkEdit()" type="text" class="form-control" id="nombreEdit" maxlength="50" required autocomplete="off" autofocus>
+                <input (keyup)="checkEdit()" type="text" class="form-control" id="apellidosEdit" maxlength="50" required autocomplete="off">
             </div>
             <div class="row mt-2">
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="identificacion">Identificación:</label>
-                    <input (keyup)="checkEdit()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="identificacionEdit" name="identificacion" maxlength="10" minlength="8" required autocomplete="off">
+                    <input (keyup)="checkEdit()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' class="form-control" id="identificacionEdit" maxlength="10" minlength="8" required autocomplete="off">
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="roles">Rol:&nbsp;</label><br>
-                    <select [disabled]="personRolEdit == 'JEFE_PROGRAMA'" (change)="getPersonRolEdit(); checkEdit()" ngModel id="personRolEdit" name="rol" class="custom-select">
+                    <select [disabled]="personRolEdit == 'JEFE_PROGRAMA'" (change)="getPersonRolEdit(); checkEdit()" id="personRolEdit" class="custom-select">
                         <ng-container *ngFor="let rol of roles">
                             <ng-container *ngIf="personRolEdit !== 'JEFE_PROGRAMA' && rol.nombre !== 'JEFE_PROGRAMA'; else JefeElse">
                                 <option value="{{rol._id}}">{{rol.nombre}}</option>
@@ -127,16 +127,16 @@
             <div class="row mt-2">
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="porcentaje_creditos">Correo:</label>
-                    <input (keyup)="checkEdit()" type="email" ngModel class="form-control" id="correoEdit" name="correo" maxlength="50" required autocomplete="off">
+                    <input (keyup)="checkEdit()" type="email" class="form-control" id="correoEdit" maxlength="50" required autocomplete="off">
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="telefono">Teléfono:</label>
-                    <input (keyup)="checkEdit()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="telefonoEdit" name="telefono" maxlength="10" minlength="10" required autocomplete="off">
+                    <input (keyup)="checkEdit()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' class="form-control" id="telefonoEdit" maxlength="10" minlength="10" required autocomplete="off">
                 </div>
             </div>
-            <ng-container *ngIf="personRolEdit == 'PROFESOR'">
+            <ng-container *ngIf="personRolEdit == 'PROFESOR' || personRolEdit == 'JEFE_PROGRAMA'">
                 <label class="mt-2" for="roles">Programa:&nbsp;</label><br>
-                <select value="{{adminSelected?.programa}}" (change)="checkEdit()" id="personProgramaEdit" ngModel name="programa" class="custom-select" required>
+                <select [disabled]="personRolEdit == 'JEFE_PROGRAMA'" value="{{adminSelected?.programa?._id}}" (change)="checkEdit()" id="personProgramaEdit" class="custom-select" required>
                     <ng-container *ngFor="let programa of programas">
                         <option value="{{programa._id}}">{{programa.nombre}}</option>
                     </ng-container>
@@ -144,14 +144,14 @@
             </ng-container>
             <ng-container *ngIf="personRolEdit == 'ENCARGADO_EMPRESA'">
                 <label class="mt-2" for="cargo">Cargo:</label>
-                <input (keyup)="checkEdit()" type="text" ngModel class="form-control" 
-                    id="cargoEdit" name="cargo" value="{{adminSelected?.cargo}}" placeholder="{{adminSelected?.cargo}}"
+                <input (keyup)="checkEdit()" type="text" class="form-control" 
+                    id="cargoEdit" value="{{adminSelected?.cargo}}" placeholder="{{adminSelected?.cargo}}"
                     maxlength="50" minlength="3" required autocomplete="off">
             </ng-container>
             <!-- Modal footer -->
             <div class="modal-footer mt-2">
               <button type="submit" class="btn btnInfo" [disabled]="editDiferente == false || editValid == false">Aceptar</button>
-              <button (click)="editAdmin.reset();" id="btnCancelarEdit" type="button" class="btn btnSuccess" data-dismiss="modal">Cancelar</button>
+              <button id="btnCancelarEdit" type="button" class="btn btnSuccess" data-dismiss="modal">Cancelar</button>
             </div>
           </form>
         </div>

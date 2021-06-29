@@ -12,7 +12,6 @@ export class EncarSolicitudVacanteComponent implements OnInit {
 
   info: any;
   solicitudes: any[];
-  programa: string;
   pasantiaSelected: any;
 
   constructor(private _pasantiaService: PasantiService, 
@@ -21,7 +20,6 @@ export class EncarSolicitudVacanteComponent implements OnInit {
 
   ngOnInit(): void {
     this.info = JSON.parse(localStorage.getItem('user'));
-    this.programa = this.info.programa;
     this.getSolicitudes();
   }
 

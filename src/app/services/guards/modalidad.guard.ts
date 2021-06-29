@@ -14,12 +14,12 @@ export class ModalidadGuard implements CanActivate {
           if(user.modalidad){
             return true;
           }else{
-            return false
+            this.router.navigate(['/login']);
           }
         }else if(user){
           return true;
         }else{
-          return false;
+          this.router.navigate(['/login']);
         }
     }
 }

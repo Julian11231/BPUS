@@ -94,7 +94,7 @@
                 <br>
 
                 <ng-container *ngFor="let dato of solicitudes">
-                    <div *ngIf="(programa === dato.estudiante.programa)" class="row mt-2">
+                    <div *ngIf="(info._id === dato.vacante.convenio.encargado._id)" class="row mt-2">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="vacantes">
                                 <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}

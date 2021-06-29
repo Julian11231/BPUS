@@ -31,15 +31,15 @@
 
                         <h5 class="text-uppercase mt-3"> <b>Gestión de la Pasantía:</b></h5>
 
-                        <div>
-                            <table class="table table-borderless table-responsive">
+                        <div class=" table-responsive">
+                            <table class="table table-borderless">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center"><b>Fase</b></th>
                                         <th style="text-align: center"><b>Estado</b></th>
                                         <th style="text-align: center"><b>Notas</b></th>
-                                        <th style="text-align: center"><b>Descarga</b></th>
                                         <th style="text-align: center"><b>Actualizar Estado</b></th>
+                                        <th style="text-align: center"><b>Descargar</b></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -63,18 +63,9 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_propuesta" [disabled]="!pasantiaSelected?.estado_propuesta"></button>
-                                        </td>
-                                        <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.documento_propuesta">
-                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantiaSelected?.documento_propuesta">
-                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_propuesta | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_propuesta" target="_blank">
-                                                    <small><b>Ver Documento</b></small>
-                                                </a>
-                                            </ng-container>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_propuesta" [disabled]="!pasantiaSelected?.estado_propuesta">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
                                         </td>
                                         <td class="text-center">
                                             <ng-container *ngIf="!pasantiaSelected?.estado_propuesta || pasantiaSelected?.estado_propuesta == 'Ajustar'">
@@ -96,6 +87,17 @@
                                                 <button type="button" class="btn btn-link" style="display: none;" (click)="cancelarAjustePropuesta()" id="cancelarAjustePropuesta">Cancelar ajuste</button>
                                             </ng-container>
 
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_propuesta">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_propuesta">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_propuesta | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_propuesta" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
+                                            </ng-container>
                                         </td>
                                     </tr>
                                     <tr id="notas_propuesta" class="collapse" *ngIf="pasantiaSelected?.estado_propuesta">
@@ -133,18 +135,9 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_actaInicio" [disabled]="!pasantiaSelected?.estado_actaInicio"></button>
-                                        </td>
-                                        <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.documento_actaInicio">
-                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantiaSelected?.documento_actaInicio">
-                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_actaInicio | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_actaInicio" target="_blank">
-                                                    <small><b>Ver Documento</b></small>
-                                                </a>
-                                            </ng-container>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_actaInicio" [disabled]="!pasantiaSelected?.estado_actaInicio">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
                                         </td>
                                         <td>
                                             <ng-container *ngIf="!pasantiaSelected?.estado_actaInicio || pasantiaSelected?.estado_actaInicio == 'Ajustar'">
@@ -164,6 +157,17 @@
                                             <ng-container *ngIf="pasantiaSelected?.estado_actaInicio === 'Aprobada'">
                                                 <button type="button" (click)="notasActaInicio()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteActaInicio">Solicitar ajuste</button>
                                                 <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteActaInicio()" id="cancelarAjusteActaInicio">Cancelar ajuste</button>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_actaInicio">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_actaInicio">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_actaInicio | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_actaInicio" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
                                             </ng-container>
                                         </td>
                                     </tr>
@@ -203,18 +207,9 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_informe7" [disabled]="!pasantiaSelected?.estado_informe7"></button>
-                                        </td>
-                                        <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.documento_informe7">
-                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantiaSelected?.documento_informe7">
-                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informe7 | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informe7" target="_blank">
-                                                    <small><b>Ver Documento</b></small>
-                                                </a>
-                                            </ng-container>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_informe7" [disabled]="!pasantiaSelected?.estado_informe7">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
                                         </td>
                                         <td>
                                             <ng-container *ngIf="!pasantiaSelected?.estado_informe7 || pasantiaSelected?.estado_informe7 == 'Ajustar'">
@@ -234,6 +229,17 @@
                                             <ng-container *ngIf="pasantiaSelected?.estado_informe7 === 'Aprobado'">
                                                 <button type="button" (click)="notasInforme7()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteInforme7">Solicitar ajuste</button>
                                                 <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteInforme7()" id="cancelarAjusteInforme7">Cancelar ajuste</button>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_informe7">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_informe7">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informe7 | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informe7" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
                                             </ng-container>
                                         </td>
                                     </tr>
@@ -273,18 +279,9 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_informe14" [disabled]="!pasantiaSelected?.estado_informe14"></button>
-                                        </td>
-                                        <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.documento_informe14">
-                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantiaSelected?.documento_informe14">
-                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informe14 | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informe14" target="_blank">
-                                                    <small><b>Ver Documento</b></small>
-                                                </a>
-                                            </ng-container>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_informe14" [disabled]="!pasantiaSelected?.estado_informe14">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
                                         </td>
                                         <td>
                                             <ng-container *ngIf="!pasantiaSelected?.estado_informe14 || pasantiaSelected?.estado_informe14 == 'Ajustar'">
@@ -304,6 +301,17 @@
                                             <ng-container *ngIf="pasantiaSelected?.estado_informe14 === 'Aprobado'">
                                                 <button type="button" (click)="notasInforme14()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteInforme14">Solicitar ajuste</button>
                                                 <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteInforme14()" id="cancelarAjusteInforme14">Cancelar ajuste</button>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_informe14">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_informe14">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informe14 | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informe14" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
                                             </ng-container>
                                         </td>
                                     </tr>
@@ -343,18 +351,9 @@
                                             </ng-container>
                                         </td>
                                         <td>
-                                            <button type="button" class="fa fa-file" data-toggle="collapse" data-target="#notas_informeFinal" [disabled]="!pasantiaSelected?.estado_informeFinal"></button>
-                                        </td>
-                                        <td>
-                                            <ng-container *ngIf="!pasantiaSelected?.documento_informeFinal">
-                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="pasantiaSelected?.documento_informeFinal">
-                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informeFinal | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informeFinal" target="_blank">
-                                                    <small><b>Ver Documento</b></small>
-                                                </a>
-                                            </ng-container>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_informeFinal" [disabled]="!pasantiaSelected?.estado_informeFinal">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
                                         </td>
                                         <td *ngIf="!pasantiaSelected?.estado_informeFinal || pasantiaSelected?.estado_informeFinal == 'Ajustar'">
                                             <select class="form-control custom-select" disabled>
@@ -372,6 +371,17 @@
                                             <button type="button" (click)="notasInformeFinal()" class="btn btnSuccess btn-block mt-4" style="display: block;" id="ajusteInformeFinal">Solicitar ajuste</button>
                                             <button type="button" class="btn btn-link btn-block mt-4" style="display: none;" (click)="cancelarAjusteInformeFinal()" id="cancelarAjusteInformeFinal">Cancelar ajuste</button>
                                         </th>
+                                        <td>
+                                            <ng-container *ngIf="!pasantiaSelected?.documento_informeFinal">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="pasantiaSelected?.documento_informeFinal">
+                                                <a class="btn btnSuccess descargar" [href]="pasantiaSelected?.documento_informeFinal | documento: pasantiaSelected?.estudiante._id" download="pasantiaSelected?.documento_informeFinal" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
+                                            </ng-container>
+                                        </td>
                                     </tr>
                                     <tr *ngIf="pasantiaSelected?.estado_informeFinal">
                                         <th colspan="3">
@@ -404,9 +414,6 @@
                         </div>
     
                         <div class="modal-footer">
-
-                            <button type="button" (click)="resetDataInfo()" id="btnCloseModalGestion" class="btn btnSuccess" data-dismiss="modal"><b>Cerrar </b><i class="fa fa-times"></i></button>
-
                             <button type="submit" class="btn btnInfo" 
                             [disabled]="new_estado_prouesta == '' && new_estado_actaInicio == '' && new_estado_informe7 == '' &&  new_estado_informe14 == '' && new_estado_informeFinal == ''
                             || (new_estado_prouesta === 'Ajustar' && new_notas_propuesta == '') || (new_estado_actaInicio === 'Ajustar' && new_notas_actaInicio == '')
@@ -414,7 +421,7 @@
                             || (new_estado_informeFinal === 'Ajustar' && new_notas_informeFinal == '')">
                             <b>Guardar Cambios </b><i class="mdi mdi-update"></i>
                             </button>
-
+                            <button type="button" (click)="resetDataInfo()" id="btnCloseModalGestion" class="btn btn-danger" data-dismiss="modal"><b>Cerrar </b><i class="fa fa-times"></i></button>
                         </div>
                     </form>
                 </div>

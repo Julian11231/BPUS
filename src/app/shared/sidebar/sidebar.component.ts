@@ -11,7 +11,7 @@ import { PasantiService } from 'src/app/services/service.index';
 export class SidebarComponent implements OnInit {
 
   user = JSON.parse(localStorage.getItem('user'));
-  menu = JSON.parse(localStorage.getItem('menu'));
+  menu:any;
   menuEstudiante:boolean = false;
   pasantia:any;
   diff:any
@@ -33,6 +33,8 @@ export class SidebarComponent implements OnInit {
           }
         });
       }
+    }else{
+      this.menu = JSON.parse(localStorage.getItem('menu'));
     }
   }
 
