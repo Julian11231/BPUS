@@ -20,9 +20,14 @@ export class AdminAdministrativosComponent implements OnInit {
 
   roles:any;
   programas:any;
-  personRolAdd:string = "PROFESOR";
 
-  programaAddValid = false; 
+  personRolAdd:string = "PROFESOR";
+  programaAddValid = false;
+  
+  adminSelected:any;
+  personRolEdit:String;
+  editValid = false;
+  editDiferente = false;
 
   desde: number = 0;
   campo:string = "nombres"
@@ -55,8 +60,6 @@ export class AdminAdministrativosComponent implements OnInit {
       for(let i in this.roles){
         if(this.roles[i].nombre == "ESTUDIANTE"){
           this.roles.splice(i, 1);
-        }if(this.roles[i].nombre == "JEFE_PROGRAMA"){
-          this.roles.splice(i, 1);
         }
       }
     });
@@ -71,7 +74,152 @@ export class AdminAdministrativosComponent implements OnInit {
   getPersonRolAdd(){
     const personRolAdd = (document.getElementById("personRol")) as HTMLSelectElement;
     const selectedIndex = personRolAdd.selectedIndex;
-    this.personRolAdd = this.roles[selectedIndex].nombre;
+    this.personRolAdd = this.roles[selectedIndex+1].nombre;
+  }
+
+  getAdminSelected(admin:any){
+    this.adminSelected = admin;
+    this.editDiferente = false;
+    //Nombres
+    const nombreEdit = (document.getElementById("nombreEdit")) as HTMLInputElement;
+    nombreEdit.value = admin.nombres;
+    nombreEdit.placeholder = admin.nombres;
+    //Apellidos
+    const apellidosEdit = (document.getElementById("apellidosEdit")) as HTMLInputElement;
+    apellidosEdit.value = admin.apellidos;
+    apellidosEdit.placeholder = admin.apellidos;
+    //Identificación
+    const identificacionEdit = (document.getElementById("identificacionEdit")) as HTMLInputElement;
+    identificacionEdit.value = admin.identificacion;
+    identificacionEdit.placeholder = admin.identificacion;
+    //Rol
+    const personRolEdit = (document.getElementById("personRolEdit")) as HTMLSelectElement;
+    personRolEdit.value = admin.rol._id;
+    this.personRolEdit = admin.rol.nombre;
+    //Correo
+    const correoEdit = (document.getElementById("correoEdit")) as HTMLInputElement;
+    correoEdit.value = admin.correo;
+    correoEdit.placeholder = admin.correo;
+    //Teléfono
+    const telefonoEdit = (document.getElementById("telefonoEdit")) as HTMLInputElement;
+    telefonoEdit.value = admin.telefono;
+    telefonoEdit.placeholder = admin.telefono;
+  }
+
+  checkAdd(){
+    const identificacion = (document.getElementById("identificacion")) as HTMLInputElement;
+    const telefono = (document.getElementById("telefono")) as HTMLInputElement;
+    identificacion.value = identificacion.value.replace(/\D/g, "");
+    telefono.value = telefono.value.replace(/\D/g, "");
+  }
+
+  checkEdit(){
+    const nombreEdit = (document.getElementById("nombreEdit")) as HTMLInputElement;
+    const apellidosEdit = (document.getElementById("apellidosEdit")) as HTMLInputElement;
+    const identificacionEdit = (document.getElementById("identificacionEdit")) as HTMLInputElement;
+    const personRolEdit = (document.getElementById("personRolEdit")) as HTMLSelectElement;
+    const correoEdit = (document.getElementById("correoEdit")) as HTMLInputElement;
+    const telefonoEdit = (document.getElementById("telefonoEdit")) as HTMLInputElement;
+    identificacionEdit.value = identificacionEdit.value.replace(/\D/g, "");
+    telefonoEdit.value = telefonoEdit.value.replace(/\D/g, "");
+    //check si es valido
+    console.log();
+    if(this.personRolEdit === "PROFESOR"){
+      const personProgramaEdit = (document.getElementById("personProgramaEdit")) as HTMLSelectElement;
+      if(
+        nombreEdit.value !== "" &&
+        apellidosEdit.value !== "" &&
+        identificacionEdit.value !== "" && identificacionEdit.value.length > 7 && !isNaN(parseInt(identificacionEdit.value)) &&
+        personRolEdit.value !== "" &&
+        correoEdit.value !== "" &&
+        telefonoEdit.value !== "" && telefonoEdit.value.length >= 10 && parseInt(telefonoEdit.value) !== NaN &&
+        personProgramaEdit.value !== ""
+      ){
+        this.editValid = true;
+      }else{
+        this.editValid = false;
+      }
+    }else if(this.personRolEdit == "ENCARGADO_EMPRESA"){
+      const cargoEdit = (document.getElementById("cargoEdit")) as HTMLInputElement;
+      if(
+        nombreEdit.value !== "" &&
+        apellidosEdit.value !== "" &&
+        identificacionEdit.value !== "" && identificacionEdit.value.length > 7 && parseInt(identificacionEdit.value) !== NaN &&
+        personRolEdit.value !== "" &&
+        correoEdit.value !== "" &&
+        telefonoEdit.value !== "" && telefonoEdit.value.length >= 10 && parseInt(telefonoEdit.value) !== NaN &&
+        cargoEdit.value !== ""
+      ){
+        this.editValid = true;
+      }else{
+        this.editValid = false;
+      }
+    }else{
+      if(
+        nombreEdit.value !== "" &&
+        apellidosEdit.value !== "" &&
+        identificacionEdit.value !== "" && identificacionEdit.value.length > 7 && parseInt(identificacionEdit.value) !== NaN &&
+        personRolEdit.value !== "" &&
+        correoEdit.value !== "" &&
+        telefonoEdit.value !== "" && telefonoEdit.value.length >= 10 && parseInt(telefonoEdit.value) !== NaN
+      ){
+        this.editValid = true;
+      }else{
+        this.editValid = false;
+      }
+    }
+    //check si son diferentes
+    if(this.adminSelected.rol.nombre !== this.personRolEdit){
+      this.editDiferente = true;
+    }else{
+      if(this.personRolEdit === "PROFESOR"){
+        const personProgramaEdit = (document.getElementById("personProgramaEdit")) as HTMLSelectElement;
+        if(
+          nombreEdit.value !== this.adminSelected.nombres ||
+          apellidosEdit.value !== this.adminSelected.apellidos ||
+          identificacionEdit.value !== this.adminSelected.identificacion ||
+          correoEdit.value !== this.adminSelected.correo ||
+          telefonoEdit.value !== this.adminSelected.telefono ||
+          personProgramaEdit.value !== this.adminSelected.programa._id
+        ){
+          this.editDiferente = true;
+        }else{
+          this.editDiferente = false;
+        }
+      }else if(this.personRolEdit == "ENCARGADO_EMPRESA"){
+        const cargoEdit = (document.getElementById("cargoEdit")) as HTMLInputElement;
+        if(
+          nombreEdit.value !== this.adminSelected.nombres ||
+          apellidosEdit.value !== this.adminSelected.apellidos ||
+          identificacionEdit.value !== this.adminSelected.identificacion ||
+          correoEdit.value !== this.adminSelected.correo ||
+          telefonoEdit.value !== this.adminSelected.telefono ||
+          cargoEdit.value !== this.adminSelected.cargo
+        ){
+          this.editDiferente = true;
+        }else{
+          this.editDiferente = false;
+        }
+      }else{
+        if(
+          nombreEdit.value !== this.adminSelected.nombres ||
+          apellidosEdit.value !== this.adminSelected.apellidos ||
+          identificacionEdit.value !== this.adminSelected.identificacion ||
+          correoEdit.value !== this.adminSelected.correo ||
+          telefonoEdit.value !== this.adminSelected.telefono
+        ){
+          this.editDiferente = true;
+        }else{
+          this.editDiferente = false;
+        }
+      }
+    }
+  }
+
+  getPersonRolEdit(){
+    const personRolEdit = (document.getElementById("personRolEdit")) as HTMLSelectElement;
+    const selectedIndex = personRolEdit.selectedIndex;
+    this.personRolEdit = this.roles[selectedIndex+1].nombre;
   }
 
   cambiarDesde(valor:number){
@@ -156,6 +304,7 @@ export class AdminAdministrativosComponent implements OnInit {
         }
         this._adminService.postAdmin(admin).subscribe((resp:any)=>{
           if(resp){
+            this._notiService.sendUSuarioNuevo(admin).subscribe();
             Swal.close();
             Swal.fire({
               title: this.personRolAdd+" creado correctamente",
@@ -184,10 +333,93 @@ export class AdminAdministrativosComponent implements OnInit {
     });
   }
 
-  deleteAdmin(id:string){
+  putAdmin(f:NgForm){
+    console.log(f.value);
     Swal.fire({
-      title:"ELiminar?",
-      text:"Esta operacion no se puede deshacer....estas seguro?",
+      title:"Cambiar datos de "+this.adminSelected.nombres+" ?",
+      icon: "question",
+      showCancelButton: true,
+      showConfirmButton:true,
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33',
+      showCloseButton:false,
+    }).then((result) => {
+      if(result.value){
+        let admin:any;
+        if(f.value.programa){
+          admin = {
+            _id:this.adminSelected._id,
+            identificacion: f.value.identificacion,
+            nombres: f.value.nombre,
+            apellidos: f.value.apellidos,
+            correo: f.value.correo,
+            telefono: f.value.telefono,
+            programa: f.value.programa,
+            rol: f.value.rol,
+          }
+        }else if(f.value.cargo){
+          admin = {
+            _id:this.adminSelected._id,
+            identificacion: f.value.identificacion,
+            nombres: f.value.nombre,
+            apellidos: f.value.apellidos,
+            correo: f.value.correo,
+            telefono: f.value.telefono,
+            cargo: f.value.cargo,
+            rol: f.value.rol,
+          }
+        }else{
+          admin = {
+            _id:this.adminSelected._id,
+            identificacion: f.value.identificacion,
+            nombres: f.value.nombre,
+            apellidos: f.value.apellidos,
+            correo: f.value.correo,
+            telefono: f.value.telefono,
+            rol: f.value.rol,
+          }
+        }
+        this._adminService.putAdmin(admin).subscribe((resp:any)=>{
+          if(resp){
+            Swal.close();
+            Swal.fire({
+              title: this.personRolAdd+" creado correctamente",
+              icon: "success",
+              showCancelButton: false,
+              showConfirmButton:false,
+              showCloseButton:false,
+              allowEnterKey: false,
+              allowEscapeKey:false,
+              allowOutsideClick: false,
+              timer:1000,
+              timerProgressBar: true,
+            }).then((result) => {
+              const btnCancelarEdit = (document.getElementById("btnCancelarEdit")) as HTMLButtonElement;
+              if(result.value){
+                btnCancelarEdit.click()
+                this.getAdmins();
+              }else{
+                btnCancelarEdit.click();
+                this.getAdmins();
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+
+  cambiarEstado(id:string, estado:boolean){
+    let txt = "";
+    if(estado){
+      txt = "Activar"
+    }else{
+      txt = "Desactivar"
+    }
+    Swal.fire({
+      title: txt+" Usuario?",
       icon: "warning",
       showCancelButton: true,
       showConfirmButton:true,
@@ -198,11 +430,12 @@ export class AdminAdministrativosComponent implements OnInit {
       showCloseButton:false,
     }).then((result) => {
       if(result.value){
-        this._adminService.deleteAdmin(id).subscribe((resp:any) => {
+        const admin = {_id: id, estado: estado};
+        this._adminService.cambiarEstado(admin).subscribe((resp:any)=>{
           if(resp){
             Swal.close();
             Swal.fire({
-              title: "Administrador eliminado correctamente",
+              title: "Estado cambiado correctamente",
               icon: "success",
               showCancelButton: false,
               showConfirmButton:false,
@@ -223,6 +456,44 @@ export class AdminAdministrativosComponent implements OnInit {
         });
       }
     });  
+  }
+
+  async deleteAdmin(admin:any){
+    let check = await Swal.fire({
+      title:"Eliminar a "+admin.nombres+" ?",
+      html: "<b>Esta operacion no se puede deshacer!!</b><br>"+
+            "<label class='mt-2'>Escribe la identifacion:<label>",
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton:true,
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33',
+      showCloseButton:false,
+      input: "text",
+      inputPlaceholder: 'Identificación',
+      inputAttributes: {
+        maxlength: "10",
+        minlength: "8",
+        onkeypress: "return (event.charCode >= 48 && event.charCode <= 57)",
+        onCopy: "return false", 
+        onDrag: "return false",
+        onDrop: "return false",
+        onPaste: "return false"
+      },
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to write something!'
+        }else if(value !== admin.identificacion){
+          return 'No coincide con la identificación'
+        }
+      }
+    });
+    if (check.value) {
+      Swal.fire(`Entered password: ${check.value}`);
+      //this._adminService.deleteAdmin(id).subscribe();  
+    }
   }
 
 }

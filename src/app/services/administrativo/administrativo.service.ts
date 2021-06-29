@@ -68,6 +68,23 @@ export class AdministrativoService {
     }));
   }
 
+  cambiarEstado(admin:any){
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/administrativos/cambiarEstado?token=${token}`;
+    return this.http.put(url, admin).pipe(map((resp: any) => {
+      if (resp.ok == true) {
+        return true;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
 
   deleteAdmin(id:string){
     let token = localStorage.getItem('token');
@@ -93,6 +110,7 @@ export class AdministrativoService {
       if (resp.ok == true) {
         localStorage.removeItem("user");
         localStorage.setItem("user",  JSON.stringify(resp.administrativoAct));
+        localStorage.setItem("menu",  JSON.stringify(resp.menu));
         return true;
       }
     }), catchError((err) => {

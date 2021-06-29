@@ -13,7 +13,6 @@ declare function init_plugins();
 export class NavbarComponent implements OnInit {
   // Obtenemos toda la información del usuario
   info = JSON.parse(localStorage.getItem('user'));
-  tipoUsuario: string;
   numeroNotificaciones: number;
   notificacionesNav:any;
   fecha: Date;

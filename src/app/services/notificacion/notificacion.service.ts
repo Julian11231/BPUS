@@ -79,6 +79,18 @@ export class NotificacionesService {
     }));
   }
 
+  sendUSuarioNuevo(usuario: any) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/notificaciones/usuarioNuevo?token=${token}`;
+    return this.http.post(url, usuario).pipe(map((resp: any) => {
+      if (resp.ok) {  
+        return true;
+      }else{
+        return false;
+      }
+    }));
+  }
+
   sendCartaPresentacionCorreo(idEstudiante:string ,notificacion: Notificacion) {
 
     let token = localStorage.getItem('token');

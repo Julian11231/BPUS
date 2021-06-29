@@ -14,7 +14,7 @@
     </div>
 
        <!-- The Modal Add-->
-   <div class="modal fade" id="addAdmin">
+    <div class="modal fade" id="addAdmin">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
       
@@ -33,25 +33,33 @@
             <div class="row mt-2">
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="identificacion">Identificación:</label>
-                    <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="identificacion" name="identificacion" placeholder="Identificación" maxlength="10" minlength="8" required autocomplete="off">
+                    <input (keyup)="checkAdd()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' 
+                        ngModel class="form-control" id="identificacion" name="identificacion" 
+                        placeholder="Identificación" maxlength="10" minlength="8" required autocomplete="off"
+                    />
                 </div>
                 <div class="col-sm-12 col-lg-6">
                     <label class="mt-2" for="roles">Rol:&nbsp;</label><br>
                     <select (change)="getPersonRolAdd()" ngModel id="personRol" name="rol" class="custom-select">
                         <ng-container *ngFor="let rol of roles">
-                            <option value="{{rol._id}}">{{rol.nombre}}</option>
+                            <ng-container *ngIf="rol.nombre !== 'JEFE_PROGRAMA'">
+                                <option value="{{rol._id}}">{{rol.nombre}}</option>
+                            </ng-container>
                         </ng-container>
                     </select>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-sm-12 col-lg-6">
-                    <label class="mt-2" for="porcentaje_creditos">Correo:</label>
+                    <label class="mt-2" for="correo">Correo:</label>
                     <input type="email" ngModel class="form-control" id="correo" name="correo" placeholder="Correo" maxlength="50" required autocomplete="off">
                 </div>
                 <div class="col-sm-12 col-lg-6">
-                    <label class="mt-2" for="porcentaje_creditos">Teléfono:</label>
-                    <input type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="telefono" name="telefono" placeholder="Teléfono" maxlength="10" minlength="10" required autocomplete="off">
+                    <label class="mt-2" for="telefono">Teléfono:</label>
+                    <input (keyup)="checkAdd()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' 
+                        ngModel class="form-control" id="telefono" name="telefono" 
+                        placeholder="Teléfono" maxlength="10" minlength="10" required autocomplete="off"
+                    />
                 </div>
             </div>
             <ng-container *ngIf="personRolAdd == 'PROFESOR'">
@@ -76,7 +84,81 @@
         
       </div>
     </div>
-  </div>
+    </div>
+
+           <!-- The Modal Edit-->
+    <div class="modal fade" id="editAdmin">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Editar administrador</h4>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form ngNativeValidate #editAdmin="ngForm" (ngSubmit)="putAdmin(editAdmin)">
+            <div class="input-group">
+                <input (keyup)="checkEdit()" type="text" ngModel class="form-control" id="nombreEdit" name="nombres" maxlength="50" required autocomplete="off" autofocus>
+                <input (keyup)="checkEdit()" type="text" ngModel class="form-control" id="apellidosEdit" name="apellidos" maxlength="50" required autocomplete="off">
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="identificacion">Identificación:</label>
+                    <input (keyup)="checkEdit()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="identificacionEdit" name="identificacion" maxlength="10" minlength="8" required autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="roles">Rol:&nbsp;</label><br>
+                    <select [disabled]="personRolEdit == 'JEFE_PROGRAMA'" (change)="getPersonRolEdit(); checkEdit()" ngModel id="personRolEdit" name="rol" class="custom-select">
+                        <ng-container *ngFor="let rol of roles">
+                            <ng-container *ngIf="personRolEdit !== 'JEFE_PROGRAMA' && rol.nombre !== 'JEFE_PROGRAMA'; else JefeElse">
+                                <option value="{{rol._id}}">{{rol.nombre}}</option>
+                            </ng-container>
+                            <ng-template #JefeElse>
+                                <ng-container *ngIf="personRolEdit == 'JEFE_PROGRAMA' && rol.nombre == 'JEFE_PROGRAMA'">
+                                    <option value="{{rol._id}}">{{rol.nombre}}</option>
+                                </ng-container>
+                            </ng-template>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="porcentaje_creditos">Correo:</label>
+                    <input (keyup)="checkEdit()" type="email" ngModel class="form-control" id="correoEdit" name="correo" maxlength="50" required autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <label class="mt-2" for="telefono">Teléfono:</label>
+                    <input (keyup)="checkEdit()" type="text" onkeypress='return (event.charCode >= 48 && event.charCode <= 57)' ngModel class="form-control" id="telefonoEdit" name="telefono" maxlength="10" minlength="10" required autocomplete="off">
+                </div>
+            </div>
+            <ng-container *ngIf="personRolEdit == 'PROFESOR'">
+                <label class="mt-2" for="roles">Programa:&nbsp;</label><br>
+                <select value="{{adminSelected?.programa}}" (change)="checkEdit()" id="personProgramaEdit" ngModel name="programa" class="custom-select" required>
+                    <ng-container *ngFor="let programa of programas">
+                        <option value="{{programa._id}}">{{programa.nombre}}</option>
+                    </ng-container>
+                </select>
+            </ng-container>
+            <ng-container *ngIf="personRolEdit == 'ENCARGADO_EMPRESA'">
+                <label class="mt-2" for="cargo">Cargo:</label>
+                <input (keyup)="checkEdit()" type="text" ngModel class="form-control" 
+                    id="cargoEdit" name="cargo" value="{{adminSelected?.cargo}}" placeholder="{{adminSelected?.cargo}}"
+                    maxlength="50" minlength="3" required autocomplete="off">
+            </ng-container>
+            <!-- Modal footer -->
+            <div class="modal-footer mt-2">
+              <button type="submit" class="btn btnInfo" [disabled]="editDiferente == false || editValid == false">Aceptar</button>
+              <button (click)="editAdmin.reset();" id="btnCancelarEdit" type="button" class="btn btnSuccess" data-dismiss="modal">Cancelar</button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+    </div>
 
     <ul class="pagination mt-3">
         <li class="page-item"><button class="page-link" (click)="cambiarDesde(-10)">Anteriores</button></li>
@@ -108,12 +190,14 @@
                         <td colspan="2"><h6>{{admin.rol.nombre}}</h6></td>
                         <td>
                             <a href="#admin{{indice}}" data-toggle="collapse" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye"></i></a>
-                            <button type="button" class="btn btnInfo btn-sm mr-2"><i class="fa fa-edit"></i></button>
-                            <button *ngIf="admin.estado == true" type="button" class="btn btn-sm btnDanger mr-2">
+                            <button (click)=" getAdminSelected(admin)" type="button" class="btn btnInfo btn-sm mr-2" data-toggle="modal" data-target="#editAdmin" data-backdrop="static" data-keyboard="false"><i class="fa fa-edit"></i></button>
+                            <button (click)="cambiarEstado(admin._id, false)" *ngIf="admin.estado == true" type="button" class="btn btn-sm btnDanger mr-2">
                                 Desactivar <i class="fa fa-ban"></i>
                             </button>
-                            <button *ngIf="admin.estado == false" type="button" class="btn btn-success">Activar</button>
-                            <button (click)="deleteAdmin(admin._id)" type="button" class="btn sm-btn btnSuccess"><i class="fa fa-trash"></i></button>
+                            <button (click)="cambiarEstado(admin._id, true)" *ngIf="admin.estado == false" type="button" class="btn btn-sm btn-success mr-2 px-3">
+                                Activar <i class="fa fa-check-circle"></i>
+                            </button>
+                            <button (click)="deleteAdmin(admin)" type="button" class="btn btn-sm btnSuccess"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>
                     <tr id="admin{{indice}}" class="collapse">
