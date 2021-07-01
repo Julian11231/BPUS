@@ -40,36 +40,11 @@
                 <!-- Messages -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" [routerLink]="['/notificaciones']"> <i class="fa fa-bell"></i>
                         <ng-container *ngIf="numeroNotificaciones > 0">
                             <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                         </ng-container>
-                        
                     </a>
-                    <div class="dropdown-menu mailbox dropdown-menu-right animated fadeIn" aria-labelledby="2">
-                        <ul>
-                            <li *ngIf="numeroNotificaciones > 0">
-                                <div class="message-center" style="height: auto;">
-                                    <ng-container *ngFor="let noti of notificacionesNav">    
-                                        <!-- Message -->
-                                        <a href="#">
-                                            <div class="mail-contnet">
-                                                <h5>{{noti.mensaje}}</h5> <span class="mail-desc">{{noti.mensajeDetalle}}</span>
-                                                <span class="time">{{noti.fecha}}</span>
-                                            </div>
-                                        </a>
-                                    </ng-container>
-                                </div>
-                            </li>
-                            <li *ngIf="numeroNotificaciones === 0">
-                                <p class="text-center">No tienes notificaciones nuevas</p>
-                            </li>
-                            <li>
-                                <a class="nav-link text-center" [routerLink]="['/notificaciones']"> <strong>Ver todas las notificaciones</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
                 <!-- ============================================================== -->
                 <!-- End Messages -->

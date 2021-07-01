@@ -77,7 +77,7 @@ export class AdminAdministrativosComponent implements OnInit {
     this.personRolAdd = this.roles[selectedIndex+1].nombre;
   }
 
-  getAdminSelected(admin:any){
+  async getAdminSelected(admin:any){
     this.adminSelected = admin;
     this.editDiferente = false;
     //Nombres
@@ -104,6 +104,18 @@ export class AdminAdministrativosComponent implements OnInit {
     const telefonoEdit = (document.getElementById("telefonoEdit")) as HTMLInputElement;
     telefonoEdit.value = admin.telefono;
     telefonoEdit.placeholder = admin.telefono;
+    setTimeout(() => {
+      console.log(admin)
+      if(admin.programa){
+        const personProgramaEdit = (document.getElementById("personProgramaEdit")) as HTMLInputElement;
+        personProgramaEdit.value = admin.programa._id;
+      }else if(admin.cargo){
+        const cargoEdit = (document.getElementById("cargoEdit")) as HTMLInputElement;
+        cargoEdit.value = admin.cargo;
+      }
+      const openModalEdit = (document.getElementById("openModalEdit")) as HTMLButtonElement;
+      openModalEdit.click();
+    }, 100);
   }
 
   checkAdd(){

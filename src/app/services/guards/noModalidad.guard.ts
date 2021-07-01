@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router} from '@angular/router';
+import { PermisosService } from 'src/app/services/permisos/permisos.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ModalidadGuard implements CanActivate {
+export class NoModalidadGuard implements CanActivate {
   constructor (private router:Router) {}
 
     canActivate () {
         const user = JSON.parse(localStorage.getItem('user'));
         if(user.codigo){
-          if(user.modalidad){
+          if(!user.modalidad){
             return true;
           }else{
-            this.router.navigate(['/login']);
+            this.router.navigate(['/']);
           }
         }else if(user){
           return true;
         }else{
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
         }
     }
 }

@@ -121,7 +121,7 @@
                         <b>Propuesta </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_propuesta">(No enviado)</span>
                         <i *ngIf="pasantia?.estado_propuesta === 'Enviada'" class="mdi mdi-update" style="color:#C7B363"></i>
                         <i *ngIf="pasantia?.estado_propuesta === 'Aprobada'" class="fa fa-check" style="color: green;"></i>
-                        <i *ngIf="pasantia?.estado_propuesta === 'Rechazada'" class="fa fa-times" style="color:#77181C"></i>
+                        <i *ngIf="pasantia?.estado_propuesta === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
                     </a>
                 </h3>
               </div>
@@ -175,7 +175,7 @@
                   <h3><a class="collapsed card-link" data-toggle="collapse" href="#inicioPasantia"><b>Inicio pasantia </b>
                         <i *ngIf="pasantia?.estado_actaInicio === 'Enviada'" class="mdi mdi-update" style="color:#C7B363"></i>
                         <i *ngIf="pasantia?.estado_actaInicio === 'Aprobada'" class="fa fa-check" style="color: green;"></i>
-                        <i *ngIf="pasantia?.estado_actaInicio === 'Rechazada'" class="fa fa-times" style="color:#77181C"></i>
+                        <i *ngIf="pasantia?.estado_actaInicio === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
                     </a>
                 </h3>
                 </div>
@@ -198,27 +198,30 @@
                             </ng-container>
                         </div>
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                            <h5><b>Acta de inicio:</b></h5>
                             <button *ngIf="!pasantia?.documento_actaInicio" class="btn btnSuccess descargar" disabled>
-                                <small><b>Acta de inicio</b></small>
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver acta</b></small>
                             </button>
-                            <a *ngIf="pasantia?.documento_actaInicio" class="btn btnSuccess descargar" [href]="pasantia?.documento_actaInicio | documento: pasantia?.estudiante._id" download="pasantia?.documento_actaInicio" target="_blank">
-                                <small><b>Acta de inicio</b></small>
+                            <a *ngIf="pasantia?.documento_actaInicio" class="btn btnSuccess descargar" [href]="pasantia?.documento_actaInicio | documento: info._id" download="pasantia?.documento_actaInicio" target="_blank">
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver acta</b></small>
                             </a>
                         </div>
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                            <h5><b>ARL:</b></h5>
                             <button *ngIf="!pasantia?.documento_arl" class="btn btnSuccess descargar px-4" disabled>
-                                <small><b>ARL</b></small>
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver ARL</b></small>
                             </button>
-                            <a *ngIf="pasantia?.documento_arl" class="btn btnSuccess descargar px-4" [href]="pasantia?.documento_arl | documento: pasantia?.estudiante._id" download="pasantia?.documento_arl" target="_blank">
-                                <small><b>ARL</b></small>
+                            <a *ngIf="pasantia?.documento_arl" class="btn btnSuccess descargar px-4" [href]="pasantia?.documento_arl | documento: info._id" download="pasantia?.documento_arl" target="_blank">
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver ARL</b></small>
                             </a>
                         </div>
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-center">
+                            <h5><b>Carta presentación:</b></h5>
                             <button *ngIf="!pasantia?.carta_presentacion" class="btn btnSuccess descargar" disabled>
-                                <small><b>Carta presentacion</b></small>
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver Carta</b></small>
                             </button>
-                            <a *ngIf="pasantia?.carta_presentacion" class="btn btnSuccess descargar" [href]="pasantia?.carta_presentacion | documento: pasantia?.estudiante._id" download="pasantia?.carta_presentacion" target="_blank">
-                                <small><b>Carta presentacion</b></small>
+                            <a *ngIf="pasantia?.carta_presentacion" class="btn btnSuccess descargar" [href]="pasantia?.carta_presentacion | documento: info._id" download="pasantia?.carta_presentacion" target="_blank">
+                                <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver Carta</b></small>
                             </a>
                         </div>
                     </div>
@@ -231,7 +234,7 @@
                   <div *ngIf="pasantia?.documento_propuesta == null || pasantia?.documento_propuesta == ''"class="card-body">
                       <h3 class="pl-3 font-italic">No has enviado la propuesta...</h3>
                   </div>
-                  <div *ngIf="pasantia?.documento_propuesta && pasantia.estado_propuesta !== 'Aprobada'" class="card-body">
+                  <div *ngIf="pasantia?.documento_propuesta && pasantia.estado_propuesta !== 'Aprobada' && !pasantia.estado_actaInicio" class="card-body">
                     <h3 class="pl-3 font-italic">No te han aceptado la propuesta...</h3>
                 </div>
                 </div>
@@ -246,7 +249,7 @@
                         <b>Informe 7 </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_informe7">(No enviado)</span>
                         <i *ngIf="pasantia?.estado_informe7 === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
                         <i *ngIf="pasantia?.estado_informe7 === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
-                        <i *ngIf="pasantia?.estado_informe7 === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
+                        <i *ngIf="pasantia?.estado_informe7 === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
                     </a>
                 </h3>
               </div>
@@ -294,7 +297,7 @@
                           <b>Informe 14 </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_informe14">(No enviado)</span>
                           <i *ngIf="pasantia?.estado_informe14 === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
                           <i *ngIf="pasantia?.estado_informe14 === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
-                          <i *ngIf="pasantia?.estado_informe14 === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
+                          <i *ngIf="pasantia?.estado_informe14 === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
                       </a>
                   </h3>
                 </div>
@@ -342,7 +345,7 @@
                           <b>Informe final </b><span class="text-dark font-italic small" *ngIf="!pasantia?.estado_informeFinal">(No enviado)</span>
                           <i *ngIf="pasantia?.estado_informeFinal === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
                           <i *ngIf="pasantia?.estado_informeFinal === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
-                          <i *ngIf="pasantia?.estado_informeFinal === 'Rechazado'" class="fa fa-times" style="color:#77181C"></i>
+                          <i *ngIf="pasantia?.estado_informeFinal === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
                       </a>
                   </h3>
                 </div>

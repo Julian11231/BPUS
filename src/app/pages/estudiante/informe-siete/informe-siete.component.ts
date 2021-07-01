@@ -85,13 +85,19 @@ export class InformeSieteComponent implements OnInit {
                 title: '¡Bien Hecho!',
                 text: `Se ha enviado correctamente el documento`,
                 icon: 'success',
-                confirmButtonText: 'Ok',
+                showCloseButton: false,
+                showConfirmButton: false,
                 showCancelButton: false,
-                confirmButtonColor: '#60D89C',
-                timer: 2000
+                allowEnterKey: false,
+                allowOutsideClick:false,
+                allowEscapeKey: false,
+                timer: 1000,
+                timerProgressBar: true
               }).then((result) => {
                 if(result.value || result.dismiss){
-                  this.router.navigate(['/mi-modalidad']);
+                  location.reload()
+                }else{
+                  location.reload()
                 }
               });
             }

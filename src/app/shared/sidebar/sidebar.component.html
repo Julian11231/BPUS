@@ -4,7 +4,6 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li class="nav-small-cap"><b>Tutorías de Grado</b> </li>
                 <li *ngFor="let item of menu"> 
                     <a  *ngIf="item.submenu; else sinSubmenu" class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="{{item.icono}}"></i>&nbsp;<span class="hide-menu">{{item.titulo}}</span>
@@ -36,20 +35,15 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-small-cap"><b> FASES DE LA MODALIDAD </b></li>
-                <li> 
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                <li>
+                    <a *ngIf="pasantia?.aprobacionEmpresa === false && pasantia?.estado ==='Rechazada'; else elsePreinscripcion" routerLink="/preinscripcion-pasantia" routerLinkActive="active" aria-expanded="false">
                         <i class="fa fa-check-square-o"></i><span class="hide-menu">Pre-Inscripción</span>
                     </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li>
-                            <a  *ngIf="pasantia?.aprobacionEmpresa === false && pasantia?.estado ==='Rechazada'; else elsePreinscripcion" routerLink="/preinscripcion-pasantia" routerLinkActive="active">Enviar
-                                Pre-Inscripción
-                            </a>
-                            <ng-template #elsePreinscripcion>
-                                <a class="isDisabled text-white">Pre-Inscripción</a>
-                            </ng-template>
-                        </li>
-                    </ul>
+                    <ng-template #elsePreinscripcion>
+                        <a class="isDisabled text-white" aria-expanded="false">
+                            <i class="fa fa-check-square-o"></i><span class="hide-menu">Pre-Inscripción</span>
+                        </a>
+                    </ng-template> 
                 </li>
                 <li> 
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">

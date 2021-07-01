@@ -136,7 +136,7 @@
             </div>
             <ng-container *ngIf="personRolEdit == 'PROFESOR' || personRolEdit == 'JEFE_PROGRAMA'">
                 <label class="mt-2" for="roles">Programa:&nbsp;</label><br>
-                <select [disabled]="personRolEdit == 'JEFE_PROGRAMA'" value="{{adminSelected?.programa?._id}}" (change)="checkEdit()" id="personProgramaEdit" class="custom-select" required>
+                <select [disabled]="personRolEdit == 'JEFE_PROGRAMA'" (change)="checkEdit()" id="personProgramaEdit" class="custom-select" required>
                     <ng-container *ngFor="let programa of programas">
                         <option value="{{programa._id}}">{{programa.nombre}}</option>
                     </ng-container>
@@ -144,9 +144,7 @@
             </ng-container>
             <ng-container *ngIf="personRolEdit == 'ENCARGADO_EMPRESA'">
                 <label class="mt-2" for="cargo">Cargo:</label>
-                <input (keyup)="checkEdit()" type="text" class="form-control" 
-                    id="cargoEdit" value="{{adminSelected?.cargo}}" placeholder="{{adminSelected?.cargo}}"
-                    maxlength="50" minlength="3" required autocomplete="off">
+                <input (keyup)="checkEdit()" type="text" class="form-control" id="cargoEdit" maxlength="50" minlength="3" required autocomplete="off">
             </ng-container>
             <!-- Modal footer -->
             <div class="modal-footer mt-2">
@@ -190,7 +188,8 @@
                         <td colspan="2"><h6>{{admin.rol.nombre}}</h6></td>
                         <td>
                             <a href="#admin{{indice}}" data-toggle="collapse" class="btn btn-sm btn-info mr-2"><i class="fa fa-eye"></i></a>
-                            <button (click)=" getAdminSelected(admin)" type="button" class="btn btnInfo btn-sm mr-2" data-toggle="modal" data-target="#editAdmin" data-backdrop="static" data-keyboard="false"><i class="fa fa-edit"></i></button>
+                            <button (click)=" getAdminSelected(admin)" type="button" class="btn btnInfo btn-sm mr-2"><i class="fa fa-edit"></i></button>
+                            <button type="button" id="openModalEdit" style="display: none;" data-toggle="modal" data-target="#editAdmin" data-backdrop="static" data-keyboard="false"></button>
                             <button (click)="cambiarEstado(admin._id, false)" *ngIf="admin.estado == true" type="button" class="btn btn-sm btnDanger mr-2">
                                 Desactivar <i class="fa fa-ban"></i>
                             </button>

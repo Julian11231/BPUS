@@ -24,6 +24,8 @@ export class ActaInicioPasantiaComponent implements OnInit {
 
   documento_ARL = new FormData();
   fecha_arl:string;
+  fecha_arlToShow: string;
+  fecha_ActToShow: string;
   documento_ActInicio = new FormData();
   fecha_artInicio:string;
   documento_actpropuesta = new FormData();
@@ -53,9 +55,16 @@ export class ActaInicioPasantiaComponent implements OnInit {
   getPasantia() {
     this._pasantiaService.getPasantia(this.info.modalidad).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
+      const pipe = new DatePipe('en-US');
+      const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
       if(this.pasantia.fecha_arl !== null && typeof(this.pasantia.fecha_arl) !== 'undefined'){
-        const pipe = new DatePipe('en-US');
         this.fecha_arl = pipe.transform(this.pasantia.fecha_arl, 'yyyy-MM-dd');
+        let fechaArl = new Date(Date.parse(this.pasantia.fecha_arl));
+        this.fecha_arlToShow = pipe.transform(this.pasantia.fecha_arl, 'dd')+" de "+meses[fechaArl.getMonth()]+" del "+fechaArl.getFullYear();
+      }
+      if(this.pasantia.fecha_actaInicio !== null && typeof(this.pasantia.fecha_actaInicio) !== 'undefined'){
+        let fechaInicio = new Date(Date.parse(this.pasantia.fecha_actaInicio));
+        this.fecha_ActToShow = pipe.transform(this.pasantia.fecha_actaInicio, 'dd')+" de "+meses[fechaInicio.getMonth()]+" del "+fechaInicio.getFullYear();
       }
     })
   }
@@ -96,7 +105,7 @@ export class ActaInicioPasantiaComponent implements OnInit {
           showCancelButton: false,
           confirmButtonColor: '#60D89C',
         }).then(() => {
-          location.reload()
+          this.getPasantia();
         });
       }
     });
@@ -128,7 +137,7 @@ export class ActaInicioPasantiaComponent implements OnInit {
           showCancelButton: false,
           confirmButtonColor: '#60D89C',
         }).then(() => {
-          location.reload()
+          this.getPasantia();
         });
       }
     });
@@ -195,7 +204,7 @@ export class ActaInicioPasantiaComponent implements OnInit {
           showCancelButton: false,
           confirmButtonColor: '#60D89C',
         }).then(() => {
-          location.reload()
+          this.getPasantia();
         });
       }
     });

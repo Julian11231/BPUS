@@ -2,7 +2,6 @@ import { Component} from '@angular/core';
 import Swal from 'sweetalert2';
 import { NotificacionesService } from 'src/app/services/service.index';
 import { Notificacion } from 'src/app/models/notificacion.model';
-import { DatePipe } from '@angular/common';
 import {interval} from 'rxjs';
 
 @Component({
@@ -40,16 +39,41 @@ export class NotificacionesComponent {
   }
 
   cargarNotificaciones() {
+    this.notificacionesLeidas = [];
+    this.notificacionesNoLeidas = [];
     this._notificacionService.getNotificaciones(this.usuario._id).subscribe((resp:any) => {
       for (let i = 0; i < resp.notificaciones.length; i++) {
-        const pipe = new DatePipe('en-US');
-        let currentDate = new Date();
-        let notiTime = new Date(Date.parse(resp.notificaciones[i].fecha));
-        let diff = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(notiTime.getFullYear(), notiTime.getMonth(), notiTime.getDate()) ) /(1000 * 60 * 60 * 24));
-        if(diff > 0){
-          resp.notificaciones[i].fecha = pipe.transform(resp.notificaciones[i].fecha, 'dd/MM/yyyy');
+        let currentDate = new Date().getTime();
+        let notiTime = new Date(Date.parse(resp.notificaciones[i].fecha)).getTime();
+        let diff = currentDate - notiTime;
+        let difminutos = Math.floor(diff/(1000*60));
+        if(difminutos < 5){
+          resp.notificaciones[i].fecha = "Hace un momento";
+        }else if(difminutos >= 5 && difminutos < 60){
+          resp.notificaciones[i].fecha = "Hace "+diff+" minutos";
         }else{
-          resp.notificaciones[i].fecha = pipe.transform(resp.notificaciones[i].fecha, 'shortTime');
+          let difhoras = Math.floor(diff/(1000*60*60));
+          if(difhoras == 1){
+            resp.notificaciones[i].fecha = "Hace "+difhoras+" hora";
+          }else if(difhoras > 1 && difhoras < 24){
+            resp.notificaciones[i].fecha = "Hace "+difhoras+" horas";
+          }else{
+            let difdias = Math.floor(diff/(1000*60*60*24));
+            if(difdias == 1){
+              resp.notificaciones[i].fecha = "Hace "+difdias+" día";
+            }else if(difdias > 1 && difdias < 7){
+              resp.notificaciones[i].fecha = "Hace "+difdias+" días";
+            }else{
+              let difSemanas = Math.floor(diff/(1000*60*60*24));
+              if(difSemanas == 1){
+                resp.notificaciones[i].fecha = "Hace "+difSemanas+" semana";
+              }else if(difSemanas > 1 && difSemanas < 4){
+                resp.notificaciones[i].fecha = "Hace "+difSemanas+" semanas";
+              }else{
+  
+              }
+            }
+          }
         }
         if(resp.notificaciones[i].isRead){
           this.notificacionesLeidas.push(resp.notificaciones[i]);
@@ -62,124 +86,46 @@ export class NotificacionesComponent {
     });
   }
 
-  borrarNotificacion(notificacion:Notificacion){
-
+  marcarLeida(id:string){
     Swal.fire({
-      title: '¿Está seguro que deseas borrar la notificación?',
+      title:"Marcar como leida",
+      icon: "question",
       showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: 'Si, Borrar!',
-      cancelButtonText: 'No, cancelar!',
-      reverseButtons: true
-    }).then(borrar => {
-      
-    if (borrar.value) {
-      this._notificacionService.eliminarNotificacion(notificacion._id).subscribe(resp=>{           
-        console.log(resp);
-        this.cargarNotificaciones();
-      });
-    } 
-    });   
-  }
-
-
-
- // ACEPTAR Y RECHAZAR NOTIFICACIONES CODIGO VIEJO..
-
-  /*
-  aceptarNotificacion(notificacion:Notificacion){
-    Swal.fire({
-      title: '¿Está seguro que desea aprobar el proyecto?',
-      type: 'question',
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: 'Si, Aprobarlo!',
-      cancelButtonText: 'No, cancelar!',
-      reverseButtons: true
-    })
-    .then(notificacionAceptada => {
-      
-    if (notificacionAceptada.value) {
-
-
-      // Codigo para aceptar solicitud. ----------------------
-      var notificacionAceptar = new Notificacion(
-        this.usuario._id,
-        "5dd4a006952d6b266002a3e2",
-        true,
-        "Aprobó la solicitud de",
-        "te aprobó la solicitud de"
-        
-        );
-
-   
-      this._notificacionService.borrarNotificaciones(notificacion._id).subscribe(resp=>{
-          console.log(resp);
-          this.cargarNotificaciones();});
-
-        //---------------------------
-      this._notificacionService.crearNotificacion(notificacionAceptar).subscribe(resp => {
-        console.log(resp);
-       
+      showConfirmButton:true,
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33',
+      showCloseButton:false,
+    }).then((result) => {
+      if(result.value){
+        this._notificacionService.isReadTrue(id).subscribe((resp:any)=>{
+          if(resp){
+            this.cargarNotificaciones();
+          }
         });
-//---------------------------
-
-
-
-
-    }
-
+      }
     });
   }
 
-
-  rechazarNotificacion(notificacion:Notificacion){
-
+  borrarNotificacion(notificacion:Notificacion){
     Swal.fire({
-      title: '¿Está seguro que desea rechazar el proyecto?',
-      type: 'question',
+      title: '¿Está seguro que deseas borrar la notificación?',
+      icon: "warning",
       showCancelButton: true,
       showConfirmButton: true,
-      confirmButtonText: 'Si, Rechazar!',
-      cancelButtonText: 'No, cancelar!',
-      reverseButtons: true
-    })
-    .then(borrar => {
-      
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!',
+      cancelButtonText: 'No, cancelar!'
+    }).then(borrar => {
     if (borrar.value) {
-
-
-      var notificacionRechazada = new Notificacion(
-        this.usuario._id,
-        "5dd4a006952d6b266002a3e2",
-        true,
-        "Aprobó la solicitud de",
-        "te aprobó la solicitud de"
-        
-        );
-
-      this._notificacionService.borrarNotificaciones(notificacion._id).subscribe(resp=>{           
-        console.log(resp);
+      this._notificacionService.eliminarNotificacion(notificacion._id).subscribe(resp=>{           
         this.cargarNotificaciones();
       });
-
-         //---------------------------
-         this._notificacionService.crearNotificacion(notificacionRechazada).subscribe(resp => {
-          console.log(resp);
-         
-          });
-  //---------------------------
-
     } 
-
     });   
   }
-*/
-
-
-
-
-
   
 }
 

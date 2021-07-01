@@ -111,13 +111,22 @@ export class InformeFinalComponent implements OnInit {
                 this._notificacionService.sendArchivosJurado(this.info._id, notificacion).subscribe();
                 Swal.fire({
                   title: '¡Bien Hecho!',
-                  text: `Se han enviado correctamente los documentos`,
-                  icon: 'success'
+                  text: `Se ha enviado correctamente el documento`,
+                  icon: 'success',
+                  showCloseButton: false,
+                  showConfirmButton: false,
+                  showCancelButton: false,
+                  allowEnterKey: false,
+                  allowOutsideClick:false,
+                  allowEscapeKey: false,
+                  timer: 1000,
+                  timerProgressBar: true
                 }).then((result) => {
                   if(result.value || result.dismiss){
-                    this.router.navigate(['/mi-modalidad']);
+                    location.reload()
+                  }else{
+                    location.reload()
                   }
-                  //this.router.navigate(['/mi-modalidad']);
                 });
               }
             });

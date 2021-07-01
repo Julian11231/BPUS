@@ -19,6 +19,7 @@
             <h3 class="card-title text-uppercase"><b>2. DATOS LEGALES DE LA PASANTIA </b></h3>
             <h3>ARL</h3>
             <ng-container *ngIf="pasantia?.documento_arl">
+                <h5><i class="fa fa-calendar-check-o"></i><b> Fecha:</b> {{fecha_arlToShow}}</h5>
                 <button class="btn btnSuccess mb-2" style="width: 100x;">
                     <a class="btnSuccess" [href]="pasantia?.documento_arl | documento: info._id" download="pasantia?.documento_arl" target="_blank">
                         <b><i class="fa fa-file-pdf-o"></i>&nbsp; ARL</b>
@@ -67,12 +68,13 @@
 
             <h3>Acta de Inicio</h3>
             <ng-container *ngIf="pasantia?.documento_actaInicio">
+                <h5><i class="fa fa-calendar-check-o"></i><b> Fecha:</b> {{fecha_ActToShow}}</h5>
                 <button class="btn btnSuccess mb-2" style="width: 100x;">
                     <a class="btnSuccess" [href]="pasantia?.documento_actaInicio | documento: info._id" download="pasantia?.documento_actaInicio" target="_blank">
                         <b><i class="fa fa-file-pdf-o"></i>&nbsp; Acta de Inicio</b>
                     </a>
                 </button>
-                <button *ngIf="pasantia?.estado_actaInicio == 'Ajustar'" class="btn btnInfo mb-2" data-toggle="modal" data-target="#actInicio" style="width: 100x;">
+                <button *ngIf="pasantia?.estado_actaInicio == 'Ajustar'" class="btn btnInfo ml-3 mb-2" data-toggle="modal" data-target="#actInicio" style="width: 100x;">
                     <b><i class="fa fa-upload"></i>&nbsp; Actualizar</b>
                 </button>
             </ng-container>
@@ -130,7 +132,7 @@
                     <b><i class="fa fa-file-pdf-o"></i>&nbsp; Propuesta</b>
                 </a>
             </button>
-            <button *ngIf="pasantia?.estado_propuesta == 'Ajustar'" class="btn btnInfo btn-sm mb-2 ml-3" data-toggle="modal" data-target="#actPropuesta" style="width: 100x;">
+            <button *ngIf="pasantia?.estado_propuesta == 'Ajustar'" class="btn btnInfo mb-2 ml-3" data-toggle="modal" data-target="#actPropuesta" style="width: 100x;">
                 <b><i class="fa fa-upload"></i>&nbsp; Actualizar</b>
             </button>
             <!-- The Modal -->
