@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PasantiaComponent } from './solicitudes/pasantia/pasantia-main/pasantia-main.component';
 import { SemilleroComponent } from './solicitudes/semillero/semillero/semillero.component';
-import { ProyectoComponent } from './solicitudes/proyecto/proyecto/proyecto.component';
+import { ProyectoComponent } from './solicitudes/proyecto/proyecto.component';
 import { ModalidadesComponent } from './modalidades/modalidades.component';
 
 
@@ -24,16 +24,16 @@ import { InscripcionPasantiaComponent } from './solicitudes/pasantia/inscripcion
 import { VacantesComponent } from './encargado/vacantes/vacantes.component';
 import { EncarSolicitudVacanteComponent } from './encargado/solicitud-vacante/solicitud-vacante.component';
 import { ModSolicitudVacanteComponent } from './docente/mod-solicitud-vacante/mod-solicitud-vacante.component';
-import { MiSolicitudComponent } from './estudiante/mi-solicitud/mi-solicitud.component';
+import { MiSolicitudComponent } from './estudiante/pasantia/mi-solicitud/mi-solicitud.component';
 import { PropuestaPasantiaComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
 import { TutoriaPasantiaComponent } from './docente/tutoria-pasantia/tutoria-pasantia.component';
 import { PropuestasComponent } from './docente/propuestas/propuestas.component';
-import { InformeCatorceComponent } from './estudiante/informe-catorce/informe-catorce.component';
-import { InformeFinalComponent } from './estudiante/informe-final/informe-final.component';
-import { InformeSieteComponent } from './estudiante/informe-siete/informe-siete.component';
+import { InformeCatorceComponent } from './estudiante/pasantia/informe-catorce/informe-catorce.component';
+import { InformeFinalComponent } from './estudiante/pasantia/informe-final/informe-final.component';
+import { InformeSieteComponent } from './estudiante/pasantia/informe-siete/informe-siete.component';
 import { NotificacionesComponent} from './notificaciones/notificaciones.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
-import { ActaInicioPasantiaComponent } from './estudiante/acta-inicio-pasantia/acta-inicio-pasantia.component';
+import { ActaInicioPasantiaComponent } from './estudiante/pasantia/acta-inicio-pasantia/acta-inicio-pasantia.component';
 import { AdminEstudiantesComponent } from './admin/admin-estudiantes/admin-estudiantes.component';
 import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
 import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';

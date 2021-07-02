@@ -1,0 +1,112 @@
+<div id="main-wrapper">
+
+    <!-- Selector del header -->
+    <app-navbar-inscripcion></app-navbar-inscripcion>
+
+    <div class="container py-5">
+
+        <h2 class="text-center font-weight-bold mt-5">Formulario de inscripción</h2>
+
+        <button id="btnShowSearch" type="button" class="btn btn-sm btnSuccess mb-2" (click)="mostrarBuscar()">
+            Agregar compañero <i class="fa fa-plus"></i>
+        </button>
+        <div class="col-12 col-lg-4" id="buscarEstudiante" style="display: none;">
+            <div class="input-group mb-3">
+                <input (keyup)="checkUserToAdd()" type="text" id="buscarUser" placeholder="Código" class="form-control form-control-sm" minlength="11" maxlength="11" autocomplete="off">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-sm btnInfo" (click)="buscarEstudiante()" [disabled]="userToAddValid == false">Agregar</button>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="esconderBuscar()">Cancelar</button>
+                </div>
+            </div>
+        </div> 
+
+        <div class="row pt-3">
+            <div class="col-12 col-md-4 col-lg-4">
+            <h6><span class="font-weight-bold text-dark">Nombre: </span>{{user.nombres}} {{user.apellidos}}</h6>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+            <h6><span class="font-weight-bold text-dark">Código: </span>{{user.codigo}}</h6>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+            <h6><span class="font-weight-bold text-dark">Identificación:</span> {{user.identificacion}}</h6>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <h6><span class="font-weight-bold text-dark mr-2 mt-4">Programa: </span> {{programa}}</h6>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <h6><span class="font-weight-bold text-dark mr-2 mt-4">Correo: </span> {{user.correo}}</h6>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <h6><span class="font-weight-bold text-dark mr-2 mt-4">Teléfono: </span> {{user.telefono}}</h6>
+            </div>
+        </div>
+        <form>
+            <div class="my-4">
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <label for="tituloPasantia" class="font-weight-bold text-dark">Titulo del proyecto:</label>
+                    </div>
+                    <div class="col-12 col-md-9 col-lg-9">
+                        <input name="tituloPasantia" type="text" class="form-control" id="tituloPasantia" placeholder="Titulo de la pasantia" required autofocus autocomplete="off">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <label for="lineaInvestigacion" class="font-weight-bold text-dark mr-5">Linea de investigación:</label>
+                    </div>
+                    <div class="col-12 col-md-9 col-lg-9">
+                        <select class="custom-select w-100" id="lineaInvestigacion" name="lineaInvestigacion">
+                            <option value="" selected>Seleccione...</option>
+                            <option value="Ingenieria de software">Ingenieria de software</option>
+                            <option value="Internet de las cosas">Internet de las cosas</option>
+                            <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <label for="director" class="font-weight-bold text-dark mt-2">Director del proyecto:</label>
+                    </div>
+                    <div class="col-12 col-md-9 col-lg-9">
+                        <input class="form-control" id="director" list="docentes" required autocomplete="off">
+                        <datalist id="docentes">
+                            <ng-container *ngFor="let docente of docentes">
+                                <option value="{{docente.nombres}}">
+                            </ng-container>
+                        </datalist>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <h4 class="font-weight-bold text-center my-4">FORMULACIÓN DEL PROBLEMA</h4>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" id="problema" maxlength="2000" placeholder="Fomulación del problema..." 
+                (keyup)="countCharsResumen('problema','charNumProblema'); espandirTexarea('problema');" style="resize: none;" required></textarea>
+                <p id="charNumProblema" class="ml-2">0/2000</p>
+            </div>
+            <h4 class="font-weight-bold text-center my-4">ALCANCE Y LIMITACIONES</h4>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" id="alcance" maxlength="2000" placeholder="Alcance y limitaciones..." 
+                (keyup)="countCharsResumen('alcance','charNumAlcance'); espandirTexarea('alcance');" style="resize: none;" required></textarea>
+            </div>
+            <p id="charNumAlcance" class="ml-2 mt-1">0/2000</p>
+            <h4 class="font-weight-bold text-center my-4">METODOLOGÍA</h4>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" id="metodologia" maxlength="2000" placeholder="Metodología..." 
+                (keyup)="countCharsResumen('metodologia','charNumMetodologia'); espandirTexarea('metodologia');" style="resize: none;" required></textarea>
+            </div>
+            <p id="charNumMetodologia" class="ml-2 mt-1">0/2000</p>
+
+            <div class="text-center my-4">
+                <button type="submit" class="btn btnSuccess px-5 py-3">ENVIAR</button> 
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

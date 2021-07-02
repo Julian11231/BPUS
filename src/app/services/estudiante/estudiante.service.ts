@@ -35,6 +35,12 @@ export class EstudianteService {
     }));
   }
 
+  getEstudiante(codigo:string) {
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/estudiantes/buscarEstudiante/${codigo}?token=${token}`;
+    return this.http.get(url);
+  }
+
   cambiarClave(usuario: string, clave:string){
     let token = localStorage.getItem('token');
     let url = `${URL_SERVICES}/estudiantes/cambiarclave?token=${token}`;
