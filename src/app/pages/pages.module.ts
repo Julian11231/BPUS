@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PasantiaComponent } from './solicitudes/pasantia/pasantia-main/pasantia-main.component';
 import { SemilleroComponent } from './solicitudes/semillero/semillero/semillero.component';
-import { ProyectoComponent } from './solicitudes/proyecto/proyecto.component';
+import { SolicitudProyectoComponent } from './solicitudes/proyecto/proyecto.component';
 import { ModalidadesComponent } from './modalidades/modalidades.component';
 
 
@@ -45,6 +45,9 @@ import { AdminConveniosComponent } from './admin/admin-convenios/admin-convenios
 import { AdminEmpresasComponent } from './admin/admin-empresas/admin-empresas.component';
 import { AdminModalidadComponent } from './admin/admin-modalidad/admin-modalidad.component';
 import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.component';
+import { AnteproyectoComponent } from './estudiante/proyecto/anteproyecto/anteproyecto.component';
+import { ProyectoComponent } from './estudiante/proyecto/proyecto/proyecto.component';
+import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/documento-final.component';
 
 
 
@@ -54,7 +57,7 @@ import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.co
     MainComponent,
     PerfilComponent,
     PasantiaComponent,
-    ProyectoComponent,
+    SolicitudProyectoComponent,
     SemilleroComponent,
     ModalidadesComponent,
     EmpresasComponent,
@@ -82,7 +85,10 @@ import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.co
     AdminConveniosComponent,
     AdminEmpresasComponent,
     AdminModalidadComponent,
-    AdminProgramaComponent
+    AdminProgramaComponent,
+    AnteproyectoComponent,
+    ProyectoComponent,
+    DocumentoFinalComponent
 
   ],
   exports: [
@@ -91,7 +97,7 @@ import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.co
     MainComponent,
     PerfilComponent,
     PasantiaComponent,
-    ProyectoComponent,
+    SolicitudProyectoComponent,
     SemilleroComponent,
     ModalidadesComponent,
     VacantesComponent,

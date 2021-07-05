@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 // Componentes
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login/login.component';
-import { RequisitosComponent } from './login/requisitos/requisitos.component';
 
 // Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,9 +33,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
   declarations: [
     AppComponent,
     LoginComponent,
-    RequisitosComponent,
-    CambioClaveComponent,
-
+    CambioClaveComponent
   ],
   imports: [
     BrowserModule,

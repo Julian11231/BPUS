@@ -98,7 +98,6 @@ export class PropuestaPasantiaComponent implements OnInit {
       icon: 'warning',
       cancelButtonText: 'Cancelar',
       confirmButtonText: 'Si',
-
       showCancelButton: true,
       confirmButtonColor: '#60D89C',
       cancelButtonColor: '#d33'

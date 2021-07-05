@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router} from '@angular/router';
-import { PermisosService } from 'src/app/services/permisos/permisos.service';
 
 @Injectable({
   providedIn: 'root'

@@ -398,6 +398,95 @@
     </div>
 
 </ng-container>
-<ng-container *ngIf="!pasantia">
+<ng-container *ngIf="proyecto">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <h4 *ngIf="proyecto.estado !== 'PreInscrita'"><b>ID: </b>{{proyecto?._id}}</h4>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <h4 *ngIf="proyecto.fecha_actaInicio"><b>Fecha inicio: </b>{{fechaInicio}}</h4>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <h4 *ngIf="proyecto.fecha_actaInicio"><b>Semana: </b>{{semanas}}/24</h4>
+        </div>
+    </div>
+    <h4><span class="font-weight-bold">Título: </span>{{proyecto?.titulo}}</h4>
+    <h4><span class="font-weight-bold">Linea de investigación: </span>{{proyecto?.lineaInvestigacion}}</h4>
+    <ng-container *ngIf="proyecto.estudiante2 || proyecto.estudiante3">
+        <h4 class="font-weight-bold">Compañero(s): </h4>
+        <ul>
+            <li>
+                <h5>
+                    {{proyecto?.estudiante2.nombres}} {{proyecto?.estudiante2.apellidos}}
+                    <span *ngIf="proyecto?.aprobacionEstudiante2 == false" class="font-weight-bold"> (Pendiente de aprobación)</span>
+                </h5>
+            </li>
+            <li *ngIf="proyecto.estudiante3">
+                <h6>
+                    {{proyecto?.estudiante3.nombres}} {{proyecto?.estudiante3.apellidos}}
+                    <span *ngIf="proyecto?.aprobacionEstudiante3 == false" class="font-weight-bold">(Pendiente de aprobación)</span>
+                </h6>
+            </li>
+        </ul>
+    </ng-container>
+    <hr> 
+    <div class="row text-center">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+            <h3><b>Modalidad seleccionada:</b></h3>
+            <h4>Proyecto de Grado</h4>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+            <h3><b>Director:</b></h3>
+            <ng-container *ngIf="proyecto.director == null" class="text-success">
+                <span class="label btnDanger"><b> No asignado </b></span>
+            </ng-container>
+            <ng-container *ngIf="proyecto.director" class="text-success">
+                <span class="label btnSuccess"><b> {{proyecto?.director.nombres}} {{proyecto?.director.apellidos}}</b></span>
+            </ng-container>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
+            <h3><b>Estado:</b> </h3>
+            <ng-container *ngIf="proyecto.estado == 'Pendiente'" class="text-success">
+                <span class="label btnDanger"> <b> {{ proyecto.estado }} </b></span>
+            </ng-container>
+            <ng-container *ngIf="proyecto.estado == 'Enviado'" class="text-success">
+                <span class="label btnInfo"> <b> {{ proyecto.estado }} </b></span>
+            </ng-container>
+            <ng-container *ngIf="proyecto.estado == 'En ejecución'" class="text-success">
+                <span class="label btnDanger"> <b> {{ proyecto.estado }} </b></span>
+            </ng-container>
+            <ng-container *ngIf="proyecto.estado == 'Rechazado'" class="text-success">
+                <span class="label btnSuccess"> <b> {{ proyecto.estado }} </b></span>
+            </ng-container>
+        </div>
+    </div>
+    <hr>
+    <ul class="mt-3 nav nav-justified" role="tablist">
+        <li class="nav-item">
+            <a (click)="activeTab('problemaTab')" id="problemaTab" class="nav-link activeTab font-weight-bold" href="#problema" role="tab" data-toggle="tab">Problema</a>
+        </li>
+        <li class="nav-item">
+            <a (click)="activeTab('alcanceTab')" id="alcanceTab" class="nav-link text-body" href="#alcance" role="tab" data-toggle="tab">Alcance</a>
+        </li>
+        <li class="nav-item">
+            <a (click)="activeTab('metodologiaTab')" id="metodologiaTab" class="nav-link text-body" href="#metodologia" role="tab" data-toggle="tab">Metodología</a>
+        </li>
+    </ul>
+    <!-- tabs panes -->
+    <div class="mt-4 px-5 tab-content">
+        <div role="tabpanel" class="tab-pane fade show active" id="problema">
+            <h5 class="pl-4">{{proyecto?.problema}}</h5>
+        </div>
+        <div role="tabpanel" class="tab-pane fade show" id="alcance">
+            <h5 class="pl-4">{{proyecto?.alcance}}</h5>
+        </div>
+        <div role="tabpanel" class="tab-pane fade show" id="metodologia">
+            <h5 class="pl-4">{{proyecto?.metodologia}}</h5>
+        </div>
+    </div>
+
+
+</ng-container>
+<ng-container *ngIf="!info.modalidad">
     <h1 class="mx-auto py-5">No has seleccionado ninguna modalidad</h1>
 </ng-container>

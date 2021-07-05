@@ -122,7 +122,7 @@ export class InscripcionDirectaComponent implements OnInit {
             this.jefe,
             currentDate,
             'Nueva solicitd de pasantia',
-            `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.nombreEmpresa}, se adjunta el documento de la solicitud.`,
+            `${this.info.nombres} te ha enviado una solicitud de pasantia para la empresa ${this.nombreEmpresa}`,
             'Administrativo',
             this.info.correo);
           this._pasantiaService.postDocumentoPropuesta(idEstudiante, this.documento_propuesta).subscribe((resp:any) => {

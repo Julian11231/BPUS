@@ -50,7 +50,7 @@ export class NotificacionesComponent {
         if(difminutos < 5){
           resp.notificaciones[i].fecha = "Hace un momento";
         }else if(difminutos >= 5 && difminutos < 60){
-          resp.notificaciones[i].fecha = "Hace "+diff+" minutos";
+          resp.notificaciones[i].fecha = "Hace "+difminutos+" minutos";
         }else{
           let difhoras = Math.floor(diff/(1000*60*60));
           if(difhoras == 1){

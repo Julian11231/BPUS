@@ -28,13 +28,13 @@
     <!-- End Sidebar scroll-->
 </aside>
 
-<aside class="left-sidebar" *ngIf="menuEstudiante">
+<aside class="left-sidebar" *ngIf="menuEstudiante && pasantia">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li class="nav-small-cap"><b> FASES DE LA MODALIDAD </b></li>
+                
                 <li>
                     <a *ngIf="pasantia?.aprobacionEmpresa === false && pasantia?.estado ==='Rechazada'; else elsePreinscripcion" routerLink="/preinscripcion-pasantia" routerLinkActive="active" aria-expanded="false">
                         <i class="fa fa-check-square-o"></i><span class="hide-menu">Pre-Inscripción</span>
@@ -129,6 +129,38 @@
                     </ul>
                 </li>
 
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<aside class="left-sidebar" *ngIf="menuEstudiante && proyecto">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="nav-small-cap"><b> FASES DE LA MODALIDAD </b></li>
+                <li>
+                    <a class="isDisabled text-white" aria-expanded="false" routerLink="/anteProyecto">
+                        <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Ante-Proyecto</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="isDisabled text-white" aria-expanded="false" routerLink="/proyecto">
+                        <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Proyecto</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="isDisabled text-white" aria-expanded="false" routerLink="/documento final">
+                        <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Documento Final</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="text-white" aria-expanded="false" routerLink="/mi-modalidad">
+                        <i class="fa fa-info-circle"></i><span class="hide-menu">Estado de mi Modalidad</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

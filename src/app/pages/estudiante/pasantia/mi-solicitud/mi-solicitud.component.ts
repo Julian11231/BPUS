@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PasantiService } from 'src/app/services/service.index';
+import { PasantiService, ProyectoService } from 'src/app/services/service.index';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -12,23 +12,38 @@ export class MiSolicitudComponent implements OnInit {
 
   info = JSON.parse(localStorage.getItem('user'));
   pasantia: any;
+  proyecto:any;
   fechaInicio:string;
   semanas:any;
 
-  constructor(public _pasantiaService: PasantiService, public router: Router) { }
+  constructor(private _pasantiaService: PasantiService, private _proyectoService:ProyectoService,private router: Router) { }
 
   ngOnInit(): void {
     if(this.info.modalidad !== null){
-      this.getPasantia();
+      if(this.info.onModel === "Pasantia"){
+        this.getPasantia();
+      }else if(this.info.onModel === "Proyecto"){
+        this.getProyecto();
+      }
     }else{
       this.router.navigate(['/modalidades'])
     }
   }
 
+  activeTab(tab: string) {
+    const activeTab = document.getElementById(tab);
+    const problemaTab = document.getElementById('problemaTab');
+    const alcanceTab = document.getElementById('alcanceTab');
+    const metodologiaTab = document.getElementById('metodologiaTab');
+    problemaTab.setAttribute('class', 'nav-link text-body');
+    alcanceTab.setAttribute('class', 'nav-link text-body');
+    metodologiaTab.setAttribute('class', 'nav-link text-body');
+    activeTab.setAttribute('class', 'nav-link activeTab font-weight-bold');
+  }
+
   getPasantia() {
     this._pasantiaService.getPasantia(this.info.modalidad).subscribe((resp: any) => {
       this.pasantia = resp.pasantia;
-      console.log(this.pasantia)
       const pipe = new DatePipe('en-US');
       let currentDate = new Date();
       if(this.pasantia.fecha_actaInicio){
@@ -37,6 +52,12 @@ export class MiSolicitudComponent implements OnInit {
         this.semanas = Math.floor(diff);
         this.fechaInicio =  pipe.transform(fechaInicio, 'dd-MM-yyyy');
       }
+    });
+  }
+
+  getProyecto() {
+    this._proyectoService.getProyecto(this.info.modalidad).subscribe((resp: any) => {
+      this.proyecto = resp.proyecto;
     });
   }
 

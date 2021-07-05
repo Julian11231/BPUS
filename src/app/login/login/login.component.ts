@@ -39,11 +39,44 @@ export class LoginComponent implements OnInit {
         // Si se inicia un estudiante...
         if (user.codigo) {
           if (user.modalidad) {
-            this.__loginService.dejaPasar();
-            localStorage.setItem("reload", "true");
-            this.router.navigate(['/panel-principal']);
+            if(user.onModel === "Proyecto"){
+              if(user._id === user.modalidad.estudiante){
+                localStorage.removeItem("user");
+                user.modalidad = user.modalidad._id;
+                localStorage.setItem("user",  JSON.stringify(user));
+                localStorage.setItem("reload", "true");
+                this.router.navigate(['/panel-principal']);
+              }else if(user._id === user.modalidad.estudiante2){
+                if(user.modalidad.aprobacionEstudiante2 == true){
+                  localStorage.removeItem("user");
+                  user.modalidad = user.modalidad._id;
+                  localStorage.setItem("user",  JSON.stringify(user));
+                  localStorage.setItem("reload", "true");
+                  this.router.navigate(['/panel-principal']);
+                }else{
+                  this.router.navigate(['/xd']);
+                }
+              }else if(user._id === user.modalidad.estudiante3){
+                if(user.modalidad.aprobacionEstudiante3 == true){
+                  localStorage.removeItem("user");
+                  user.modalidad = user.modalidad._id;
+                  localStorage.setItem("user",  JSON.stringify(user));
+                  
+                  localStorage.setItem("reload", "true");
+                  this.router.navigate(['/panel-principal']);
+                }else{
+                  this.router.navigate(['/xd']);
+                }
+              }
+            }else{
+              localStorage.removeItem("user");
+              user.modalidad = user.modalidad._id;
+              localStorage.setItem("user",  JSON.stringify(user));
+              localStorage.setItem("reload", "true");
+              this.router.navigate(['/panel-principal']);
+            }
           } else {
-            this.router.navigate(['/requisitos']);
+            this.router.navigate(['/modalidades']);
           }
         } else{
           localStorage.setItem("reload", "true");

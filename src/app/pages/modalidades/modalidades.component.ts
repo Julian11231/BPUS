@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import {
   RequisitosService,
   ModalidadService,
-  ProgramaService,
+  ProgramaService
 } from 'src/app/services/service.index';
 
 declare function init_plugins();
@@ -15,30 +16,33 @@ declare function init_plugins();
 export class ModalidadesComponent implements OnInit {
   info = JSON.parse(localStorage.getItem("user"));
   modalidades: any[] = []; // Lista que almacenará la información de las modalidades
-  porcentajeAprobado: Number; // Porcentaje de créditos aprobados del estudiante
-
-  // Obtenemos los elementos que vamos a desactivar si el estudiante no cumple con el porcentaje
-  btnSeleccionar: any = document.getElementsByClassName('btn');
-  cardHeader: any = document.getElementsByClassName('card-header');
+  porcentajeAprobado: number; // Porcentaje de créditos aprobados del estudiante
 
   // Inyectamos los servicios
   constructor(
     public _requisitoService: RequisitosService,
     public _modalidadesService: ModalidadService,
-    public _programaService: ProgramaService
+    public _programaService: ProgramaService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
     init_plugins();
-    // Pasamos el porcentaje calculado en el servicio de la modalidad al la variable "porcentajeAprobado"
-    this.porcentajeAprobado = this._modalidadesService.porcentaje;
+    this.calcularPorcentaje();
     this.getModalidades();
-    // Enviamos los elemntos que queremos al servicio de la modalidad
-    this._modalidadesService.seleccionarModalidad(
-      this.btnSeleccionar,
-      this.cardHeader
-    );
   }
+
+    // Calculamos el porcentaje y se lo pasamos a la variable global
+    calcularPorcentaje() {
+      this._programaService.getPrograma().subscribe((resp: any) => {
+        let credAprob:any;
+        credAprob = this.info.creditos_aprobados;
+        let programa = resp.programa;
+        let creditosTotales = programa.creditos_totales;
+        let porcent = (credAprob * 100) / creditosTotales;
+        this.porcentajeAprobado = parseInt(porcent.toFixed(1));
+      });
+    }
 
   // Función que nos permite obtener la información de las modalidades
   getModalidades() {
@@ -46,4 +50,5 @@ export class ModalidadesComponent implements OnInit {
       this.modalidades = resp.modalidades;
     });
   }
+
 }

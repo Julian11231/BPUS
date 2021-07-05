@@ -1,5 +1,6 @@
 export { TutoresService } from './tutores/tutores.service';
 export { PasantiService } from './pasantia/pasanti.service';
+export { ProyectoService } from './proyecto/proyecto.service';
 export { VacantesService } from './vacantes/vacantes.service';
 export { EmpresaService } from './empresa/empresa.service';
 export { ModalidadService } from './modalidad/modalidad.service';
@@ -15,6 +16,7 @@ export { InformeSieteGuard } from './guards/informeSiete.guard';
 export { InformeCatorceGuard } from './guards/informeCatorce.guard';
 export { InformeFinalGuard } from './guards/informeFinal.guard';
 export { PropuestaPasantiaGuard } from './guards/propuestaPasantia.guard';
+export { ModalidadCreditosGuard } from './guards/modalidadCreditos.guard';
 // ---
 export { RequisitosService } from './requisitos/requisitos.service';
 export { LoginService } from './login/login.service';

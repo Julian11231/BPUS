@@ -6,14 +6,11 @@ import { URL_SERVICES } from 'src/app/config/config';
 import { map, catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { throwError } from 'rxjs/internal/observable/throwError';
-import { PasantiaAdmin } from '../../models/PasantiaAdmin';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PasantiService {
-
-  _id: string;
 
   constructor(public http: HttpClient, public router: Router) { }
 

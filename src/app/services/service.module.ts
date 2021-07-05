@@ -29,7 +29,9 @@ import {
   ActaInicioGuard,
   PropuestaPasantiaGuard,
   RolesService,
-  AdministrativoService
+  AdministrativoService,
+  ProyectoService,
+  ModalidadCreditosGuard
 } from './service.index'
 
 
@@ -64,7 +66,9 @@ import {
     VerificaTokenGuard,
     PropuestaPasantiaGuard,
     RolesService,
-    AdministrativoService
+    AdministrativoService,
+    ProyectoService,
+    ModalidadCreditosGuard
   ]
 })
 export class ServiceModule { }

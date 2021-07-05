@@ -18,15 +18,6 @@ export class LoginService {
   constructor(public router: Router, public http: HttpClient) {
   }
 
-  // Esta función nos va a servir para cuando el estudiante está en la página de requisitos
-  // y si intenta entrar al panel principal, no lo deje. Ya que la ruta va a estar protegida
-  // por el loginGuard que confirma si está el token en el local storage --> Al hacer click
-  // En el botón continuar, se llama esta función y se guarda el token en el local storage
-  dejaPasar() {
-    console.log(this.token);
-    localStorage.setItem('token', this.token);
-  }
-
   renuevaToken(){
     let url = URL_SERVICES+'/login/renuevatoken?token='+this.token;
     return this.http.get(url).pipe(map((resp: any) => {
@@ -81,9 +72,9 @@ export class LoginService {
           }
           // Guardamos toda la info del estudiante y el id
           localStorage.setItem('user', JSON.stringify(resp.estudiante));
+          localStorage.setItem('token', resp.token);
           // Se le asigna el token de la respuesta a la variable token
           this.token = resp.token;
-          console.log(this.token);
           // Es el mismo procedimiento anterior(Administrativo)
         } else if(resp['administrativo']) {
           // Si el check está activado, se guarda el usuario en el localStorage

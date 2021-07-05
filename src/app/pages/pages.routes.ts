@@ -16,7 +16,7 @@ import { NotificacionesComponent} from './notificaciones/notificaciones.componen
 import { PerfilComponent } from './perfil/perfil.component';
 import { PasantiaComponent } from './solicitudes/pasantia/pasantia-main/pasantia-main.component';
 import { SemilleroComponent } from './solicitudes/semillero/semillero/semillero.component';
-import { ProyectoComponent } from './solicitudes/proyecto/proyecto.component';
+import { SolicitudProyectoComponent } from './solicitudes/proyecto/proyecto.component';
 import { ModalidadesComponent } from './modalidades/modalidades.component';
 import { EmpresasComponent } from './docente/empresas/empresas.component';
 import { InscripcionDirectaComponent} from './solicitudes/pasantia/inscripcion-directa/inscripcion-directa.component';
@@ -26,6 +26,9 @@ import { AdminEstudiantesComponent } from './admin/admin-estudiantes/admin-estud
 import { GestionJuradosComponent } from './docente/gestion-jurados/gestion-jurados.component';
 import { JuradoPasantiaComponent } from './docente/jurado-pasantia/jurado-pasantia.component';
 import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.component';
+import { AnteproyectoComponent } from './estudiante/proyecto/anteproyecto/anteproyecto.component';
+import { ProyectoComponent } from './estudiante/proyecto/proyecto/proyecto.component';
+import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/documento-final.component';
 //admin
 import { RolesComponent } from './admin/roles/roles.component';
 import { PermisosComponent } from './admin/permisos/permisos.component';
@@ -45,16 +48,17 @@ import { InformeCatorceGuard } from '../services/service.index';
 import { InformeFinalGuard } from '../services/service.index';
 import { VerificaTokenGuard } from '../services/service.index';
 import { PropuestaPasantiaGuard } from '../services/service.index';
+import { ModalidadCreditosGuard } from '../services/service.index';
 
 const pagesRoutes: Routes = [
 
     { path: 'modalidades', component: ModalidadesComponent, data: { titulo: 'Modalidades Disponibles' }, canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard] },
-    { path: 'solicitud-pasantia-supervisada', component: PasantiaComponent, data: { titulo: 'Solicitud Pasantía' }, canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard] },
-    { path: 'solicitud-proyecto-de-grado', component: ProyectoComponent, data: { titulo: 'Solicitud Proyecto' }, canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard] },
-    { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard] },
+    { path: 'solicitud-pasantia-supervisada', component: PasantiaComponent, data: { titulo: 'Solicitud Pasantía' }, canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard] },
+    { path: 'solicitud-proyecto-de-grado', component: SolicitudProyectoComponent, data: { titulo: 'Solicitud Proyecto' }, canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard] },
+    { path: 'solicitud-semillero-de-investigacion', component: SemilleroComponent, data: { titulo: 'Solicitud Semillero' }, canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard] },
     { path: 'notificaciones', component: NotificacionesComponent, data: { titulo: 'Notificaciones' }, canActivate: [LoginGuardGuard, ModalidadGuard, VerificaTokenGuard] },
-    { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard] },
-    { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard] },
+    { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard], },
+    { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard] },
     {
         path: '',
         component: PagesComponent,
@@ -76,6 +80,9 @@ const pagesRoutes: Routes = [
             { path: 'acta-inicio', component: ActaInicioPasantiaComponent, data: { titulo: 'Acta de inicio' } ,canActivate: [PermisosGuard, ActaInicioGuard]},
             { path: 'gestion-estudiantes', component: AdminEstudiantesComponent, data: { titulo: 'Gestión de estudiantes' } ,canActivate: [PermisosGuard]},
             { path: 'asignacion-jurados', component: GestionJuradosComponent, data: { titulo: 'Asignación de jurados' } ,canActivate: [PermisosGuard]},
+            {path: "anteproyecto", component:AnteproyectoComponent, data: {titulo: 'Anteproyecto'}, canActivate:[PermisosGuard]},
+            {path: "proyecto", component:ProyectoComponent, data: {titulo: 'Proyecto'}, canActivate:[PermisosGuard]},
+            {path: "documento-final-proyecto", component:DocumentoFinalComponent, data: {titulo: 'Documento final proyecto'}, canActivate:[PermisosGuard]},
             { path: 'jurado', component: JuradoPasantiaComponent, data: { titulo: 'Jurado' } ,canActivate: [PermisosGuard]},
             { path: 'sustentacion-pasantia', component: SustentacionComponent, data: { titulo: 'Sustentación pasantia' } ,canActivate: [PermisosGuard]},
             { path: 'roles', component: RolesComponent, data: { titulo: 'Administración de roles' } ,canActivate: [PermisosGuard]},

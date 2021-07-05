@@ -28,7 +28,7 @@
 
             <div class="row">
 
-                <div class="col-md-4" *ngFor="let modalidad of modalidades">
+                <div class="col-12 col-md-4" *ngFor="let modalidad of modalidades">
 
                     <div class=" card-info border border-secondary rounded ">
                         <h6 class="card-header text-uppercase " style="background-color: #8F141B; color: #ffffff; "><b>{{ modalidad.nombre }}</b> </h6>
@@ -46,7 +46,7 @@
 
                             <div class="text-left ">
                                 <div class="btnSolicitud ">
-                                    <button routerLink="{{modalidad.url}}" class="btn btn-sm " disabled><i class="fa fa-clipboard " ></i>&nbsp; <b>Hacer Solicitud</b> </button>
+                                    <button routerLink="{{modalidad.url}}" class="btn btn-sm" [disabled]="porcentajeAprobado < modalidad.porcentaje_creditos*100" ><i class="fa fa-clipboard " ></i>&nbsp; <b>Hacer Solicitud</b> </button>
                                 </div>
                             </div>
 

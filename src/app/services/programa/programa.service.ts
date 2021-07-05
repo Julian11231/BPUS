@@ -43,7 +43,8 @@ export class ProgramaService {
     // Obtenemos el id del programa que corresponde al usuario
     let idPrograma = this.usuario.programa;
     // Se obtiene del backend
-    let url = URL_SERVICES + '/programa/' + idPrograma;
+    let token = localStorage.getItem('token');
+    let url = `${URL_SERVICES}/programa/${idPrograma}?token=${token}`;
     return this.http.get(url);
   }
 }
