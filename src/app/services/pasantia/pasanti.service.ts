@@ -15,44 +15,37 @@ export class PasantiService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getSolicitudes() {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia`;
     return this.http.get(url);
   }
 
   getSolicitudesEncargado() {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/encargado?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/encargado`;
     return this.http.get(url);
   }
 
   getSolicitudesTutor(tutor: string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/tutor${tutor}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/tutor${tutor}`;
     return this.http.get(url);
   }
 
   getSolicitudesJurado(jurado: string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/jurado${jurado}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/jurado${jurado}`;
     return this.http.get(url);
   }
 
   getSolicitudesAsignarJurado() {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/asignarJurado?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/asignarJurado`;
     return this.http.get(url);
   }
 
   getPasantia(id: string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/${id}`;
     return this.http.get(url);
   }
 
   postSolicitud(id: String, solicitud: Pasantia) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/${id}`;
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
       if (resp.ok) {
         localStorage.removeItem("user");
@@ -72,8 +65,7 @@ export class PasantiService {
   }
 
   postSolicitudDirecta(idEstudiante: String, solicitud: Pasantia) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/direct/${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/direct/${idEstudiante}`;
     return this.http.post(url, solicitud).pipe(map((resp: any) => {
       if (resp.ok == true) {
         localStorage.removeItem("user");
@@ -93,8 +85,7 @@ export class PasantiService {
   }
 
   cambiarEstadoEncargado(id: String, estado: boolean) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/cambiarEstado${id}?estado=${estado}&token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/cambiarEstado${id}?estado=${estado}`;
     return this.http.put(url, estado).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -112,8 +103,7 @@ export class PasantiService {
   }
 
   putSolicitudPropuesta(id: string, pasantia: any) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/propuesta${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/propuesta${id}`;
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -129,8 +119,7 @@ export class PasantiService {
   }
 
   putSolicitudJefe(id: string, pasantia: any) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/jefe${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/jefe${id}`;
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -146,8 +135,7 @@ export class PasantiService {
   }
 
   putSolicitudTutor(id: string, pasantia: any) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/tutor${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/tutor${id}`;
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -163,8 +151,7 @@ export class PasantiService {
   }
 
   asignarJurado(id: string, pasantia: any) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/asignarJurados${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/asignarJurados${id}`;
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -180,8 +167,7 @@ export class PasantiService {
   }
 
   evaluar(id: string, pasantia: any) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/pasantia/evaluar${id}?token=${token}`;
+    let url = `${URL_SERVICES}/pasantia/evaluar${id}`;
     return this.http.put(url, pasantia).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -197,8 +183,7 @@ export class PasantiService {
   }
 
   postDocumentoPropuesta(idEstudiante: string, documento_propuesta: FormData) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, documento_propuesta).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -215,8 +200,7 @@ export class PasantiService {
   }
 
   putDocumentoPropuesta(idEstudiante: string, documento_actpropuesta: FormData) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, documento_actpropuesta).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -233,8 +217,8 @@ export class PasantiService {
   }
 
   postCartaPresentacion(idEstudiante: string, carta_presentacion: FormData,) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, carta_presentacion).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -251,8 +235,8 @@ export class PasantiService {
   }
 
   postDocumentoFichaAcademica(idEstudiante: string, documento_fichaAcademica: FormData) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, documento_fichaAcademica).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return resp.pasantia;
@@ -269,8 +253,8 @@ export class PasantiService {
   }
 
   postDocumentoActInicio(idEstudiante: string, documento_actaInicio: FormData, fecha_actaInicio: string) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_actaInicio=${fecha_actaInicio}&token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_actaInicio=${fecha_actaInicio}`;
     return this.http.put(url, documento_actaInicio).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -287,8 +271,8 @@ export class PasantiService {
   }
 
   postDocumentoARL(idEstudiante: string, documento_arl: FormData, fecha_arl:string) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_arl=${fecha_arl}&token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?fecha_arl=${fecha_arl}`;
     return this.http.put(url, documento_arl).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -305,8 +289,8 @@ export class PasantiService {
   }
 
   postDocumentoInf7(idEstudiante: string, documento_informe7: FormData) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, documento_informe7).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -323,8 +307,8 @@ export class PasantiService {
   }
 
   postDocumentoInf14(idEstudiante: string, documento_informe14: FormData) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, documento_informe14).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -341,8 +325,8 @@ export class PasantiService {
   }
 
   postDocumentoInfFinal(idEstudiante: string, documento_informeFinal: FormData) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, documento_informeFinal).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -359,8 +343,8 @@ export class PasantiService {
   }
 
   postDocumentoAprobacionEmpresa(idEstudiante: string, documento_aprobacionEmpresa: FormData) {
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?token=${token}`;
+    
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}`;
     return this.http.put(url, documento_aprobacionEmpresa).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -376,8 +360,8 @@ export class PasantiService {
   }
 
   postDocumentoEvaluacion(idEstudiante: string, jurado:string, documento_evaluacion_jurado: FormData) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?jurado=${jurado}&token=${token}`;
+
+    let url = `${URL_SERVICES}/upload_pasantia/${idEstudiante}?jurado=${jurado}`;
     return this.http.put(url, documento_evaluacion_jurado).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return resp.pasantiaActualizada;

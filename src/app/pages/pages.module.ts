@@ -23,7 +23,6 @@ import { FormsModule } from '@angular/forms';
 import { InscripcionPasantiaComponent } from './solicitudes/pasantia/inscripcion-pasantia/inscripcion-pasantia.component';
 import { VacantesComponent } from './encargado/vacantes/vacantes.component';
 import { EncarSolicitudVacanteComponent } from './encargado/solicitud-vacante/solicitud-vacante.component';
-import { ModSolicitudVacanteComponent } from './docente/mod-solicitud-vacante/mod-solicitud-vacante.component';
 import { MiSolicitudComponent } from './estudiante/pasantia/mi-solicitud/mi-solicitud.component';
 import { PropuestaPasantiaComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
 import { TutoriaPasantiaComponent } from './docente/tutoria-pasantia/tutoria-pasantia.component';
@@ -49,8 +48,6 @@ import { AnteproyectoComponent } from './estudiante/proyecto/anteproyecto/antepr
 import { ProyectoComponent } from './estudiante/proyecto/proyecto/proyecto.component';
 import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/documento-final.component';
 
-
-
 @NgModule({
   declarations: [
     PagesComponent,
@@ -63,7 +60,6 @@ import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/d
     EmpresasComponent,
     InscripcionPasantiaComponent,
     VacantesComponent,
-    ModSolicitudVacanteComponent,
     MiSolicitudComponent,
     PropuestaPasantiaComponent,
     TutoriaPasantiaComponent,
@@ -101,7 +97,6 @@ import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/d
     SemilleroComponent,
     ModalidadesComponent,
     VacantesComponent,
-    ModSolicitudVacanteComponent,
     MiSolicitudComponent,
     PropuestaPasantiaComponent,
     TutoriaPasantiaComponent,

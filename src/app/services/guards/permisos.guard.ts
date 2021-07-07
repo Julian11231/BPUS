@@ -10,11 +10,15 @@ export class PermisosGuard implements CanActivate {
 
     async canActivate (route: ActivatedRouteSnapshot) {
     const pagina = route.url[0].path;
-    const resp:any = await this._permisoService.getPermisosPagina(pagina).toPromise();
-    if(resp.permiso == true){
-      return true;
-    }else{
-      this.router.navigate(["/panel-principal"]);
+    try{
+      const resp:any = await this._permisoService.getPermisosPagina(pagina).toPromise();
+      if(resp.permiso == true){
+        return true;
+      }else{
+        this.router.navigate(["/panel-principal"]);
+      }
+    }catch(err){
+      console.log("Error al cargar el permiso");
     }
   }
 

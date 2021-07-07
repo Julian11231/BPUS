@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { URL_SERVICES } from 'src/app/config/config';
 import { map, catchError } from 'rxjs/operators';
@@ -16,8 +16,7 @@ export class AdministrativoService {
   totalAdmins:number = 0;
 
   getAdmins(desde:number, campo: string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/administrativos?campo=${campo}&desde=${desde}&token=${token}`;
+    let url = `${URL_SERVICES}/administrativos?campo=${campo}&desde=${desde}`;
     return this.http.get(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         this.totalAdmins = resp.total;
@@ -29,14 +28,17 @@ export class AdministrativoService {
   }
 
   getDocentes() {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/administrativos/docentes?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos/docentes`;
+    return this.http.get(url);
+  }
+
+  getTutores(idPrograma: string) {
+    let url = `${URL_SERVICES}/administrativos/${idPrograma}`;
     return this.http.get(url);
   }
 
   postAdmin(admin:any){
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/administrativos?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos`;
     return this.http.post(url, admin).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -47,13 +49,12 @@ export class AdministrativoService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo crear el usuario");
     }));
   }
 
   putAdmin(admin:any){
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/administrativos?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos`;
     return this.http.put(url, admin).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -64,13 +65,12 @@ export class AdministrativoService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo editar al usuario");
     }));
   }
 
   cambiarEstado(admin:any){
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/administrativos/cambiarEstado?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos/cambiarEstado`;
     return this.http.put(url, admin).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -81,14 +81,12 @@ export class AdministrativoService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo cambiar el estado del usuario");
     }));
   }
 
-
   deleteAdmin(id:string){
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/administrativos/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos/${id}`;
     return this.http.delete(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -99,13 +97,12 @@ export class AdministrativoService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo eliminar al usuario");
     }));
   }
 
   cambiarClave(usuario: string, clave:string){
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/administrativos/cambiarclave?token=${token}`;
+    let url = `${URL_SERVICES}/administrativos/cambiarclave`;
     return this.http.put(url, {usuario: usuario, clave: clave}).pipe(map((resp: any) => {
       if (resp.ok == true) {
         localStorage.removeItem("user");
@@ -119,7 +116,7 @@ export class AdministrativoService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se le pudo cambiar la clave al usuario");
     }));
   }
 

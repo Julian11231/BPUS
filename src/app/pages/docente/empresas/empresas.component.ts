@@ -5,7 +5,7 @@ import { EncargadoEmpresa } from '../../../models/EncargadoEmpresa.model';
 import { Convenio } from 'src/app/models/Convenio.model';
 import Swal from 'sweetalert2';
 import { EmpresaService } from 'src/app/services/service.index';
-import { EncargadoEmpresaService, ConvenioService } from 'src/app/services/service.index';
+import { ConvenioService } from 'src/app/services/service.index';
 import {Router} from '@angular/router'
 
 @Component({
@@ -47,7 +47,6 @@ export class EmpresasComponent implements OnInit {
 
   constructor(public router: Router,
               public _empresaService: EmpresaService, 
-              public _encargadoEmpresaService: EncargadoEmpresaService,
               public _convenioService: ConvenioService) { }
 
   ngOnInit(): void {this.getConveniosJefe();}
@@ -97,6 +96,7 @@ export class EmpresasComponent implements OnInit {
             form.value.puesto,
             "60b66f2b5756933d5096d51a",
           )
+          /*
           this._encargadoEmpresaService.postEncargadoEmpresa(encargadoEmpresa).subscribe((respp:any) => {
             let convenio = new Convenio(programa,  resp._id, respp._id);
             this._convenioService.postConvenio(convenio).subscribe((anws:any) => {
@@ -123,6 +123,7 @@ export class EmpresasComponent implements OnInit {
               }
             });
           });
+          */
         }); 
       }
     });

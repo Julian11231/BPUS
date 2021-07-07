@@ -15,30 +15,23 @@ export class VacantesService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getVacantesEncargado(encargado:string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/encargado${encargado}?token=${token}`;
+    let url = `${URL_SERVICES}/vacantes/encargado${encargado}`;
     return this.http.get(url);
   }
 
   getVacantes() {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes?token=${token}`;
+    let url = `${URL_SERVICES}/vacantes`;
     return this.http.get(url);
   }
 
   getVacantesEstudiante(programa:string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/estudiante${programa}?token=${token}`;
+    let url = `${URL_SERVICES}/vacantes/estudiante${programa}`;
     return this.http.get(url);
   }
 
   postVacantes(vacante: Vacante) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes?token=${token}`;
-
+    let url = `${URL_SERVICES}/vacantes`;
     return this.http.post(url, vacante).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
@@ -48,31 +41,21 @@ export class VacantesService {
           location.reload();
         });
       }
-
       return true;
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
-
     }));
 
   }
 
-
   putVacante(id: String, vacante: Vacante) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/${id}?token=${token}`;
-
+    let url = `${URL_SERVICES}/vacantes/${id}`;
     return this.http.put(url, vacante).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
@@ -82,32 +65,20 @@ export class VacantesService {
           location.reload();
         });
       }
-
       return true;
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
-
     }));
-
   }
 
-
-
   eliminarVacante(id: string) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/vacantes/${id}?token=${token}`;
-
+    let url = `${URL_SERVICES}/vacantes/${id}`;
     return this.http.delete(url).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
@@ -117,9 +88,7 @@ export class VacantesService {
           location.reload();
         });
       }
-
       return true;
-
     }), catchError((err) => {
 
       Swal.fire({
@@ -127,12 +96,8 @@ export class VacantesService {
         text: err.error.mensaje,
         icon: 'error',
       });
-
       return throwError(err);
-
     }));
-
   }
-
 
 }

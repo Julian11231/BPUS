@@ -7,15 +7,12 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ProgramaService {
-  // Alamacenaremos la info del usuario
-  usuario = JSON.parse(localStorage.getItem('user'));
   totalprogramas:number = 0;
 
   constructor(public http: HttpClient) { }
 
   getProgramas(desde:number) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/programa?desde=${desde}&token=${token}`;
+    let url = `${URL_SERVICES}/programa?desde=${desde}`;
     return this.http.get(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         this.totalprogramas = resp.total;
@@ -27,8 +24,7 @@ export class ProgramaService {
   }
 
   getTodosProgramas() {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/programa/todos?token=${token}`;
+    let url = `${URL_SERVICES}/programa/todos`;
     return this.http.get(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return resp.programas;
@@ -40,11 +36,7 @@ export class ProgramaService {
 
   // Función para obtener el programa que corresponde el estudiante
   getPrograma() {
-    // Obtenemos el id del programa que corresponde al usuario
-    let idPrograma = this.usuario.programa;
-    // Se obtiene del backend
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/programa/${idPrograma}?token=${token}`;
+    let url = `${URL_SERVICES}/programa/programaEstudiante`;
     return this.http.get(url);
   }
 }

@@ -11,30 +11,24 @@
                     <p id="textoLog">INSCRIPCIÓN DE MODALIDAD DE GRADO</p>
                 </div>
                 <div class="mt-5 px-3">
+
                     <div class="form-group">
                         <input [(ngModel)]="usuario" name="usuario" id="inputUsuario" class="form-control floating-labels" type="text" required>
                         <span class="bar"></span>
                         <label for="inputUsuario">Usuario</label>
                     </div>
                     
-                    <div class="row">
-                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
-                            <div class="form-group">
-                                <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" required>
-                                <span class="bar"></span>
-                                <label for="inputContra">Contraseña</label>
-                            </div>
-                        </div>
-                        <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 mx-auto">
-                            <button (click)="showPass()" type="button" class="btn btnInfo"><i class="fa fa-eye" id="showPass"></i></button>
-                        </div>
+                    <div class="form-group">
+                        <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" required>
+                        <span class="bar"></span>
+                        <label for="inputContra">Contraseña</label>
                     </div>
                     
                     <div class="row">
                         <div class="col-5 col-sm-5 col-md-6 col-lg-6">
                             <div class="">
-                                    <input [(ngModel)]="recordar" name="recordar" id="checkbox-signup" type="checkbox" class="filled-in chk-col-red">
-                                    <label for="checkbox-signup"> Recordarme </label>
+                                    <input [(ngModel)]="mostrarcontra" name="recordar" (change)="showPass()" id="checkbox-signup" type="checkbox" class="filled-in chk-col-red">
+                                    <label for="checkbox-signup"> Mostrar contraseña </label>
                             </div>
                         </div>
                         <br>

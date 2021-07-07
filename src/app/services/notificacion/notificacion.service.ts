@@ -13,20 +13,17 @@ export class NotificacionesService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getNotificaciones(usuarioId: String) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/${usuarioId}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/${usuarioId}}`;
     return this.http.get(url);
   }
 
   getNotificacionesNav(usuarioId: String) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/notificacionesNav/${usuarioId}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/notificacionesNav/${usuarioId}`;
     return this.http.get(url);
   }
 
   postNotificacion(notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -37,8 +34,7 @@ export class NotificacionesService {
   }
 
   sendNotificacionCorreo(notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/correo?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/correo`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -49,8 +45,7 @@ export class NotificacionesService {
   }
 
   sendUSuarioNuevo(usuario: any) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/usuarioNuevo?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/usuarioNuevo`;
     return this.http.post(url, usuario).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -61,8 +56,7 @@ export class NotificacionesService {
   }
 
   sendCartaPresentacionCorreo(idEstudiante:string ,notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/correoCartaPresentacion${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/correoCartaPresentacion${idEstudiante}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -73,8 +67,7 @@ export class NotificacionesService {
   }
 
   sendPropuestaCorreo(idEstudiante:string ,notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/correoPropusta${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/correoPropusta${idEstudiante}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -85,8 +78,7 @@ export class NotificacionesService {
   }
 
   sendActInicioCorreo(idEstudiante:string ,notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/correoActInicio${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/correoActInicio${idEstudiante}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -97,8 +89,7 @@ export class NotificacionesService {
   }
 
   sendInforme7Correo(idEstudiante:string ,notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/correoInforme7${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/correoInforme7${idEstudiante}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -109,8 +100,7 @@ export class NotificacionesService {
   }
 
   sendInforme14Correo(idEstudiante:string ,notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/correoInforme14${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/correoInforme14${idEstudiante}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -121,8 +111,7 @@ export class NotificacionesService {
   }
 
   sendArchivosJurado(idEstudiante:string ,notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/archivosJurado${idEstudiante}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/archivosJurado${idEstudiante}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -133,8 +122,7 @@ export class NotificacionesService {
   }
 
   sendEvaluacion(idEstudiante:string, jurado:string, notificacion: Notificacion) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/evaluacion${idEstudiante}?jurado=${jurado}&token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/evaluacion${idEstudiante}?jurado=${jurado}`;
     return this.http.post(url, notificacion).pipe(map((resp: any) => {
       if(resp.ok){  
         return true;
@@ -145,8 +133,7 @@ export class NotificacionesService {
   }
 
   isReadTrue(id: string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/leida/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/leida/${id}`;
     return this.http.get(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -157,8 +144,7 @@ export class NotificacionesService {
   }
 
   eliminarNotificacion(id: string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/notificaciones/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/notificaciones/${id}`;
     return this.http.delete(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;

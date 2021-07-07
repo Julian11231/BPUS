@@ -13,22 +13,17 @@ export class PermisosService {
   constructor(public http: HttpClient) { }
 
   getPermisos() {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/permisos?token=${token}`;
+    let url = `${URL_SERVICES}/permisos`;
     return this.http.get(url);
   }
 
   getPermisosPagina(pagina:string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/permisos/pagina${pagina}?token=${token}`;
+    let url = `${URL_SERVICES}/permisos/pagina${pagina}`;
     return this.http.get(url);
   }
 
   postPermiso(permiso: any) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/permisos?token=${token}`;
-
+    let url = `${URL_SERVICES}/permisos`;
     return this.http.post(url, permiso).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return resp.permisoGuardado;
@@ -39,15 +34,12 @@ export class PermisosService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo crear el permiso");
     }));
   }
 
   putPermiso(permiso: any) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/permisos?token=${token}`;
-
+    let url = `${URL_SERVICES}/permisos`;
     return this.http.put(url, permiso).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return resp.permisoActualizado;
@@ -58,7 +50,7 @@ export class PermisosService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo editar el permiso");
     }));
   }
 

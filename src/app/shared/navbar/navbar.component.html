@@ -59,21 +59,17 @@
                     <div class="dropdown-menu dropdown-menu-right animated fadeIn">
                         <ul class="dropdown-user">
                             <li>
-                                <div class="text-center">
-                                    <div class="dw-user-box">
-                                        <div class="u-text">
-                                            <br>
-                                            <h4>{{info.nombres}} {{info.apellidos}} </h4>
-                                            <p class="text-active">{{info.correo}}</p>
-                                        </div>
+                                <div class="dw-user-box">
+                                    <div class="u-text">
+                                        <br>
+                                        <h4>{{info.nombres}} {{info.apellidos}} </h4>
+                                        <p class="text-active">{{info.correo}}</p>
                                     </div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li><a (click)="irPerfil()" class="pointer"><i class="fa fa-id-card"></i> &nbsp; Ver
                                     Perfil</a></li>
-                            <li *ngIf="info.codigo"><a routerLink='/mi-modalidad'><i
-                                        class="fa fa-clipboard"></i> &nbsp;Mi Modalidad</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a (click)="_loginService.logOut()" class="pointer"><i class="fa fa-power-off"></i>
                                     &nbsp; Cerrar Sesión</a></li>

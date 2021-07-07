@@ -268,7 +268,7 @@ export class SolicitudProyectoComponent implements OnInit {
     }
     this._proyectoService.postProyecto(proyecto).subscribe((resp:any)=>{
       if(resp){
-        this._proyectoService.uploadFichaAcademica(resp._id, this.documento_fichaAcademica).subscribe((answ:any)=>{
+        this._proyectoService.uploadDocumento(resp._id, this.documento_fichaAcademica).subscribe((answ:any)=>{
           if(answ){
             let estudiantes:string = this.user.nombres+" "+this.user.apellidos;
             let txt:string = "ha";

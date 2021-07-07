@@ -485,6 +485,150 @@
         </div>
     </div>
 
+    <div class="mt-4" id="accordionProyecto">
+        <div class="card">
+            <div class="card-header">
+            <h3><a class="collapsed card-link" data-toggle="collapse" href="#anteproyecto"><b>Anteproyecto </b>
+                    <i *ngIf="proyecto?.estado_anteproyecto === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
+                    <i *ngIf="proyecto?.estado_anteproyecto === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
+                    <i *ngIf="proyecto?.estado_anteproyecto === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
+                </a>
+            </h3>
+            </div>
+            <div id="anteproyecto" class="collapse" data-parent="#accordionProyecto">
+                <div *ngIf="proyecto?.estado_anteproyecto && proyecto?.estado === 'En ejecución';else elseAnteproyecto"class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                            <h3><b>Estado:</b> </h3>
+                            <ng-container *ngIf="proyecto?.estado_anteproyecto == 'Enviado'" class="text-success">
+                                <span class="label btnInfo"> <b> {{ proyecto?.estado_anteproyecto }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="proyecto?.estado_anteproyecto == 'Aprobado'" class="text-success">
+                                <span class="label" style="background-color: green;"> <b> {{ proyecto?.estado_anteproyecto }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="proyecto?.estado_anteproyecto == 'Ajustar'" class="text-success">
+                                <span class="label btnSuccess"> <b> {{ proyecto?.estado_anteproyecto }} </b></span>
+                            </ng-container>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                            <h5><b>Documento anteproyecto:</b></h5>
+                            <button class="btn btnSuccess">
+                                <a class="btnSuccess" [href]="proyecto?.documento_anteproyecto | documento: info._id" download="proyecto?.documento_anteproyecto" target="_blank">
+                                    <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver Anteproyecto</b></small>
+                                </a>
+                            </button>
+                        </div>
+                        <br> 
+                    </div>
+                    <div class="mt-5 ml-3">
+                        <h4><b>Notas del anteproyecto:</b></h4>
+                        <p *ngIf="proyecto.notas_anteproyecto && proyecto.notas_anteproyecto !== ''" class="pl-3 mt-2">{{proyecto?.notas_anteproyecto}}</p>
+                        <p *ngIf="!proyecto.notas_anteproyecto || proyecto.notas_anteproyecto == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
+                    </div> 
+                </div>
+                <ng-template #elseAnteproyecto>
+                    <div class="card-body">
+                        <h2>No has enviado el anteproyecto....</h2>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+            <h3><a class="collapsed card-link" data-toggle="collapse" href="#proyecto"><b>Proyecto </b>
+                    <i *ngIf="proyecto?.estado_proyecto === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
+                    <i *ngIf="proyecto?.estado_proyecto === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
+                    <i *ngIf="proyecto?.estado_proyecto === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
+                </a>
+            </h3>
+            </div>
+            <div id="proyecto" class="collapse" data-parent="#accordionProyecto">
+                <div *ngIf="proyecto?.estado_proyecto && proyecto?.estado === 'En ejecución';else elseProyecto"class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                            <h3><b>Estado:</b> </h3>
+                            <ng-container *ngIf="proyecto?.estado_proyecto == 'Enviado'" class="text-success">
+                                <span class="label btnInfo"> <b> {{ proyecto?.estado_proyecto }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="proyecto?.estado_proyecto == 'Aprobado'" class="text-success">
+                                <span class="label" style="background-color: green;"> <b> {{ proyecto?.estado_proyecto }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="proyecto?.estado_proyecto == 'Ajustar'" class="text-success">
+                                <span class="label btnSuccess"> <b> {{ proyecto?.estado_proyecto }} </b></span>
+                            </ng-container>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                            <h5><b>Documento proyecto:</b></h5>
+                            <button class="btn btnSuccess">
+                                <a class="btnSuccess" [href]="proyecto?.documento_proyecto | documento: info._id" download="proyecto?.documento_proyecto" target="_blank">
+                                    <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver proyecto</b></small>
+                                </a>
+                            </button>
+                        </div>
+                        <br> 
+                    </div>
+                    <div class="mt-5 ml-3">
+                        <h4><b>Notas del proyecto:</b></h4>
+                        <p *ngIf="proyecto.notas_proyecto && proyecto.notas_proyecto !== ''" class="pl-3 mt-2">{{proyecto?.notas_proyecto}}</p>
+                        <p *ngIf="!proyecto.notas_proyecto || proyecto.notas_proyecto == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
+                    </div> 
+                </div>
+                <ng-template #elseProyecto>
+                    <div class="card-body">
+                        <h2>No has enviado el proyecto....</h2>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+            <h3><a class="collapsed card-link" data-toggle="collapse" href="#documentoFinal"><b>Documento final </b>
+                    <i *ngIf="proyecto?.estado_documentoFinal === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
+                    <i *ngIf="proyecto?.estado_documentoFinal === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
+                    <i *ngIf="proyecto?.estado_documentoFinal === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
+                </a>
+            </h3>
+            </div>
+            <div id="documentoFinal" class="collapse" data-parent="#accordionProyecto">
+                <div *ngIf="proyecto?.estado_documentoFinal && proyecto?.estado === 'En ejecución';else elseDocumentoFinal"class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                            <h3><b>Estado:</b> </h3>
+                            <ng-container *ngIf="proyecto?.estado_documentoFinal == 'Enviado'" class="text-success">
+                                <span class="label btnInfo"> <b> {{ proyecto?.estado_documentoFinal }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="proyecto?.estado_documentoFinal == 'Aprobado'" class="text-success">
+                                <span class="label" style="background-color: green;"> <b> {{ proyecto?.estado_documentoFinal }} </b></span>
+                            </ng-container>
+                            <ng-container *ngIf="proyecto?.estado_documentoFinal == 'Ajustar'" class="text-success">
+                                <span class="label btnSuccess"> <b> {{ proyecto?.estado_documentoFinal }} </b></span>
+                            </ng-container>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center">
+                            <h5><b>Documento final:</b></h5>
+                            <button class="btn btnSuccess">
+                                <a class="btnSuccess" [href]="proyecto?.documento_final | documento: info._id" download="proyecto?.documento_final" target="_blank">
+                                    <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver documento final</b></small>
+                                </a>
+                            </button>
+                        </div>
+                        <br> 
+                    </div>
+                    <div class="mt-5 ml-3">
+                        <h4><b>Notas del documento final:</b></h4>
+                        <p *ngIf="proyecto.notas_documentoFinal && proyecto.notas_documentoFinal !== ''" class="pl-3 mt-2">{{proyecto?.notas_documentoFinal}}</p>
+                        <p *ngIf="!proyecto.notas_documentoFinal || proyecto.notas_documentoFinal == ''" class="pl-3 mt-2 font-italic">No hay notas...</p>  
+                    </div> 
+                </div>
+                <ng-template #elseDocumentoFinal>
+                    <div class="card-body">
+                        <h2>No has enviado el documento final....</h2>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
 
 </ng-container>
 <ng-container *ngIf="!info.modalidad">

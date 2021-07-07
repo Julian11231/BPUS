@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PasantiService, TutoresService, NotificacionesService, ProgramaService } from 'src/app/services/service.index';
+import { PasantiService, AdministrativoService, NotificacionesService, ProgramaService } from 'src/app/services/service.index';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Notificacion } from 'src/app/models/notificacion.model';
@@ -28,7 +28,7 @@ export class PropuestasComponent implements OnInit {
   carta_presentacion = new FormData();
 
   constructor(public _pasantiaService: PasantiService, 
-    public _tutoresService: TutoresService, 
+    public _tutoresService: AdministrativoService, 
     public _notificacionService: NotificacionesService,
     public _programaService: ProgramaService) { }
 

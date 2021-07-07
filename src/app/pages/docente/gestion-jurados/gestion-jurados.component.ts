@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { PasantiService, TutoresService, NotificacionesService } from 'src/app/services/service.index';
+import { PasantiService, AdministrativoService, NotificacionesService } from 'src/app/services/service.index';
 import { Notificacion } from 'src/app/models/notificacion.model';
 import { PasantiaAsignarJurado } from '../../../models/pasantiaAsignarJurado.model';
 import { DatePipe } from '@angular/common';
@@ -23,7 +23,7 @@ export class GestionJuradosComponent implements OnInit {
   jurado1:string = "";
   jurado2:string = "";
 
-  constructor(public _pasantiaService: PasantiService, public _tutoresService: TutoresService, public _notificacionService: NotificacionesService) { }
+  constructor(public _pasantiaService: PasantiService, public _tutoresService: AdministrativoService, public _notificacionService: NotificacionesService) { }
 
   ngOnInit(): void {
     this.user  = JSON.parse(localStorage.getItem('user'));

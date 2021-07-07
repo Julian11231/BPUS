@@ -17,14 +17,12 @@ export class ConvenioService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getConveniosPrograma(programa:String) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios/programa${programa}?token=${token}`;;
+    let url = `${URL_SERVICES}/convenios/programa${programa}`;
     return this.http.get(url);
   }
 
   getConvenios(desde:number) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios?desde=${desde}&token=${token}`;
+    let url = `${URL_SERVICES}/convenios?desde=${desde}`;
     return this.http.get(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         this.totalConvenios = resp.total;
@@ -36,43 +34,30 @@ export class ConvenioService {
   }
 
   getConvenioEncargado(convenio: string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios/encargado${convenio}?token=${token}`;;
+    let url = `${URL_SERVICES}/convenios/encargado${convenio}`;
     return this.http.get(url);
   }
 
 
   postConvenio(convenio: Convenio) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios?token=${token}`;
-
+    let url = `${URL_SERVICES}/convenios`;
     return this.http.post(url, convenio).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return resp.convenioGuardado;
       }
-      //return true;
-
     }), catchError((err) => {
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
-
+      return throwError("No se pudo crear el convenio");
     }));
-
   }
 
   putConvenio(id: String, convenio: Convenio) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios/${id}?token=${token}`;
-
+    let url = `${URL_SERVICES}/convenios/${id}`;
     return this.http.put(url, convenio).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
@@ -82,77 +67,53 @@ export class ConvenioService {
           location.reload();
         });
       }
-
       return true;
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
-      return throwError(err);
-
+      return throwError("No se pudo editar el convenio");
     }));
-
   }
 
   postDocumentoConvenio(idConvenio: string, documento_convenio: FormData) {
-
-    let token = localStorage.getItem('token')
-    let url = `${URL_SERVICES}/upload_convenio/${idConvenio}?token=${token}`;
-
-    console.log("lol");
-
+    let url = `${URL_SERVICES}/upload_convenio/${idConvenio}`;
     return this.http.put(url, documento_convenio).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         return true;
       }
-      
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-
-      return throwError(err);
+      return throwError("No se pudo guardar el archivo del convenio");
     }));
-
   }
 
-
-
-  deleteConvenio(id: string) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/convenios/${id}?token=${token}`;
-
+  deleteConvenio(id: string) {    
+    let url = `${URL_SERVICES}/convenios/${id}`;
     return this.http.delete(url).pipe(map((resp: any) => {
-
       if (resp.ok == true) {
         Swal.fire({
           title: '¡Bien Hecho!',
-          text: 'Convenio eliminada correctamente',
+          text: 'Convenio eliminado correctamente',
           icon: 'success'
         }).then(() => {
           location.reload();
         });
       }
       return true;
-
     }), catchError((err) => {
-
       Swal.fire({
         title: '¡Error!',
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo eliminar el convenio");
     }));
   }
 }

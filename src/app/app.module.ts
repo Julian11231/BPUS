@@ -10,10 +10,14 @@ import { CommonModule } from '@angular/common';
 // Componentes
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login/login.component';
+import { CambioClaveComponent } from './login/cambio-clave/cambio-clave.component';
 
 // Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+//httpInterceptor
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/interceptors/httpInterceptor';
 
 // Rutas
 import { APP_ROUTES } from './app.routes';
@@ -21,7 +25,7 @@ import { APP_ROUTES } from './app.routes';
 // Import pdfmake-wrapper and the fonts to use
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { CambioClaveComponent } from './login/cambio-clave/cambio-clave.component';
+
 //import pdfFonts from "pdfmake/build/vfs_fonts"; // fonts provided for pdfmake
 
 // Set the fonts to use
@@ -47,7 +51,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     BrowserModule
     
   ],
-  providers: [],
+  providers: [  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

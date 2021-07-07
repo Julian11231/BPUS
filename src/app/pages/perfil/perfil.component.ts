@@ -9,12 +9,21 @@ import { ProgramaService } from 'src/app/services/service.index';
 export class PerfilComponent implements OnInit {
   // Creamos variables globales
   tipoUsuario: string;
-  info = JSON.parse(localStorage.getItem('user'));
-  programa: String;
+  usuario = JSON.parse(localStorage.getItem('user'));
+  programa: any;
 
   // Inyectamos el servicio
   constructor(public _programaService: ProgramaService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getProgramaInfo();
+  }
+
+  getProgramaInfo() {
+    this._programaService.getPrograma().subscribe((resp) => {
+      let infoPrograma = resp['programa'];
+      this.programa = infoPrograma;
+    });
+  }
 
 }

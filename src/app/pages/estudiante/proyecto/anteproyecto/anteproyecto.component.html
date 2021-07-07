@@ -1,1 +1,45 @@
-<p>anteproyecto works!</p>
+<div class="p-3" style="background-color: white;">
+
+    <div class="row px-3">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h2>Título:</h2>
+            <h4>{{proyecto?.titulo}}</h4>
+            <h2>Descripción:</h2>
+            <h5>El documento a adjuntar debe contener:</h5>
+            <div class="pl-5">
+                <h6>Integrantes</h6>
+                <h6>Linea de investigación</h6>
+                <h6>Titulo (Debe contener máximo 20 palabras)</h6>
+                <h6>Introducción (Debe contener máximo 2 hojas)</h6>
+                <h6>Justificación (Debe contener máximo 1 hoja)</h6>
+                <h6>Objetivos generales y específicos (Debe contener máximo 1 hoja)</h6>
+                <h6>Estado del arte ( Debe contener máximo 3 hojas)</h6>
+                <h6>Referencias</h6>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+            <div class="vertical-center">
+                <h4 class="font-weight-bold">TODO EL DOCUMENTO DEBE PRESENTARSE CON LAS NORMAS APA</h4>
+                <label for="fileanteproyecto" id="labelfileanteproyecto"
+                    class="labels custom-file-upload text-center py-3 mt-4">Click para subir el archivo del anteproyecto</label>
+    
+                <input name="fileanteproyecto" id="fileanteproyecto"
+                    (change)="getFilePropuesta( $event.target.files[0])" type="file" accept="application/pdf"
+                    class="imagenes-secundarias" required />
+                    
+                <h6 class="text-dark font-weight-bold small">
+                    <u>Los archivos tienen que ser en formato PDF y con un tamaño máximo de 1MB.</u>
+                </h6>
+    
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btnSuccess mt-4" [disabled]="!fileValid" (click)="uploadAnteproyecto()">
+                        <b>Enviar Documento</b>
+                    </button>
+                </div>  
+            </div>
+        </div>
+    
+    </div>
+
+</div>

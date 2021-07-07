@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-5">
+    <div class="col-6">
         <div class="card">
             <div class="card-body">
 
@@ -12,8 +12,7 @@
                             <label for="exampleInputuname">Nombre Completo</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                <input *ngIf="tipoUsuario !== 'encargadoEmpresa'" type="text" class="form-control" id="exampleInputuname" value="{{info.nombres}} {{ info.apellidos }}">
-                                <input *ngIf="tipoUsuario === 'encargadoEmpresa'" type="text" class="form-control" id="exampleInputuname" value="{{info.nombre}}">
+                                <input type="text" class="form-control"  value="{{usuario.nombres}} {{ usuario.apellidos }}" readonly>
                             </div>
                         </div>
                     </div>
@@ -25,7 +24,7 @@
                             <label for="exampleInputuname">Identificación</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-id-card-o"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.identificacion}}">
+                                <input type="text" class="form-control"  value="{{usuario.identificacion}}">
                             </div>
                         </div>
                     </div>
@@ -34,7 +33,7 @@
                             <label for="exampleInputuname">Teléfono</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-phone"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.telefono}}">
+                                <input type="text" class="form-control"  value="{{usuario.telefono}}">
                             </div>
                         </div>
                     </div>
@@ -44,7 +43,7 @@
         </div>
     </div>
 
-    <div class="col-7">
+    <div class="col-6">
         <div class="card">
             <div class="card-body">
 
@@ -58,7 +57,7 @@
                             <label for="exampleInputuname">Perfil</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa fa-user-circle-o"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.rol.nombre}}">
+                                <input type="text" class="form-control"  value="{{tipoUsuario}}">
                             </div>
                         </div>
                     </div>
@@ -68,7 +67,7 @@
                             <label for="exampleInputuname">Programa</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-book"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.programa.nombre}}">
+                                <input type="text" class="form-control"  value="{{programa?.nombre}}">
                             </div>
                         </div>
                     </div>
@@ -78,22 +77,22 @@
 
                 <div class="row p-t-0" style="padding-left: 15px;" te>
 
-                    <div class="col-md-6" *ngIf="info.codigo">
+                    <div class="col-md-6" *ngIf="usuario.codigo">
                         <div class="form-group">
                             <label for="exampleInputuname">Código</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-drivers-license"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.codigo}}">
+                                <input type="text" class="form-control"  value="{{usuario.codigo}}">
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6" *ngIf="info.creditos_aprobados">
+                    <div class="col-md-6" *ngIf="usuario.creditos_aprobados">
                         <div class="form-group">
                             <label for="exampleInputuname">Créditos Aprobados</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-check-square-o"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.creditos_aprobados}}">
+                                <input type="text" class="form-control"  value="{{usuario.creditos_aprobados}}">
                             </div>
                         </div>
                     </div>
@@ -105,7 +104,7 @@
                             <label for="exampleInputuname">Correo Institucional</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="mdi mdi-email"></i></div>
-                                <input type="text" class="form-control" id="exampleInputuname" value="{{info.correo}}">
+                                <input type="text" class="form-control"  value="{{usuario.correo}}">
                             </div>
                         </div>
                     </div>

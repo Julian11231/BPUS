@@ -16,8 +16,7 @@ export class EstudianteService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getEstudiantes(programa:string, desde: number) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/estudiantes?programa=${programa}&desde=${desde}&token=${token}`;
+    let url = `${URL_SERVICES}/estudiantes?programa=${programa}&desde=${desde}`;
     return this.http.get(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         this.totalEstudiantes = resp.total;
@@ -26,24 +25,17 @@ export class EstudianteService {
         return false;
       }
     }), catchError((err) => {
-      Swal.fire({
-        title: '¡Error!',
-        text: err.error.mensaje,
-        icon: 'error',
-      });
-      return throwError(err);
+      return throwError("No se pudo obtener a los estudiantes");
     }));
   }
 
   getEstudiante(codigo:string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/estudiantes/buscarEstudiante/${codigo}?token=${token}`;
+    let url = `${URL_SERVICES}/estudiantes/buscarEstudiante/${codigo}`;
     return this.http.get(url);
   }
 
   cambiarClave(usuario: string, clave:string){
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/estudiantes/cambiarclave?token=${token}`;
+    let url = `${URL_SERVICES}/estudiantes/cambiarclave`;
     return this.http.put(url, {usuario: usuario, clave: clave}).pipe(map((resp: any) => {
       if (resp.ok == true) {
         localStorage.removeItem("user");
@@ -56,13 +48,12 @@ export class EstudianteService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudo cambiar la clave");
     }));
   }
 
   postEstudiante(programa:string, documento_est: FormData) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/estudiantes/actualizar?programa=${programa}&token=${token}`;
+    let url = `${URL_SERVICES}/estudiantes/actualizar?programa=${programa}`;
     return this.http.post(url, documento_est).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -73,7 +64,7 @@ export class EstudianteService {
         text: err.error.mensaje,
         icon: 'error',
       });
-      return throwError(err);
+      return throwError("No se pudieron crear/actualizar los estudiantes");
     }));
   }
 

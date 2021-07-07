@@ -9,30 +9,23 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class ModalidadService {
-  // Variable que almacenará el porcentaje de créditos aprobados por el estudiante
-  porcentaje: any;
 
   // Inyectamos el módulo de Http
   constructor(private http: HttpClient) {}
 
   // Obtenemos las modalidades del backend
   getModalidades() {
-    let token = localStorage.getItem('token');
-    let url = URL_SERVICES + '/modalidades?token='+token;
+    let url = URL_SERVICES + '/modalidades';
     return this.http.get(url);
   }
 
   getModalidad(id:string) {
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/modalidades/${id}?token=${token}`;
+    let url = `${URL_SERVICES}/modalidades/${id}`;
     return this.http.get(url);
   }
 
   postModalidad(modalidad: any) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/modalidades?token=${token}`;
-
+    let url = `${URL_SERVICES}/modalidades`;
     return this.http.post(url, modalidad).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -48,10 +41,7 @@ export class ModalidadService {
   }
 
   putModalidad(modalidad: any) {
-
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/modalidades?token=${token}`;
-
+    let url = `${URL_SERVICES}/modalidades`;
     return this.http.put(url, modalidad).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;
@@ -67,9 +57,7 @@ export class ModalidadService {
   }
 
   deleteModalidad(id:string){
-    let token = localStorage.getItem('token');
-    let url = `${URL_SERVICES}/modalidades/${id}?token=${token}`;
-
+    let url = `${URL_SERVICES}/modalidades/${id}`;
     return this.http.delete(url).pipe(map((resp: any) => {
       if (resp.ok == true) {
         return true;

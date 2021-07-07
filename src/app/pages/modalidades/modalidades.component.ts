@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {
-  RequisitosService,
-  ModalidadService,
-  ProgramaService
-} from 'src/app/services/service.index';
+import {ModalidadService, ProgramaService} from 'src/app/services/service.index';
 
 declare function init_plugins();
 
@@ -20,10 +15,8 @@ export class ModalidadesComponent implements OnInit {
 
   // Inyectamos los servicios
   constructor(
-    public _requisitoService: RequisitosService,
-    public _modalidadesService: ModalidadService,
-    public _programaService: ProgramaService,
-    private router:Router
+    private _modalidadesService: ModalidadService,
+    private _programaService: ProgramaService,
   ) {}
 
   ngOnInit(): void {

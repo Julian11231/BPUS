@@ -140,22 +140,43 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li class="nav-small-cap"><b> FASES DE LA MODALIDAD </b></li>
-                <li>
-                    <a class="isDisabled text-white" aria-expanded="false" routerLink="/anteProyecto">
-                        <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Ante-Proyecto</span>
+                <li class="nav-small-cap"><b> Módulo proyecto de grado </b></li>
+                <li *ngIf="(proyecto?.estado === 'En ejecución' && !proyecto.estado_anteproyecto) || proyecto.estado_anteproyecto === 'Ajustar'; else anteproyecto">
+                    <a class="text-white" aria-expanded="false" routerLink="/anteproyecto">
+                        <i class="fa fa-book"></i><span class="hide-menu">Ante-Proyecto{{proyecto?.estado}}</span>
                     </a>
                 </li>
-                <li>
-                    <a class="isDisabled text-white" aria-expanded="false" routerLink="/proyecto">
+                <ng-template #anteproyecto>
+                    <li>
+                        <a class="isDisabled text-white" aria-expanded="false">
+                            <i class="fa fa-book"></i><span class="hide-menu">Ante-Proyecto</span>
+                        </a>
+                    </li>
+                </ng-template>
+                <li *ngIf="(proyecto.estado === 'En ejecución' && !proyecto.estado_proyecto) || proyecto.estado_proyecto === 'Ajustar'; else elseproyecto">
+                    <a class="text-white" aria-expanded="false" routerLink="/proyecto">
                         <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Proyecto</span>
                     </a>
                 </li>
-                <li>
-                    <a class="isDisabled text-white" aria-expanded="false" routerLink="/documento final">
-                        <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Documento Final</span>
+                <ng-template #elseproyecto>
+                    <li>
+                        <a class="isDisabled text-white" aria-expanded="false">
+                            <i class="fa fa-file-pdf-o"></i><span class="hide-menu">Proyecto</span>
+                        </a>
+                    </li>
+                </ng-template>
+                <li *ngIf="(proyecto.estado === 'En ejecución' && !proyecto.estado_documentoFinal) || proyecto.estado_documentoFinal === 'Ajustar'; else documentoFinal">
+                    <a class="text-white" aria-expanded="false" routerLink="/proyecto">
+                        <i class="fa fa-file-word-o"></i><span class="hide-menu">Documento final</span>
                     </a>
                 </li>
+                <ng-template #documentoFinal>
+                    <li>
+                        <a class="isDisabled text-white" aria-expanded="false">
+                            <i class="fa fa-file-word-o"></i><span class="hide-menu">Documento final</span>
+                        </a>
+                    </li>
+                </ng-template>
                 <li>
                     <a class="text-white" aria-expanded="false" routerLink="/mi-modalidad">
                         <i class="fa fa-info-circle"></i><span class="hide-menu">Estado de mi Modalidad</span>

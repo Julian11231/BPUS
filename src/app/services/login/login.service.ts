@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { URL_SERVICES } from '../../config/config';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -19,19 +19,13 @@ export class LoginService {
   }
 
   renuevaToken(){
-    let url = URL_SERVICES+'/login/renuevatoken?token='+this.token;
+    let url = URL_SERVICES+'/login/renuevatoken';
     return this.http.get(url).pipe(map((resp: any) => {
       this.token = resp.token;
       localStorage.setItem('token',this.token);
       return true;
     }), catchError((err) => {
-      Swal.fire({
-        title: '¡Error!',
-        text: err.error.mensaje,
-        icon: 'error',
-        confirmButtonColor: '#8F141B'
-      });
-      return throwError(err);
+      return throwError('No se pudo renovar el token');
     }));
   }
 
@@ -56,7 +50,7 @@ export class LoginService {
   // Recibe un usuario de tipo Usuario (Modelo), y una bandera que nos indica que el check de
   // recordarme está activado
 
-  login(usuario: Usuario, recordar: boolean = false) {
+  login(usuario: Usuario) {
 
     // Definimos la url del servicio que queremos llamar
     let url = URL_SERVICES + '/login';
@@ -64,12 +58,6 @@ export class LoginService {
     // Enviamos los datos. Es un observable, entonces tendrá una respuesta
     return this.http.post(url, usuario).pipe(map((resp: any) => {
         if (resp['estudiante']) {
-          // Si el check está activado, se guarda el usuario en el localStorage
-          if (recordar === true) {
-            localStorage.setItem('usuario', resp.estudiante.usuario);
-          } else {
-            localStorage.removeItem('usuario')
-          }
           // Guardamos toda la info del estudiante y el id
           localStorage.setItem('user', JSON.stringify(resp.estudiante));
           localStorage.setItem('token', resp.token);
@@ -77,12 +65,6 @@ export class LoginService {
           this.token = resp.token;
           // Es el mismo procedimiento anterior(Administrativo)
         } else if(resp['administrativo']) {
-          // Si el check está activado, se guarda el usuario en el localStorage
-          if (recordar === true) {
-            localStorage.setItem('usuario', resp.administrativo.usuario);
-          } else {
-            localStorage.removeItem('usuario');
-          }
           // Se guarde la info del administrativo, el id y el token al local sotrage
           // NOTA: Como nos podemos dar cuenta, aquí no se asigna el token del admin a la variable
           // token, esto debido a que el administrativo no va a pasar por la página de requisitos
