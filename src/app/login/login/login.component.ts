@@ -33,45 +33,37 @@ export class LoginComponent implements OnInit {
     // Llamamos a la función login del servicio Login y le pasamos el usuario y la variable recordar
     this.__loginService.login(usuario).subscribe((resp) => {
       const user = JSON.parse(localStorage.getItem("user"));
-      if(user.contraseña === ':('){
+      const modalidad = JSON.parse(localStorage.getItem("modalidad"));
+      if(user.password === '$Pl3aSeC4mbI3D3clV3#&'){
         this.router.navigate(['/cambio-contraseña']);
       }else{
         // Si se inicia un estudiante...
         if (user.codigo) {
-          if (user.modalidad) {
+          if (modalidad) {
             if(user.onModel === "Proyecto"){
-              if(user._id === user.modalidad.estudiante){
-                localStorage.removeItem("user");
-                user.modalidad = user.modalidad._id;
-                localStorage.setItem("user",  JSON.stringify(user));
+              if(user._id === modalidad.estudiante._id){
+                localStorage.removeItem("modalidad");
                 localStorage.setItem("reload", "true");
                 this.router.navigate(['/panel-principal']);
-              }else if(user._id === user.modalidad.estudiante2){
-                if(user.modalidad.aprobacionEstudiante2 == true){
-                  localStorage.removeItem("user");
-                  user.modalidad = user.modalidad._id;
-                  localStorage.setItem("user",  JSON.stringify(user));
+              }else if(user._id === modalidad.estudiante2?._id){
+                if(modalidad.aprobacionEstudiante2 === true){
+                  localStorage.removeItem("modalidad");
                   localStorage.setItem("reload", "true");
                   this.router.navigate(['/panel-principal']);
                 }else{
-                  this.router.navigate(['/xd']);
+                  this.router.navigate(['/aceptar-proyecto']);
                 }
-              }else if(user._id === user.modalidad.estudiante3){
-                if(user.modalidad.aprobacionEstudiante3 == true){
-                  localStorage.removeItem("user");
-                  user.modalidad = user.modalidad._id;
-                  localStorage.setItem("user",  JSON.stringify(user));
-                  
+              }else if(user._id === modalidad.estudiante3?._id){
+                if(modalidad.aprobacionEstudiante3 === true){
+                  localStorage.removeItem("modalidad");
                   localStorage.setItem("reload", "true");
                   this.router.navigate(['/panel-principal']);
                 }else{
-                  this.router.navigate(['/xd']);
+                  this.router.navigate(['/aceptar-proyecto']);
                 }
               }
             }else{
-              localStorage.removeItem("user");
-              user.modalidad = user.modalidad._id;
-              localStorage.setItem("user",  JSON.stringify(user));
+              localStorage.removeItem("modalidad");
               localStorage.setItem("reload", "true");
               this.router.navigate(['/panel-principal']);
             }

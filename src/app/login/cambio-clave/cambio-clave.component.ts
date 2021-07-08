@@ -27,7 +27,7 @@ export class CambioClaveComponent implements OnInit {
     const newPassword = (document.getElementById('newPassword')) as HTMLInputElement;
     if(this.info.codigo){
       this._estudianteService.cambiarClave(this.info._id, newPassword.value).subscribe((resp:any) => {
-        this.router.navigate(['/requisitos']);
+        this.router.navigate(['/modalidades']);
       });
     }else{
       this._administrativoService.cambiarClave(this.info._id, newPassword.value).subscribe((resp:any) => {

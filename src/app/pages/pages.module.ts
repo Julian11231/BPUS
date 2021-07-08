@@ -47,6 +47,7 @@ import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.co
 import { AnteproyectoComponent } from './estudiante/proyecto/anteproyecto/anteproyecto.component';
 import { ProyectoComponent } from './estudiante/proyecto/proyecto/proyecto.component';
 import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/documento-final.component';
+import { AceptarProyectoComponent } from './estudiante/proyecto/aceptar-proyecto/aceptar-proyecto.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/d
     AdminProgramaComponent,
     AnteproyectoComponent,
     ProyectoComponent,
-    DocumentoFinalComponent
+    DocumentoFinalComponent,
+    AceptarProyectoComponent
 
   ],
   exports: [

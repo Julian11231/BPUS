@@ -28,6 +28,7 @@ import { SustentacionComponent } from './estudiante/sustentacion/sustentacion.co
 import { AnteproyectoComponent } from './estudiante/proyecto/anteproyecto/anteproyecto.component';
 import { ProyectoComponent } from './estudiante/proyecto/proyecto/proyecto.component';
 import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/documento-final.component';
+import { AceptarProyectoComponent } from './estudiante/proyecto/aceptar-proyecto/aceptar-proyecto.component';
 //admin
 import { RolesComponent } from './admin/roles/roles.component';
 import { PermisosComponent } from './admin/permisos/permisos.component';
@@ -58,17 +59,18 @@ const pagesRoutes: Routes = [
     { path: 'notificaciones', component: NotificacionesComponent, data: { titulo: 'Notificaciones' }, canActivate: [LoginGuardGuard, ModalidadGuard, VerificaTokenGuard] },
     { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard], },
     { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard] },
+    {path: "aceptar-proyecto", component:AceptarProyectoComponent, data: {titulo: 'Aceptar proyecto'}, canActivate:[PermisosGuard, ModalidadGuard]},
     {
         path: '',
         component: PagesComponent,
-        canActivate: [LoginGuardGuard, ModalidadGuard, VerificaTokenGuard],
+        canActivate: [LoginGuardGuard, ModalidadGuard],
         children: [
-            { path: 'panel-principal', component: MainComponent, data: { titulo: 'Panel Principal' } },
+            { path: 'panel-principal', component: MainComponent, data: { titulo: 'Panel Principal' }, canActivate:[VerificaTokenGuard] },
             { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil de Usuario' } },
             { path: 'empresas', component: EmpresasComponent, data: { titulo: 'Gestión de Empresas' } ,canActivate: [PermisosGuard]},
             { path: 'vacantes', component: VacantesComponent, data: { titulo: 'Gestión de Vacantes' } ,canActivate: [PermisosGuard]},
             { path: 'inscripcion-propuesta', component: PropuestaPasantiaComponent, data: { titulo: 'Inscripción de la Propuesta' },canActivate: [PermisosGuard, PropuestaPasantiaGuard] },
-            { path: 'mi-modalidad', component: MiSolicitudComponent, data: { titulo: 'Seguimiento a la Modalidad' } ,canActivate: [PermisosGuard]},
+            { path: 'mi-modalidad', component: MiSolicitudComponent, data: { titulo: 'Seguimiento a la Modalidad' } ,canActivate: [PermisosGuard, VerificaTokenGuard]},
             { path: 'pasantias-asignadas', component: TutoriaPasantiaComponent, data: { titulo: 'Pasantías Asignadas' } ,canActivate: [PermisosGuard]},
             { path: 'propuestas', component: PropuestasComponent, data: { titulo: 'Propuestas de Pasantía' } ,canActivate: [PermisosGuard]},
             { path: 'informe-siete', component: InformeSieteComponent, data: { titulo: 'Envío de Informe de la Semana 7' } ,canActivate: [PermisosGuard, InformeSieteGuard]},
