@@ -9,17 +9,20 @@
             <h5 class="text-center">{{proyecto.estudiante.nombres}} {{proyecto.estudiante.apellidos}} te inscribio en el proyecto {{proyecto.titulo}}</h5>
             <h3 class="font-weight-bold mt-1 mt-lg-4">Información del proyecto:</h3>
             <div class="row px-2 px-lg-5 pt-1 pt-lg-3">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="col-12 col-sm-12 col-md-5 col-lg-5">
                     <h5 *ngIf="proyecto.estado !== 'PreInscrita'"><b>ID: </b>{{proyecto?._id}}</h5>
                     <h5><span class="font-weight-bold">Título: </span>{{proyecto?.titulo}}</h5>
                     <h5><span class="font-weight-bold">Linea de investigación: </span>{{proyecto?.lineaInvestigacion}}</h5>
                     <h5><span class="font-weight-bold">Director: </span>{{proyecto?.director.nombres}} {{proyecto?.director.apellidos}}</h5>
                 </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="col-12 col-sm-12 col-md-7 col-lg-7">
                     <h5 class="font-weight-bold">Integrantes: </h5>
                     <ul>
                         <li>
-                            <h5>{{proyecto?.estudiante.nombres}} {{proyecto?.estudiante.apellidos}}</h5>
+                            <h5>
+                                {{proyecto?.estudiante.nombres}} {{proyecto?.estudiante.apellidos}}
+                                <span class="font-weight-bold">({{proyecto?.estudiante.programa.nombre}})</span>
+                            </h5>
                         </li>
                         <li>
                             <h5>
@@ -65,7 +68,7 @@
 
             <div class="text-center mt-2 mt-lg-5">
                 <button class="btn btnInfo mr-2" data-toggle="collapse" data-target="#aceptarProyecto">Aceptar</button>
-                <button class="btn btnSuccess mr-2">Rechazar</button>
+                <button (click)="rechazarProyecto()" class="btn btnSuccess mr-2">Rechazar</button>
                 <button class="btn btn-info" data-toggle="collapse" data-target="#masInfo">Más info</button>
             </div>
 
@@ -77,7 +80,7 @@
                 <input name="fileFicha" id="fileFicha" (change)="getFileFicha( $event.target.files[0] )" 
                 type="file" accept="application/pdf" class="imagenes-secundarias" required />
 
-                <button type="button" class="btn btnSuccess mt-3 px-5 py-3" [disabled]="fichaValid === false">ENVIAR</button> 
+                <button (click)="aceptarProyecto()" type="button" class="btn btnSuccess mt-3 px-5 py-3" [disabled]="fichaValid === false">ENVIAR</button> 
             </div>
         
         </ng-container>

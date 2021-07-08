@@ -59,7 +59,7 @@ const pagesRoutes: Routes = [
     { path: 'notificaciones', component: NotificacionesComponent, data: { titulo: 'Notificaciones' }, canActivate: [LoginGuardGuard, ModalidadGuard, VerificaTokenGuard] },
     { path: 'preinscripcion-pasantia', component: InscripcionPasantiaComponent, data: { titulo: 'Pre-Inscripción de Pasantía' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard], },
     { path: 'inscripcion-directa-propuesta', component: InscripcionDirectaComponent, data: { titulo: 'Inscripción directa de la propuesta' },canActivate: [LoginGuardGuard,PermisosGuard, VerificaTokenGuard, NoModalidadGuard, ModalidadCreditosGuard] },
-    {path: "aceptar-proyecto", component:AceptarProyectoComponent, data: {titulo: 'Aceptar proyecto'}, canActivate:[PermisosGuard, ModalidadGuard]},
+    {path: "aceptar-proyecto", component:AceptarProyectoComponent, data: {titulo: 'Aceptar proyecto'}, canActivate:[PermisosGuard]},
     {
         path: '',
         component: PagesComponent,

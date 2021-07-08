@@ -38,6 +38,54 @@ export class ProyectoService {
     }));
   }
 
+  aceptarProyecto(idProyecto: string,){
+    let url = `${URL_SERVICES}/proyecto/aprobarSerParteProyecto/${idProyecto}`;
+    return this.http.put(url, null).pipe(map((resp: any) => {
+      if (resp.ok) {
+        let user = JSON.parse(localStorage.getItem("user"));
+        localStorage.removeItem("user");
+        user.modalidad = user.modalidad._id;
+        localStorage.setItem("user",  JSON.stringify(user));
+        localStorage.removeItem("NoEntre");
+        localStorage.removeItem("modalidad");
+        return resp.proyectoSave;
+      }else{
+        return false;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
+  rechazarProyecto(idProyecto: string,){
+    let url = `${URL_SERVICES}/proyecto/rechazarSerParteProyecto/${idProyecto}`;
+    return this.http.put(url, null).pipe(map((resp: any) => {
+      if (resp.ok) {
+        let user = JSON.parse(localStorage.getItem("user"));
+        localStorage.removeItem("user");
+        delete user.modalidad;
+        localStorage.setItem("user",  JSON.stringify(user));
+        localStorage.removeItem("NoEntre");
+        localStorage.removeItem("modalidad");
+        return true;
+      }else{
+        return false;
+      }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
   uploadDocumento(idProyecto: string, documento: FormData) {
     let url = `${URL_SERVICES}/upload_proyecto/${idProyecto}`;
     return this.http.put(url, documento).pipe(map((resp: any) => {

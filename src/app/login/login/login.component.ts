@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       }else{
         // Si se inicia un estudiante...
         if (user.codigo) {
-          if (modalidad) {
+          if (modalidad !== "No tiene modalidad") {
             if(user.onModel === "Proyecto"){
               if(user._id === modalidad.estudiante._id){
                 localStorage.removeItem("modalidad");
@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
                   localStorage.setItem("reload", "true");
                   this.router.navigate(['/panel-principal']);
                 }else{
+                  localStorage.setItem('NoEntre',"ApruebaPrimero");
                   this.router.navigate(['/aceptar-proyecto']);
                 }
               }else if(user._id === modalidad.estudiante3?._id){
@@ -59,6 +60,7 @@ export class LoginComponent implements OnInit {
                   localStorage.setItem("reload", "true");
                   this.router.navigate(['/panel-principal']);
                 }else{
+                  localStorage.setItem('NoEntre',"ApruebaPrimero");
                   this.router.navigate(['/aceptar-proyecto']);
                 }
               }
@@ -68,6 +70,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/panel-principal']);
             }
           } else {
+            localStorage.removeItem("modalidad");
             this.router.navigate(['/modalidades']);
           }
         } else{

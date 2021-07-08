@@ -237,74 +237,100 @@ export class SolicitudProyectoComponent implements OnInit {
       });
     } else {
       const labelFicha = document.getElementById("labelFicha") as HTMLInputElement;
-      labelFicha.setAttribute("style","color: #8F141B; font-weight: bold;");
-      labelFicha.innerHTML = file.name;
-      let documento_fichaAcademica = <File>file;
-      this.documento_fichaAcademica.append('documento_fichaAcademica', documento_fichaAcademica, documento_fichaAcademica.name);
-      this.fichaValid = true;
+      const nombreCortado = file.name.split('.');
+      const extensionArchivo = nombreCortado[nombreCortado.length - 1];
+      const extensionesValidas = ['pdf', 'PDF'];
+  
+      if (extensionesValidas.indexOf(extensionArchivo) >= 0) {
+        this.fichaValid = true;
+        labelFicha.setAttribute("style", "color: #8F141B; font-weight: bold;");
+        labelFicha.innerHTML = file.name;
+        let documento_fichaAcademica = <File>file;
+        this.documento_fichaAcademica.append('documento_fichaAcademica', documento_fichaAcademica, documento_fichaAcademica.name);
+      }else{
+        this.documento_fichaAcademica = new FormData();
+        this.fichaValid = false;
+        Swal.fire({
+          title: '¡Lo Sentimos!',
+          html: `<p> El archivo deber ser en formato pdf</p>`,
+          icon: 'error',
+          confirmButtonText: 'Ok',
+          showCancelButton: false,
+          confirmButtonColor: '#60D89C',
+        }).then(() => {
+          labelFicha.setAttribute("style", "");
+          labelFicha.innerHTML = "Click aquí para subir la ficha academica";
+        });
+      }
     }
   }
 
   postProyecto(){
-    const tituloPasantia = (document.getElementById("tituloPasantia") as HTMLInputElement).value;
-    const lineaInvestigacion = (document.getElementById("lineaInvestigacion") as HTMLSelectElement).value;
-    const problema = (document.getElementById("problema") as HTMLTextAreaElement).value;
-    const alcance = (document.getElementById("alcance") as HTMLTextAreaElement).value;
-    const metodologia = (document.getElementById("metodologia") as HTMLTextAreaElement).value;
-    let proyecto:any = {
-      estudiante: this.user._id,
-      lineaInvestigacion: lineaInvestigacion,
-      titulo: tituloPasantia,
-      problema: problema,
-      alcance: alcance,
-      metodologia: metodologia,
-      director: this.director,
-    }
-    if(this.estudiante2){
-      proyecto.estudiante2 = this.estudiante2._id;
-    }
-    if(this.estudiante3){
-      proyecto.estudiante3 = this.estudiante3._id;
-    }
-    this._proyectoService.postProyecto(proyecto).subscribe((resp:any)=>{
-      if(resp){
-        this._proyectoService.uploadDocumento(resp._id, this.documento_fichaAcademica).subscribe((answ:any)=>{
-          if(answ){
-            let estudiantes:string = this.user.nombres+" "+this.user.apellidos;
-            let txt:string = "ha";
-            if(this.estudiante2 && this.estudiante2.programa._id == this.programa._id){
-              txt = "han";
-              estudiantes = estudiantes+", "+this.estudiante2.nombres+" "+this.estudiante2.apellidos;
-            }
-            if(this.estudiante3 && this.estudiante3.programa._id == this.programa._id){
-              estudiantes = estudiantes+ ", "+this.estudiante3.nombres+" "+this.estudiante3.apellidos;
-            }
-            let currentDate = new Date();
-            let notificacion = new Notificacion(
-              this.jefe._id,
-              currentDate,
-              'Nueva solicitd de proyecto de grado',
-              `${estudiantes} te ${txt} enviado una solicitud de proyecto de grado`,
-              'Administrativo',
-              this.jefe.correo);
-              this._notificacionService.postNotificacion(notificacion).subscribe();
-              this._notificacionService.sendNotificacionCorreo(notificacion).subscribe();
-            Swal.fire({
-              title: '¡Bien Hecho!',
-              html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${resp._id}</b>`,
-              icon: 'warning',
-              confirmButtonText: 'Aceptar',
-              confirmButtonColor: '#60D89C',
-              allowEnterKey:false,
-              allowOutsideClick:false,
-              allowEscapeKey:false
-            }).then((result) => {
-              if (result.value) {
-                localStorage.setItem("reload", "true");
-                this.router.navigate(['/']);
-              }else{
-                localStorage.setItem("reload", "true");
-                this.router.navigate(['/']);
+    Swal.fire({
+      title: '¿Enviar solicitud de proyecto de grado?',
+      icon: 'warning',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si',
+      showCancelButton: true,
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
+      if (result.value) {
+        const tituloPasantia = (document.getElementById("tituloPasantia") as HTMLInputElement).value;
+        const lineaInvestigacion = (document.getElementById("lineaInvestigacion") as HTMLSelectElement).value;
+        const problema = (document.getElementById("problema") as HTMLTextAreaElement).value;
+        const alcance = (document.getElementById("alcance") as HTMLTextAreaElement).value;
+        const metodologia = (document.getElementById("metodologia") as HTMLTextAreaElement).value;
+        let proyecto:any = {
+          estudiante: this.user._id,
+          lineaInvestigacion: lineaInvestigacion,
+          titulo: tituloPasantia,
+          problema: problema,
+          alcance: alcance,
+          metodologia: metodologia,
+          director: this.director,
+        }
+        if(this.estudiante2){
+          proyecto.estudiante2 = this.estudiante2._id;
+        }
+        if(this.estudiante3){
+          proyecto.estudiante3 = this.estudiante3._id;
+        }
+        this._proyectoService.postProyecto(proyecto).subscribe((resp:any)=>{
+          if(resp){
+            this._proyectoService.uploadDocumento(resp._id, this.documento_fichaAcademica).subscribe((answ:any)=>{
+              if(answ){
+                if(!this.estudiante2 && !this.estudiante3){
+                  let estudiante:string = this.user.nombres+" "+this.user.apellidos;
+                  let currentDate = new Date();
+                  let notificacion = new Notificacion(
+                    this.jefe._id,
+                    currentDate,
+                    'Nueva solicitd de proyecto de grado',
+                    `${estudiante} te ha enviado una solicitud de proyecto de grado`,
+                    'Administrativo',
+                    this.jefe.correo);
+                  this._notificacionService.postNotificacion(notificacion).subscribe();
+                  this._notificacionService.sendNotificacionCorreo(notificacion).subscribe(); 
+                }
+                Swal.fire({
+                  title: '¡Bien Hecho!',
+                  html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${resp._id}</b>`,
+                  icon: 'warning',
+                  confirmButtonText: 'Aceptar',
+                  confirmButtonColor: '#60D89C',
+                  allowEnterKey:false,
+                  allowOutsideClick:false,
+                  allowEscapeKey:false
+                }).then((result) => {
+                  if (result.value) {
+                    localStorage.setItem("reload", "true");
+                    this.router.navigate(['/']);
+                  }else{
+                    localStorage.setItem("reload", "true");
+                    this.router.navigate(['/']);
+                  }
+                });
               }
             });
           }

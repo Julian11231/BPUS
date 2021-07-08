@@ -400,35 +400,37 @@
 </ng-container>
 <ng-container *ngIf="proyecto">
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-            <h4 *ngIf="proyecto.estado !== 'PreInscrita'"><b>ID: </b>{{proyecto?._id}}</h4>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <h4><b>ID: </b>{{proyecto?._id}}</h4>
+            <h4><span class="font-weight-bold">Título: </span>{{proyecto?.titulo}}</h4>
+            <h4><span class="font-weight-bold">Linea de investigación: </span>{{proyecto?.lineaInvestigacion}}</h4>
         </div>
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-            <h4 *ngIf="proyecto.fecha_actaInicio"><b>Fecha inicio: </b>{{fechaInicio}}</h4>
-        </div>
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-            <h4 *ngIf="proyecto.fecha_actaInicio"><b>Semana: </b>{{semanas}}/24</h4>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <ng-container *ngIf="proyecto.estudiante2 || proyecto.estudiante3">
+                <h4 class="font-weight-bold">Integrantes: </h4>
+                <ul>
+                    <li>
+                        <h5>
+                            {{proyecto?.estudiante.nombres}} {{proyecto?.estudiante.apellidos}}
+                            <span *ngIf="proyecto.estudiante._id === info._id" class="font-weight-bold">(Tú)</span>
+                        </h5>
+                    </li>
+                    <li>
+                        <h5>
+                            {{proyecto?.estudiante2.nombres}} {{proyecto?.estudiante2.apellidos}}
+                            <span *ngIf="proyecto.estudiante2._id === info._id" class="font-weight-bold">(Tú)</span>
+                        </h5>
+                    </li>
+                    <li *ngIf="proyecto.estudiante3">
+                        <h6>
+                            {{proyecto?.estudiante3.nombres}} {{proyecto?.estudiante3.apellidos}}
+                            <span *ngIf="proyecto.estudiante3._id === info._id" class="font-weight-bold">(Tú)</span>
+                        </h6>
+                    </li>
+                </ul>
+            </ng-container>
         </div>
     </div>
-    <h4><span class="font-weight-bold">Título: </span>{{proyecto?.titulo}}</h4>
-    <h4><span class="font-weight-bold">Linea de investigación: </span>{{proyecto?.lineaInvestigacion}}</h4>
-    <ng-container *ngIf="proyecto.estudiante2 || proyecto.estudiante3">
-        <h4 class="font-weight-bold">Compañero(s): </h4>
-        <ul>
-            <li>
-                <h5>
-                    {{proyecto?.estudiante2.nombres}} {{proyecto?.estudiante2.apellidos}}
-                    <span *ngIf="proyecto?.aprobacionEstudiante2 == false" class="font-weight-bold"> (Pendiente de aprobación)</span>
-                </h5>
-            </li>
-            <li *ngIf="proyecto.estudiante3">
-                <h6>
-                    {{proyecto?.estudiante3.nombres}} {{proyecto?.estudiante3.apellidos}}
-                    <span *ngIf="proyecto?.aprobacionEstudiante3 == false" class="font-weight-bold">(Pendiente de aprobación)</span>
-                </h6>
-            </li>
-        </ul>
-    </ng-container>
     <hr> 
     <div class="row text-center">
         <div class="col-12 col-sm-12 col-md-4 col-lg-4 text-center">
