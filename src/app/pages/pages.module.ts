@@ -26,7 +26,7 @@ import { EncarSolicitudVacanteComponent } from './encargado/solicitud-vacante/so
 import { MiSolicitudComponent } from './estudiante/pasantia/mi-solicitud/mi-solicitud.component';
 import { PropuestaPasantiaComponent } from './solicitudes/pasantia/propuesta-pasantia/propuesta-pasantia.component';
 import { TutoriaPasantiaComponent } from './docente/tutoria-pasantia/tutoria-pasantia.component';
-import { PropuestasComponent } from './docente/propuestas/propuestas.component';
+import { PropuestasPasantiaComponent } from './docente/propuestas-pasantia/propuestas.component';
 import { InformeCatorceComponent } from './estudiante/pasantia/informe-catorce/informe-catorce.component';
 import { InformeFinalComponent } from './estudiante/pasantia/informe-final/informe-final.component';
 import { InformeSieteComponent } from './estudiante/pasantia/informe-siete/informe-siete.component';
@@ -48,6 +48,7 @@ import { AnteproyectoComponent } from './estudiante/proyecto/anteproyecto/antepr
 import { ProyectoComponent } from './estudiante/proyecto/proyecto/proyecto.component';
 import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/documento-final.component';
 import { AceptarProyectoComponent } from './estudiante/proyecto/aceptar-proyecto/aceptar-proyecto.component';
+import { PropuestasProyectoComponent } from './docente/propuestas-proyecto/propuestas-proyecto.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { AceptarProyectoComponent } from './estudiante/proyecto/aceptar-proyecto
     MiSolicitudComponent,
     PropuestaPasantiaComponent,
     TutoriaPasantiaComponent,
-    PropuestasComponent,
+    PropuestasPasantiaComponent,
     InformeSieteComponent,
     InformeCatorceComponent,
     InformeFinalComponent,
@@ -86,7 +87,8 @@ import { AceptarProyectoComponent } from './estudiante/proyecto/aceptar-proyecto
     AnteproyectoComponent,
     ProyectoComponent,
     DocumentoFinalComponent,
-    AceptarProyectoComponent
+    AceptarProyectoComponent,
+    PropuestasProyectoComponent
 
   ],
   exports: [
@@ -102,7 +104,7 @@ import { AceptarProyectoComponent } from './estudiante/proyecto/aceptar-proyecto
     MiSolicitudComponent,
     PropuestaPasantiaComponent,
     TutoriaPasantiaComponent,
-    PropuestasComponent,
+    PropuestasPasantiaComponent,
     InformeSieteComponent,
     InformeCatorceComponent,
     InformeFinalComponent,

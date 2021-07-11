@@ -14,7 +14,12 @@ export class ProyectoService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getProyecto(id: string) {
-    let url = `${URL_SERVICES}/proyecto/${id}`;
+    let url = `${URL_SERVICES}/proyecto/porId/${id}`;
+    return this.http.get(url);
+  }
+
+  getProyectoEnviados(programa:string) {
+    let url = `${URL_SERVICES}/proyecto/porPrograma/${programa}`;
     return this.http.get(url);
   }
 

@@ -11,13 +11,14 @@ export class VerificaTokenGuard implements CanActivate {
 
     let token = this._loginService.token;
     try {
-      let payload=JSON.parse(atob(token.split('.')[1]));
+      let payload= (JSON.parse(atob(token.split('.')[1]))).exp;
       let expirado = this.expirado(payload);
       if (expirado) {
         this.router.navigate(['/login']);
         return false;
+      }else{
+        return true;
       }
-      return true;
     } catch (error) {
       this.router.navigate(['/login']);
       return false;
@@ -26,7 +27,7 @@ export class VerificaTokenGuard implements CanActivate {
 
   expirado(fechaExp:number){
     let ahora = new Date().getTime()/1000;
-    if (fechaExp<ahora) {
+    if (fechaExp < ahora) {
       return true;
     } else {
       return false;

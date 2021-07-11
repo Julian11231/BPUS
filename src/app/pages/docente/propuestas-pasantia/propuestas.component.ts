@@ -12,10 +12,10 @@ PdfMakeWrapper.setFonts(pdfFonts);
 
 @Component({
   selector: 'app-propuestas',
-  templateUrl: './propuestas.component.html',
-  styleUrls: ['./propuestas.component.css']
+  templateUrl: './propuestas-pasantia.component.html',
+  styleUrls: ['./propuestas-pasantia.component.css']
 })
-export class PropuestasComponent implements OnInit {
+export class PropuestasPasantiaComponent implements OnInit {
 
   pasantiaSelected: any;
 

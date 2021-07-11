@@ -111,6 +111,7 @@ export class AceptarProyectoComponent implements OnInit {
       if (result.value) {
         this._proyectoService.aceptarProyecto(this.proyecto._id).subscribe((resp:any)=>{
           if(resp){
+            console.log(resp);
             this._proyectoService.uploadDocumento(this.proyecto._id, this.documento_fichaAcademica).subscribe((respp:any)=>{
               if(respp){
                 if(resp.estudiante2 && resp.aprobacionEstudiante2){
@@ -138,12 +139,12 @@ export class AceptarProyectoComponent implements OnInit {
                         resp.estudiante.programa.jefe.correo,
                       );
                       const noti2 = new Notificacion(
-                        this.jefe._id,
+                        resp.estudiante2.programa.jefe._id,
                         curretdate,
                         'Solicitud de proyecto de grado',
                         `${resp.estudiante2.nombres} ${resp.estudiante2.apellidos} te ha enviado una solicitud de proyecto de grado`,
                         'Administrativo',
-                        this.jefe.correo
+                        resp.estudiante2.programa.jefe.correo,
                       );
                       this._notificacionService.postNotificacion(noti1).subscribe();
                       this._notificacionService.postNotificacion(noti2).subscribe();
@@ -157,12 +158,12 @@ export class AceptarProyectoComponent implements OnInit {
                     if(resp.estudiante.programa._id === resp.estudiante2.programa._id && resp.estudiante.programa._id  === resp.estudiante3.programa._id ){
                       const estudiantes = resp.estudiante.nombres+" "+resp.estudiante.apellidos+", "+resp.estudiante2.nombres+" "+resp.estudiante2.apellidos+", "+resp.estudiante3.nombres+" "+resp.estudiante3.apellidos;
                       const noti = new Notificacion(
-                        this.jefe._id,
+                        resp.estudiante.programa.jefe._id,
                         curretdate,
                         'Solicitud de proyecto de grado',
                         `${estudiantes} te han enviado una solicitud de proyecto de grado`,
                         'Administrativo',
-                        this.jefe.correo
+                        resp.estudiante2.programa.jefe.correo,
                       );
                       this._notificacionService.postNotificacion(noti).subscribe();
                       this._notificacionService.sendNotificacionCorreo(noti).subscribe();
@@ -177,12 +178,12 @@ export class AceptarProyectoComponent implements OnInit {
                         resp.estudiante.programa.jefe.correo
                       );
                       const noti2 = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
+                        resp.estudiante3.programa.jefe._id,
                         curretdate,
                         'Solicitud de proyecto de grado',
                         `${resp.estudiante3.nombres} ${resp.estudiante3.apellidos} te ha enviado una solicitud de proyecto de grado`,
                         'Administrativo',
-                        resp.estudiante.programa.jefe.correo
+                        resp.estudiante3.programa.jefe.correo
                       );
                       this._notificacionService.postNotificacion(noti1).subscribe();
                       this._notificacionService.postNotificacion(noti2).subscribe();
@@ -200,12 +201,12 @@ export class AceptarProyectoComponent implements OnInit {
                         resp.estudiante.programa.jefe.correo
                       );
                       const noti2 = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
+                        resp.estudiante2.programa.jefe._id,
                         curretdate,
                         'Solicitud de proyecto de grado',
                         `${resp.estudiante2.nombres} ${resp.estudiante2.apellidos} te ha enviado una solicitud de proyecto de grado`,
                         'Administrativo',
-                        resp.estudiante.programa.jefe.correo
+                        resp.estudiante2.programa.jefe.correo
                       );
                       this._notificacionService.postNotificacion(noti1).subscribe();
                       this._notificacionService.postNotificacion(noti2).subscribe();

@@ -13,7 +13,7 @@ export class NotificacionesService {
   constructor(public http: HttpClient, public router: Router) { }
 
   getNotificaciones(usuarioId: String) {
-    let url = `${URL_SERVICES}/notificaciones/${usuarioId}}`;
+    let url = `${URL_SERVICES}/notificaciones/${usuarioId}`;
     return this.http.get(url);
   }
 
