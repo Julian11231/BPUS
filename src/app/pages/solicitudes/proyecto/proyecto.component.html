@@ -48,9 +48,6 @@
             <div class="col-12 col-md-4 col-lg-4">
                 <h6><span class="font-weight-bold text-dark mr-2 mt-4">Correo: </span> {{user.correo}}</h6>
             </div>
-            <div class="col-12 col-md-4 col-lg-4">
-                <h6><span class="font-weight-bold text-dark mr-2 mt-4">Teléfono: </span> {{user.telefono}}</h6>
-            </div>
         </div>
         
         <div class="row my-3">
@@ -135,7 +132,7 @@
                         <label for="tituloPasantia" class="font-weight-bold text-dark">Titulo del proyecto:</label>
                     </div>
                     <div class="col-12 col-md-9 col-lg-9">
-                        <input (keyup)="check()" name="tituloPasantia" type="text" class="form-control" id="tituloPasantia" placeholder="Titulo de la pasantia" required autofocus autocomplete="off">
+                        <input (keyup)="check()" name="tituloPasantia" type="text" class="form-control" id="tituloPasantia" placeholder="Titulo del proyecto" required autofocus autocomplete="off">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -166,27 +163,22 @@
                 </div>
                 <hr>
             </div>
-            <h4 class="font-weight-bold text-center my-4">FORMULACIÓN DEL PROBLEMA</h4>
-            <div class="form-group">
-                <textarea (keyup)="check()" class="form-control" rows="5" id="problema" maxlength="2000" placeholder="Fomulación del problema..." 
-                (keyup)="countCharsResumen('problema','charNumProblema'); espandirTexarea('problema');" style="resize: none;" required></textarea>
-                <p id="charNumProblema" class="ml-2">0/2000</p>
-            </div>
-            <h4 class="font-weight-bold text-center my-4">ALCANCE Y LIMITACIONES</h4>
-            <div class="form-group">
-                <textarea (keyup)="check()" class="form-control" rows="5" id="alcance" maxlength="2000" placeholder="Alcance y limitaciones..." 
-                (keyup)="countCharsResumen('alcance','charNumAlcance'); espandirTexarea('alcance');" style="resize: none;" required></textarea>
-            </div>
-            <p id="charNumAlcance" class="ml-2 mt-1">0/2000</p>
-            <h4 class="font-weight-bold text-center my-4">METODOLOGÍA</h4>
-            <div class="form-group">
-                <textarea (keyup)="check()" class="form-control" rows="5" id="metodologia" maxlength="2000" placeholder="Metodología..." 
-                (keyup)="countCharsResumen('metodologia','charNumMetodologia'); espandirTexarea('metodologia');" style="resize: none;" required></textarea>
-            </div>
-            <p id="charNumMetodologia" class="ml-2 mt-1">0/2000</p>
 
-            <div class="text-center my-4">
-                <button type="submit" class="btn btnSuccess px-5 py-3" [disabled]="formularioValid === false || fichaValid === false">ENVIAR</button> 
+            <button type="button" class="btn descargar btnSuccess mb-3">
+                <a class="btnSuccess" href="/assets/documentos/formatosSolicitudPasantia/formatoSolicitudPasantiaIngSoftware.docx" download target="_blank">
+                    <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Descargar formato</b></small>
+                </a>
+            </button>
+
+            <label for="fileInscripcion" id="labelInscripcion" class="labels custom-file-upload py-2 py-lg-4">
+                Click aquí para subir el documento de Inscripción
+            </label>
+
+            <input name="fileInscripcion" id="fileInscripcion" (change)="getFileInscripcion( $event.target.files[0] )" 
+            type="file" accept="application/pdf" class="imagenes-secundarias" required />
+
+            <div class="text-center my-3 my-lg-5">
+                <button type="submit" class="btn btnSuccess px-5 py-3" [disabled]="formularioValid === false || fichaValid === false || inscripcionValid === false">ENVIAR</button> 
             </div>
 
         </form>

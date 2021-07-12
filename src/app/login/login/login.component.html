@@ -13,13 +13,13 @@
                 <div class="mt-5 px-3">
 
                     <div class="form-group">
-                        <input [(ngModel)]="usuario" name="usuario" id="inputUsuario" class="form-control floating-labels" type="text" required>
+                        <input [(ngModel)]="usuario" name="usuario" id="inputUsuario" class="form-control floating-labels" type="text" maxlength="12" required>
                         <span class="bar"></span>
                         <label for="inputUsuario">Usuario</label>
                     </div>
                     
                     <div class="form-group">
-                        <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" required>
+                        <input ngModel name="contrasena" id="inputContra" class="form-control" type="password" maxlength="30" required>
                         <span class="bar"></span>
                         <label for="inputContra">Contraseña</label>
                     </div>

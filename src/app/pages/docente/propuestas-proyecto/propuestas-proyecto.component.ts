@@ -29,17 +29,6 @@ export class PropuestasProyectoComponent implements OnInit {
     });
   }
 
-  activeTab(tab: string) {
-    const activeTab = document.getElementById(tab);
-    const problemaTab = document.getElementById('problemaTab');
-    const alcanceTab = document.getElementById('alcanceTab');
-    const metodologiaTab = document.getElementById('metodologiaTab');
-    problemaTab.setAttribute('class', 'nav-link text-body');
-    alcanceTab.setAttribute('class', 'nav-link text-body');
-    metodologiaTab.setAttribute('class', 'nav-link text-body');
-    activeTab.setAttribute('class', 'nav-link activeTab font-weight-bold');
-  }
-
   rechazarSolicitud(form: NgForm){
 
   }

@@ -111,168 +111,41 @@ export class AceptarProyectoComponent implements OnInit {
       if (result.value) {
         this._proyectoService.aceptarProyecto(this.proyecto._id).subscribe((resp:any)=>{
           if(resp){
-            console.log(resp);
             this._proyectoService.uploadDocumento(this.proyecto._id, this.documento_fichaAcademica).subscribe((respp:any)=>{
               if(respp){
-                if(resp.estudiante2 && resp.aprobacionEstudiante2){
-                  const curretdate = new Date();
-                  if(!resp.estudiante3 && !resp.aprobacionEstudiante3){
-                    if(this.programa._id === resp.estudiante.programa._id){
-                      const estudiantes = resp.estudiante.nombres+" "+resp.estudiante.apellidos+", "+resp.estudiante2.nombres+" "+resp.estudiante2.apellidos;
-                      const noti = new Notificacion(
-                        this.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${estudiantes} te han enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        this.jefe.correo
-                      );
-                      this._notificacionService.postNotificacion(noti).subscribe();
-                      this._notificacionService.sendNotificacionCorreo(noti).subscribe();
-                    }else{
-                      const noti1 = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante.nombres} ${resp.estudiante.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante.programa.jefe.correo,
-                      );
-                      const noti2 = new Notificacion(
-                        resp.estudiante2.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante2.nombres} ${resp.estudiante2.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante2.programa.jefe.correo,
-                      );
-                      this._notificacionService.postNotificacion(noti1).subscribe();
-                      this._notificacionService.postNotificacion(noti2).subscribe();
-                      this._notificacionService.sendNotificacionCorreo(noti1).subscribe((respC:any)=>{
-                        if(respC){
-                          this._notificacionService.sendNotificacionCorreo(noti2).subscribe();
-                        }
-                      });
-                    }
-                  }else if(resp.estudiante3 && resp.aprobacionEstudiante3){
-                    if(resp.estudiante.programa._id === resp.estudiante2.programa._id && resp.estudiante.programa._id  === resp.estudiante3.programa._id ){
-                      const estudiantes = resp.estudiante.nombres+" "+resp.estudiante.apellidos+", "+resp.estudiante2.nombres+" "+resp.estudiante2.apellidos+", "+resp.estudiante3.nombres+" "+resp.estudiante3.apellidos;
-                      const noti = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${estudiantes} te han enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante2.programa.jefe.correo,
-                      );
-                      this._notificacionService.postNotificacion(noti).subscribe();
-                      this._notificacionService.sendNotificacionCorreo(noti).subscribe();
-                    }else if(resp.estudiante.programa._id === resp.estudiante2.programa._id){
-                      const estudiantes = resp.estudiante.nombres+" "+resp.estudiante.apellidos+", "+resp.estudiante2.nombres+" "+resp.estudiante2.apellidos;
-                      const noti1 = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${estudiantes} te han enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante.programa.jefe.correo
-                      );
-                      const noti2 = new Notificacion(
-                        resp.estudiante3.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante3.nombres} ${resp.estudiante3.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante3.programa.jefe.correo
-                      );
-                      this._notificacionService.postNotificacion(noti1).subscribe();
-                      this._notificacionService.postNotificacion(noti2).subscribe();
-                      this._notificacionService.sendNotificacionCorreo(noti1).subscribe((respC2:any)=>{
-                        this._notificacionService.sendNotificacionCorreo(noti2).subscribe();
-                      });
-                    }else if(resp.estudiante.programa._id === resp.estudiante3.programa._id){
-                      const estudiantes = resp.estudiante.nombres+" "+resp.estudiante.apellidos+", "+resp.estudiante3.nombres+" "+resp.estudiante3.apellidos;
-                      const noti1 = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${estudiantes} te han enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante.programa.jefe.correo
-                      );
-                      const noti2 = new Notificacion(
-                        resp.estudiante2.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante2.nombres} ${resp.estudiante2.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante2.programa.jefe.correo
-                      );
-                      this._notificacionService.postNotificacion(noti1).subscribe();
-                      this._notificacionService.postNotificacion(noti2).subscribe();
-                      this._notificacionService.sendNotificacionCorreo(noti1).subscribe((respC3:any)=>{
-                        this._notificacionService.sendNotificacionCorreo(noti2).subscribe();
-                      });
-                    }else if(resp.estudiante2.programa._id === resp.estudiante3.programa._id){
-                      const estudiantes = resp.estudiante2.nombres+" "+resp.estudiante2.apellidos+", "+resp.estudiante3.nombres+" "+resp.estudiante3.apellidos;
-                      const noti1 = new Notificacion(
-                        resp.estudiante2.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${estudiantes} te han enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante2.programa.jefe.correo
-                      );
-                      const noti2 = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante.nombres} ${resp.estudiante.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante.programa.jefe.correo
-                      );
-                      this._notificacionService.postNotificacion(noti1).subscribe();
-                      this._notificacionService.postNotificacion(noti2).subscribe();
-                      this._notificacionService.sendNotificacionCorreo(noti1).subscribe((respC3:any)=>{
-                        this._notificacionService.sendNotificacionCorreo(noti2).subscribe();
-                      });
-                    }else{
-                      const noti1 = new Notificacion(
-                        resp.estudiante.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante.nombres} ${resp.estudiante.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante.programa.jefe.correo
-                      );
-                      const noti2 = new Notificacion(
-                        resp.estudiante2.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante2.nombres} ${resp.estudiante2.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante2.programa.jefe.correo
-                      );
-                      const noti3 = new Notificacion(
-                        resp.estudiante3.programa.jefe._id,
-                        curretdate,
-                        'Solicitud de proyecto de grado',
-                        `${resp.estudiante3.nombres} ${resp.estudiante3.apellidos} te ha enviado una solicitud de proyecto de grado`,
-                        'Administrativo',
-                        resp.estudiante3.programa.jefe.correo
-                      );
-                      this._notificacionService.postNotificacion(noti1).subscribe();
-                      this._notificacionService.postNotificacion(noti2).subscribe();
-                      this._notificacionService.postNotificacion(noti3).subscribe();
-                      this._notificacionService.sendNotificacionCorreo(noti1).subscribe((respC4:any)=>{
-                        this._notificacionService.sendNotificacionCorreo(noti2).subscribe((respC5:any)=>{
-                          this._notificacionService.sendNotificacionCorreo(noti3).subscribe();
-                        });
-                      });
-                    }
+                let currentDate = new Date();
+                let noti = new Notificacion(
+                  resp.estudiante._id,
+                  currentDate,
+                  "Tu compañero acepto ser parte del proyecto",
+                  `${this.info.nombres} ${this.info.apellidos} ha aceptado ser parte del proyecto de grado`,
+                  'Estudiante',
+                  resp.estudiante.correo);
+                  this._notificacionService.postNotificacion(noti).subscribe();
+                  this._notificacionService.sendNotificacionCorreo(noti).subscribe();
+                if(resp.estado == "Enviado"){
+                  let currentDate = new Date();
+                  let estudiante = resp.estudiante.nombres+" "+resp.estudiante.apellidos;
+                  let txt = "ha";
+                  if(resp.estudiante2 && !resp.estudiante3){
+                    txt = "han";
+                    estudiante = estudiante+" y "+resp.estudiante2.nombres+" "+resp.estudiante2.apellidos;
+                  }else if(resp.estudiante2 && resp.estudiante3){
+                    estudiante = estudiante+", "+resp.estudiante2.nombres+" "+resp.estudiante2.apellidos;
                   }
-                }
-                
+                  if(resp.estudiante3){
+                    estudiante = estudiante+" y "+resp.estudiante3.nombres+" "+resp.estudiante3.apellidos
+                  }
+                  let notificacion = new Notificacion(
+                    this.jefe._id,
+                    currentDate,
+                    'Nueva solicitd de proyecto de grado',
+                    `${estudiante} te ${txt} enviado una solicitud de proyecto de grado`,
+                    'Administrativo',
+                    this.jefe.correo);
+                  this._notificacionService.postNotificacion(notificacion).subscribe();
+                  this._notificacionService.sendNotificacionCorreo(notificacion).subscribe();
+                }                
                 Swal.fire({
                   title: '¡Bien Hecho!',
                   text: `Ya eres parte del proyecto`,
@@ -312,6 +185,16 @@ export class AceptarProyectoComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this._proyectoService.rechazarProyecto(this.proyecto._id).subscribe((resp:any)=>{
+          let currentDate = new Date();
+          let noti = new Notificacion(
+            resp.estudiante._id,
+            currentDate,
+            "Tu compañero rechazo ser parte del proyecto",
+            `${this.info.nombres} ${this.info.apellidos} ha rechazado ser parte del proyecto de grado`,
+            'Estudiante',
+            resp.estudiante.correo);
+            this._notificacionService.postNotificacion(noti).subscribe();
+            this._notificacionService.sendNotificacionCorreo(noti).subscribe();
             Swal.fire({
               text: `Rechazaste ser parte del proyecto, puedes inscribir otra modalidad`,
               icon: 'success',

@@ -19,6 +19,7 @@ export class SolicitudProyectoComponent implements OnInit {
   busquedasInvalidas = 0;
   userToAddValid = false;
   fichaValid = false;
+  inscripcionValid = false;
   formularioValid = false;
   director:string;
   programa:any;
@@ -26,6 +27,7 @@ export class SolicitudProyectoComponent implements OnInit {
   docentes:any;
 
   documento_fichaAcademica = new FormData();
+  documento_inscripcion = new FormData();
   MAX_SIZE_FILE: number = 1000000;
 
   constructor(
@@ -69,26 +71,10 @@ export class SolicitudProyectoComponent implements OnInit {
     });
   }
 
-  countCharsResumen(id:string, idCharNum: string) {
-    const text = (document.getElementById(id) as HTMLInputElement).value;
-    const strLength = text.length;
-    document.getElementById(idCharNum).innerHTML = strLength + '/2000';
-  }
-
-  espandirTexarea(id:string) {
-    const textarea = (document.getElementById(id) as HTMLInputElement);
-    textarea.style.overflow = 'hidden';
-    textarea.style.height = textarea.getAttribute('data-min.rows');
-    textarea.style.height = textarea.scrollHeight + 'px';
-  }
-
   check(){
     const tituloPasantia = (document.getElementById("tituloPasantia") as HTMLInputElement).value;
     const lineaInvestigacion = (document.getElementById("lineaInvestigacion") as HTMLSelectElement).value;
     const director = (document.getElementById("director") as HTMLSelectElement).value;
-    const problema = document.getElementById("problema") as HTMLTextAreaElement;
-    const alcance = document.getElementById("alcance") as HTMLTextAreaElement;
-    const metodologia = document.getElementById("metodologia") as HTMLTextAreaElement;
     let isInDocentes = false;
     for(let i= 0; i < this.docentes.length; i++){
       if(director === this.docentes[i].nombres){
@@ -99,10 +85,7 @@ export class SolicitudProyectoComponent implements OnInit {
     if(
       isInDocentes && 
       tituloPasantia !== "" && 
-      lineaInvestigacion !== "" &&
-      problema.value !== "" && 
-      alcance.value !== "" && 
-      metodologia.value !== ""  
+      lineaInvestigacion !== "" 
     ){
       this.formularioValid = true;
     }else{
@@ -265,6 +248,54 @@ export class SolicitudProyectoComponent implements OnInit {
     }
   }
 
+  getFileInscripcion(file: File) {
+    if (file.size > this.MAX_SIZE_FILE) {
+      const fileInscripcion = document.getElementById("fileInscripcion") as HTMLInputElement;
+      const labelInscripcion = document.getElementById("labelInscripcion") as HTMLInputElement;
+      this.documento_inscripcion = new FormData();
+      this.inscripcionValid = false;
+      Swal.fire({
+        title: '¡Lo Sentimos!',
+        html: `<p> El archivo: <b>${file.name}</b>, supera el 1 MB</p>`,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        showCancelButton: false,
+        confirmButtonColor: '#60D89C',
+      }).then(() => {
+        fileInscripcion.value = "";
+        labelInscripcion.innerHTML = "Click aquí para subir el documento de Inscripción";
+        labelInscripcion.setAttribute("style","");
+      });
+    } else {
+      const labelInscripcion = document.getElementById("labelInscripcion") as HTMLInputElement;
+      const nombreCortado = file.name.split('.');
+      const extensionArchivo = nombreCortado[nombreCortado.length - 1];
+      const extensionesValidas = ['pdf', 'PDF'];
+  
+      if (extensionesValidas.indexOf(extensionArchivo) >= 0) {
+        this.inscripcionValid = true;
+        labelInscripcion.setAttribute("style", "color: #8F141B; font-weight: bold;");
+        labelInscripcion.innerHTML = file.name;
+        let documento_inscripcion = <File>file;
+        this.documento_inscripcion.append('documento_inscripcion', documento_inscripcion, documento_inscripcion.name);
+      }else{
+        this.documento_inscripcion = new FormData();
+        this.inscripcionValid = false;
+        Swal.fire({
+          title: '¡Lo Sentimos!',
+          html: `<p> El archivo deber ser en formato pdf</p>`,
+          icon: 'error',
+          confirmButtonText: 'Ok',
+          showCancelButton: false,
+          confirmButtonColor: '#60D89C',
+        }).then(() => {
+          labelInscripcion.setAttribute("style", "");
+          labelInscripcion.innerHTML = "Click aquí para subir el documento de Inscripción";
+        });
+      }
+    }
+  }
+
   postProyecto(){
     Swal.fire({
       title: '¿Enviar solicitud de proyecto de grado?',
@@ -278,16 +309,11 @@ export class SolicitudProyectoComponent implements OnInit {
       if (result.value) {
         const tituloPasantia = (document.getElementById("tituloPasantia") as HTMLInputElement).value;
         const lineaInvestigacion = (document.getElementById("lineaInvestigacion") as HTMLSelectElement).value;
-        const problema = (document.getElementById("problema") as HTMLTextAreaElement).value;
-        const alcance = (document.getElementById("alcance") as HTMLTextAreaElement).value;
-        const metodologia = (document.getElementById("metodologia") as HTMLTextAreaElement).value;
         let proyecto:any = {
           estudiante: this.user._id,
+          programa: this.programa._id,
           lineaInvestigacion: lineaInvestigacion,
           titulo: tituloPasantia,
-          problema: problema,
-          alcance: alcance,
-          metodologia: metodologia,
           director: this.director,
         }
         if(this.estudiante2){
@@ -300,36 +326,40 @@ export class SolicitudProyectoComponent implements OnInit {
           if(resp){
             this._proyectoService.uploadDocumento(resp._id, this.documento_fichaAcademica).subscribe((answ:any)=>{
               if(answ){
-                if(!this.estudiante2 && !this.estudiante3){
-                  let estudiante:string = this.user.nombres+" "+this.user.apellidos;
-                  let currentDate = new Date();
-                  let notificacion = new Notificacion(
-                    this.jefe._id,
-                    currentDate,
-                    'Nueva solicitd de proyecto de grado',
-                    `${estudiante} te ha enviado una solicitud de proyecto de grado`,
-                    'Administrativo',
-                    this.jefe.correo);
-                  this._notificacionService.postNotificacion(notificacion).subscribe();
-                  this._notificacionService.sendNotificacionCorreo(notificacion).subscribe(); 
-                }
-                Swal.fire({
-                  title: '¡Bien Hecho!',
-                  html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${resp._id}</b>`,
-                  icon: 'warning',
-                  confirmButtonText: 'Aceptar',
-                  confirmButtonColor: '#60D89C',
-                  allowEnterKey:false,
-                  allowOutsideClick:false,
-                  allowEscapeKey:false
-                }).then((result) => {
-                  if (result.value) {
-                    localStorage.setItem("reload", "true");
-                    this.router.navigate(['/']);
-                  }else{
-                    localStorage.setItem("reload", "true");
-                    this.router.navigate(['/']);
-                  }
+                this._proyectoService.uploadDocumento(resp._id, this.documento_inscripcion).subscribe((respI:any)=>{
+                   if(respI){
+                    let currentDate = new Date();
+                    let estudiante = this.user.nombres+" "+this.user.apellidos;
+                    if(!this.estudiante2 && !this.estudiante3){
+                      let notificacion = new Notificacion(
+                        this.jefe._id,
+                        currentDate,
+                        'Nueva solicitd de proyecto de grado',
+                        `${estudiante} te ha enviado una solicitud de proyecto de grado`,
+                        'Administrativo',
+                        this.jefe.correo);
+                      this._notificacionService.postNotificacion(notificacion).subscribe();
+                      this._notificacionService.sendNotificacionCorreo(notificacion).subscribe();
+                    }
+                    Swal.fire({
+                      title: '¡Bien Hecho!',
+                      html: `Su solicitud fue eviada exitosamente, el radicado de su solicitud es: <b> ${resp._id}</b>`,
+                      icon: 'warning',
+                      confirmButtonText: 'Aceptar',
+                      confirmButtonColor: '#60D89C',
+                      allowEnterKey:false,
+                      allowOutsideClick:false,
+                      allowEscapeKey:false
+                    }).then((result) => {
+                      if (result.value) {
+                        localStorage.setItem("reload", "true");
+                        this.router.navigate(['/']);
+                      }else{
+                        localStorage.setItem("reload", "true");
+                        this.router.navigate(['/']);
+                      }
+                    }); 
+                   } 
                 });
               }
             });

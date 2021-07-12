@@ -77,7 +77,7 @@ export class ProyectoService {
         localStorage.setItem("user",  JSON.stringify(user));
         localStorage.removeItem("NoEntre");
         localStorage.removeItem("modalidad");
-        return true;
+        return resp.proyectoSave;
       }else{
         return false;
       }
