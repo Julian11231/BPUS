@@ -129,6 +129,34 @@ export class ProyectoService {
     }));
   }
 
+  asignarJurados(id: string, proyecto: any) {
+    let url = `${URL_SERVICES}/proyecto/asignarJurados/${id}`;
+    return this.http.put(url, proyecto).pipe(map((resp: any) => {
+      return resp.ok;
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
+  evaluar(id: string, proyecto: any) {
+    let url = `${URL_SERVICES}/proyecto/evaluar/${id}`;
+    return this.http.put(url, proyecto).pipe(map((resp: any) => {
+      return resp.ok;
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
   uploadDocumento(idProyecto: string, documento: FormData) {
     let url = `${URL_SERVICES}/upload_proyecto/${idProyecto}`;
     return this.http.put(url, documento).pipe(map((resp: any) => {

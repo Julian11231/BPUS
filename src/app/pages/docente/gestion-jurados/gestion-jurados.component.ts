@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
 export class GestionJuradosComponent implements OnInit {
 
   user = JSON.parse(localStorage.getItem('user'));
-  
+  pipe = new DatePipe('en-US');
   fechamin:string;
   fechamax:string;
 
@@ -37,13 +37,12 @@ export class GestionJuradosComponent implements OnInit {
 
   ngOnInit(): void {
     const fecha =  new Date();
-    const pipe = new DatePipe('en-US');
     let max = fecha.getTime()+(1000*60*60*24*33);
     let min = fecha.getTime()+(1000*60*60*24*3);
     let fechamax = new Date(max);
     let fechamin = new Date(min)
-    this.fechamin = pipe.transform(fechamin, 'yyyy-MM-dd');
-    this.fechamax = pipe.transform(fechamax, 'yyyy-MM-dd');
+    this.fechamin = this.pipe.transform(fechamin, 'yyyy-MM-dd');
+    this.fechamax = this.pipe.transform(fechamax, 'yyyy-MM-dd');
     this.getPasantias();
     this.getJurados();
     this.getProyectos();
@@ -68,11 +67,11 @@ export class GestionJuradosComponent implements OnInit {
     this._pasantiaService.getSolicitudesAsignarJurado().subscribe((resp: any) => {
       this.pasantias = resp.pasantias;
       let currentDate = new Date();
-      const pipe = new DatePipe('en-US');
+      
       for (let i = 0; i < this.pasantias.length; i++) {
         if(this.pasantias[i].fecha_actaInicio){
           let fechaInicio = new Date(Date.parse(this.pasantias[i].fecha_actaInicio));
-          this.pasantias[i].fecha_actaInicio =  pipe.transform(fechaInicio, 'dd-MM-yyyy')
+          this.pasantias[i].fecha_actaInicio =  this.pipe.transform(fechaInicio, 'dd-MM-yyyy')
           let diff = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate()) ) /(1000 * 60 * 60 * 24 * 7));
           this.pasantias[i].semanas = Math.floor(diff);
         }
@@ -81,7 +80,7 @@ export class GestionJuradosComponent implements OnInit {
   }
 
   checkJuradosPasantia(){
-    var errorJuradosPasantia = (document.getElementById('errorJuradosPasantia')) as HTMLElement;
+    let errorJuradosPasantia = (document.getElementById('errorJuradosPasantia')) as HTMLElement;
     if(this.juradoPasantia1 !== "" && this.juradoPasantia2 !== "" && this.juradoPasantia1 === this.juradoPasantia2){
       errorJuradosPasantia.setAttribute('style','display:block; color: red;');
     }else{
@@ -90,7 +89,7 @@ export class GestionJuradosComponent implements OnInit {
   }
 
   checkJuradosProyecto(){
-    var errorJuradosProyecto = (document.getElementById('errorJuradosProyecto')) as HTMLElement;
+    let errorJuradosProyecto = (document.getElementById('errorJuradosProyecto')) as HTMLElement;
     if(this.juradoProyecto1 !== "" && this.juradoProyecto2 !== "" && this.juradoProyecto1 === this.juradoProyecto2){
       errorJuradosProyecto.setAttribute('style','display:block; color: red;');
     }else{
@@ -111,14 +110,14 @@ export class GestionJuradosComponent implements OnInit {
       if (result.value) {
 
         let pasantia = new PasantiaAsignarJurado(this.juradoPasantia1,this.juradoPasantia2,f.value.fecha, f.value.lugar);
-        var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        var jurado1Nombre:string; var jurado2Nombre:string;
-        var fecha = f.value.fecha.split(/\D/);
-        var sustentacion_fecha =  new Date(fecha[0], --fecha[1], fecha[2]);
+        let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        let jurado1Nombre:string; let jurado2Nombre:string;
+        let fecha = f.value.fecha.split(/\D/);
+        let sustentacion_fecha =  new Date(fecha[0], --fecha[1], fecha[2]);
 
-        var selectJurado1 = (document.getElementById("juradoPasantia1")) as HTMLSelectElement;
-        var selectJurado2 = (document.getElementById("juradoPasantia2")) as HTMLSelectElement;
-        var selectedIndex1 = selectJurado1.selectedIndex; var selectedIndex2 = selectJurado2.selectedIndex;  
+        let selectJurado1 = (document.getElementById("juradoPasantia1")) as HTMLSelectElement;
+        let selectJurado2 = (document.getElementById("juradoPasantia2")) as HTMLSelectElement;
+        let selectedIndex1 = selectJurado1.selectedIndex; let selectedIndex2 = selectJurado2.selectedIndex;  
         selectedIndex1 = selectedIndex1-1; selectedIndex2 = selectedIndex2-1;
 
         jurado1Nombre = this.jurados[selectedIndex1].nombres+' '+this.jurados[selectedIndex1].apellidos;
@@ -131,7 +130,7 @@ export class GestionJuradosComponent implements OnInit {
             this.pasantiaSelected.estudiante._id,
             currentDate,
             'Te han asignado los jurados de tu pasantia',
-            `${jurado1Nombre} y ${jurado2Nombre} serán los jurados de tu pasantia, se realizara en ${f.value.lugar} el ${sustentacion_fecha.getDate()} de ${meses[sustentacion_fecha.getMonth()]} del ${sustentacion_fecha.getFullYear()}`,
+            `${jurado1Nombre} y ${jurado2Nombre} serán los jurados de tu pasantia, se realizara en ${f.value.lugar} el ${sustentacion_fecha.getDate()} de ${meses[sustentacion_fecha.getMonth()]} del ${sustentacion_fecha.getFullYear()} a las ${f.value.hora}`,
             'Estudiante',
             this.pasantiaSelected.estudiante.correo);
 
@@ -179,7 +178,136 @@ export class GestionJuradosComponent implements OnInit {
   }
 
   AsignarJuradosProyecto(f:NgForm){
+    Swal.fire({
+      title: '¿Asignar jurados?',
+      icon: 'warning',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si',
+      showCancelButton: true,
+      confirmButtonColor: '#60D89C',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
+      if (result.value) {
+        Swal.close();
+        Swal.fire({
+          title: 'Por favor espera!',
+          html: '<b></b>',
+          allowEnterKey: false,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          showCancelButton: false,
+          showCloseButton: false,
+          showConfirmButton:false,
+          timer: 1000*60*5,
+          timerProgressBar: true,
+          onOpen: () => {
+            Swal.showLoading();
+            const content = Swal.getHtmlContainer();
+            const b = content.querySelector('b');
+            b.textContent = "Asignando jurados al proyecto";
+            let fechaArray = f.value.fecha.split(/\D/);
+            let horaArray = f.value.hora.split(/\D/);
+            let sustentacion_fecha =  new Date(fechaArray[0], --fechaArray[1], fechaArray[2], horaArray[0], horaArray[1]);
+            let hora = this.pipe.transform(sustentacion_fecha, 'shortTime')
+            let proyecto = {
+              jurado1: this.juradoProyecto1,
+              jurado2:this.juradoProyecto2,
+              fecha: f.value.fecha,
+              hora: f.value.hora,
+              lugar: f.value.lugar
+            };
+            let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            let jurado1Nombre:string; let jurado2Nombre:string;
 
+            let selectJurado1 = (document.getElementById("juradoProyecto1")) as HTMLSelectElement;
+            let selectJurado2 = (document.getElementById("juradoProyecto2")) as HTMLSelectElement;
+            let selectedIndex1 = selectJurado1.selectedIndex; let selectedIndex2 = selectJurado2.selectedIndex;  
+            selectedIndex1 = selectedIndex1-1; selectedIndex2 = selectedIndex2-1;
+
+            jurado1Nombre = this.jurados[selectedIndex1].nombres+' '+this.jurados[selectedIndex1].apellidos;
+            jurado2Nombre = this.jurados[selectedIndex2].nombres+' '+this.jurados[selectedIndex2].apellidos;
+
+            this._proyectoService.asignarJurados(this.proyectoSelected._id, proyecto).subscribe(async(resp:any) => {
+              const currentDate = new Date();
+              let notificacionE =new Notificacion(
+                this.proyectoSelected.estudiante._id,
+                currentDate,
+                'Te han asignado los jurados de tu pasantia',
+                `${jurado1Nombre} y ${jurado2Nombre} serán los jurados de tu pasantia, se realizara en ${f.value.lugar} el ${sustentacion_fecha.getDate()} de ${meses[sustentacion_fecha.getMonth()]} a las ${hora}`,
+                'Estudiante',
+                this.proyectoSelected.estudiante.correo);
+                b.textContent = "Enviando notificación a "+this.proyectoSelected.estudiante.nombres;
+                await this._notificacionService.postNotificacion(notificacionE).toPromise();
+                await this._notificacionService.sendNotificacionCorreo(notificacionE).toPromise();
+                if(this.proyectoSelected.estudiante2){
+                  notificacionE.receptor = this.proyectoSelected.estudiante2._id;
+                  notificacionE.receptorCorreo = this.proyectoSelected.estudiante2.correo;
+                  b.textContent = "Enviando notificación a "+this.proyectoSelected.estudiante2.nombres;
+                  await this._notificacionService.postNotificacion(notificacionE).toPromise();
+                  await this._notificacionService.sendNotificacionCorreo(notificacionE).toPromise();
+                }
+                if(this.proyectoSelected.estudiante3){
+                  notificacionE.receptor = this.proyectoSelected.estudiante3._id;
+                  notificacionE.receptorCorreo = this.proyectoSelected.estudiante3.correo;
+                  b.textContent = "Enviando notificación a "+this.proyectoSelected.estudiante3.nombres;
+                  await this._notificacionService.postNotificacion(notificacionE).toPromise();
+                  await this._notificacionService.sendNotificacionCorreo(notificacionE).toPromise();
+                }
+              let notificacionJ1 =new Notificacion(
+                this.juradoProyecto1,
+                currentDate,
+                'Te han asignado como jurado de una pasantia',
+                `Has sido asignado como jurado de la pasantia del estudiante ${this.proyectoSelected.estudiante.nombres} ${this.proyectoSelected.estudiante.apellidos}`,
+                'Administrativo',
+                this.jurados[selectedIndex1].correo);
+              b.textContent = "Enviando notificación al jurado: "+jurado1Nombre;
+              await this._notificacionService.postNotificacion(notificacionJ1).toPromise();
+              await this._notificacionService.sendNotificacionCorreo(notificacionJ1).toPromise();
+              let notificacionJ2 =new Notificacion(
+                this.juradoProyecto2,
+                currentDate,
+                'Te han asignado como jurado de una pasantia',
+                `Has sido asignado como jurado de la pasantia del estudiante ${this.proyectoSelected.estudiante.nombres} ${this.proyectoSelected.estudiante.apellidos}`,
+                'Administrativo',
+                this.jurados[selectedIndex2].correo);
+              b.textContent = "Enviando notificación al jurado: "+jurado2Nombre;
+              await this._notificacionService.postNotificacion(notificacionJ2).toPromise();
+              await this._notificacionService.sendNotificacionCorreo(notificacionJ2).toPromise();
+              Swal.close();
+            });
+          },
+          onClose: () => {
+            Swal.fire({
+              title: '¡Bien Hecho!',
+              html: "Jurados asignados correctamente",
+              icon: 'success',
+              allowEnterKey: false,
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              showCancelButton: false,
+              showCloseButton: false,
+              showConfirmButton:false,
+              timer: 1300,
+              timerProgressBar: true
+            }).then(() => {
+              const btnCerrar = (document.getElementById('btnCerrarProyecto')) as HTMLElement;
+              btnCerrar.click();
+              this.getProyectos();
+              this.juradoProyecto1 = "";
+              this.juradoProyecto2 = "";
+              this.proyectoSelected = undefined;
+            });
+          }
+        }).then(() => {
+          const btnCerrar = (document.getElementById('btnCerrarProyecto')) as HTMLElement;
+          btnCerrar.click();
+          this.getProyectos();
+          this.juradoProyecto1 = "";
+          this.juradoProyecto2 = "";
+          this.proyectoSelected = undefined;
+        });
+      }
+    });
   }
 
   getJurados() {
@@ -200,14 +328,14 @@ export class GestionJuradosComponent implements OnInit {
   clearDataPasantia(){
     this.juradoPasantia1 = "";
     this.juradoPasantia2 = "";
-    var errorJuradosPasantia = (document.getElementById('errorJuradosPasantia')) as HTMLElement;
+    let errorJuradosPasantia = (document.getElementById('errorJuradosPasantia')) as HTMLElement;
     errorJuradosPasantia.setAttribute('style','display:none;');
   }
 
   clearDataProyecto(){
     this.juradoProyecto1 = "";
     this.juradoProyecto2 = "";
-    var errorJuradosProyecto = (document.getElementById('errorJuradosProyecto')) as HTMLElement;
+    let errorJuradosProyecto = (document.getElementById('errorJuradosProyecto')) as HTMLElement;
     errorJuradosProyecto.setAttribute('style','display:none;');
   }
 

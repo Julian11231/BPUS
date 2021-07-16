@@ -122,7 +122,12 @@
                                             <select name="juradoPasantia1" [(ngModel)]="juradoPasantia1" class="form-control custom-select" id="juradoPasantia1" (change)="checkJuradosPasantia()" required>
                                                 <option value="" selected>Selecciona un jurado...</option>
                                                 <ng-container *ngFor="let jurado of jurados">
-                                                    <option *ngIf="jurado._id !== pasantiaSelected.tutor._id" value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    <ng-container *ngIf="jurado._id === pasantiaSelected.director._id; else elsejuradoPasantia1">
+                                                        <option value="{{jurado._id}}" style="display: none;">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-container>
+                                                    <ng-template #elsejuradoPasantia1>
+                                                        <option value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-template>
                                                 </ng-container>
                                             </select>
                                         </div>
@@ -131,29 +136,38 @@
                                             <select name="juradoPasantia2" [(ngModel)]="juradoPasantia2" class="form-control custom-select" id="juradoPasantia2" (change)="checkJuradosPasantia()" required>
                                                 <option value="" selected>Selecciona un jurado...</option>
                                                 <ng-container *ngFor="let jurado of jurados">
-                                                    <option *ngIf="jurado._id !== pasantiaSelected.tutor._id" value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    <ng-container *ngIf="jurado._id === pasantiaSelected.director._id; else elsejuradoPasantia2">
+                                                        <option value="{{jurado._id}}" style="display: none;">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-container>
+                                                    <ng-template #elsejuradoPasantia2>
+                                                        <option value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-template>
                                                 </ng-container>
                                             </select>
                                         </div>
                                     </div>
                                     <p class="font-weight-bold ml-4 my-3" id="errorJuradosPasantia" style="display: none;">Los jurados deben ser diferentes</p>
                                     <div class="row mt-4">
-                                        <div class="col-4">
+                                        <div class="col-12 col-lg-6">
                                             <div class="form-group">
                                                 <label class="font-weight-bold" for="fecha">Fecha de la sustentación:</label>
                                                 <input type="date" class="form-control" ngModel #fecha="ngModel" id="fecha" name="fecha" min="{{fechamin}}" max="{{fechamax}}" required>
                                             </div>
                                         </div>
-                                        <div class="col-8">
+                                        <div class="col-12 col-lg-6">
                                             <div class="form-group">
-                                                <label class="font-weight-bold" for="lugar">Lugar de sustentación:</label>
-                                                <input type="text" class="form-control" ngModel #lugar="ngModel" id="lugar" name="lugar" maxlength="50" placeholder="Lugar de sustentación" required>
+                                                <label class="font-weight-bold" for="fecha">Hora de la sustentación:</label>
+                                                <input type="time" class="form-control" ngModel #hora="ngModel" id="hora" name="hora" min="08:00" max="16:00" required>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="lugar">Lugar de sustentación:</label>
+                                        <input type="text" class="form-control" ngModel #lugar="ngModel" id="lugar" name="lugar" maxlength="50" placeholder="Lugar de sustentación" required>
+                                    </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btnInfo" [disabled]="juradoPasantia1 === '' || juradoPasantia2 === '' || juradoPasantia1 === juradoPasantia2 || asignarJurados.invalid">Asignar jurados</button>
-                                        <button type="button" id="btnCerrar" (click)="lugar.reset(); fecha.reset(); clearDataPasantia();" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                                        <button type="button" id="btnCerrar" (click)="lugar.reset(); fecha.reset(); hora.reset(); clearDataPasantia();" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
                                     </div>
                                 </form>
                             </div>
@@ -287,16 +301,26 @@
                                             <select name="juradoProyecto1" [(ngModel)]="juradoProyecto1" class="form-control custom-select" id="juradoProyecto1" (change)="checkJuradosProyecto()" required>
                                                 <option value="" selected>Selecciona un jurado...</option>
                                                 <ng-container *ngFor="let jurado of jurados">
-                                                    <option *ngIf="jurado._id !== proyectoSelected.director._id" value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    <ng-container *ngIf="jurado._id === proyectoSelected.director._id; else elsejuradoProyecto1">
+                                                        <option value="{{jurado._id}}" style="display: none;">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-container>
+                                                    <ng-template #elsejuradoProyecto1>
+                                                        <option value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-template>
                                                 </ng-container>
                                             </select>
                                         </div>
-                                        <div class="col-12 col-lg-6">
+                                        <div class="col-12 col-lg-6 mt-3 mt-lg-0">
                                             <label class="font-weight-bold">Segundo jurado:</label>
                                             <select name="juradoProyecto2" [(ngModel)]="juradoProyecto2" class="form-control custom-select" id="juradoProyecto2" (change)="checkJuradosProyecto()" required>
                                                 <option value="" selected>Selecciona un jurado...</option>
                                                 <ng-container *ngFor="let jurado of jurados">
-                                                    <option *ngIf="jurado._id !== proyectoSelected.director._id" value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    <ng-container *ngIf="jurado._id === proyectoSelected.director._id; else elsejuradoProyecto2">
+                                                        <option value="{{jurado._id}}" style="display: none;">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-container>
+                                                    <ng-template #elsejuradoProyecto2>
+                                                        <option value="{{jurado._id}}">{{jurado.nombres}} {{jurado.apellidos}}</option>
+                                                    </ng-template>
                                                 </ng-container>
                                             </select>
                                         </div>
@@ -307,7 +331,6 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold" for="fecha">Fecha de la sustentación:</label>
                                                 <input type="date" class="form-control" ngModel #fecha="ngModel" id="fecha" name="fecha" min="{{fechamin}}" max="{{fechamax}}" required>
-                                                <span class="validity"></span>
                                             </div>
                                         </div>
                                         <div class="col-12 col-lg-6">
@@ -323,7 +346,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btnInfo" [disabled]="juradoProyecto1 === '' || juradoProyecto2 === '' || juradoProyecto1 === juradoProyecto2 || juradosProyecto.invalid">Asignar jurados</button>
-                                        <button type="button" id="btnCerrar" (click)="lugar.reset(); fecha.reset(); hora.reset(); clearDataProyecto();" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                                        <button type="button" id="btnCerrarProyecto" (click)="lugar.reset(); fecha.reset(); hora.reset(); clearDataProyecto();" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
                                     </div>
                                 </form>
                             </div>
