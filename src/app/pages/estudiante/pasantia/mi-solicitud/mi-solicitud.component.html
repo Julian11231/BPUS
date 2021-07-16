@@ -460,7 +460,7 @@
                 <ng-container *ngIf="proyecto.estado == 'En ejecución'" class="text-success">
                     <span class="label btnDanger"> <b> {{ proyecto.estado }} </b></span>
                 </ng-container>
-                <ng-container *ngIf="proyecto.estado == 'Rechazado'" class="text-success">
+                <ng-container *ngIf="proyecto.estado == 'Ajustar'" class="text-success">
                     <span class="label btnSuccess"> <b> {{ proyecto.estado }} </b></span>
                 </ng-container>
             </div>
@@ -471,8 +471,8 @@
             <div class="card">
                 <div class="card-header">
                 <h3><a class="collapsed card-link" data-toggle="collapse" href="#inscripcion"><b>Inscripción </b>
-                        <i *ngIf="proyecto?.estado_inscripcion === 'Enviado'" class="mdi mdi-update" style="color:#C7B363"></i>
-                        <i *ngIf="proyecto?.estado_inscripcion === 'Aprobado'" class="fa fa-check" style="color: green;"></i>
+                        <i *ngIf="proyecto?.estado_inscripcion === 'Enviada'" class="mdi mdi-update" style="color:#C7B363"></i>
+                        <i *ngIf="proyecto?.estado_inscripcion === 'Aprobada'" class="fa fa-check" style="color: green;"></i>
                         <i *ngIf="proyecto?.estado_inscripcion === 'Ajustar'" class="fa fa-times" style="color:#77181C"></i>
                     </a>
                 </h3>
@@ -485,10 +485,10 @@
                                 <ng-container *ngIf="proyecto?.estado_inscripcion == 'Pendiente'" class="text-success">
                                     <span class="label btnDanger"> <b> {{ proyecto?.estado_inscripcion }} </b></span>
                                 </ng-container>
-                                <ng-container *ngIf="proyecto?.estado_inscripcion == 'Enviado'" class="text-success">
+                                <ng-container *ngIf="proyecto?.estado_inscripcion == 'Enviada'" class="text-success">
                                     <span class="label btnInfo"> <b> {{ proyecto?.estado_inscripcion }} </b></span>
                                 </ng-container>
-                                <ng-container *ngIf="proyecto?.estado_inscripcion == 'Aprobado'" class="text-success">
+                                <ng-container *ngIf="proyecto?.estado_inscripcion == 'Aprobada'" class="text-success">
                                     <span class="label" style="background-color: green;"> <b> {{ proyecto?.estado_inscripcion }} </b></span>
                                 </ng-container>
                                 <ng-container *ngIf="proyecto?.estado_inscripcion == 'Ajustar'" class="text-success">

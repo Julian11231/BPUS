@@ -46,9 +46,10 @@ import { AdminModalidadComponent } from './admin/admin-modalidad/admin-modalidad
 import { AdminProgramaComponent } from './admin/admin-programa/admin-programa.component';
 import { AnteproyectoComponent } from './estudiante/proyecto/anteproyecto/anteproyecto.component';
 import { ProyectoComponent } from './estudiante/proyecto/proyecto/proyecto.component';
-import { DocumentoFinalComponent } from './estudiante/proyecto/documento-final/documento-final.component';
 import { AceptarProyectoComponent } from './estudiante/proyecto/aceptar-proyecto/aceptar-proyecto.component';
 import { PropuestasProyectoComponent } from './docente/propuestas-proyecto/propuestas-proyecto.component';
+import { TutoriaProyectoComponent } from './docente/tutoria-proyecto/tutoria-proyecto.component';
+import { InscripcionProyectoComponent } from './estudiante/proyecto/inscripcion-proyecto/inscripcion-proyecto.component';
 
 @NgModule({
   declarations: [
@@ -86,9 +87,10 @@ import { PropuestasProyectoComponent } from './docente/propuestas-proyecto/propu
     AdminProgramaComponent,
     AnteproyectoComponent,
     ProyectoComponent,
-    DocumentoFinalComponent,
     AceptarProyectoComponent,
-    PropuestasProyectoComponent
+    PropuestasProyectoComponent,
+    TutoriaProyectoComponent,
+    InscripcionProyectoComponent
 
   ],
   exports: [

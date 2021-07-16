@@ -1,0 +1,403 @@
+<div class="container p-4" style="background-color: #ffff;">
+
+    <div class="modal fade" id="modalGestionProyecto">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5><b>ID: </b>{{proyectoSelected?._id}}</h5>
+                            <h5><span class="font-weight-bold">Título: </span>{{proyectoSelected?.titulo}}</h5>
+                            <h5><span class="font-weight-bold">Linea de investigación: </span>{{proyectoSelected?.lineaInvestigacion}}</h5>
+                            <h5><span class="font-weight-bold">Semanas: </span>{{proyectoSelected?.semanas}}</h5>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <h5 class="font-weight-bold">Integrantes: </h5>
+                            <ul>
+                                <li>
+                                    <h6>
+                                        {{proyectoSelected?.estudiante.nombres}} {{proyectoSelected?.estudiante.apellidos}}
+                                    </h6>
+                                </li>
+                                <li *ngIf="proyectoSelected?.estudiante2">
+                                    <h6>
+                                        {{proyectoSelected?.estudiante2.nombres}} {{proyectoSelected?.estudiante2.apellidos}}
+                                    </h6>
+                                </li>
+                                <li *ngIf="proyectoSelected?.estudiante3">
+                                    <h6>
+                                        {{proyectoSelected?.estudiante3.nombres}} {{proyectoSelected?.estudiante3.apellidos}}
+                                    </h6>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <form (ngSubmit)="putProyecto()" class="form-horizontal">
+
+                        <h5 class="text-uppercase mt-2"> <b>Gestión del Proyecto:</b></h5>
+
+                        <div class=" table-responsive">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center"><b>Fase</b></th>
+                                        <th style="text-align: center"><b>Estado</b></th>
+                                        <th style="text-align: center"><b>Notas</b></th>
+                                        <th style="text-align: center"><b>Actualizar Estado</b></th>
+                                        <th style="text-align: center"><b>Descargar</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Inscripción</td>
+                                        <td> 
+                                            <ng-container *ngIf="proyectoSelected?.estado_inscripcion == 'Enviada'">
+                                                <span class="label btnInfo"><b>{{proyectoSelected?.estado_inscripcion}}</b></span><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_inscripcion == 'Aprobada'">
+                                                <span class="label" style="background-color: #6fbf73;"><b>{{proyectoSelected?.estado_inscripcion}}</b></span><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_inscripcion == 'Ajustar'">
+                                                <span class="label btnSuccess"><b>{{proyectoSelected?.estado_inscripcion}}</b></span><br>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_inscripcion" [disabled]="!proyectoSelected?.estado_inscripcion">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <ng-container *ngIf="!proyectoSelected?.estado_inscripcion || proyectoSelected?.estado_inscripcion == 'Ajustar'">
+                                                <select class="form-control custom-select" disabled>
+                                                    <option>No enviado</option>
+                                                </select>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_inscripcion === 'Enviada'">
+                                                <select (change)="notasInscripcion()" [(ngModel)]="new_estado_inscripcion" name="new_estado_inscripcion" class="form-control custom-select" >
+                                                    <option value="" selected>Seleccionar...</option>
+                                                    <option value="Aprobada">Aprobada</option>
+                                                    <option value="Ajustar">Ajustar</option>
+                                                </select>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_inscripcion === 'Aprobada'">
+                                                <button type="button" (click)="notasInscripcion()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteInscripcion">Solicitar ajuste</button>
+                                                <button type="button" class="btn btn-link" style="display: none;" (click)="cancelarAjusteInscripcion()" id="cancelarAjusteInscripcion">Cancelar ajuste</button>
+                                            </ng-container>
+
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!proyectoSelected?.documento_inscripcion">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.documento_inscripcion">
+                                                <a class="btn btnSuccess descargar" [href]="proyectoSelected?.documento_inscripcion | documentoP: proyectoSelected?._id" download="proyectoSelected?.documento_inscripcion" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr id="notas_inscripcion" class="collapse" *ngIf="proyectoSelected?.estado_inscripcion">
+                                        <th colspan="5" id="notasInscripcion">
+                                            <div class="mr-3">
+                                                <label class="control-label mt-2">
+                                                    <h5> <b class="text-uppercase">Notas de la inscripción:</b></h5>
+                                                </label>
+                                                <textarea [(ngModel)]="new_notas_inscripcion" name="notasInscripcion" class="form-control" rows="3" placeholder="Notas de la inscripción"></textarea>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" id="btnAjusteInscripcion" style="display: none;">
+                                            <div class="btn-group py-5">
+                                                <button type="button" class="btn text-white" (click)="ajusteInscripcion()" [disabled]="new_notas_inscripcion === ''" style="background-color: #6fbf73;">Aceptar</button>
+                                                <button type="button" class="btn btn-danger" (click)="cancelarAjusteInscripcion()">Cancelar</button>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>Anteproyecto</td>
+                                        <td>
+                                            <ng-container *ngIf="!proyectoSelected?.estado_anteproyecto">
+                                                <span class="label btnDanger"><b>No enviado</b></span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_anteproyecto == 'Enviado'">
+                                                <span class="label btnInfo"><b>{{proyectoSelected?.estado_anteproyecto}}</b></span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_anteproyecto == 'Aprobado'">
+                                                <span class="label" style="background-color: #6fbf73;"><b>{{proyectoSelected?.estado_anteproyecto}}</b></span><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_anteproyecto == 'Ajustar'">
+                                                <span class="label btnSuccess"><b>{{proyectoSelected?.estado_anteproyecto}}</b></span><br>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_anteproyecto" [disabled]="!proyectoSelected?.estado_anteproyecto">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!proyectoSelected?.estado_anteproyecto || proyectoSelected?.estado_anteproyecto == 'Ajustar'">
+                                                <select class="form-control custom-select" disabled>
+                                                    <option>No enviado</option>
+                                                </select>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_anteproyecto === 'Enviado'">
+                                                <select (change)="notasAnteproyecto()" [(ngModel)]="new_estado_anteproyecto" name="new_estado_anteproyecto" class="form-control custom-select" >
+                                                    <option value="" selected>Seleccionar...</option>
+                                                    <option value="Aprobado">Aprobado</option>
+                                                    <option value="Ajustar">Ajustar</option>
+                                                </select>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_anteproyecto === 'Aprobado'">
+                                                <button type="button" (click)="notasAnteproyecto()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteAnteproyecto">Solicitar ajuste</button>
+                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteAnteproyecto()" id="cancelarAjusteAnteproyecto">Cancelar ajuste</button>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!proyectoSelected?.documento_anteproyecto">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.documento_anteproyecto">
+                                                <a class="btn btnSuccess descargar" [href]="proyectoSelected?.documento_anteproyecto | documentoP: proyectoSelected?._id" download="proyectoSelected?.documento_anteproyecto" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr id="notas_anteproyecto" class="collapse" *ngIf="proyectoSelected?.estado_anteproyecto">
+                                        <th colspan="5" id="notasAnteproyecto">
+                                            <div class="mr-3">
+                                                <label class="control-label mt-2">
+                                                    <h5> <b class="text-uppercase">Notas Anteproyecto:</b></h5>
+                                                </label>
+                                                <textarea [(ngModel)]="new_notas_anteproyecto" name="notasAnteproyecto" class="form-control" rows="3" placeholder="Notas del anteproyecto"></textarea>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" id="btnAjusteAnteproyecto" style="display: none;">
+                                            <div class="btn-group py-5">
+                                                <button type="button" [disabled]="new_notas_anteproyecto == ''" class="btn text-white" style="background-color: #6fbf73;" (click)="ajusteAnteproyecto()">Aceptar</button>
+                                                <button type="button" class="btn btn-danger" (click)="cancelarAjusteAnteproyecto()">Cancelar</button>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>Proyecto</td>
+                                        <td>
+                                            <ng-container *ngIf="!proyectoSelected?.estado_proyecto">
+                                                <span class="label btnDanger"><b>No enviado</b></span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_proyecto == 'Enviado'">
+                                                <span class="label btnInfo"><b>{{proyectoSelected?.estado_proyecto}}</b></span>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_proyecto == 'Aprobado'">
+                                                <span class="label" style="background-color: #6fbf73;"><b>{{proyectoSelected?.estado_proyecto}}</b></span><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_proyecto == 'Ajustar'">
+                                                <span class="label btnSuccess"><b>{{proyectoSelected?.estado_proyecto}}</b></span><br>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target="#notas_proyecto" [disabled]="!proyectoSelected?.estado_proyecto">
+                                                Notas <i class="fa fa-eye"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!proyectoSelected?.estado_proyecto || proyectoSelected?.estado_proyecto == 'Ajustar'">
+                                                <select class="form-control custom-select" disabled>
+                                                    <option>No enviado</option>
+                                                </select>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_proyecto === 'Enviado'">
+                                                <select (change)="notasProyecto()" [(ngModel)]="new_estado_proyecto" name="new_estado_proyecto" class="form-control custom-select" >
+                                                    <option value="" selected>Seleccionar...</option>
+                                                    <option value="Aprobado">Aprobado</option>
+                                                    <option value="Ajustar">Ajustar</option>
+                                                </select>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.estado_proyecto === 'Aprobado'">
+                                                <button type="button" (click)="notasProyecto()" class="btn btnSuccess btn-block" style="display: block;" id="ajusteProyecto">Solicitar ajuste</button>
+                                                <button type="button" class="btn btn-link btn-block" style="display: none;" (click)="cancelarAjusteProyecto()" id="cancelarAjusteProyecto">Cancelar ajuste</button>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="!proyectoSelected?.documento_proyecto">
+                                                <button class="btn btnSuccess descargar" disabled><small><b>Ver Documento</b></small></button><br>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="proyectoSelected?.documento_proyecto">
+                                                <a class="btn btnSuccess descargar" [href]="proyectoSelected?.documento_proyecto | documentoP: proyectoSelected?._id" download="proyectoSelected?.documento_proyecto" target="_blank">
+                                                    <small><b>Ver Documento</b></small>
+                                                </a>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr id="notas_proyecto" class="collapse" *ngIf="proyectoSelected?.estado_proyecto">
+                                        <th colspan="5" id="notasProyecto">
+                                            <div class="mr-3">
+                                                <label class="control-label mt-2">
+                                                    <h5> <b class="text-uppercase">Notas Proyecto:</b></h5>
+                                                </label>
+                                                <textarea [(ngModel)]="new_notas_proyecto" name="notasProyecto" class="form-control" rows="3" placeholder="Notas del proyecto"></textarea>
+                                            </div>
+                                        </th>
+                                        <th colspan="1" id="btnAjusteProyecto" style="display: none;">
+                                            <div class="btn-group py-5">
+                                                <button type="button" [disabled]="new_notas_proyecto == ''"  class="btn text-white" style="background-color: #6fbf73;" (click)="ajusteProyecto()">Aceptar</button>
+                                                <button type="button" class="btn btn-danger" (click)="cancelarAjusteProyecto()">Cancelar</button>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btnInfo" 
+                            [disabled]="new_estado_inscripcion === '' && new_estado_anteproyecto === '' && new_estado_proyecto === ''
+                            || (proyectoSelected.notas_inscripcion && new_notas_inscripcion === proyectoSelected.notas_inscripcion)
+                            || (proyectoSelected.notas_anteproyecto && new_notas_anteproyecto === proyectoSelected.notas_anteproyecto)
+                            || (proyectoSelected.notas_proyecto && new_notas_proyecto === proyectoSelected.notas_proyecto)
+                            || (new_estado_inscripcion === 'Ajustar' && new_notas_inscripcion === '') || (new_estado_anteproyecto === 'Ajustar' && new_notas_anteproyecto === '')
+                            || (new_estado_proyecto === 'Ajustar' && new_notas_proyecto === '')">
+                                <b>Guardar Cambios </b><i class="mdi mdi-update"></i>
+                            </button>
+                            <button type="button" (click)="resetDataInfo()" id="btnCloseModalGestion" class="btn btn-danger" data-dismiss="modal"><b>Cerrar </b><i class="fa fa-times"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="infoPasantia">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5><b>Título:</b> &nbsp; {{proyectoSelected?.titulo}}</h5>
+                    <h5><b>ID de la solicitud:</b> &nbsp; {{proyectoSelected?._id}}</h5>
+                    <h5><b>Linea de investigación:</b> &nbsp; {{proyectoSelected?.lineaInvestigacion}}</h5>
+                    <hr>
+                    <h5 class="text-uppercase"> <b>{{ proyectoSelected?.estudiante.nombres }} {{proyectoSelected?.estudiante.apellidos}}</b></h5>
+                    <div class="row mt-3">
+                        <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                            <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{proyectoSelected?.estudiante.correo}}</small>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{proyectoSelected?.estudiante.codigo}}</small>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                            <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{proyectoSelected?.estudiante.identificacion}}</small>
+                        </div>
+                    </div>
+                    <div class="row mt-0 mt-lg-3">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <i class="fa fa-book"></i> &nbsp; <small class="text-justify">Creditos aprobados:&nbsp; {{proyectoSelected?.estudiante.creditos_aprobados}}</small>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="proyectoSelected?.estudiante2">
+                        <hr>
+                        <h5 class="text-uppercase"> <b>{{ proyectoSelected?.estudiante2.nombres }} {{proyectoSelected?.estudiante2.apellidos}}</b></h5>
+                        <div class="row mt-3">
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{proyectoSelected?.estudiante2.correo}}</small>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{proyectoSelected?.estudiante2.codigo}}</small>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{proyectoSelected?.estudiante2.identificacion}}</small>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <i class="fa fa-book"></i> &nbsp; <small class="text-justify">Creditos aprobados:&nbsp; {{proyectoSelected?.estudiante2.creditos_aprobados}}</small>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="proyectoSelected?.estudiante3">
+                        <hr>
+                        <h5 class="text-uppercase"> <b>{{ proyectoSelected?.estudiante3.nombres }} {{proyectoSelected?.estudiante3.apellidos}}</b></h5>
+                        <div class="row mt-3">
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                <i class="mdi mdi-email"></i> &nbsp;<small class="text-justify">Correo:&nbsp; {{proyectoSelected?.estudiante3.correo}}</small>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <i class="fa fa-id-card"></i> &nbsp; <small class="text-justify">Cód:&nbsp; {{proyectoSelected?.estudiante3.codigo}}</small>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                <i class="fa fa-id-card-o"></i> &nbsp; <small class="text-justify">ID:&nbsp; {{proyectoSelected?.estudiante3.identificacion}}</small>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <i class="fa fa-book"></i> &nbsp; <small class="text-justify">Creditos aprobados:&nbsp; {{proyectoSelected?.estudiante3.creditos_aprobados}}</small>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="modal-footer mt-3">
+                        <button type="button" class="btn btnSuccess" data-dismiss="modal">Cerrar <i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="proyectos?.length === 0">
+        <div class="text-center m-2 m-lg-5">
+            <h2>No te han asignado ningún proyecto de grado</h2>
+        </div>
+    </ng-container>
+    
+    <ng-container *ngIf="proyectos?.length > 0">
+        <div class="form-group">
+            <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
+                type="text" id="firstName" class="form-control"
+                placeholder="Busca la solicitud por Id, Estudiante o Empresa">
+        </div>
+    </ng-container>
+
+    <ng-container *ngFor="let dato of proyectos">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="vacantes">
+                    <h5>{{dato.titulo}}</h5>
+                    <h5 class="small"> 
+                        <b>{{ dato.estudiante.nombres }} {{ dato.estudiante.apellidos }}</b>
+                    </h5>
+                    <h5 *ngIf="dato.estudiante2" class="small"> 
+                        <b>{{ dato.estudiante2.nombres }} {{ dato.estudiante2.apellidos }}</b>
+                    </h5>
+                    <h5 *ngIf="dato.estudiante3" class="small"> 
+                        <b>{{ dato.estudiante3.nombres }} {{ dato.estudiante3.apellidos }}</b>
+                    </h5>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="buttons mt-2 mt-lg-3">
+                    <button class="btn btn-info btn-sm mr-2" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#infoPasantia" data-backdrop="static"><i class="fa fa-info-circle" style="font-size: large;"></i></button>
+                    <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target="#modalGestionProyecto" data-backdrop="static" class="btn btnInfo">
+                        <b>Gestionar</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </ng-container>    
+
+</div>

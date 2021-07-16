@@ -56,7 +56,7 @@ export class MiSolicitudComponent implements OnInit {
   }
 
   getProyecto() {
-    this._proyectoService.getProyecto(this.info.modalidad).subscribe((resp: any) => {
+    this._proyectoService.getProyecto().subscribe((resp: any) => {
       this.proyecto = resp.proyecto;
     });
   }

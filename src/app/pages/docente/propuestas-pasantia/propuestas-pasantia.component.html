@@ -185,7 +185,7 @@
                         <div class="row">
                             <div class="col-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="vacantes">
-                                    <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres }}
+                                    <h5 class="text-uppercase"> <b>{{ dato.estudiante.nombres}}
                                             {{ dato.estudiante.apellidos }}</b></h5>
                                     <small *ngIf="dato.vacante"><i class="fa fa-briefcase"></i> &nbsp;
                                         {{dato.vacante.convenio.empresa.nombre}}
@@ -201,12 +201,12 @@
                         </div>
                         <div id="{{dato._id}}" class="collapse mt-2">
                             <div class="d-flex justify-content-end pr-5">
-                                <button class="btn descargar btnSuccess mb-2 mr-3">
+                                <button class="btn btnSuccess mb-2 mr-3">
                                     <a class="btnSuccess" [href]="dato.documento_propuesta | documento: dato.estudiante._id" download="dato.documento_propuesta" target="_blank">
                                         <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver Propuesta</b></small>
                                     </a>
                                 </button>
-                                <button class="btn descargar btnSuccess mb-2 mr-5">
+                                <button class="btn btnSuccess mb-2 mr-5">
                                     <a class="btnSuccess" [href]="dato.documento_fichaAcademica | documento: dato.estudiante._id" download="dato.documento_fichaAcademica" target="_blank">
                                         <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver Ficha</b></small>
                                     </a>

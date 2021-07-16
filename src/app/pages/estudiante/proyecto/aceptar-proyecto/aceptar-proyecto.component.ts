@@ -36,17 +36,6 @@ export class AceptarProyectoComponent implements OnInit {
     });
   }
 
-  activeTab(tab: string) {
-    const activeTab = document.getElementById(tab);
-    const problemaTab = document.getElementById('problemaTab');
-    const alcanceTab = document.getElementById('alcanceTab');
-    const metodologiaTab = document.getElementById('metodologiaTab');
-    problemaTab.setAttribute('class', 'nav-link text-body');
-    alcanceTab.setAttribute('class', 'nav-link text-body');
-    metodologiaTab.setAttribute('class', 'nav-link text-body');
-    activeTab.setAttribute('class', 'nav-link activeTab font-weight-bold');
-  }
-
   getFileFicha(file: File) {
     const labelFicha = document.getElementById("labelFicha") as HTMLElement;
     if (file.size > this.MAX_SIZE_FILE) {

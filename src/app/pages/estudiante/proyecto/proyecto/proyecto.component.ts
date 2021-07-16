@@ -30,8 +30,11 @@ export class ProyectoComponent implements OnInit {
   }
 
   getProyecto() {
-    this._proyectoService.getProyecto(this.info.modalidad).subscribe((resp: any) => {
+    this._proyectoService.getProyecto().subscribe((resp: any) => {
       this.proyecto = resp.proyecto;
+      if(this.proyecto.estado_proyecto && this.proyecto.estado_proyecto !== 'Ajustar'){
+        this.router.navigate(["/"]);
+      }
     })
   }
 

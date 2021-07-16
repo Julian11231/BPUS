@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit {
             }
           });
         }else if(this.user.onModel === "Proyecto"){
-          this._proyectoService.getProyecto(this.user.modalidad).subscribe((resp:any)=>{
+          this._proyectoService.getProyecto().subscribe((resp:any)=>{
             this.proyecto = resp.proyecto;
           });
         }

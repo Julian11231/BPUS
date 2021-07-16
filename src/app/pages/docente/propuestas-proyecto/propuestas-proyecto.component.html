@@ -1,7 +1,5 @@
 <div class="p-2 px-lg-4" style="background-color: white;">
 
-    <h3 class="card-title text-uppercase"><b> Todas las Propuestas </b></h3>
-    <hr>
     <div class="modal fade modal-propuesta">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -91,15 +89,15 @@
                 <div class="modal-body">
                     Estas a punto de rechazar la solicitud de proyecto de 
                     <span class="text-capitalize">{{proyectoSelected?.estudiante.nombres}} {{proyectoSelected?.estudiante.apellidos}}</span>
-                    <span *ngIf="proyectoSelected?.estudiante2" class="text-capitalize">{{proyectoSelected?.estudiante2.nombres}} {{proyectoSelected?.estudiante2.apellidos}}</span>
-                    <span *ngIf="proyectoSelected?.estudiante3" class="text-capitalize">{{proyectoSelected?.estudiante3.nombres}} {{proyectoSelected?.estudiante3.apellidos}}</span>
+                    <span *ngIf="proyectoSelected?.estudiante2" class="text-capitalize">, {{proyectoSelected?.estudiante2.nombres}} {{proyectoSelected?.estudiante2.apellidos}}</span>
+                    <span *ngIf="proyectoSelected?.estudiante3" class="text-capitalize">, {{proyectoSelected?.estudiante3.nombres}} {{proyectoSelected?.estudiante3.apellidos}}</span>
                     <form ngNativeValidate #rechazar="ngForm" (ngSubmit)="rechazarSolicitud(rechazar)">
                         <label class="control-label mt-2">
                             <h5> <b class="text-uppercase">Notas</b> (escribe el motivo del rechazo) <b>:</b></h5>
                         </label>
                         <textarea [(ngModel)]="notas" name="notas" class="form-control" rows="5" placeholder="Notas Para el Estudiante" required></textarea>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btnSuccess btn-block">Rechazar</button>
+                            <button type="submit" class="btn btnSuccess btn-block" [disabled]="!notas">Rechazar</button>
                         </div>
                     </form>
                 </div>
@@ -115,25 +113,37 @@
                 <!-- Modal Header -->
                 <div class="modal-header text-white" style="background-color: #357a38;">
                     <h4 class="modal-title text-white">Aprobar solicitud</h4>
-                    <button id="btnCloseAprobar" type="button" class="close" data-dismiss="modal" style="color:#ffff">&times;</button>
+                    <button (click)="escoderNotas()" id="btnCloseAprobar" type="button" class="close" data-dismiss="modal" style="color:#ffff">&times;</button>
                 </div>
                 
                 <!-- Modal body -->
                 <div class="modal-body">
                     Estas a punto de aprobar la solicitud de proyecto de 
                     <span class="text-capitalize"> {{proyectoSelected?.estudiante.nombres}} {{proyectoSelected?.estudiante.apellidos}}</span>
-                    <span *ngIf="proyectoSelected?.estudiante2" class="text-capitalize"> {{proyectoSelected?.estudiante2.nombres}} {{proyectoSelected?.estudiante2.apellidos}}</span>
-                    <span *ngIf="proyectoSelected?.estudiante3" class="text-capitalize"> {{proyectoSelected?.estudiante3.nombres}} {{proyectoSelected?.estudiante3.apellidos}}</span>
+                    <span *ngIf="proyectoSelected?.estudiante2" class="text-capitalize">, {{proyectoSelected?.estudiante2.nombres}} {{proyectoSelected?.estudiante2.apellidos}}</span>
+                    <span *ngIf="proyectoSelected?.estudiante3" class="text-capitalize">, {{proyectoSelected?.estudiante3.nombres}} {{proyectoSelected?.estudiante3.apellidos}}</span>
                     <form ngNativeValidate #aprobar="ngForm" (ngSubmit)="aprobarSolicitud(aprobar)">
+                        <h5 class="font-weight-bold mt-3" *ngIf="!proyectoSelected?.estudiante2">Director sugerido por el estudiante:</h5>
+                        <h5 class="font-weight-bold mt-3" *ngIf="proyectoSelected?.estudiante2 || proyectoSelected?.estudiante3">Director sugerido por los estudiantes:</h5>
+                        <span>{{proyectoSelected?.director.nombres}} {{proyectoSelected?.director.apellidos}}</span><br>
+                        <label class="control-label mt-3">
+                            <h5 class="font-weight-bold">Asiganar director:</h5>
+                        </label>
+                        <select name="tutor" class="form-control custom-select" [(ngModel)]="director" id="directorSelected" (change)="getDirectorSelected()" required>
+                            <option value="" selected>Selecciona un director...</option>
+                            <ng-container *ngFor="let director of directores">
+                                <option value="{{director._id}}">{{director.nombres}} {{director.apellidos}}</option>
+                            </ng-container>
+                        </select>
                         <a href="#notasAprobar" class="btn btnSuccess my-2 my-lg-3" data-toggle="collapse">Agregar notas</a>
                         <div id="notasAprobar" class="collapse">
                             <label class="control-label mt-2">
-                                <h5 class="text-uppercase"> <b>Notas(opcional):</b></h5>
+                                <h5><b>Notas(opcional):</b></h5>
                             </label>
                             <textarea [(ngModel)]="notas" name="notas" class="form-control" rows="5" placeholder="Notas de la propuesta"></textarea>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-block text-white" style="background-color: #4caf50">Aprobar</button>
+                            <button type="submit" class="btn btn-block text-white" style="background-color: #4caf50" [disabled]="!directorValid">Aprobar</button>
                         </div>
                     </form>
                 </div>
@@ -148,6 +158,8 @@
     </ng-container>
     
     <ng-container *ngIf="proyectos?.length > 0">
+        <h3 class="card-title text-uppercase"><b> Todas las Propuestas </b></h3>
+        <hr>
         <div class="form-group">
             <input #dataBuscar (keyup)="getDataBuscar(dataBuscar.value)" name="dataBuscar"
                 type="text" id="firstName" class="form-control"
@@ -157,7 +169,7 @@
 
     <ng-container *ngFor="let dato of proyectos; let indice = index">
         <div class="row">
-            <div class="col-10 col-sm-5 col-md-5 col-lg-5">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="vacantes">
                     <h5>{{dato.titulo}}</h5>
                     <h5 class="small"> 
@@ -171,9 +183,13 @@
                     </h5>
                 </div>
             </div>
-            <div class="col-10 col-sm-10 col-md-5 col-lg-5">
-                <h5>Director:</h5>
-                <h5 class="small font-weight-bold">{{dato.director.nombres}} {{dato.director.apellidos}} </h5>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+                <h6 class="font-weight-bold">Documento inscripción</h6>
+                <button class="btn descargar btnSuccess">
+                    <a class="btnSuccess" [href]="dato.documento_inscripcion | documentoP: dato._id" download="dato.documento_inscripcion" target="_blank">
+                        <small><b><i class="fa fa-file-pdf-o"></i>&nbsp; Ver inscripción</b></small>
+                    </a>
+                </button>   
             </div>
             <div class="col-12 col-sm-12 col-md-2 col-lg-2 mt-2">
                 <a href="#propuesta{{indice+1}}" data-toggle="collapse">Ver mas <i class="fa fa-angle-down"></i></a>
@@ -212,10 +228,10 @@
                 <button type="button" (click)="getDataInfo(dato)" data-toggle="modal" data-target=".modal-propuesta" class="btn btn btn-outline-info btn-sm mr-2">
                     <i class="fa fa-info-circle" style="font-size: 20px;"></i>
                 </button>
-                <button type="button" [disabled]="dato.estado == 'Aprobada'" (click)="getDataInfo(dato)" class="btn text-white mr-2" data-toggle="modal" data-target="#AprobarModal" style="background-color: #6fbf73;">
+                <button type="button" [disabled]="dato.estado == 'Aprobada'" (click)="getDataInfo(dato)" class="btn text-white mr-2" data-toggle="modal" data-target="#AprobarModal" data-backdrop="static" data-keyboard="false" style="background-color: #6fbf73;">
                     Aprobar
                 </button>
-                <button type="button" [disabled]="dato.estado == 'Rechazada'" (click)="getDataInfo(dato)" class="btn btnSuccess mr-2" data-toggle="modal" data-target="#rechazarModal">
+                <button type="button" [disabled]="dato.estado == 'Rechazada'" (click)="getDataInfo(dato)" class="btn btnSuccess mr-2" data-toggle="modal" data-target="#rechazarModal" data-backdrop="static" data-keyboard="false">
                     Rechazar
                 </button>
             </div>

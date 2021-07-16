@@ -53,8 +53,8 @@ export class SolicitudProyectoComponent implements OnInit {
 
   getDocentes(){
     const director = document.getElementById("director") as HTMLInputElement;
-    this._adminService.getDocentes().subscribe( async (resp:any) =>{
-      this.docentes = resp.docentes;
+    this._adminService.getTutores(this.user.programa).subscribe( async (resp:any) =>{
+      this.docentes = resp.admins;
       let maxlength = 0;
       for(let i= 0; i < this.docentes.length; i++){
         this.docentes[i].nombres = this.docentes[i].nombres+" "+this.docentes[i].apellidos;

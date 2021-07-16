@@ -13,13 +13,23 @@ export class ProyectoService {
 
   constructor(public http: HttpClient, public router: Router) { }
 
-  getProyecto(id: string) {
-    let url = `${URL_SERVICES}/proyecto/porId/${id}`;
+  getProyecto() {
+    let url = `${URL_SERVICES}/proyecto/estudiante`;
     return this.http.get(url);
   }
 
   getProyectoEnviados(programa:string) {
     let url = `${URL_SERVICES}/proyecto/porPrograma/${programa}`;
+    return this.http.get(url);
+  }
+
+  getProyectosDirector(director:string){
+    let url = `${URL_SERVICES}/proyecto/director/${director}`;
+    return this.http.get(url);
+  }
+
+  getProyectosAsignarJurados(programa:string){
+    let url = `${URL_SERVICES}/proyecto/asignarJurado/${programa}`;
     return this.http.get(url);
   }
 
@@ -43,7 +53,7 @@ export class ProyectoService {
     }));
   }
 
-  aceptarProyecto(idProyecto: string,){
+  aceptarProyecto(idProyecto: string){
     let url = `${URL_SERVICES}/proyecto/aprobarSerParteProyecto/${idProyecto}`;
     return this.http.put(url, null).pipe(map((resp: any) => {
       if (resp.ok) {
@@ -67,7 +77,7 @@ export class ProyectoService {
     }));
   }
 
-  rechazarProyecto(idProyecto: string,){
+  rechazarProyecto(idProyecto: string){
     let url = `${URL_SERVICES}/proyecto/rechazarSerParteProyecto/${idProyecto}`;
     return this.http.put(url, null).pipe(map((resp: any) => {
       if (resp.ok) {
@@ -81,6 +91,34 @@ export class ProyectoService {
       }else{
         return false;
       }
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
+  putJefeProyecto(idProyecto: string, proyecto:any){
+    let url = `${URL_SERVICES}/proyecto/jefeProyecto/${idProyecto}`;
+    return this.http.put(url, proyecto).pipe(map((resp: any) => {
+      return resp.ok;
+    }), catchError((err) => {
+      Swal.fire({
+        title: '¡Error!',
+        text: err.error.mensaje,
+        icon: 'error',
+      });
+      return throwError(err);
+    }));
+  }
+
+  putDirectorProyecto(idProyecto: string, proyecto:any){
+    let url = `${URL_SERVICES}/proyecto/directorProyecto/${idProyecto}`;
+    return this.http.put(url, proyecto).pipe(map((resp: any) => {
+      return resp.ok;
     }), catchError((err) => {
       Swal.fire({
         title: '¡Error!',

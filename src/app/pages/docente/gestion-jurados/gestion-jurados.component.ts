@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { PasantiService, AdministrativoService, NotificacionesService } from 'src/app/services/service.index';
+import { PasantiService, ProyectoService, AdministrativoService, NotificacionesService } from 'src/app/services/service.index';
 import { Notificacion } from 'src/app/models/notificacion.model';
 import { PasantiaAsignarJurado } from '../../../models/pasantiaAsignarJurado.model';
 import { DatePipe } from '@angular/common';
@@ -13,42 +13,55 @@ import { DatePipe } from '@angular/common';
 })
 export class GestionJuradosComponent implements OnInit {
 
-  user: any;
-  fecha:Date;
+  user = JSON.parse(localStorage.getItem('user'));
+  
   fechamin:string;
   fechamax:string;
+
   pasantias: any[];
   pasantiaSelected: any;
+ 
+  proyectos: any[];
+  proyectoSelected:any;
+  
   jurados: any
-  jurado1:string = "";
-  jurado2:string = "";
+  juradoPasantia1:string = "";
+  juradoPasantia2:string = "";
+  juradoProyecto1:string = "";
+  juradoProyecto2:string = "";
 
-  constructor(public _pasantiaService: PasantiService, public _tutoresService: AdministrativoService, public _notificacionService: NotificacionesService) { }
+  constructor(private _pasantiaService: PasantiService,
+    private _proyectoService: ProyectoService,
+    private _tutoresService: AdministrativoService,
+    private _notificacionService: NotificacionesService) { }
 
   ngOnInit(): void {
-    this.user  = JSON.parse(localStorage.getItem('user'));
-    this.fecha =  new Date();
+    const fecha =  new Date();
     const pipe = new DatePipe('en-US');
-    var mes:string; var dia:string;
-    var year = this.fecha.getFullYear()+1;
-    var month = this.fecha.getMonth()+1;
-    var date = this.fecha.getDate();
-    if(month < 10){
-      mes = '0'+month.toString();
-    }else{
-      mes = month.toString();
-    }
-    if(date < 10){
-      dia = '0'+date.toString();
-    }else{
-      dia = date.toString();
-    }
-    this.fechamin = pipe.transform(this.fecha, 'yyyy-MM-dd');
-    this.fechamax = year+'-'+mes+'-'+dia;
-    console.log(this.fechamin)
-    console.log(this.fechamax)
+    let max = fecha.getTime()+(1000*60*60*24*33);
+    let min = fecha.getTime()+(1000*60*60*24*3);
+    let fechamax = new Date(max);
+    let fechamin = new Date(min)
+    this.fechamin = pipe.transform(fechamin, 'yyyy-MM-dd');
+    this.fechamax = pipe.transform(fechamax, 'yyyy-MM-dd');
     this.getPasantias();
     this.getJurados();
+    this.getProyectos();
+  }
+
+  activeTab(tab: string) {
+    const activeTab = document.getElementById(tab);
+    const pasantiaTab = document.getElementById('pasantiaTab');
+    const proyectoTab = document.getElementById('proyectoTab');
+    pasantiaTab.setAttribute('class', 'nav-link text-body');
+    proyectoTab.setAttribute('class', 'nav-link text-body');
+    activeTab.setAttribute('class', 'nav-link activeTab font-weight-bold');
+  }
+
+  getProyectos() {
+    this._proyectoService.getProyectosAsignarJurados(this.user.programa).subscribe((resp: any) => {
+      this.proyectos = resp.proyectos;
+    });
   }
 
   getPasantias() {
@@ -67,16 +80,25 @@ export class GestionJuradosComponent implements OnInit {
     })
   }
 
-  checkJurados(){
-    var errorJurados = (document.getElementById('errorJurados')) as HTMLElement;
-    if(this.jurado1 !== "" && this.jurado2 !== "" && this.jurado1 === this.jurado2){
-      errorJurados.setAttribute('style','display:block; color: red;');
+  checkJuradosPasantia(){
+    var errorJuradosPasantia = (document.getElementById('errorJuradosPasantia')) as HTMLElement;
+    if(this.juradoPasantia1 !== "" && this.juradoPasantia2 !== "" && this.juradoPasantia1 === this.juradoPasantia2){
+      errorJuradosPasantia.setAttribute('style','display:block; color: red;');
     }else{
-      errorJurados.setAttribute('style','display:none;');
+      errorJuradosPasantia.setAttribute('style','display:none;');
     }
   }
 
-  AsignarJurados(idPasantia:string, f:NgForm){
+  checkJuradosProyecto(){
+    var errorJuradosProyecto = (document.getElementById('errorJuradosProyecto')) as HTMLElement;
+    if(this.juradoProyecto1 !== "" && this.juradoProyecto2 !== "" && this.juradoProyecto1 === this.juradoProyecto2){
+      errorJuradosProyecto.setAttribute('style','display:block; color: red;');
+    }else{
+      errorJuradosProyecto.setAttribute('style','display:none;');
+    }
+  }
+
+  AsignarJuradosPasantia(idPasantia:string, f:NgForm){
     Swal.fire({
       title: '¿Asignar jurados?',
       icon: 'warning',
@@ -88,14 +110,14 @@ export class GestionJuradosComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
 
-        let pasantia = new PasantiaAsignarJurado(this.jurado1,this.jurado2,f.value.fecha, f.value.lugar);
+        let pasantia = new PasantiaAsignarJurado(this.juradoPasantia1,this.juradoPasantia2,f.value.fecha, f.value.lugar);
         var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         var jurado1Nombre:string; var jurado2Nombre:string;
         var fecha = f.value.fecha.split(/\D/);
         var sustentacion_fecha =  new Date(fecha[0], --fecha[1], fecha[2]);
 
-        var selectJurado1 = (document.getElementById("jurado1")) as HTMLSelectElement;
-        var selectJurado2 = (document.getElementById("jurado2")) as HTMLSelectElement;
+        var selectJurado1 = (document.getElementById("juradoPasantia1")) as HTMLSelectElement;
+        var selectJurado2 = (document.getElementById("juradoPasantia2")) as HTMLSelectElement;
         var selectedIndex1 = selectJurado1.selectedIndex; var selectedIndex2 = selectJurado2.selectedIndex;  
         selectedIndex1 = selectedIndex1-1; selectedIndex2 = selectedIndex2-1;
 
@@ -114,7 +136,7 @@ export class GestionJuradosComponent implements OnInit {
             this.pasantiaSelected.estudiante.correo);
 
           let notificacionJ1 =new Notificacion(
-            this.jurado1,
+            this.juradoPasantia1,
             currentDate,
             'Te han asignado como jurado de una pasantia',
             `Has sido asignado como jurado de la pasantia del estudiante ${this.pasantiaSelected.estudiante.nombres} ${this.pasantiaSelected.estudiante.apellidos}`,
@@ -122,7 +144,7 @@ export class GestionJuradosComponent implements OnInit {
             this.jurados[selectedIndex1].correo);
             
           let notificacionJ2 =new Notificacion(
-            this.jurado2,
+            this.juradoPasantia2,
             currentDate,
             'Te han asignado como jurado de una pasantia',
             `Has sido asignado como jurado de la pasantia del estudiante ${this.pasantiaSelected.estudiante.nombres} ${this.pasantiaSelected.estudiante.apellidos}`,
@@ -140,7 +162,7 @@ export class GestionJuradosComponent implements OnInit {
             title: '¡Bien hecho!',
             text: 'Jurados asignados correctamente',
             icon: 'success',
-            timer: 2000,
+            timer: 1000,
             confirmButtonText: 'Aceptar',
             showCancelButton: false,
             confirmButtonColor: '#60D89C',
@@ -156,6 +178,10 @@ export class GestionJuradosComponent implements OnInit {
     });
   }
 
+  AsignarJuradosProyecto(f:NgForm){
+
+  }
+
   getJurados() {
     let idPrograma = this.user.programa;
     this._tutoresService.getTutores(idPrograma).subscribe((resp: any) => {
@@ -163,15 +189,26 @@ export class GestionJuradosComponent implements OnInit {
     });
   }
 
-  getDataInfo(data: any) {
+  getPasantiaSelected(data: any) {
     this.pasantiaSelected = data;
   }
 
-  clearDataInfo(){
-    this.jurado1 = "";
-    this.jurado2 = "";
-    var errorJurados = (document.getElementById('errorJurados')) as HTMLElement;
-    errorJurados.setAttribute('style','display:none;');
+  getProyectoSelected(data: any) {
+    this.proyectoSelected = data;
+  }
+
+  clearDataPasantia(){
+    this.juradoPasantia1 = "";
+    this.juradoPasantia2 = "";
+    var errorJuradosPasantia = (document.getElementById('errorJuradosPasantia')) as HTMLElement;
+    errorJuradosPasantia.setAttribute('style','display:none;');
+  }
+
+  clearDataProyecto(){
+    this.juradoProyecto1 = "";
+    this.juradoProyecto2 = "";
+    var errorJuradosProyecto = (document.getElementById('errorJuradosProyecto')) as HTMLElement;
+    errorJuradosProyecto.setAttribute('style','display:none;');
   }
 
 }
